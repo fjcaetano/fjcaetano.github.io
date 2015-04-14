@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>You Shouldn't Use Git Blame to Blame on People - License to Kill -9</title>
+  <meta name="author" content="Flávio Caetano">
+
+  
+  <meta name="description" content="
+  
+    
+      
+        You Shouldn't Use Git Blame to Blame on People
+        
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+          
+
+in
+
+  
+    git
+  
+
+
+
+...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://127.0.0.1:4000/post/you-shouldnt-use-git-blame/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>You Shouldn't Use Git Blame to Blame on People</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-07-23T17:22:57-03:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    git
+  
+</span>
+
+
+        </div>
+        <p><!--:en--></p>
+<p style="text-align: justify;">Have you ever used <em>git-blame</em> to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with "default" <em>git-blame</em> and Xcode's blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
+<p style="text-align: justify;">Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I'm the one who fixes what is not according. Therefore, my name comes up in Xcode's blame view more  often than others.</p>
+<p style="text-align: justify;">If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <em>git-blame</em> command line with the "-n" option. It'll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
+<p style="text-align: justify;">Or maybe, even better, get the changelog and the names of who touched a specific line of code with <em>git-log</em> "-L" option:</p>
+<p style="text-align: justify;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img class="size-medium wp-image-941 alignnone" alt="git-log -L" src="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM-250x300.png" width="250" height="300" /></a></p>
+<p style="text-align: justify;"><span style="line-height: 1.5;">Thanks to: </span><a style="line-height: 1.5;" href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file" target="_blank">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="Previous Post: This is when a CGFloat may be a double">&laquo; Previous: This is when a CGFloat may be a double</a>
+        
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

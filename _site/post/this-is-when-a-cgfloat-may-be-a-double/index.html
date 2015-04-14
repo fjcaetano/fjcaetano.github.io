@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>This is when a CGFloat may be a double - License to Kill -9</title>
+  <meta name="author" content="Flávio Caetano">
+
+  
+  <meta name="description" content="
+  
+    
+      
+        This is when a CGFloat may be a double
+        
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+          
+
+in
+
+  
+    objective-c
+  
+
+
+
+...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://127.0.0.1:4000/post/this-is-when-a-cgfloat-may-be-a-double/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>This is when a CGFloat may be a double</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-06-30T11:00:29-03:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    objective-c
+  
+</span>
+
+
+        </div>
+        <p><!--:en-->
+<p style="text-align: justify;">How would you explain the following code never getting into the <em>if</em> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
+<pre class="lang:objc decode:true">for (UIView *subview in view.subviews)
+{
+    CGFloat subviewAlpha = subview.alpha;
+    CGFloat myAlpha = 0.15f;
+    if (subviewAlpha == myAlpha &amp;&amp;
+        [subview isKindOfClass:NSClassFromString(@"_UIPopoverViewBackgroundComponentView")])
+    {
+        subview.alpha = 0.f;
+    }
+ }</pre>
+<p style="text-align: justify;">Printing the value also proved to be pointless:</p>
+<pre class="lang:objc decode:true">NSLog(@"%f", subviewAlpha);
+// output: 0.150000
+
+NSLog(@"%f", myAlpha);
+// output: 0.150000</pre>
+<p style="text-align: justify;">Finally, XCode's debugger shed a dim of light to the real issue. It showed that the true value of <em>subviewAlpha</em> is 0.14999999999999999, and as a floating point it's accurate. Meanwhile the value of <em>myAlpha</em> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
+<p style="text-align: justify;">Jumping to <em>CGFloat</em> definition, we can see that it may be an alias to float or double, depending on the system's architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros" target="_blank">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424" target="_blank">@gustavocsb</a>, for the link).</p>
+<p style="text-align: center;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img class="size-medium wp-image-781 aligncenter" alt="Screen Shot 2014-06-28 at 12.53.35 AM" src="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM-300x130.png" width="300" height="130" /></a></p>
+<p style="text-align: justify;">As usual, I solved it the more elegant way I could. "Hey, if <em>CGFloat</em> is bipolar, let it tell me how to read it!"</p>
+<pre class="lang:objc decode:true">for (UIView *subview in view.subviews)
+{
+    if (subview.alpha == (CGFloat)0.15 &amp;&amp;
+        [subview isKindOfClass:NSClassFromString(@"_UIPopoverViewBackgroundComponentView")])
+    {
+        subview.alpha = 0.f;
+    }
+ }</pre>
+<p style="text-align: justify;">Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <em>typecast</em> it.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/post/memoirs-of-a-wwdc-rookie/" title="Previous Post: Memoirs of a WWDC Rookie">&laquo; Previous: Memoirs of a WWDC Rookie</a>
+        
+
+        
+          <a class="pull-right" href="/post/you-shouldnt-use-git-blame/" title="Next Post: You Shouldn't Use Git Blame to Blame on People">Next: You Shouldn't Use Git Blame to Blame on People &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

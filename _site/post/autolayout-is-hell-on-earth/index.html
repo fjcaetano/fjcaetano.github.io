@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Autolayout Is Hell on Earth - License to Kill -9</title>
+  <meta name="author" content="Flávio Caetano">
+
+  
+  <meta name="description" content="
+  
+    
+      
+        Autolayout Is Hell on Earth
+        
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+          
+
+in
+
+  
+    objective-c
+  
+
+
+
+        
+  ...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://127.0.0.1:4000/post/autolayout-is-hell-on-earth/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Autolayout Is Hell on Earth</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-09-12T11:24:56-03:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    objective-c
+  
+</span>
+
+
+        </div>
+        <p><!--:en-->
+<p style="text-align: justify;">I believe that every iOS developer is already aware of Apple's new directive forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using this tool created by the son of a devil called <em>autolayout</em>.<em><br />
+</em></p>
+<p style="text-align: justify;">Anyone that has already used <em>autolayout</em> knows that margin, width, height and other properties are calculated in runtime, therefore, they consume sometimes unnecessary CPU time. For some inescrutable reason, Apple decided to create this new concept from scratch to ease working with different sized screens, while they could easily reuse existing CSS concepts like <em>margin</em>, <em>padding</em>, among others. In addition to being extremely confusing (a <code>UIView's</code> margin <em>constraints</em> are in its <em>superview</em>), having a pitiful syntax (“V:|-(-5)-[view1]-(&gt;=10)-[view2]-(912837)-|”), <em>autolayout</em> also makes everything slow.</p>
+<p style="text-align: justify;"><strong>Protip:</strong> if you're configuring your <em>coinstraints</em> via code, <span style="text-decoration: underline;">never</span> forget seting <code>self.translatesAutoresizingMaskIntoConstraints = NO</code> in your view. It took me a couple of coffee cups to realise this was the reason why my <em>constraints</em> weren't being executing along with <code>[self layoutIfNeeded]</code>.</p>
+<p style="text-align: justify;">I recently had to work with a <code>UICollectionView</code> and the scroll was getting really laggy. Anytime a new cell was loaded, the framerate dropped. After spending a few hours trying to find the root of the problem with a couple of friends (we even considered the problem being the SDK's <code>dequeue</code> thanks to <em>Profiler</em>) some inspired insight hit us and we decided to disable <em>autolayout</em> on the <code>UICollectionViewCell's</code> xib and everything flowed like a beautiful stream under the morning sunlight of tropical woods. So let us analise what happened: Apple created a new concept, from the grounds, that theoretically would solve all problems when working with screens of different sizes, but this devilish concept is composed of runtime calculated values that ruin the <em>app's</em> smoothness. Yep, it gets hard to work happily...</p>
+<p style="text-align: justify;">This view that is the <code>UICollectionView's</code> cell will not have <em>autolayout</em>. Nobody knows what will happen when we submit the <em>app</em> to the Appstore and we sincerely hope that Apple doesn't mind this view that, although is not explicitly using <em>frames</em>, also is not configured to accept <em>autolayout</em>.</p>
+<p style="text-align: justify;">I'm yet to find an iOS developer that has nothing to complain about this weird invention, but, as usual, Apple's "this is what we want, so deal with it" policy doesn't give us any alternatives. Instead of easing developers' work, they're making our daily lives every more difficult while <del>Android scores another point</del> Apple is walking backwards.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/post/cocoapod-badges/" title="Previous Post: Cocoapod Badges">&laquo; Previous: Cocoapod Badges</a>
+        
+
+        
+          <a class="pull-right" href="/post/cicada-2014/" title="Next Post: Cicada 3301 Lives!">Next: Cicada 3301 Lives! &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

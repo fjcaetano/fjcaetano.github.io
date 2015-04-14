@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Protip: Unregistering a UICollectionView header/footer - License to Kill -9</title>
+  <meta name="author" content="Flávio Caetano">
+
+  
+  <meta name="description" content="
+  
+    
+      
+        Protip: Unregistering a UICollectionView header/footer
+        
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+          
+
+in
+
+  
+    ob...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://127.0.0.1:4000/post/protip-unregistering-a-uicollectionview-headerfooter/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Protip: Unregistering a UICollectionView header/footer</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-05-16T16:33:52-03:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    objective-c
+  
+</span>
+
+
+        </div>
+        <p><!--:en-->You can unregister a UICollectionView supplementary view by re-registering it with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10" target="_blank">Apple's docs</a>. (Remember to use the same <code>reuseIdentifier</code>).</p>
+<pre>[self.collectionView registerClass:nil forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kHEADER_IDENTIFIER];</pre>
+<p><span style="text-align: justify; line-height: 1.5;">But don't forget to overwrite the </span><a style="text-align: justify; line-height: 1.5;" href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:" target="_blank"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
+<pre class="lang:objc decode:true">- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    return CGSizeZero;
+}</pre>
+<p style="text-align: justify;"> Header or footer, depending on your need.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/post/cocoapods-and-resource_bundles/" title="Previous Post: Cocoapods and resource_bundles">&laquo; Previous: Cocoapods and resource_bundles</a>
+        
+
+        
+          <a class="pull-right" href="/post/swift-for-dummies/" title="Next Post: Swift for Dummies">Next: Swift for Dummies &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

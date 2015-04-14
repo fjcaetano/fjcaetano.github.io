@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>SQLite Modelling - License to Kill -9</title>
+  <meta name="author" content="Flávio Caetano">
+
+  
+  <meta name="description" content="
+  
+    
+      
+        SQLite Modelling
+        
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+          
+
+in
+
+  
+    database
+  
+
+
+
+        
+        
+
+SQLite...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://127.0.0.1:4000/post/sqlite-modelling/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>SQLite Modelling</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-01-16T20:42:01-02:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    database
+  
+</span>
+
+
+        </div>
+        <p><!--:en-->
+<div>
+<p style="text-align: justify;">SQLite sucks. I think everybody knows, but I had to say it. But, sometimes, we have no choice other than using it. Even though it's horrible and we know we`ll be frustrated, once in a lifetime, SQLite may be the best choice. Wether developing a program with a tiny or fast persistence. Sure there are other alternatives that may suit you best, but the platform we're using may not support it.</p>
+<p style="text-align: justify;">For instance, I'm currently working on an iPad app that will have a fairly big amount of data which must be available offline and it will have to be updated sometimes. The best solution we came with is a background server task wich will build an SQLite database populated with the most recent data and, when the user requests, the iPad will download the whole database, overwriting any existing ones.</p>
+<p style="text-align: justify;">I'm no DBA, but I don't think anyone writes database creation scripts anymore. At least not for the usual <code>CREATE TABLE</code>, etc. I'm mostly a MySQL guy and, for a long time, I've been using <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a> to create my DB models and syncing with my existing database. It automatically creates everything that needs to be created and alter all tables that must be altered without losing any data (most of the time). It's pretty good and I never had any problems with it.</p>
+<p style="text-align: justify;">Now, back to listing reasons why SQLite sucks (dude, you can't add a constraint when altering a table!). As any platform/framework with no "official" team, SQLite depends on the community to increase it's awesomeness. Therefore, as everybody knows SQLite <em>is not awesome</em>, no one really waste time developing a <em>good</em> administration tool for it. What may happen, is a company own a DB management program (such as <a href="http://www.navicat.com/">Navicat</a>) and something like this goes by:</p>
+<div class="codehilite" style="text-align: justify;">
+<pre>    <span class="o">-</span> <span class="n">Hey</span><span class="p">,</span> <span class="n">we</span><span class="o">'</span><span class="n">re</span> <span class="n">supporting</span> <span class="n">MySQL</span><span class="p">,</span> <span class="n">SQL</span> <span class="n">Server</span><span class="p">,</span> <span class="n">MongoDB</span><span class="p">,</span> <span class="n">Cassandra</span><span class="p">,</span> <span class="n">NoSQL</span> <span class="n">and</span> <span class="n">Postgree</span><span class="p">,</span> <span class="n">don</span><span class="o">'</span><span class="n">t</span> <span class="n">you</span> <span class="n">think</span> <span class="n">people</span> <span class="n">will</span> <span class="n">notice</span> <span class="n">we</span><span class="o">'</span><span class="n">re</span> <span class="n">ignoring</span> <span class="n">SQLite</span>?
+    <span class="o">-</span> <span class="n">God</span> <span class="n">dammit</span> <span class="o">*</span><span class="n">gasps</span><span class="o">*</span><span class="p">,</span> <span class="n">add</span> <span class="n">support</span> <span class="n">to</span> <span class="n">it</span> <span class="n">too</span><span class="p">...</span> <span class="n">but</span> <span class="n">don</span><span class="o">'</span><span class="n">t</span> <span class="n">lose</span> <span class="n">too</span> <span class="n">much</span> <span class="n">time</span> <span class="n">with</span> <span class="n">it</span>!</pre>
+</div>
+<p style="text-align: justify;">Unfortunately, there are no really good tools to work with SQLite available. "Hey, what about <a href="http://www.navicat.com/">Navicat</a>?" It's okay, but I found tons of bugs in the Mac version. If that's not enough, are you really willing to pay to use a management tool for a free, open source database? But if you search deep enough - like the 3rd page of Google - there are also some weird stuff that appears such as <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a> (for Mac). When I see things I like that I think "why the hell would people lose time developing something for SQLite?" But hey, there are weirdos for everything, so I'd like to thank for the <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a> team for being strange enough to create it.</p>
+<p style="text-align: justify;">Even though it's not the best tool ever, <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a> sure comes in handy and helps a lot, but it doesn't solve the mentioned problem of modelling your SQLite database and not dealing with SQL scripts. So, searching for something that would fill this void I found <a href="http://www.henlich.de/software/sqlite-export-plugin-for-mysql-workbench/">this excellent script</a> in Lua for <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a> that automagically generates the SQLite CREATE script from a model. It's super easy to install and use. Just follow this steps:</p>
+<ol style="text-align: justify;">
+<li>Download the .lua script (duh!)</li>
+<li>Click in the "Scripting" menu in <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>.</li>
+<li>Click "Install Plugin/Module".</li>
+<li>Choose the downloaded .lua script.</li>
+<li>???</li>
+<li>Profit.</li>
+</ol>
+<p style="text-align: justify;">That's it. Now, if you want to try, open a model, click the "Plugins" menu and under "Utilities" there must be an option named "Export SQLite CREATE Script" which may be the first one. Just click it and choose where to save the .sql script and execute it. <em>Voilà</em>! If you have any problems executing the generated script, you may need to comment the <code>BEGIN;</code> at the top and the <code>COMMIT;</code> at the bottom of the .sql script.</p>
+<p style="text-align: justify;">Super easy, isn't it? Give it a try. Even if, like me, you hate SQLite. The plugin solves the modelling problem, but creates a new one, because you can't <code>ALTER</code> an existing table since it only generates the <code>CREATE</code> script. But if that's not a problem go for it and be happy. When I found it, life suddenly became joyful again.</p>
+</div>
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/post/the-tale-of-luck/" title="Previous Post: The Tale of Luck">&laquo; Previous: The Tale of Luck</a>
+        
+
+        
+          <a class="pull-right" href="/post/best-xcode-tip/" title="Next Post: The Best XCode Tip No One Ever Gave You">Next: The Best XCode Tip No One Ever Gave You &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

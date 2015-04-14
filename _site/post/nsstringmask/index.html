@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>NSStringMask: Simplifying masks - License to Kill -9</title>
+  <meta name="author" content="Flávio Caetano">
+
+  
+  <meta name="description" content="
+  
+    
+      
+        NSStringMask: Simplifying masks
+        
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+          
+
+in
+
+  
+    objective-c
+  
+
+
+
+       ...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://127.0.0.1:4000/post/nsstringmask/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>NSStringMask: Simplifying masks</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-05-16T14:27:10-03:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    objective-c
+  
+</span>
+
+
+        </div>
+        <p><!--:en-->
+<div>
+<p style="text-align: justify;">When developing, we often come across code we've seen hundreds of times that we just copy and paste from project to project. Sometimes it's so banal that it's not worth trying to improve, change or even modularize it. Ctrl-C + Ctrl-V may be the cheapest and fastest solution, ergo, the best.</p>
+<p style="text-align: justify;">This is the kind of situation we see when masks must be applied to <em>text fields</em> such as Social Security Numbers (SSN), Telephones, Zip Codes, and so on. Those awful few dozens of lines we copy from one <code>textField:shouldChangeCharactersInRange:replacementString:</code> to the other. It never changes because it works. There's no need to improve it. It's always the same. But I've got tired of it. That nasty code that, in a well structured class, can be as a mole in a beautiful woman's face.</p>
+<p style="text-align: justify;">A few days ago I got some spare time and I started working on something I though could come handy. So how do you simplify and generalise this problem that every developer has to face at least once? Easy! <em>Regex</em>! Wait.. You sure it's easy? I'll tell you, it wasn't easy, but we're talking about patterns in varying occasions and, as I visualised it, <em>regex</em> is the best, simplest and most "approachable" solution. I mean, everybody knows a little bit of <em>regex</em>.</p>
+<p style="text-align: justify;">While modelling, I wanted to make it as simple and as clean as possible, therefore, for now, there are only two classes, and only one method you'll really use, but you can read the <a href="http://fjcaetano.github.io/NSStringMask/">complete documentation</a>. From now on, I'll present a superficial approach to introduce this small library.</p>
+<p style="text-align: justify;">Fork the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a>!</p>
+<h2 id="nsstringmask" style="text-align: justify;">NSStringMask</h2>
+<p style="text-align: justify;">The NSStringMask is the main class responsible for applying your masks to the NSStrings. Among it's methods the only noteworthy is <a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/maskString:withPattern:placeholder:"><code>[NSStringMask maskString:withPattern:placeholder:]</code></a>.</p>
+<p style="text-align: justify;">It formats the given <code>string</code> based on the <code>pattern</code> you provide, filling the voids with the <code>placeholder</code>. It automatically creates an instance of NSRegularExpression with the option <code>CaseInsensitive</code>, so if you need a different option, you may use the alternate method which expects a <em>regex</em> instead of <code>pattern</code>.</p>
+<p style="text-align: justify;">There's also an alternative method that receives no <code>placeholder</code> (same as <code>nil</code>), in this case, when the given <code>string</code> is shorter than expected, instead of applying the mask, the method will return a cleaned <em>string</em> having only the valid characters based on <a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/validCharactersForString:"><code>validCharactersForString:</code></a>.</p>
+<h3 id="important-note" style="text-align: justify;">Important Note</h3>
+<p style="text-align: justify;">Doesn't matter if providing a <code>pattern</code> or an instance of <em>regex</em>, the regular expression <strong>must</strong> have capturing groups (parentheses). This is because the class understands that everything that is not within parentheses is part of the mask and must be interpreted as literal characters!</p>
+<p style="text-align: justify;">Suppose you're formatting a SSN, whose <em>regex</em> pattern is <code>\d{3}-\d{2}-\d{3}</code>. If you provide that <em>regex</em>/pattern, nothing will be formatted because the class will think that <code>\d{3}</code> is part of the mask, and not 3 numbers that should go there.</p>
+<p style="text-align: justify;">The correct usage is: <code>(\d{3})-(\d{2})-(\d{3})</code></p>
+<div class="codehilite" style="text-align: justify;">
+<pre><span class="c1">// RIGHT:</span>
+<span class="n">NSString</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskString:</span><span class="s">@"12345678"</span> <span class="nl">withPattern:</span><span class="s">@"(\d{3})-(\d{2})-(\d{3})"</span><span class="p">];</span>
+<span class="c1">// result = @"123-45-678"</span>
+
+<span class="c1">// WRONG:</span>
+<span class="n">NSString</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskString:</span><span class="s">@"12345678"</span> <span class="nl">withPattern:</span><span class="s">@"\d{3}-\d{2}-\d{3}"</span><span class="p">];</span>
+<span class="c1">// result = nil</span></pre>
+</div>
+<p style="text-align: justify;"><strong>Obs</strong>: If Xcode is showing a <em>warning</em> about unknown escape sequences, try adding double slashes (<code>\\d</code>)</p>
+<h2 id="uitextfieldmask" style="text-align: justify;">UITextFieldMask</h2>
+<p style="text-align: justify;">This is a subclass of UITextField, so you can set your <em>nibs</em> to use this class and automatically apply masks to your <em>text fields</em>.</p>
+<p style="text-align: justify;">Obviously, you must provide a mask to transform your <em>strings</em>, and it's recommended that you do so when initialising your <em>view</em> or <em>view controller</em>. So you should set the text field's mask inside <code>viewDidLoad</code> or <code>awakeFromNib</code>.</p>
+<p style="text-align: justify;">Suppose you have a <em>view</em> with an <em>outlet</em> to an UITextFieldMask named <code>textFieldMask</code>:</p>
+<div class="codehilite" style="text-align: justify;">
+<pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">awakeFromNib</span>
+<span class="p">{</span>
+    <span class="n">NSStringMask</span> <span class="o">*</span><span class="n">mask</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskWithPattern:</span><span class="s">@"(</span><span class="se">\</span><span class="s">d+)"</span><span class="p">];</span>
+
+    <span class="n">textFieldMask</span><span class="p">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="p">;</span>
+    <span class="n">textFieldMask</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span></pre>
+</div>
+<p style="text-align: justify;">A question for you: what does that mask accepts?</p>
+<h2 id="installation" style="text-align: justify;">Installation</h2>
+<p style="text-align: justify;">You can install it from <a href="http://cocoadocs.org/docsets/NSStringMask">Cocoa Pods</a>, or clone the project from the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a> and copy the files in the folder <code>Classes</code>.</p>
+<h3 id="helpful-stuff" style="text-align: justify;">Helpful stuff</h3>
+<p style="text-align: justify;">I've also created <a href="https://gist.github.com/fjcaetano/5600452">this gist</a> with some common patterns. Feel free to improve it!</p>
+</div>
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/post/best-xcode-tip/" title="Previous Post: The Best XCode Tip No One Ever Gave You">&laquo; Previous: The Best XCode Tip No One Ever Gave You</a>
+        
+
+        
+          <a class="pull-right" href="/post/documentation-and-objective-c/" title="Next Post: Documentation and Objective-C (part 1)">Next: Documentation and Objective-C (part 1) &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

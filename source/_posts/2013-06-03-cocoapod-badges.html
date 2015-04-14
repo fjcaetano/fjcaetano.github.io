@@ -1,0 +1,46 @@
+---
+layout: post
+title: Cocoapod Badges
+date: 2013-06-03 16:15:45.000000000 -03:00
+categories:
+- Objective-C
+tags:
+- badge
+- cocoapod
+- code climate
+- django
+- gemnasium
+- github
+- objc
+- pypi
+- pypip
+- shield
+- travis ci
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  gr_overridden: '1'
+  gr_options: a:3:{s:13:"enable-ribbon";s:4:"Show";s:10:"github-url";s:44:"https://github.com/fjcaetano/cocoapod-badges";s:11:"ribbon-type";i:3;}
+author:
+  login: fjcaetano
+  email: flavio@vieiracaetano.com
+  display_name: Flávio Caetano
+  first_name: Flávio
+  last_name: Caetano
+---
+<p><!--:en-->
+<p style="text-align: justify;">In any kind of environment, visual marks ease and enhance the comprehension of information. Countless researches studied the best way to display data, which colors induce what emotions, the association of geometric shapes with pre-formed concepts. The fact is that a sign or plaque draws much more attention than plain text. After all, an image is worth a thousand words, therefore, an image sends a much more significant message than some written words.</p>
+<p style="text-align: justify;">That's one of the reasons many development tools have featured <em>badges</em> (or <em>shields)</em> to inform the status of an application/framework/library/<em>etcetera</em>. It's the case of <a href="http://about.travis-ci.org/docs/user/status-images/" target="_blank">Travis CI</a>, <a href="https://codeclimate.com/changelog/510d4fde56b102523a0004bf" target="_blank">Code Climate</a>, <a href="http://blog.tech-angels.com/post/43141047457/gemnasium-v3-aka-gemnasium" target="_blank">Gemnasium</a>, among others, all following <a href="https://github.com/olivierlacan/shields" target="_blank">olivierlacan/shields</a>' trend, available Github.</p>
+<p style="text-align: justify;">I'm an iOS developer and previously have worked with Python/Django (though I still fool around) and I've always found very interesting this creative way of sharing the state of a service dynamically, but sadly, there were no solution to Python nor iOS featuring <em>badges</em> (except for Travis CI for tests). But, recently, appeared - out of nowhere - <a href="https://pypip.in/" target="_blank">pypip</a>'s <em>shields</em> for Python packages that allows the visualisation of the latest available version of a package on <a href="http://pypi.python.org" target="_blank">pypi</a> or how many downloads some <em>release </em>had<em>.</em> When I came aware if it I resented for taking so long for solution so simple and effective to come up (or at least for <span style="text-decoration: underline;">I</span> to discover it)... but it got over the top when I found out... or better, <span style="text-decoration: underline;">did not found out<em></em></span> a similar solution for <a href="http://cocoapods.org" target="_blank">Cocoapods</a>.</p>
+<p style="text-align: justify;">I'm one of those who doesn't miss a chance to solve a problem and endeavour an opportunity. That's how the <a href="http://fjcaetano.github.io/cocoapod-badges/" target="_blank">Cocoapod Badges</a> project started. Since Cocoapods doesn't provide an API, any info on the number of <em>users/downloads</em>, nor any kind of useful data, it proved to be a challenge, and all I could use had to be what was at hand: the latest version of a <em>pod</em>. But even though, mistaken are those who thought it easy. As mentioned, there's no API!</p>
+<h1 style="text-align: justify;">Cocoapod Badges <img class=" alignnone" title="NSStringMask 1.1.2" alt="NSStringMask 1.1.2" src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" width="120" height="18" /></h1>
+<p style="text-align: justify;">Digging through Cocoapod's and <a href="http://cocoadocs.org" target="_blank">Cocoadocs</a>' websites, I tried, first, to use the <a href="http://cocoadocs.org/documents.jsonp" target="_blank">documents.jsonp</a> file that I found in the <em>source</em> of the <em>pod</em>'s documentation website, however, I soon gave up for realising that its update frequency is too high (above one hour). At last, I had to content with the unfortunate <code>/search?q=</code> requested when searching for a <em>pod</em> in Cocoapod's main page. At first, it looked like an excellent solution since it returned a <code>json</code> object with some info, until I realised that inside the object was a string with some <code>html</code> code and only inside that code was the <em>pod</em>'s latest version. "<em>God dammit!</em>" Now I have to run a request on a "pseudo-<em>webservice</em>" and parse it with <code>XPATH</code> to get the latest version!</p>
+<p style="text-align: justify;">Super easy! But, as my mother would on a brazilian saying: "<em>few shit is silliness</em>". The damned "API" doesn't return the requested <em>pod</em>, but anything with the searched string. To get something more useful, I figured that <code>/search?q=name:POD_NAME</code> searches only in the <em>pod</em>'s name and not in its description, what significantly reduces the results, specially when dealing with popular <em>pods</em> such as <a href="http://afnetworking.github.io/AFNetworking/index.html" target="_blank">AFNetworking</a>.</p>
+<p style="text-align: justify;">After all that suffering, I finally got the information I wanted, but then, how do I show it in an image? Olivier Lacan's repo, that enabled all the existing <em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code>.SVG</code> vectorial files that render <code>xml</code> data to images. So, accidentally, I double-clicked the <code>.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news! As the information about the version is in plain text inside the <code>xml</code>, all I had to do was to set the <code>mimetype</code> so Django could provide the file as an image.</p>
+<p style="text-align: justify;">1 <a href="http://heroku.com" target="_blank">Heroku</a> <em>dyno</em> later and the service is available fulltime (depending on Cocoapods website) through the images' url:</p>
+<blockquote>
+<pre><code>http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></pre>
+</blockquote>
+<p style="text-align: justify;">All you have to do is replace the <code>$PODNAME</code> with the name of the pod you want. Simple and easy, isn't it? Use it at will! And suport the Github repo!</p>

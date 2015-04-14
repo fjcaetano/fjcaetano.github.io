@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Cocoapods and resource_bundles - License to Kill -9</title>
+  <meta name="author" content="Flávio Caetano">
+
+  
+  <meta name="description" content="
+  
+    
+      
+        Cocoapods and resource_bundles
+        
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+          
+
+in
+
+  
+    objective-c
+  
+
+
+
+        ...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://127.0.0.1:4000/post/cocoapods-and-resource_bundles/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Cocoapods and resource_bundles</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-04-15T17:12:13-03:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    objective-c
+  
+</span>
+
+
+        </div>
+        <p><!--:en-->
+<p style="text-align: justify;">Anyone that have recently developed any pods for Cocoapods know that resources should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles" target="_blank"><code>resource_bundles</code></a> option. What is quite hard to figure out is how, exactly, to access those resources once they're set up in the <em>bundle</em>. It seems obvious now that I got it working, but I struggle a lot since there wasn't anything in Stackoverflow or anywhere else that provided the answer I came up with.</p>
+<p style="text-align: justify;">After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in a "resources" folder within the Pods project, but none of them are added in the target's "Copy bundle resources". For that reason, I couldn't access any of the Pod's images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
+<p style="text-align: justify;"><code>'Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Could not load NIB in bundle:<{PATH_TO_APP}> (loaded)' with name '{VIEW_CONTROLLER_NAME}'</code></p>
+<p style="text-align: justify;">The obvious solution that wasn't listed anywhere is using the Cocoapods generated bundle (which the folder actually doesn't exist) as a <code>NSBundle</code>:</p>
+<pre class="lang:objc decode:true">NSString *bundlePath             = [[NSBundle mainBundle] pathForResource:@"MyBundle" ofType:@"bundle"];
+
+NSBundle *bundle                 = [NSBundle bundleWithPath:bundlePath];
+
+MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"MyViewController" bundle:bundle];
+
+[self.navigationController pushViewController:viewController animated:YES];</pre>
+<p style="text-align: justify;">Yes, it's that simple, that obvious, though it's not listed anywhere. I believe to be prudent and convenient to write about it in order to help anyone who encounter themselves in the same situation as I did.</p>
+<p style="text-align: justify;">
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/post/cicada-2014/" title="Previous Post: Cicada 3301 Lives!">&laquo; Previous: Cicada 3301 Lives!</a>
+        
+
+        
+          <a class="pull-right" href="/post/protip-unregistering-a-uicollectionview-headerfooter/" title="Next Post: Protip: Unregistering a UICollectionView header/footer">Next: Protip: Unregistering a UICollectionView header/footer &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

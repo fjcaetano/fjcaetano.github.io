@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
+url: http://127.0.0.1:4000
 title: License to Kill -9
 subtitle: Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.
 author: Flávio Caetano

@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Once Upon a Time, There Was Nothing (part. 2) - License to Kill -9</title>
+  <meta name="author" content="Flávio Caetano">
+
+  
+  <meta name="description" content="
+  
+    
+      
+        Once Upon a Time, There Was Nothing (part. 2)
+        
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+          
+
+in
+
+  
+    django
+  
+
+...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://127.0.0.1:4000/post/once-upon-2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Once Upon a Time, There Was Nothing (part. 2)</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-12-13T18:35:00-02:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    django
+  
+</span>
+
+
+        </div>
+        <p><!--:en-->
+<p style="text-align: justify;">One of the main reasons I like Django is it's awesome auto-generated admin interface. It's  just awesome. When you start to play with it and discover apps like <a href="https://bitbucket.org/izi/django-admin-tools/wiki/Home" target="_blank">django-admin-tools</a>, the faded <a href="http://code.google.com/p/django-jqmobile/" target="_blank">jq-mobile</a> and other cool stuff you realise how versatile Django really is.</p>
+<h1 style="text-align: justify;">The Context</h1>
+<p style="text-align: justify;">When I started learning Django I created a small manager for some of my hobbies. The first one was a book manager in which I have a log of <strong>every single</strong> book I've ever read, <strong>when</strong> I read it, <strong>where</strong> the book is located, if it's <strong>borrowed</strong> to somebody, a "<strong>GIVE IT BACK TO ME</strong>" button that sends an email with that exact message to whoever has it, and so on. Among everything, I also added a field for the book's <em>cover</em> but I never really used it.</p>
+<p style="text-align: justify;">More recently, I restarted to improve my card deck collection (yes, I'm weird) and added this new feature to my Django manager. But this time, since it's cataloging a collection and decks are mainly visual, the photos of the decks are <strong><em>very</em></strong> important. Yes, I said image<em><strong>S</strong></em>. Each deck has five photos:</p>
+<ol style="text-align: justify;">
+<li>The Front of the Box</li>
+<li>The Back of the Box</li>
+<li>The Back of the Cards</li>
+<li>The Joker</li>
+<li>The Ace of Spades</li>
+</ol>
+<p style="text-align: justify;">There are decks with a different back for each card, but that's not important,. Those are the options I'm contemplating. But, since not all of them are opened (I have one numbered deck that goes to 2500 copies. I won't open it. Never!) only the first two images are requirements.</p>
+<p style="text-align: justify;">So, now that you are aware of the context, this is when the problem (and the fun) started.</p>
+<h2 style="text-align: justify;">The Problem</h2>
+<p style="text-align: justify;">I started looking for some Django solution that could easily show thumbnails for my images in my admin module. Guess what was my surprise when I realised there was <em>N</em><em>one</em>.</p>
+<p style="text-align: justify;">There was absolutely nothing that would do what wanted and needed. The closest things I found were the automatic thumbnail creator <a href="https://github.com/sorl/sorl-thumbnail" target="_blank">sorl-thumbnail</a> and <a href="http://www.acedevs.com/blog/2011/07/11/django-admin-list-view-thumbnails/" target="_blank">Ace Devs solution</a> which didn't solve my problem. Dude, my images have 1936x2592 pixels of resolution. I can't just show them as they are.</p>
+<p style="text-align: justify;">That's when I realised I would have to develop a new solution for that.</p>
+<h1 style="text-align: justify;">The Solution (aka The Fun Part)</h1>
+<p style="text-align: justify;">I'm a modest guy, I don't like bragging about what I do.</p>
+<p style="text-align: justify;">No forget it. Bullshit. I do like to show everyone what I did. Specially when I think it's awesome, I mean, It's awesome. Don't you like sharing awesome stuff with your friends? Dude, I'm even writing an article about it! In <strong>TWO</strong> languages!</p>
+<p style="text-align: justify;">So, what I did was basically to join and improve those two solutions I found. "<strong>Basically</strong>" because, in the deep, it was a little more complex than that.</p>
+<p style="text-align: justify;">I came up with the stupidest yet simplest name I could find: <a href="https://github.com/fjcaetano/django-admin-thumbnail" target="_blank">django-admin-thumbnail</a>. I know, it's über stupid. But it's also simple, so it works.</p>
+<h2 style="text-align: justify;">django-admin-thumbnail</h2>
+<p style="text-align: justify;">The package automatically works on your <em>list_display</em> of your <em>ModelAdmin</em>. It <em>automagically</em> detects your <em>ImageFields</em>, converts it to thumbnail (physically allocated) using <a href="https://github.com/sorl/sorl-thumbnail" target="_blank">sorl-thumbnail</a> and displays to you in a user friendly way.</p>
+<p style="text-align: justify;">This is how it looks when you hover your cursor over an <em>ImageField</em> in your model grid.</p>
+<p style="text-align: justify;"><a href="http://127.0.0.1:4000/images/thumb_image.png" target="_blank"><img class="alignnone" alt="" src="http://127.0.0.1:4000/images/thumb_image.png" width="538" height="331" /></a></p>
+<p style="text-align: justify;">The image is in portuguese. Imagem = Image, Abrir Imagem = Open Image. <a href="https://github.com/fjcaetano/django-admin-thumbnail" target="_blank">django-admin-thumbnail</a> is localizable but, currently, only <code>pt-BR</code> and <code>en-US</code> are the officially supported languages. If you want it to be in your language, just send me your <code>.po</code> file and I'll validate it and share. It's ridiculous, there are only two tags. Give it a try!</p>
+<p style="text-align: justify;">When I finished, I realised how simple and effective it was. I had to share it with the community. So I took the opportunity to create my first <em>python package</em>. It was a pain in the ass because the documentation is lame, specially the <em>long-description</em> part. I had to generate it a zillion times to get the <em>reStructured Text</em> working until I found the <a href="http://pypi.python.org/pypi/py2html" target="_blank">py2html</a> command.</p>
+<h1 style="text-align: justify;">Wrap and Finish</h1>
+<p style="text-align: justify;">That's it. If you want to know more about <a href="https://github.com/fjcaetano/django-admin-thumbnail" target="_blank">django-admin-thumbnail</a> just click the link and it will send you to the Github repository. There's a quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/0.1.1" target="_blank">Here's the link for the python package</a></p>
+<p style="text-align: justify;">If you have any trouble to use it, don't hesitate to send me a message.</p>
+<p style="text-align: justify;">Have fun!</p>
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/post/once-upon/" title="Previous Post: Once Upon a Time, There Was Nothing">&laquo; Previous: Once Upon a Time, There Was Nothing</a>
+        
+
+        
+          <a class="pull-right" href="/post/the-tale-of-luck/" title="Next Post: The Tale of Luck">Next: The Tale of Luck &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>
