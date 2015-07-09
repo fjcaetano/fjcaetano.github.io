@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://127.0.0.1:4000/atom.xml" rel="self"/>
   <link href="http://127.0.0.1:4000/"/>
-  <updated>2015-07-09T20:02:42-03:00</updated>
+  <updated>2015-07-09T20:15:00-03:00</updated>
   <id>http://127.0.0.1:4000/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -23,7 +23,7 @@
 <p style="text-align: justify;">Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I'm the one who fixes what is not according. Therefore, my name comes up in Xcode's blame view more  often than others.</p>
 <p style="text-align: justify;">If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <em>git-blame</em> command line with the "-n" option. It'll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
 <p style="text-align: justify;">Or maybe, even better, get the changelog and the names of who touched a specific line of code with <em>git-log</em> "-L" option:</p>
-<p style="text-align: justify;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img class="size-medium wp-image-941 alignnone" alt="git-log -L" src="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM-250x300.png" width="250" height="300" /></a></p>
+<p style="text-align: justify;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img class="size-medium wp-image-941 alignnone" alt="git-log -L" src="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" width="250" height="300" /></a></p>
 <p style="text-align: justify;"><span style="line-height: 1.5;">Thanks to: </span><a style="line-height: 1.5;" href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file" target="_blank">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
 ]]></content>
   </entry>
@@ -53,7 +53,7 @@ NSLog(@"%f", myAlpha);
 // output: 0.150000</pre>
 <p style="text-align: justify;">Finally, XCode's debugger shed a dim of light to the real issue. It showed that the true value of <em>subviewAlpha</em> is 0.14999999999999999, and as a floating point it's accurate. Meanwhile the value of <em>myAlpha</em> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
 <p style="text-align: justify;">Jumping to <em>CGFloat</em> definition, we can see that it may be an alias to float or double, depending on the system's architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros" target="_blank">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424" target="_blank">@gustavocsb</a>, for the link).</p>
-<p style="text-align: center;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img class="size-medium wp-image-781 aligncenter" alt="Screen Shot 2014-06-28 at 12.53.35 AM" src="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM-300x130.png" width="300" height="130" /></a></p>
+<p style="text-align: center;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img class="size-medium wp-image-781 aligncenter" alt="Screen Shot 2014-06-28 at 12.53.35 AM" src="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" width="300" height="130" /></a></p>
 <p style="text-align: justify;">As usual, I solved it the more elegant way I could. "Hey, if <em>CGFloat</em> is bipolar, let it tell me how to read it!"</p>
 <pre class="lang:objc decode:true">for (UIView *subview in view.subviews)
 {
@@ -172,7 +172,7 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
     <id>http://127.0.0.1:4000/post/cicada-2014</id>
     <content type="html"><![CDATA[<p><!--:en-->
 <p style="text-align: justify;">This morning, Cicada 3301 went back to active! In his/hers <a href="https://twitter.com/1231507051321" target="_blank">Twitter account</a> used on last year's challenge there was new link to an image posted on imgur.</p>
-<p>[caption id="attachment_311" align="alignnone" width="547"]<a href="http://flaviocaetano_blog.s3.amazonaws.com/wp-content/uploads/2014/01/zN4h51m.jpg"><img class="size-full wp-image-311" alt="First Chapter" src="http://127.0.0.1:4000/images/zN4h51m.jpg" width="547" height="557" /></a> First Chapter[/caption]</p>
+<p><a href="http://127.0.0.1:4000/images/zN4h51m.jpg"><img class="size-full wp-image-311" alt="First Chapter" src="http://127.0.0.1:4000/images/zN4h51m.jpg" width="547" height="557" /></a></p>
 <p style="text-align: justify;">Reproducing the tradicional previous steps, by extracting the image using <a href="http://www.outguess.org/" target="_blank">outguess</a> we came onto a message, once again signed. Its authenticity could be proved using Cicada's previous known <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;search=0x181F01E57A35090F" target="_blank">public key</a>.</p>
 <p style="text-align: justify;">Now let's get our hands dirty! The first task was easy, since it's steps were already elucidated on previous years. Now things start to get interesting.</p>
 <p style="text-align: justify;">If you're interested in following the challenge progress, <a href="http://uncovering-cicada.wikia.com/wiki/CICADA_3301_2014_PUZZLE" target="_blank">Uncovering Cicada</a> is on a good pace.</p>

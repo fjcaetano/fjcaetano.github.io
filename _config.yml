@@ -9,6 +9,24 @@ author: Flávio Caetano
 simple_search: https://www.google.com/search
 description: Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.
 
+# Owner/author information
+owner:
+  name:           Flávio Caetano
+  avatar:         avatar.jpg
+  bio:            "Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order."
+  email:          flavio@vieiracaetano.com
+  # Social networking links used in footer. Update and remove as you like.
+  twitter:        flavio_caetano
+  facebook:
+  github:         fjcaetano
+  stackexchange:
+  linkedin:
+  instagram:
+  flickr:
+  tumblr:
+  # google plus id, include the '+', eg +mmistakes
+  google_plus:
+
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
 # http://www.ruby-doc.org/core-1.9.2/Time.html#method-i-strftime
@@ -41,8 +59,8 @@ rdiscount:
     - smart
 highlighter: pygments # default python pygments have been replaced by pygments.rb
 
-paginate: 10          # Posts per page on the blog index
-paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
+paginate: 5          # Posts per page on the blog index
+# paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
 excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
 excerpt_separator: "<!--more-->"
