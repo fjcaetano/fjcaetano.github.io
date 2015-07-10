@@ -6,8 +6,13 @@ url: http://fjcaetano.github.io
 title: License to Kill -9
 subtitle: Tales from an iOS Dev
 author: Flávio Caetano
+simple_search: https://www.google.com/search
 description: Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.
 avatar:      /images/avatar.png
+author_bio: Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.
+about: https://flaviocaetano.com
+future: false
+timezone: America/Sao_Paulo
 
 # RSS / Email (optional) subscription links (change if using something like Feedburner)
 subscribe_rss: /atom.xml
@@ -19,8 +24,11 @@ email: flavio@vieiracaetano.com
 # ----------------------- #
 
 # If publishing to a subdirectory as in http://site.com/project set 'root: /project'
-# root: /
+root: /
 permalink: /post/:title/
+destination: public
+plugins: plugins
+code_dir: downloads/code
 source: source
 category_dir: blog/categories
 markdown: rdiscount
