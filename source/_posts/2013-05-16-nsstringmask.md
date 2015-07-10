@@ -17,6 +17,8 @@ type: post
 published: true
 share: true
 comments: true
+github_repo: https://github.com/fjcaetano/NSStringMask
+
 ---
 
 When developing, we often come across code we've seen hundreds of times that we

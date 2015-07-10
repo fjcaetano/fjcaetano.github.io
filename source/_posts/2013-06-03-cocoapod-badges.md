@@ -21,6 +21,7 @@ type: post
 published: true
 share: true
 comments: true
+github_repo: https://github.com/fjcaetano/cocoapod-badges
 ---
 
 In any kind of environment, visual marks ease and enhance the comprehension of
