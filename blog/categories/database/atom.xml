@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Database | License to Kill -9]]></title>
+  <link href="http://fjcaetano.github.io/blog/categories/database/atom.xml" rel="self"/>
+  <link href="http://fjcaetano.github.io/"/>
+  <updated>2015-07-10T17:53:25-03:00</updated>
+  <id>http://fjcaetano.github.io/</id>
+  <author>
+    <name><![CDATA[Flávio Caetano]]></name>
+    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[SQLite Modelling]]></title>
+    <link href="http://fjcaetano.github.io/post/sqlite-modelling/"/>
+    <updated>2013-01-16T20:42:01-02:00</updated>
+    <id>http://fjcaetano.github.io/post/sqlite-modelling</id>
+    <content type="html"><![CDATA[<p>SQLite sucks. I think everybody knows, but I had to say it. But, sometimes, we
+have no choice other than using it. Even though it&rsquo;s horrible and we know we`ll
+be frustrated, once in a lifetime, SQLite may be the best choice. Wether developing
+a program with a tiny or fast persistence. Sure there are other alternatives that
+may suit you best, but the platform we&rsquo;re using may not support it.</p>
+
+<p>For instance, I&rsquo;m currently working on an iPad app that will have a fairly big
+amount of data which must be available offline and it will have to be updated
+sometimes. The best solution we came with is a background server task wich will
+build an SQLite database populated with the most recent data and, when the user
+requests, the iPad will download the whole database, overwriting any existing ones.</p>
+
+<p>I&rsquo;m no DBA, but I don&rsquo;t think anyone writes database creation scripts anymore.
+At least not for the usual <code>CREATE TABLE</code>, etc. I&rsquo;m mostly a MySQL guy and, for
+a long time, I&rsquo;ve been using <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>
+to create my DB models and syncing with my existing database. It automatically
+creates everything that needs to be created and alter all tables that must be
+altered without losing any data (most of the time). It&rsquo;s pretty good and I never
+had any problems with it.</p>
+
+<p>Now, back to listing reasons why SQLite sucks (dude, you can&rsquo;t add a constraint
+when altering a table!). As any platform/framework with no &ldquo;official&rdquo; team, SQLite
+depends on the community to increase it&rsquo;s awesomeness. Therefore, as everybody
+knows SQLite <em>is not awesome</em>, no one really waste time developing a <em>good</em>
+administration tool for it. What may happen, is a company own a DB management
+program (such as <a href="http://www.navicat.com/">Navicat</a>) and something like this goes by:</p>
+
+<pre><code>- Hey, we're supporting MySQL, SQL Server, MongoDB, Cassandra, NoSQL and Postgree,
+don't you think people will notice we're ignoring SQLite?
+
+- God dammit *gasps*, add support to it too... but don't lose too much time with it!
+</code></pre>
+
+<p>Unfortunately, there are no really good tools to work with SQLite available.
+&ldquo;Hey, what about <a href="http://www.navicat.com/">Navicat</a>?&rdquo; It&rsquo;s okay, but I found tons
+of bugs in the Mac version. If that&rsquo;s not enough, are you really willing to pay
+to use a management tool for a free, open source database? But if you search deep
+enough - like the 3rd page of Google - there are also some weird stuff that
+appears such as <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a> (for Mac). When I see
+things I like that I think &ldquo;why the hell would people lose time developing
+something for SQLite?&rdquo; But hey, there are weirdos for everything, so I&rsquo;d like to
+thank for the <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a> team for being strange
+enough to create it.</p>
+
+<p>Even though it&rsquo;s not the best tool ever, <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a>
+sure comes in handy and helps a lot, but it doesn&rsquo;t solve the mentioned problem
+of modelling your SQLite database and not dealing with SQL scripts. So, searching
+for something that would fill this void I found <a href="http://www.henlich.de/software/sqlite-export-plugin-for-mysql-workbench/">this excellent script</a>
+in Lua for <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a> that
+<em>automagically</em> generates the SQLite CREATE script from a model. It&rsquo;s super easy
+to install and use. Just follow this steps:</p>
+
+<ul>
+<li>Download the .lua script (duh!)</li>
+<li>Click in the &ldquo;Scripting&rdquo; menu in <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>.</li>
+<li>Click &ldquo;Install Plugin/Module&rdquo;.</li>
+<li>Choose the downloaded .lua script.</li>
+<li>???</li>
+<li>Profit.</li>
+</ul>
+
+
+<p>That&rsquo;s it. Now, if you want to try, open a model, click the &ldquo;Plugins&rdquo; menu and
+under &ldquo;Utilities&rdquo; there must be an option named &ldquo;Export SQLite CREATE Script&rdquo;
+which may be the first one. Just click it and choose where to save the .sql script
+and execute it. <em>Voilà</em>! If you have any problems executing the generated script,
+you may need to comment the <code>BEGIN;</code> at the top and the <code>COMMIT;</code> at the bottom
+of the .sql script.</p>
+
+<p>Super easy, isn&rsquo;t it? Give it a try. Even if, like me, you hate SQLite. The plugin
+solves the modelling problem, but creates a new one, because you can&rsquo;t <code>ALTER</code> an
+existing table since it only generates the <code>CREATE</code> script. But if that&rsquo;s not a
+problem go for it and be happy. When I found it, life suddenly became joyful again.</p>
+]]></content>
+  </entry>
+  
+</feed>

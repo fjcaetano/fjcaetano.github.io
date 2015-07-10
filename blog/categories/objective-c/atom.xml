@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Objective-c | License to Kill -9]]></title>
+  <link href="http://fjcaetano.github.io/blog/categories/objective-c/atom.xml" rel="self"/>
+  <link href="http://fjcaetano.github.io/"/>
+  <updated>2015-07-10T17:53:25-03:00</updated>
+  <id>http://fjcaetano.github.io/</id>
+  <author>
+    <name><![CDATA[Flávio Caetano]]></name>
+    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[This Is When a CGFloat May Be a Double]]></title>
+    <link href="http://fjcaetano.github.io/post/this-is-when-a-cgfloat-may-be-a-double/"/>
+    <updated>2014-06-30T11:00:29-03:00</updated>
+    <id>http://fjcaetano.github.io/post/this-is-when-a-cgfloat-may-be-a-double</id>
+    <content type="html"><![CDATA[<p>How would you explain the following code never getting into the <code>if</code> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
+
+<p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">CGFloat</span> <span class="n">subviewAlpha</span> <span class="o">=</span> <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span><span class="p">;</span>
+    <span class="n">CGFloat</span> <span class="n">myAlpha</span> <span class="o">=</span> <span class="mf">0.15f</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">subviewAlpha</span> <span class="o">==</span> <span class="n">myAlpha</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">_UIPopoverViewBackgroundComponentView</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)])</span>
+    <span class="p">{</span>
+        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+    <span class="p">}</span>
+ <span class="p">}</span></code></pre></div></p>
+
+<p>Printing the value also proved to be pointless:</p>
+
+<p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">NSLog</span><span class="p">(@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">%</span><span class="n">f</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="n">subviewAlpha</span><span class="p">);</span>
+<span class="c1">// output: 0.150000&lt;/p&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">NSLog</span><span class="p">(@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">%</span><span class="n">f</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="n">myAlpha</span><span class="p">);</span>
+<span class="c1">// output: 0.150000</span></code></pre></div></p>
+
+<p>Finally, XCode&rsquo;s debugger shed a dim of light to the real issue. It showed that the true value of <code>subviewAlpha</code> is 0.14999999999999999, and as a floating point it&rsquo;s accurate. Meanwhile the value of <code>myAlpha</code> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
+
+<p>Jumping to <code>CGFloat</code> definition, we can see that it may be an alias to float or double, depending on the system&rsquo;s architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424">@gustavocsb</a>, for the link).</p>
+
+<p><a href="/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img src="/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" alt="" /></a></p>
+
+<p>As usual, I solved it the more elegant way I could. &ldquo;Hey, if <code>CGFloat</code> is bipolar, let it tell me how to read it!&rdquo;</p>
+
+<p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">==</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="mf">0.15</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">_UIPopoverViewBackgroundComponentView</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)])</span>
+    <span class="p">{</span>
+        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+    <span class="p">}</span>
+ <span class="p">}</span></code></pre></div></p>
+
+<p> Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <code>typecast</code> it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Protip: Unregistering a UICollectionView Header/footer]]></title>
+    <link href="http://fjcaetano.github.io/post/protip-unregistering-a-uicollectionview-headerfooter/"/>
+    <updated>2014-05-16T16:33:52-03:00</updated>
+    <id>http://fjcaetano.github.io/post/protip-unregistering-a-uicollectionview-headerfooter</id>
+    <content type="html"><![CDATA[<p>You can unregister a UICollectionView supplementary view by re-registering it
+with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple&rsquo;s docs</a>.
+(Remember to use the same <code>reuseIdentifier</code>).</p>
+
+<p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nl">registerClass</span><span class="p">:</span><span class="nb">nil</span>
+        <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span>
+               <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div></p>
+
+<p>But don&rsquo;t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
+
+<p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">CGSizeZero</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p>Header or footer, depending on your need.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cocoapods and Resource_bundles]]></title>
+    <link href="http://fjcaetano.github.io/post/cocoapods-and-resource_bundles/"/>
+    <updated>2014-04-15T17:12:13-03:00</updated>
+    <id>http://fjcaetano.github.io/post/cocoapods-and-resource_bundles</id>
+    <content type="html"><![CDATA[<p>Anyone that have recently developed any pods for Cocoapods know that resources
+should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code>resource_bundles</code></a>
+option. What is quite hard to figure out is how, exactly, to access those
+resources once they&rsquo;re set up in the <code>bundle</code>. It seems obvious now that I got
+it working, but I struggle a lot since there wasn&rsquo;t anything in Stackoverflow or
+anywhere else that provided the answer I came up with.</p>
+
+<p>After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in
+a &ldquo;resources&rdquo; folder within the Pods project, but none of them are added in the
+target&rsquo;s &ldquo;Copy bundle resources&rdquo;. For that reason, I couldn&rsquo;t access any of the
+Pod&rsquo;s images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
+
+<blockquote><p>&lsquo;Terminating app due to uncaught exception 'NSInternalInconsistencyException&rsquo;,
+reason: &lsquo;Could not load NIB in bundle:&lt;{PATH_TO_APP}> (loaded)&rsquo; with name
+&lsquo;{VIEW_CONTROLLER_NAME}&rsquo;</p></blockquote>
+
+<p>The obvious solution that wasn&rsquo;t listed anywhere is using the Cocoapods
+generated bundle (which the folder actually doesn&rsquo;t exist) as a <code>NSBundle</code>:</p>
+
+<p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="bp">NSString</span> <span class="o">*</span><span class="n">bundlePath</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource</span><span class="p">:@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">MyBundle</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="nl">ofType</span><span class="p">:@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">bundle</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;];</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="bp">NSBundle</span> <span class="o">*</span><span class="n">bundle</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSBundle</span> <span class="nl">bundleWithPath</span><span class="p">:</span><span class="n">bundlePath</span><span class="p">];</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">MyViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyViewController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithNibName</span><span class="p">:@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">MyViewController</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="nl">bundle</span><span class="p">:</span><span class="n">bundle</span><span class="p">];</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController</span><span class="p">:</span><span class="n">viewController</span> <span class="nl">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span></code></pre></div></p>
+
+<p>Yes, it&rsquo;s that simple, that obvious, though it&rsquo;s not listed anywhere. I believe
+to be prudent and convenient to write about it in order to help anyone who
+encounter themselves in the same situation as I did.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Autolayout Is Hell on Earth]]></title>
+    <link href="http://fjcaetano.github.io/post/autolayout-is-hell-on-earth/"/>
+    <updated>2013-09-12T11:24:56-03:00</updated>
+    <id>http://fjcaetano.github.io/post/autolayout-is-hell-on-earth</id>
+    <content type="html"><![CDATA[<p>I believe that every iOS developer is already aware of Apple&rsquo;s new directive
+forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new
+iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using
+this tool created by the son of a devil called <em>autolayout</em>.</p>
+
+<p>Anyone that has already used <em>autolayout</em> knows that margin, width, height and
+other properties are calculated in runtime, therefore, they consume sometimes
+unnecessary CPU time. For some inescrutable reason, Apple decided to create this
+new concept from scratch to ease working with different sized screens, while
+they could easily reuse existing CSS concepts like <em>margin</em>, <em>padding</em>, among
+others. In addition to being extremely confusing (a <code>UIView's</code> margin
+<em>constraints</em> are in its <em>superview</em>), having a pitiful syntax 
+<code>(“V:|-(-5)-[view1]-(&gt;=10)-[view2]-(912837)-|”)</code>, <em>autolayout</em> also makes
+ everything slow.</p>
+
+<p><strong>Protip:</strong> if you&rsquo;re configuring your <em>coinstraints</em> via code, <strong>never</strong> forget
+seting <code>self.translatesAutoresizingMaskIntoConstraints = NO</code> in your view. It
+took me a couple of coffee cups to realise this was the reason why my 
+<em>constraints</em> weren&rsquo;t being executing along with <code>[self layoutIfNeeded]</code>.</p>
+
+<p>I recently had to work with a <code>UICollectionView</code> and the scroll was getting
+really laggy. Anytime a new cell was loaded, the framerate dropped. After
+spending a few hours trying to find the root of the problem with a couple of
+friends (we even considered the problem being the SDK's <code>dequeue</code> thanks to 
+<em>Profiler</em>) some inspired insight hit us and we decided to disable <em>autolayout</em>
+on the <code>UICollectionViewCell's</code> xib and everything flowed like a beautiful
+stream under the morning sunlight of tropical woods. So let us analise what
+happened: Apple created a new concept, from the grounds, that theoretically
+would solve all problems when working with screens of different sizes, but this
+devilish concept is composed of runtime calculated values that ruin the <em>app&rsquo;s</em>
+smoothness. Yep, it gets hard to work happily&hellip;</p>
+
+<p>This view that is the <code>UICollectionView's</code> cell will not have <em>autolayout</em>.
+Nobody knows what will happen when we submit the <em>app</em> to the Appstore and we
+sincerely hope that Apple doesn&rsquo;t mind this view that, although is not
+explicitly using <em>frames</em>, also is not configured to accept <em>autolayout</em>.</p>
+
+<p>I&rsquo;m yet to find an iOS developer that has nothing to complain about this weird
+invention, but, as usual, Apple&rsquo;s &ldquo;this is what we want, so deal with it&rdquo; policy
+doesn&rsquo;t give us any alternatives. Instead of easing developers' work, they&rsquo;re
+making our daily lives every more difficult while <del>Android scores another
+point</del> Apple is walking backwards.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cocoapod Badges]]></title>
+    <link href="http://fjcaetano.github.io/post/cocoapod-badges/"/>
+    <updated>2013-06-03T16:15:45-03:00</updated>
+    <id>http://fjcaetano.github.io/post/cocoapod-badges</id>
+    <content type="html"><![CDATA[<p>In any kind of environment, visual marks ease and enhance the comprehension of
+information. Countless researches studied the best way to display data, which
+colors induce what emotions, the association of geometric shapes with pre-formed
+concepts. The fact is that a sign or plaque draws much more attention than plain
+text. After all, an image is worth a thousand words, therefore, an image sends a
+much more significant message than some written words.</p>
+
+<p>That&rsquo;s one of the reasons many development tools have featured <em>badges</em> (or 
+<em>shields)</em> to inform the status of an application/framework/library/<em>etcetera</em>.
+It&rsquo;s the case of <a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI</a>, 
+<a href="https://codeclimate.com/changelog/510d4fde56b102523a0004bf">Code Climate</a>, 
+<a href="http://blog.tech-angels.com/post/43141047457/gemnasium-v3-aka-gemnasium">Gemnasium</a>,
+among others, all following <a href="https://github.com/olivierlacan/shields">olivierlacan/shields`</a>
+trend, available Github.</p>
+
+<p>I&rsquo;m an iOS developer and previously have worked with Python/Django (though I
+still fool around) and I&rsquo;ve always found very interesting this creative way of
+sharing the state of a service dynamically, but sadly, there were no solution to
+Python nor iOS featuring <em>badges</em> (except for Travis CI for tests). But,
+recently, appeared - out of nowhere - <a href="https://pypip.in/">pypip&rsquo;s</a> <em>shields</em> for
+Python packages that allows the visualisation of the latest available version of
+a package on <a href="http://pypi.python.org">pypi</a> or how many downloads some <em>release
+</em>had<em>.</em> When I came aware if it I resented for taking so long for solution so
+simple and effective to come up (or at least for <strong>I</strong> to discover it)&hellip; but it
+got over the top when I found out&hellip; or better, <strong>did not found out</strong> a similar
+solution for <a href="http://cocoapods.org">Cocoapods</a>.</p>
+
+<p>I&rsquo;m one of those who doesn&rsquo;t miss a chance to solve a problem and endeavour an
+opportunity. That&rsquo;s how the <a href="http://fjcaetano.github.io/cocoapod-badges/">Cocoapod Badges</a> 
+project started. Since Cocoapods doesn&rsquo;t provide an API, any info on the number
+of <em>users/downloads</em>, nor any kind of useful data, it proved to be a challenge,
+and all I could use had to be what was at hand: the latest version of a <em>pod</em>.
+But even though, mistaken are those who thought it easy. As mentioned, there&rsquo;s
+no API!</p>
+
+<h1>Cocoapod Badges <img src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" alt="NSStringMask 1.1.2" /></h1>
+
+<p>Digging through Cocoapod&rsquo;s and <a href="http://cocoadocs.org">Cocoadocs'</a> websites, I
+tried, first, to use the <a href="http://cocoadocs.org/documents.jsonp">documents.jsonp</a> 
+file that I found in the <em>source</em> of the <em>pod</em>&rsquo;s documentation website, however,
+I soon gave up for realising that its update frequency is too high (above one
+hour). At last, I had to content with the unfortunate <code>/search?q=</code> requested
+when searching for a <em>pod</em> in Cocoapod&rsquo;s main page. At first, it looked like an
+excellent solution since it returned a <code>json</code> object with some info, until I
+realised that inside the object was a string with some <code>html</code> code and only
+inside that code was the <em>pod</em>&rsquo;s latest version. &ldquo;<em>God dammit!</em>&rdquo; Now I have to
+run a request on a &ldquo;pseudo-<em>webservice</em>&rdquo; and parse it with <code>XPATH</code> to get the
+latest version!</p>
+
+<p>Super easy! But, as my mother would on a brazilian saying: &ldquo;<em>few shit is
+silliness</em>&rdquo;. The damned &ldquo;API&rdquo; doesn&rsquo;t return the requested <em>pod</em>, but anything
+with the searched string. To get something more useful, I figured that 
+<code>/search?q=name:POD_NAME</code> searches only in the <em>pod</em>&rsquo;s name and not in its
+description, what significantly reduces the results, specially when dealing with
+popular <em>pods</em> such as <a href="http://afnetworking.github.io/AFNetworking/index.html">AFNetworking</a>.</p>
+
+<p>After all that suffering, I finally got the information I wanted, but then, how
+do I show it in an image? Olivier Lacan&rsquo;s repo, that enabled all the existing 
+<em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code>.SVG</code> vectorial
+files that render <code>xml</code> data to images. So, accidentally, I double-clicked the 
+<code>.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news!
+As the information about the version is in plain text inside the <code>xml</code>, all I
+had to do was to set the <code>mimetype</code> so Django could provide the file as an image.</p>
+
+<p>1 <a href="http://heroku.com">Heroku</a> <em>dyno</em> later and the service is available fulltime
+(depending on Cocoapods website) through the images' url:</p>
+
+<blockquote><p><code>http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></p></blockquote>
+
+<p>All you have to do is replace the <code>$PODNAME</code> with the name of the pod you want.
+Simple and easy, isn&rsquo;t it? Use it at will! And suport the Github repo!</p>
+]]></content>
+  </entry>
+  
+</feed>

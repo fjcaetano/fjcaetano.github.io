@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+
+<head>
+
+
+<meta charset="utf-8">
+<meta http-equiv="cleartype" content="on">
+
+<title>Swift for Dummies - License to Kill -9</title>
+<meta name="author" content="Flávio Caetano">
+
+
+
+
+<meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+
+<meta name="keywords" content="swift ">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Twitter Cards -->
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/images/wwdc14-home-branding_2x.png"
+  
+  <meta name="twitter:title" content="Swift for Dummies">
+  <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+  <meta name="twitter:creator" content="@flavio_caetano">
+
+
+<!-- Open Graph -->
+<meta property="og:local" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://fjcaetano.github.io/post/swift-for-dummies">
+<meta property="og:title" content="Swift for Dummies">
+<meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+
+  <meta property="og:image" content="/images/wwdc14-home-branding_2x.png">
+
+<meta property="og:site_name" content="License to Kill -9">
+
+<link rel="canonical" href="http://fjcaetano.github.io/post/swift-for-dummies">
+<link href="/favicon.png" rel="icon">
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+
+
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body id="post" class="feature">
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="/images/avatar.png" alt="Flávio Caetano photo" class="author-photo">
+					<h4>Flávio Caetano</h4>
+					<p>Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.</p>
+				</li>
+				
+				<li>
+					<a href="mailto:flavio@vieiracaetano.com"><i class="fa fa-envelope"></i> Email</a>
+				</li>
+				<li>
+					<a href="https://twitter.com/flavio_caetano"><i class="fa fa-twitter"></i> Twitter</a>
+				</li>
+				
+				<li>
+					<a href="https://github.com/fjcaetano"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826"><i class="fa fa-linkedin"></i> LinkedIn</a>
+				</li>
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="/posts/">All Posts</a></li>
+				<li><a href="/categories/">All Categories</a></li>
+			</ul>
+		</li>
+		
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+<div class="entry-header">
+  
+  <div class="entry-image">
+    <img src="/images/wwdc14-home-branding_2x.png" alt="Swift for Dummies">
+  </div><!-- /.entry-image -->
+</div><!-- /.entry-header -->
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="/post/swift-for-dummies/" rel="bookmark" title="Swift for Dummies">Swift for Dummies</a></h1>
+        
+        <h2>June 04, 2014</h2>
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+
+      
+
+      <p>At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows
+for sure what will happen to Objective-C, but one can only guess it won&rsquo;t be
+around for long. My guess is that Apple will be accepting ObjC apps up till iOS
+10, but that is just my guest.</p>
+
+<p>By attending to the WWDC I had the opportunity of directly contacting Apple&rsquo;s
+engineers and insights most of people couldn&rsquo;t, so in the next posts I&rsquo;ll cover
+the basics of Swift.</p>
+
+<p>It doesn&rsquo;t matter if you&rsquo;re new to iOS or an experienced programmer. Now, we&rsquo;re
+all in the same boat. We all have to learn Swift from scratch, so forget
+everything you know about Objective-C and get ready to learn this brand new
+language. By the way, its potential is overwhelming.</p>
+
+<h2>The basics</h2>
+
+<p>As far as I could tell, Swift borrows concepts from Python, Javascript and even
+Java. It&rsquo;s syntax also resembles these languages very much.</p>
+
+<p>You can forget about pointers for now, most of what we&rsquo;ll be using in Swift is
+passed through references. No more asterisk (woohoo \o/).</p>
+
+<p>Swift plays with the concepts of variables and constants. There&rsquo;s no type
+definition to neither of those just the declares var, for variables, and <code>let</code>
+for constants. As you may have figured out, constants can&rsquo;t be altered. We&rsquo;ll
+cover when to use it in a few steps.</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="s">&quot;this is getting good&quot;</span>
+
+<span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></div>
+
+
+<p>Yep, there are no semi-colons at the end of statements.</p>
+
+<p>Switches are extremely powerful. <code>Cases</code> can be variables, strings, even a range
+ of numbers. Also, cases don&rsquo;t automatically fall through the next condition, so
+  there&rsquo;s no need to <code>break</code>.</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
+        <span class="c1">// do something</span>
+
+    <span class="k">case</span> <span class="nl">someOtherVar</span><span class="p">:</span>
+        <span class="c1">// this is getting wild</span>
+
+    <span class="k">case</span> <span class="s">&quot;string&quot;</span><span class="o">:</span>
+        <span class="c1">// holy cow!</span>
+
+    <span class="k">case</span> <span class="mf">1..4</span><span class="o">:</span>
+        <span class="c1">// ok, this is awesome</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="c1">// something unimplemented</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>There&rsquo;s also no need for surrounding parenthesis when working with conditions,
+unless it&rsquo;s a complex condition, as usual. Switches in Swift (yep, try saying
+that three times) are exhaustive. That means that you must either supply <code>cases</code>
+for every possible condition or a <code>default</code> to handle everything else.
+XCode will error at compile time if you don&rsquo;t.</p>
+
+<p>The final topic of this post is how you&rsquo;ll print output to the console. It&rsquo;s as
+simple as calling <code>println()</code> (it&rsquo;s a function) and you&rsquo;re done.
+Formatting strings is also awsome:</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Flavio&quot;</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello \(name)!&quot;</span><span class="p">)</span>
+<span class="c1">// Hello Flavio!</span></code></pre></div>
+
+
+<p>This is enough to get started and get familiar with Swift. Go ahead, poke it
+around, but don&rsquo;t try to get fancy just yet. I&rsquo;ll be covering more in the next
+few days.</p>
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="/categories/#swift" title="Pages tagged swift" class="tag">swift</a></span>
+        <span><a href="/post/swift-for-dummies/" rel="bookmark" title="Swift for Dummies">Swift for Dummies</a> was published on <span class="entry-date date published updated"><time datetime="2014-06-04T13:57:21-03:00">June 04, 2014</time></span></span>
+        
+        <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
+        <div class="social-share">
+          <ul class="socialcount socialcount-small inline-list">
+            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=/post/swift-for-dummies/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=/post/swift-for-dummies/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+            <li class="googleplus"><a href="https://plus.google.com/share?url=/post/swift-for-dummies/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+          </ul>
+        </div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    
+      <div class="read-more">
+        
+          <div class="read-more-header">
+            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
+          </div><!-- /.read-more-header -->
+          <div class="read-more-content">
+            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
+            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+          </div><!-- /.read-more-content -->
+        
+        <div class="read-more-list">
+          
+            <div class="list-item">
+              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
+              <span>Published on June 30, 2014</span>
+            </div><!-- /.list-item -->
+          
+            <div class="list-item">
+              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
+              <span>Published on June 12, 2014</span>
+            </div><!-- /.list-item -->
+          
+        </div><!-- /.read-more-list -->
+      </div><!-- /.read-more -->
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/javascripts/octopress.js" type="text/javascript"></script>
+<script src="/javascripts/scripts.min.js"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'flaviocaetanoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fjcaetano.github.io/post/swift-for-dummies/';
+        var disqus_url = 'http://fjcaetano.github.io/post/swift-for-dummies/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+</body>
+</html>

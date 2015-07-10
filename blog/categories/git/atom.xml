@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | License to Kill -9]]></title>
+  <link href="http://fjcaetano.github.io/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://fjcaetano.github.io/"/>
+  <updated>2015-07-10T17:53:25-03:00</updated>
+  <id>http://fjcaetano.github.io/</id>
+  <author>
+    <name><![CDATA[Flávio Caetano]]></name>
+    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[You Shouldn't Use Git Blame to Blame on People]]></title>
+    <link href="http://fjcaetano.github.io/post/you-shouldnt-use-git-blame/"/>
+    <updated>2014-07-23T17:22:57-03:00</updated>
+    <id>http://fjcaetano.github.io/post/you-shouldnt-use-git-blame</id>
+    <content type="html"><![CDATA[<p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn&rsquo;t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with &ldquo;default" <code>git-blame</code> and Xcode&rsquo;s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
+
+<p>Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I&rsquo;m the one who fixes what is not according. Therefore, my name comes up in Xcode&rsquo;s blame view more  often than others.</p>
+
+<p>If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <code>git-blame</code> command line with the &ldquo;-n&rdquo; option. It&rsquo;ll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
+
+<p>Or maybe, even better, get the changelog and the names of who touched a specific line of code with <code>git-log</code> &ldquo;-L&rdquo; option:</p>
+
+<p><a href="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
+
+<p>Thanks to: <a href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
+]]></content>
+  </entry>
+  
+</feed>

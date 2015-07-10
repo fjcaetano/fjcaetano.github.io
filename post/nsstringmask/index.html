@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+
+<head>
+
+
+<meta charset="utf-8">
+<meta http-equiv="cleartype" content="on">
+
+<title>NSStringMask: Simplifying Masks - License to Kill -9</title>
+<meta name="author" content="Flávio Caetano">
+
+
+
+
+<meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+
+<meta name="keywords" content="objective-c ">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Twitter Cards -->
+
+  
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content"">
+  
+  <meta name="twitter:title" content="NSStringMask: Simplifying masks">
+  <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+  <meta name="twitter:creator" content="@flavio_caetano">
+
+
+<!-- Open Graph -->
+<meta property="og:local" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://fjcaetano.github.io/post/nsstringmask">
+<meta property="og:title" content="NSStringMask: Simplifying masks">
+<meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+
+  <meta property="og:image" content="">
+
+<meta property="og:site_name" content="License to Kill -9">
+
+<link rel="canonical" href="http://fjcaetano.github.io/post/nsstringmask">
+<link href="/favicon.png" rel="icon">
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+
+
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="/images/avatar.png" alt="Flávio Caetano photo" class="author-photo">
+					<h4>Flávio Caetano</h4>
+					<p>Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.</p>
+				</li>
+				
+				<li>
+					<a href="mailto:flavio@vieiracaetano.com"><i class="fa fa-envelope"></i> Email</a>
+				</li>
+				<li>
+					<a href="https://twitter.com/flavio_caetano"><i class="fa fa-twitter"></i> Twitter</a>
+				</li>
+				
+				<li>
+					<a href="https://github.com/fjcaetano"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826"><i class="fa fa-linkedin"></i> LinkedIn</a>
+				</li>
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="/posts/">All Posts</a></li>
+				<li><a href="/categories/">All Categories</a></li>
+			</ul>
+		</li>
+		
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="/post/nsstringmask/" rel="bookmark" title="NSStringMask: Simplifying masks">NSStringMask: Simplifying masks</a></h1>
+        
+        <h2>May 16, 2013</h2>
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+
+      
+      <a href="https://github.com/fjcaetano/NSStringMask"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+      
+
+      <p>When developing, we often come across code we&rsquo;ve seen hundreds of times that we
+just copy and paste from project to project. Sometimes it&rsquo;s so banal that it&rsquo;s
+not worth trying to improve, change or even modularize it. Ctrl-C + Ctrl-V may
+be the cheapest and fastest solution, ergo, the best.</p>
+
+<p>This is the kind of situation we see when masks must be applied to <em>text fields</em>
+such as Social Security Numbers (SSN), Telephones, Zip Codes, and so on. Those
+awful few dozens of lines we copy from one <code>textField:shouldChangeCharactersInRange:replacementString:</code>
+to the other. It never changes because it works. There&rsquo;s no need to improve it.
+It&rsquo;s always the same. But I&rsquo;ve got tired of it. That nasty code that, in a well
+structured class, can be as a mole in a beautiful woman&rsquo;s face.</p>
+
+<p>A few days ago I got some spare time and I started working on something I though
+could come handy. So how do you simplify and generalise this problem that every
+developer has to face at least once? Easy! <em>Regex</em>! Wait.. You sure it&rsquo;s easy? I&rsquo;ll
+tell you, it wasn&rsquo;t easy, but we&rsquo;re talking about patterns in varying occasions
+and, as I visualised it, <em>regex</em> is the best, simplest and most &ldquo;approachable&rdquo;
+solution. I mean, everybody knows a little bit of <em>regex</em>.</p>
+
+<p>While modelling, I wanted to make it as simple and as clean as possible, therefore,
+for now, there are only two classes, and only one method you&rsquo;ll really use, but
+you can read the <a href="http://fjcaetano.github.io/NSStringMask/">complete documentation</a>.
+From now on, I&rsquo;ll present a superficial approach to introduce this small library.</p>
+
+<p>Fork the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a>!</p>
+
+<h2>NSStringMask</h2>
+
+<p>The NSStringMask is the main class responsible for applying your masks to the
+NSStrings. Among it&rsquo;s methods the only noteworthy is
+<a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/maskString:withPattern:placeholder:"><code>[NSStringMask maskString:withPattern:placeholder:]</code></a>.</p>
+
+<p>It formats the given <code>string</code> based on the <code>pattern</code> you provide, filling the
+voids with the <code>placeholder</code>. It automatically creates an instance of
+NSRegularExpression with the option <code>CaseInsensitive</code>, so if you need a different
+option, you may use the alternate method which expects a <em>regex</em> instead of <code>pattern</code>.</p>
+
+<p>There&rsquo;s also an alternative method that receives no <code>placeholder</code> (same as <code>nil</code>),
+in this case, when the given <code>string</code> is shorter than expected, instead of
+applying the mask, the method will return a cleaned <em>string</em> having only the
+valid characters based on <a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/validCharactersForString:"><code>validCharactersForString:</code></a>.</p>
+
+<h3>Important Note</h3>
+
+<p>Doesn&rsquo;t matter if providing a <code>pattern</code> or an instance of <em>regex</em>, the regular
+expression <strong>must</strong> have capturing groups (parentheses). This is because the
+class understands that everything that is not within parentheses is part of the
+mask and must be interpreted as literal characters!</p>
+
+<p>Suppose you&rsquo;re formatting a SSN, whose <em>regex</em> pattern is <code>\d{3}-\d{2}-\d{3}</code>.
+If you provide that <em>regex</em>/pattern, nothing will be formatted because the class
+will think that <code>\d{3}</code> is part of the mask, and not 3 numbers that should go there.</p>
+
+<p>The correct usage is: <code>(\d{3})-(\d{2})-(\d{3})</code></p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="c1">// RIGHT:</span>
+<span class="bp">NSString</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskString</span><span class="p">:</span><span class="s">@&quot;12345678&quot;</span> <span class="nl">withPattern</span><span class="p">:</span><span class="s">@&quot;(\d{3})-(\d{2})-(\d{3})&quot;</span><span class="p">];</span>
+<span class="c1">// result = @&quot;123-45-678&quot;</span>
+
+<span class="c1">// WRONG:</span>
+<span class="bp">NSString</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskString</span><span class="p">:</span><span class="s">@&quot;12345678&quot;</span> <span class="nl">withPattern</span><span class="p">:</span><span class="s">@&quot;\d{3}-\d{2}-\d{3}&quot;</span><span class="p">];</span>
+<span class="c1">// result = nil</span></code></pre></div>
+
+
+<p><strong>Obs</strong>: If Xcode is showing a <em>warning</em> about unknown escape sequences, try
+adding double slashes (<code>\\d</code>)</p>
+
+<h2>UITextFieldMask</h2>
+
+<p>This is a subclass of UITextField, so you can set your <em>nibs</em> to use this class
+and automatically apply masks to your <em>text fields</em>.</p>
+
+<p>Obviously, you must provide a mask to transform your <em>strings</em>, and it&rsquo;s
+recommended that you do so when initialising your <em>view</em> or <em>view controller</em>.
+So you should set the text field&rsquo;s mask inside <code>viewDidLoad</code> or <code>awakeFromNib</code>.</p>
+
+<p>Suppose you have a <em>view</em> with an <em>outlet</em> to an UITextFieldMask named <code>textFieldMask</code>:</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">awakeFromNib</span>
+<span class="p">{</span>
+    <span class="n">NSStringMask</span> <span class="o">*</span><span class="n">mask</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskWithPattern</span><span class="p">:</span><span class="s">@&quot;(\d+)&quot;</span><span class="p">];</span>
+
+    <span class="n">textFieldMask</span><span class="p">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="p">;</span>
+    <span class="n">textFieldMask</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>A question for you: what does that mask accepts?</p>
+
+<h2>Installation</h2>
+
+<p>You can install it from <a href="http://cocoadocs.org/docsets/NSStringMask">Cocoa Pods</a>,
+or clone the project from the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a>
+and copy the files in the folder <code>Classes</code>.</p>
+
+<h3>Helpful stuff</h3>
+
+<p>I&rsquo;ve also created <a href="https://gist.github.com/fjcaetano/5600452">this gist</a> with
+some common patterns. Feel free to improve it!</p>
+
+<div><script src='https://gist.github.com/5600452.js'></script>
+<noscript><pre><code>These are a few patterns commonly used.
+
+1 - Digits only: (\\d+)
+2 - Names without special characters: ([A-Za-z\\s]+)
+3 - Email: (([\\w\\.\\-]*?@)([\\w\\.\\-]+)(\\.[a-z]{2,4}) # Incompatible with versions previous to 1.1.2 of NSStringMask
+4 - Dates: (\\d{2})/(\\d{2})/(\\d{4})
+5 - SSN: (\\d{3})-(\\d{2})-(\\d{3})
+6 - Telephone: (\\d{3})-(\\d{3})-(\\d{4})
+
+Brasil:
+1 - CPF: (\\d{3}).(\\d{3}).(\\d{3})-(\\d{2})
+2 - RG: (\\d{2}).(\\d{3}).(\\d{3})-(\\d)
+3 - CEP: (\\d{2}).(\\d{3})-(\\d{3})
+4 - Telefone: (\\d{2}) (\\d{4})-(\\d{4})
+</code></pre></noscript></div>
+
+
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="/categories/#objective-c" title="Pages tagged objective-c" class="tag">objective-c</a></span>
+        <span><a href="/post/nsstringmask/" rel="bookmark" title="NSStringMask: Simplifying masks">NSStringMask: Simplifying masks</a> was published on <span class="entry-date date published updated"><time datetime="2013-05-16T14:27:10-03:00">May 16, 2013</time></span></span>
+        
+        <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
+        <div class="social-share">
+          <ul class="socialcount socialcount-small inline-list">
+            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=/post/nsstringmask/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=/post/nsstringmask/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+            <li class="googleplus"><a href="https://plus.google.com/share?url=/post/nsstringmask/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+          </ul>
+        </div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    
+      <div class="read-more">
+        
+          <div class="read-more-header">
+            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
+          </div><!-- /.read-more-header -->
+          <div class="read-more-content">
+            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
+            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+          </div><!-- /.read-more-content -->
+        
+        <div class="read-more-list">
+          
+            <div class="list-item">
+              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
+              <span>Published on June 30, 2014</span>
+            </div><!-- /.list-item -->
+          
+            <div class="list-item">
+              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
+              <span>Published on June 12, 2014</span>
+            </div><!-- /.list-item -->
+          
+        </div><!-- /.read-more-list -->
+      </div><!-- /.read-more -->
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/javascripts/octopress.js" type="text/javascript"></script>
+<script src="/javascripts/scripts.min.js"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'flaviocaetanoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fjcaetano.github.io/post/nsstringmask/';
+        var disqus_url = 'http://fjcaetano.github.io/post/nsstringmask/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+</body>
+</html>
