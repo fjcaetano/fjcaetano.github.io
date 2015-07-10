@@ -77,7 +77,7 @@
 			<a href="#">About</a>
 			<ul class="dl-submenu">
 				<li>
-					<img src="" alt="Flávio Caetano photo" class="author-photo">
+					<img src="/images/avatar.png" alt="Flávio Caetano photo" class="author-photo">
 					<h4>Flávio Caetano</h4>
 					<p></p>
 				</li>
@@ -91,6 +91,9 @@
 				
 				<li>
 					<a href="https://github.com/fjcaetano"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826"><i class="fa fa-linkedin"></i> LinkedIn</a>
 				</li>
 			</ul><!-- /.dl-submenu -->
 		</li>
@@ -126,41 +129,80 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p><!--:en-->
-<p style="text-align: justify;">At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows for sure what will happen to Objective-C, but one can only guess it won't be around for long. My guess is that Apple will be accepting ObjC apps up till iOS 10, but that is just my guest.</p>
-<p style="text-align: justify;">By attending to the WWDC I had the opportunity of directly contacting Apple's engineers and insights most of people couldn't, so in the next posts I'll cover the basics of Swift.</p>
-<p style="text-align: justify;">It doesn't matter if you're new to iOS or an experienced programmer. Now, we're all in the same boat. We all have to learn Swift from scratch, so forget everything you know about Objective-C and get ready to learn this brand new language. By the way, its potential is overwhelming.</p>
-<h2 style="text-align: justify;">The basics</h2>
-<p style="text-align: justify;">As far as I could tell, Swift borrows concepts from Python, Javascript and even Java. It's syntax also resembles these languages very much.</p>
-<p style="text-align: justify;">You can forget about pointers for now, most of what we'll be using in Swift is passed through references. No more asterisk (woohoo \o/).</p>
-<p style="text-align: justify;">Swift plays with the concepts of variables and constants. There's no type definition to neither of those just the declares var, for variables, and <em>let</em>, for constants. As you may have figured out, constants can't be altered. We'll cover when to use it in a few steps.</p>
-<pre class="lang:objc decode:true">var foo = "this is getting good"
+      <p>At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows
+for sure what will happen to Objective-C, but one can only guess it won&rsquo;t be
+around for long. My guess is that Apple will be accepting ObjC apps up till iOS
+10, but that is just my guest.</p>
 
-let x = 42</pre>
-<p style="text-align: justify;">Yep, there are no semi-colons at the end of statements.</p>
-<p style="text-align: justify;">Switches are extremely powerful. <em>Cases</em> can be variables, strings, even a range of numbers. Also, cases don't automatically fall through the next condition, so there's no need to <em>break</em>.</p>
-<pre class="lang:objc decode:true">switch myvar {
-    case 4:
-        // do something
+<p>By attending to the WWDC I had the opportunity of directly contacting Apple&rsquo;s
+engineers and insights most of people couldn&rsquo;t, so in the next posts I&rsquo;ll cover
+the basics of Swift.</p>
 
-    case someOtherVar:
-        // this is getting wild
+<p>It doesn&rsquo;t matter if you&rsquo;re new to iOS or an experienced programmer. Now, we&rsquo;re
+all in the same boat. We all have to learn Swift from scratch, so forget
+everything you know about Objective-C and get ready to learn this brand new
+language. By the way, its potential is overwhelming.</p>
 
-    case "string":
-        // holy cow!
+<h2>The basics</h2>
 
-    case 1..4:
-        // ok, this is awesome
-    default:
-        // something unimplemented
-}</pre>
-<p style="text-align: justify;">There's also no need for surrounding parenthesis when working with conditions, unless it's a complex condition, as usual. Switches in Swift (yep, try saying that three times) are exhaustive. That means that you must either supply <em>cases</em> for every possible condition or a <em>default</em> to handle everything else. XCode will error at compile time if you don't.</p>
-<p style="text-align: justify;">The final topic of this post is how you'll print output to the console. It's as simple as calling <em>println()</em> (it's a function) and you're done. Formatting strings is also awsome:</p>
-<pre class="lang:objc decode:true">var name = "Flavio"
+<p>As far as I could tell, Swift borrows concepts from Python, Javascript and even
+Java. It&rsquo;s syntax also resembles these languages very much.</p>
 
-println("Hello \(name)!")
-// Hello Flavio!</pre>
-<p style="text-align: justify;">This is enough to get started and get familiar with Swift. Go ahead, poke it around, but don't try to get fancy just yet. I'll be covering more in the next few days.</p>
+<p>You can forget about pointers for now, most of what we&rsquo;ll be using in Swift is
+passed through references. No more asterisk (woohoo \o/).</p>
+
+<p>Swift plays with the concepts of variables and constants. There&rsquo;s no type
+definition to neither of those just the declares var, for variables, and <code>let</code>
+for constants. As you may have figured out, constants can&rsquo;t be altered. We&rsquo;ll
+cover when to use it in a few steps.</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="s">&quot;this is getting good&quot;</span>
+
+<span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></div>
+
+
+<p>Yep, there are no semi-colons at the end of statements.</p>
+
+<p>Switches are extremely powerful. <code>Cases</code> can be variables, strings, even a range
+ of numbers. Also, cases don&rsquo;t automatically fall through the next condition, so
+  there&rsquo;s no need to <code>break</code>.</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
+        <span class="c1">// do something</span>
+
+    <span class="k">case</span> <span class="nl">someOtherVar</span><span class="p">:</span>
+        <span class="c1">// this is getting wild</span>
+
+    <span class="k">case</span> <span class="s">&quot;string&quot;</span><span class="o">:</span>
+        <span class="c1">// holy cow!</span>
+
+    <span class="k">case</span> <span class="mf">1..4</span><span class="o">:</span>
+        <span class="c1">// ok, this is awesome</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="c1">// something unimplemented</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>There&rsquo;s also no need for surrounding parenthesis when working with conditions,
+unless it&rsquo;s a complex condition, as usual. Switches in Swift (yep, try saying
+that three times) are exhaustive. That means that you must either supply <code>cases</code>
+for every possible condition or a <code>default</code> to handle everything else.
+XCode will error at compile time if you don&rsquo;t.</p>
+
+<p>The final topic of this post is how you&rsquo;ll print output to the console. It&rsquo;s as
+simple as calling <code>println()</code> (it&rsquo;s a function) and you&rsquo;re done.
+Formatting strings is also awsome:</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Flavio&quot;</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello \(name)!&quot;</span><span class="p">)</span>
+<span class="c1">// Hello Flavio!</span></code></pre></div>
+
+
+<p>This is enough to get started and get familiar with Swift. Go ahead, poke it
+around, but don&rsquo;t try to get fancy just yet. I&rsquo;ll be covering more in the next
+few days.</p>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#swift" title="Pages tagged swift" class="tag">swift</a></span>
@@ -184,7 +226,7 @@ println("Hello \(name)!")
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
             <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used git-blame to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others...&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming othe...&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
@@ -202,7 +244,7 @@ println("Hello \(name)!")
         </div><!-- /.read-more-list -->
       </div><!-- /.read-more -->
     
-    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
   </article>
 </div><!-- /#main -->
 
@@ -232,6 +274,24 @@ println("Hello \(name)!")
     })();
   </script>
 
+
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'flaviocaetanoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://127.0.0.1:4000/post/swift-for-dummies/';
+        var disqus_url = 'http://127.0.0.1:4000/post/swift-for-dummies/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

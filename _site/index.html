@@ -76,7 +76,7 @@
 			<a href="#">About</a>
 			<ul class="dl-submenu">
 				<li>
-					<img src="" alt="Flávio Caetano photo" class="author-photo">
+					<img src="/images/avatar.png" alt="Flávio Caetano photo" class="author-photo">
 					<h4>Flávio Caetano</h4>
 					<p></p>
 				</li>
@@ -90,6 +90,9 @@
 				
 				<li>
 					<a href="https://github.com/fjcaetano"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826"><i class="fa fa-linkedin"></i> LinkedIn</a>
 				</li>
 			</ul><!-- /.dl-submenu -->
 		</li>
@@ -141,6 +144,10 @@
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/you-shouldnt-use-git-blame/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -150,13 +157,17 @@
 </header>
 
 <div class="entry-content">
-  <p><!--:en--></p>
-<p style="text-align: justify;">Have you ever used <em>git-blame</em> to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with "default" <em>git-blame</em> and Xcode's blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
-<p style="text-align: justify;">Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I'm the one who fixes what is not according. Therefore, my name comes up in Xcode's blame view more  often than others.</p>
-<p style="text-align: justify;">If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <em>git-blame</em> command line with the "-n" option. It'll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
-<p style="text-align: justify;">Or maybe, even better, get the changelog and the names of who touched a specific line of code with <em>git-log</em> "-L" option:</p>
-<p style="text-align: justify;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img class="size-medium wp-image-941 alignnone" alt="git-log -L" src="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" width="250" height="300" /></a></p>
-<p style="text-align: justify;"><span style="line-height: 1.5;">Thanks to: </span><a style="line-height: 1.5;" href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file" target="_blank">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
+  <p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn&rsquo;t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with &ldquo;default" <code>git-blame</code> and Xcode&rsquo;s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
+
+<p>Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I&rsquo;m the one who fixes what is not according. Therefore, my name comes up in Xcode&rsquo;s blame view more  often than others.</p>
+
+<p>If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <code>git-blame</code> command line with the &ldquo;-n&rdquo; option. It&rsquo;ll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
+
+<p>Or maybe, even better, get the changelog and the names of who touched a specific line of code with <code>git-log</code> &ldquo;-L&rdquo; option:</p>
+
+<p><a href="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
+
+<p>Thanks to: <a href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
 
   
   
@@ -186,6 +197,10 @@
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/this-is-when-a-cgfloat-may-be-a-double/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -195,37 +210,48 @@
 </header>
 
 <div class="entry-content">
-  <p><!--:en-->
-<p style="text-align: justify;">How would you explain the following code never getting into the <em>if</em> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
-<pre class="lang:objc decode:true">for (UIView *subview in view.subviews)
-{
-    CGFloat subviewAlpha = subview.alpha;
-    CGFloat myAlpha = 0.15f;
-    if (subviewAlpha == myAlpha &amp;&amp;
-        [subview isKindOfClass:NSClassFromString(@"_UIPopoverViewBackgroundComponentView")])
-    {
-        subview.alpha = 0.f;
-    }
- }</pre>
-<p style="text-align: justify;">Printing the value also proved to be pointless:</p>
-<pre class="lang:objc decode:true">NSLog(@"%f", subviewAlpha);
-// output: 0.150000
+  <p>How would you explain the following code never getting into the <code>if</code> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
 
-NSLog(@"%f", myAlpha);
-// output: 0.150000</pre>
-<p style="text-align: justify;">Finally, XCode's debugger shed a dim of light to the real issue. It showed that the true value of <em>subviewAlpha</em> is 0.14999999999999999, and as a floating point it's accurate. Meanwhile the value of <em>myAlpha</em> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
-<p style="text-align: justify;">Jumping to <em>CGFloat</em> definition, we can see that it may be an alias to float or double, depending on the system's architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros" target="_blank">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424" target="_blank">@gustavocsb</a>, for the link).</p>
-<p style="text-align: center;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img class="size-medium wp-image-781 aligncenter" alt="Screen Shot 2014-06-28 at 12.53.35 AM" src="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" width="300" height="130" /></a></p>
-<p style="text-align: justify;">As usual, I solved it the more elegant way I could. "Hey, if <em>CGFloat</em> is bipolar, let it tell me how to read it!"</p>
-<pre class="lang:objc decode:true">for (UIView *subview in view.subviews)
-{
-    if (subview.alpha == (CGFloat)0.15 &amp;&amp;
-        [subview isKindOfClass:NSClassFromString(@"_UIPopoverViewBackgroundComponentView")])
-    {
-        subview.alpha = 0.f;
-    }
- }</pre>
-<p style="text-align: justify;">Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <em>typecast</em> it.</p>
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">CGFloat</span> <span class="n">subviewAlpha</span> <span class="o">=</span> <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span><span class="p">;</span>
+    <span class="n">CGFloat</span> <span class="n">myAlpha</span> <span class="o">=</span> <span class="mf">0.15f</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">subviewAlpha</span> <span class="o">==</span> <span class="n">myAlpha</span> <span class="o">&amp;&amp;</span>
+        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
+    <span class="p">{</span>
+        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+    <span class="p">}</span>
+ <span class="p">}</span></code></pre></div>
+
+
+<p>Printing the value also proved to be pointless:</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">subviewAlpha</span><span class="p">);</span>
+<span class="c1">// output: 0.150000</span>
+
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">myAlpha</span><span class="p">);</span>
+<span class="c1">// output: 0.150000</span></code></pre></div>
+
+
+<p>Finally, XCode&rsquo;s debugger shed a dim of light to the real issue. It showed that the true value of <code>subviewAlpha</code> is 0.14999999999999999, and as a floating point it&rsquo;s accurate. Meanwhile the value of <code>myAlpha</code> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
+
+<p>Jumping to <code>CGFloat</code> definition, we can see that it may be an alias to float or double, depending on the system&rsquo;s architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424">@gustavocsb</a>, for the link).</p>
+
+<p><a href="/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img src="/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" alt="" /></a></p>
+
+<p>As usual, I solved it the more elegant way I could. &ldquo;Hey, if <code>CGFloat</code> is bipolar, let it tell me how to read it!&rdquo;</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">==</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="mf">0.15</span> <span class="o">&amp;&amp;</span>
+        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
+    <span class="p">{</span>
+        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+    <span class="p">}</span>
+ <span class="p">}</span></code></pre></div>
+
+
+<p> Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <code>typecast</code> it.</p>
 
   
   
@@ -255,6 +281,10 @@ NSLog(@"%f", myAlpha);
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/memoirs-of-a-wwdc-rookie/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -264,15 +294,21 @@ NSLog(@"%f", myAlpha);
 </header>
 
 <div class="entry-content">
-  <p><!--:en-->
-<p style="text-align: justify;">This year I went to Apple's WWDC for the first time. I got the chance to be where every iOS developer wanted to be. The place where stuff happened. The place with the best among all. The place that mattered.</p>
-<p style="text-align: justify;">We got to San Francisco the weekend before the conference and left the weekend after, so we had some time to explore a new city I didn't know. First of all, the food is great. I had the <a href="http://www.yelp.com/biz/super-duper-burgers-san-francisco-3" target="_blank">best burger</a>, the <a href="http://www.yelp.com/biz/r-and-g-lounge-san-francisco" target="_blank">best chinese</a> and the <a href="http://www.yelp.com/biz/tonys-pizza-napoletana-san-francisco" target="_blank">best pizza</a> I've ever had. And I'm a foodie. Just Yelp it and be happy. There's a lot of tourism you can do in SF, some of the things we did were visiting Alcatraz, bike to Sausalito and drive to the Silicon Valley and visit the great tech companies HQs.</p>
-<p style="text-align: justify;">Monday, when the WWDC starts, we got out of the hotel at 4:30am and got to the keynote line at around 4:45am and it was already huge. Honestly, I was skeptical about the keynote being all of what people say. But, as a first timer I thought I just had to go and see. We had bought beach chairs at Target in the Sunday and sat in the line and got to know new people, exchange ideas, do some networking. Despite the cold and sleepiness, the line itself was already worthy of the effort. But, thankfully, <strong>everything</strong> was worthy. Sure, some say we had the best keynote since the iPhone, but if you're a first timer, do find time and motivation to go to the keynote.</p>
-<p style="text-align: justify;">Throughout the WWDC, the sessions were outstanding. Me and my team split up to cover the maximum ground we could. Later we would get together to share what we learned and who we met. One thing I regret is not going to more labs. I was too focused on the sessions and lost this opportunity. Have this in mind: the sessions are streamed. Everyone can see it and you don't have to be at the WWDC to keep up to it. Tête-à-tête with Apple engineers is a one-of-a-kind experience. You can only do it by being there. The Design Lab lines can get pretty overwhelming. There were already people waiting outside the Moscone at 7am and Apple's designers insight of your app is priceless. This is my main advice:</p>
-<blockquote><p>Prioritise people time rather than session time. Don't interrupt a conversation to go to a session. Sessions must be you're last resource. If you have nothing to do, go see one.</p></blockquote>
-<p style="text-align: justify;">It's easy to see great faces there. Tim Cook wandered about, Craig Federighi took selfies with whoever asked him, Steve Streza and his green hair was everywhere, Marco Arment, John Gruber, Aaron Hillegass and his cowboy hat... if you see someone you admire, go and talk to them. Lose your shyness. They are mostly great people and will be happy to talk to you and give you advice. There were also outstanding folks at the AltConf. Great talkers like Matt Thompson and Orta Therox that only attended to the AltConf.</p>
-<p style="text-align: justify;">Go to parties and get togethers. Get to know people. Lot's of companies promote after parties at their HQs. Twitter, Github, Foursquare, Pinterest, Yelp, Dropbox, Pebble, Square... these are just some of the <a href="https://github.com/orta/wwdc_parties_2014" target="_blank">after parties</a>. Worst case scenario, you get to eat and drink for free and get to know their office.</p>
-<p style="text-align: justify;">Basically, my advice is the same my mom gave to me over and over: go outside and talk to people.</p>
+  <p>This year I went to Apple&rsquo;s WWDC for the first time. I got the chance to be where every iOS developer wanted to be. The place where stuff happened. The place with the best among all. The place that mattered.</p>
+
+<p>We got to San Francisco the weekend before the conference and left the weekend after, so we had some time to explore a new city I didn&rsquo;t know. First of all, the food is great. I had the <a href="http://www.yelp.com/biz/super-duper-burgers-san-francisco-3">best burger</a>, the <a href="http://www.yelp.com/biz/r-and-g-lounge-san-francisco">best chinese</a> and the <a href="http://www.yelp.com/biz/tonys-pizza-napoletana-san-francisco">best pizza</a> I&rsquo;ve ever had. And I&rsquo;m a foodie. Just Yelp it and be happy. There&rsquo;s a lot of tourism you can do in SF, some of the things we did were visiting Alcatraz, bike to Sausalito and drive to the Silicon Valley and visit the great tech companies HQs.</p>
+
+<p>Monday, when the WWDC starts, we got out of the hotel at 4:30am and got to the keynote line at around 4:45am and it was already huge. Honestly, I was skeptical about the keynote being all of what people say. But, as a first timer I thought I just had to go and see. We had bought beach chairs at Target in the Sunday and sat in the line and got to know new people, exchange ideas, do some networking. Despite the cold and sleepiness, the line itself was already worthy of the effort. But, thankfully, <strong>everything</strong> was worthy. Sure, some say we had the best keynote since the iPhone, but if you&rsquo;re a first timer, do find time and motivation to go to the keynote.</p>
+
+<p>Throughout the WWDC, the sessions were outstanding. Me and my team split up to cover the maximum ground we could. Later we would get together to share what we learned and who we met. One thing I regret is not going to more labs. I was too focused on the sessions and lost this opportunity. Have this in mind: the sessions are streamed. Everyone can see it and you don&rsquo;t have to be at the WWDC to keep up to it. Tête-à-tête with Apple engineers is a one-of-a-kind experience. You can only do it by being there. The Design Lab lines can get pretty overwhelming. There were already people waiting outside the Moscone at 7am and Apple&rsquo;s designers insight of your app is priceless. This is my main advice:</p>
+
+<blockquote><p>Prioritise people time rather than session time. Don&rsquo;t interrupt a conversation to go to a session. Sessions must be you&rsquo;re last resource. If you have nothing to do, go see one.</p></blockquote>
+
+<p>It&rsquo;s easy to see great faces there. Tim Cook wandered about, Craig Federighi took selfies with whoever asked him, Steve Streza and his green hair was everywhere, Marco Arment, John Gruber, Aaron Hillegass and his cowboy hat&hellip; if you see someone you admire, go and talk to them. Lose your shyness. They are mostly great people and will be happy to talk to you and give you advice. There were also outstanding folks at the AltConf. Great talkers like Matt Thompson and Orta Therox that only attended to the AltConf.</p>
+
+<p>Go to parties and get togethers. Get to know people. Lot&rsquo;s of companies promote after parties at their HQs. Twitter, Github, Foursquare, Pinterest, Yelp, Dropbox, Pebble, Square&hellip; these are just some of the <a href="https://github.com/orta/wwdc_parties_2014">after parties</a>. Worst case scenario, you get to eat and drink for free and get to know their office.</p>
+
+<p>Basically, my advice is the same my mom gave to me over and over: go outside and talk to people.</p>
 
   
   
@@ -302,6 +338,10 @@ NSLog(@"%f", myAlpha);
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/swift-for-dummies/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -311,41 +351,80 @@ NSLog(@"%f", myAlpha);
 </header>
 
 <div class="entry-content">
-  <p><!--:en-->
-<p style="text-align: justify;">At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows for sure what will happen to Objective-C, but one can only guess it won't be around for long. My guess is that Apple will be accepting ObjC apps up till iOS 10, but that is just my guest.</p>
-<p style="text-align: justify;">By attending to the WWDC I had the opportunity of directly contacting Apple's engineers and insights most of people couldn't, so in the next posts I'll cover the basics of Swift.</p>
-<p style="text-align: justify;">It doesn't matter if you're new to iOS or an experienced programmer. Now, we're all in the same boat. We all have to learn Swift from scratch, so forget everything you know about Objective-C and get ready to learn this brand new language. By the way, its potential is overwhelming.</p>
-<h2 style="text-align: justify;">The basics</h2>
-<p style="text-align: justify;">As far as I could tell, Swift borrows concepts from Python, Javascript and even Java. It's syntax also resembles these languages very much.</p>
-<p style="text-align: justify;">You can forget about pointers for now, most of what we'll be using in Swift is passed through references. No more asterisk (woohoo \o/).</p>
-<p style="text-align: justify;">Swift plays with the concepts of variables and constants. There's no type definition to neither of those just the declares var, for variables, and <em>let</em>, for constants. As you may have figured out, constants can't be altered. We'll cover when to use it in a few steps.</p>
-<pre class="lang:objc decode:true">var foo = "this is getting good"
+  <p>At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows
+for sure what will happen to Objective-C, but one can only guess it won&rsquo;t be
+around for long. My guess is that Apple will be accepting ObjC apps up till iOS
+10, but that is just my guest.</p>
 
-let x = 42</pre>
-<p style="text-align: justify;">Yep, there are no semi-colons at the end of statements.</p>
-<p style="text-align: justify;">Switches are extremely powerful. <em>Cases</em> can be variables, strings, even a range of numbers. Also, cases don't automatically fall through the next condition, so there's no need to <em>break</em>.</p>
-<pre class="lang:objc decode:true">switch myvar {
-    case 4:
-        // do something
+<p>By attending to the WWDC I had the opportunity of directly contacting Apple&rsquo;s
+engineers and insights most of people couldn&rsquo;t, so in the next posts I&rsquo;ll cover
+the basics of Swift.</p>
 
-    case someOtherVar:
-        // this is getting wild
+<p>It doesn&rsquo;t matter if you&rsquo;re new to iOS or an experienced programmer. Now, we&rsquo;re
+all in the same boat. We all have to learn Swift from scratch, so forget
+everything you know about Objective-C and get ready to learn this brand new
+language. By the way, its potential is overwhelming.</p>
 
-    case "string":
-        // holy cow!
+<h2>The basics</h2>
 
-    case 1..4:
-        // ok, this is awesome
-    default:
-        // something unimplemented
-}</pre>
-<p style="text-align: justify;">There's also no need for surrounding parenthesis when working with conditions, unless it's a complex condition, as usual. Switches in Swift (yep, try saying that three times) are exhaustive. That means that you must either supply <em>cases</em> for every possible condition or a <em>default</em> to handle everything else. XCode will error at compile time if you don't.</p>
-<p style="text-align: justify;">The final topic of this post is how you'll print output to the console. It's as simple as calling <em>println()</em> (it's a function) and you're done. Formatting strings is also awsome:</p>
-<pre class="lang:objc decode:true">var name = "Flavio"
+<p>As far as I could tell, Swift borrows concepts from Python, Javascript and even
+Java. It&rsquo;s syntax also resembles these languages very much.</p>
 
-println("Hello \(name)!")
-// Hello Flavio!</pre>
-<p style="text-align: justify;">This is enough to get started and get familiar with Swift. Go ahead, poke it around, but don't try to get fancy just yet. I'll be covering more in the next few days.</p>
+<p>You can forget about pointers for now, most of what we&rsquo;ll be using in Swift is
+passed through references. No more asterisk (woohoo \o/).</p>
+
+<p>Swift plays with the concepts of variables and constants. There&rsquo;s no type
+definition to neither of those just the declares var, for variables, and <code>let</code>
+for constants. As you may have figured out, constants can&rsquo;t be altered. We&rsquo;ll
+cover when to use it in a few steps.</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="s">&quot;this is getting good&quot;</span>
+
+<span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></div>
+
+
+<p>Yep, there are no semi-colons at the end of statements.</p>
+
+<p>Switches are extremely powerful. <code>Cases</code> can be variables, strings, even a range
+ of numbers. Also, cases don&rsquo;t automatically fall through the next condition, so
+  there&rsquo;s no need to <code>break</code>.</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
+        <span class="c1">// do something</span>
+
+    <span class="k">case</span> <span class="nl">someOtherVar</span><span class="p">:</span>
+        <span class="c1">// this is getting wild</span>
+
+    <span class="k">case</span> <span class="s">&quot;string&quot;</span><span class="o">:</span>
+        <span class="c1">// holy cow!</span>
+
+    <span class="k">case</span> <span class="mf">1..4</span><span class="o">:</span>
+        <span class="c1">// ok, this is awesome</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="c1">// something unimplemented</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>There&rsquo;s also no need for surrounding parenthesis when working with conditions,
+unless it&rsquo;s a complex condition, as usual. Switches in Swift (yep, try saying
+that three times) are exhaustive. That means that you must either supply <code>cases</code>
+for every possible condition or a <code>default</code> to handle everything else.
+XCode will error at compile time if you don&rsquo;t.</p>
+
+<p>The final topic of this post is how you&rsquo;ll print output to the console. It&rsquo;s as
+simple as calling <code>println()</code> (it&rsquo;s a function) and you&rsquo;re done.
+Formatting strings is also awsome:</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Flavio&quot;</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello \(name)!&quot;</span><span class="p">)</span>
+<span class="c1">// Hello Flavio!</span></code></pre></div>
+
+
+<p>This is enough to get started and get familiar with Swift. Go ahead, poke it
+around, but don&rsquo;t try to get fancy just yet. I&rsquo;ll be covering more in the next
+few days.</p>
 
   
   
@@ -375,6 +454,10 @@ println("Hello \(name)!")
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/protip-unregistering-a-uicollectionview-headerfooter/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -384,14 +467,24 @@ println("Hello \(name)!")
 </header>
 
 <div class="entry-content">
-  <p><!--:en-->You can unregister a UICollectionView supplementary view by re-registering it with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10" target="_blank">Apple's docs</a>. (Remember to use the same <code>reuseIdentifier</code>).</p>
-<pre>[self.collectionView registerClass:nil forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kHEADER_IDENTIFIER];</pre>
-<p><span style="text-align: justify; line-height: 1.5;">But don't forget to overwrite the </span><a style="text-align: justify; line-height: 1.5;" href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:" target="_blank"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
-<pre class="lang:objc decode:true">- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    return CGSizeZero;
-}</pre>
-<p style="text-align: justify;"> Header or footer, depending on your need.</p>
+  <p>You can unregister a UICollectionView supplementary view by re-registering it
+with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple&rsquo;s docs</a>.
+(Remember to use the same <code>reuseIdentifier</code>).</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nl">registerClass</span><span class="p">:</span><span class="nb">nil</span>
+        <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span>
+               <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div>
+
+
+<p>But don&rsquo;t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">CGSizeZero</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Header or footer, depending on your need.</p>
 
   
   

@@ -76,7 +76,7 @@
 			<a href="#">About</a>
 			<ul class="dl-submenu">
 				<li>
-					<img src="" alt="Flávio Caetano photo" class="author-photo">
+					<img src="/images/avatar.png" alt="Flávio Caetano photo" class="author-photo">
 					<h4>Flávio Caetano</h4>
 					<p></p>
 				</li>
@@ -90,6 +90,9 @@
 				
 				<li>
 					<a href="https://github.com/fjcaetano"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826"><i class="fa fa-linkedin"></i> LinkedIn</a>
 				</li>
 			</ul><!-- /.dl-submenu -->
 		</li>
@@ -141,6 +144,10 @@
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/cocoapods-and-resource_bundles/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -150,20 +157,37 @@
 </header>
 
 <div class="entry-content">
-  <p><!--:en-->
-<p style="text-align: justify;">Anyone that have recently developed any pods for Cocoapods know that resources should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles" target="_blank"><code>resource_bundles</code></a> option. What is quite hard to figure out is how, exactly, to access those resources once they're set up in the <em>bundle</em>. It seems obvious now that I got it working, but I struggle a lot since there wasn't anything in Stackoverflow or anywhere else that provided the answer I came up with.</p>
-<p style="text-align: justify;">After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in a "resources" folder within the Pods project, but none of them are added in the target's "Copy bundle resources". For that reason, I couldn't access any of the Pod's images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
-<p style="text-align: justify;"><code>'Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Could not load NIB in bundle:<{PATH_TO_APP}> (loaded)' with name '{VIEW_CONTROLLER_NAME}'</code></p>
-<p style="text-align: justify;">The obvious solution that wasn't listed anywhere is using the Cocoapods generated bundle (which the folder actually doesn't exist) as a <code>NSBundle</code>:</p>
-<pre class="lang:objc decode:true">NSString *bundlePath             = [[NSBundle mainBundle] pathForResource:@"MyBundle" ofType:@"bundle"];
+  <p>Anyone that have recently developed any pods for Cocoapods know that resources
+should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code>resource_bundles</code></a>
+option. What is quite hard to figure out is how, exactly, to access those
+resources once they&rsquo;re set up in the <code>bundle</code>. It seems obvious now that I got
+it working, but I struggle a lot since there wasn&rsquo;t anything in Stackoverflow or
+anywhere else that provided the answer I came up with.</p>
 
-NSBundle *bundle                 = [NSBundle bundleWithPath:bundlePath];
+<p>After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in
+a &ldquo;resources&rdquo; folder within the Pods project, but none of them are added in the
+target&rsquo;s &ldquo;Copy bundle resources&rdquo;. For that reason, I couldn&rsquo;t access any of the
+Pod&rsquo;s images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
 
-MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"MyViewController" bundle:bundle];
+<blockquote><p>&lsquo;Terminating app due to uncaught exception 'NSInternalInconsistencyException&rsquo;,
+reason: &lsquo;Could not load NIB in bundle:&lt;{PATH_TO_APP}> (loaded)&rsquo; with name
+&lsquo;{VIEW_CONTROLLER_NAME}&rsquo;</p></blockquote>
 
-[self.navigationController pushViewController:viewController animated:YES];</pre>
-<p style="text-align: justify;">Yes, it's that simple, that obvious, though it's not listed anywhere. I believe to be prudent and convenient to write about it in order to help anyone who encounter themselves in the same situation as I did.</p>
-<p style="text-align: justify;">
+<p>The obvious solution that wasn&rsquo;t listed anywhere is using the Cocoapods
+generated bundle (which the folder actually doesn&rsquo;t exist) as a <code>NSBundle</code>:</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="bp">NSString</span> <span class="o">*</span><span class="n">bundlePath</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource</span><span class="p">:</span><span class="s">@&quot;MyBundle&quot;</span> <span class="nl">ofType</span><span class="p">:</span><span class="s">@&quot;bundle&quot;</span><span class="p">];</span>
+
+<span class="bp">NSBundle</span> <span class="o">*</span><span class="n">bundle</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSBundle</span> <span class="nl">bundleWithPath</span><span class="p">:</span><span class="n">bundlePath</span><span class="p">];</span>
+
+<span class="n">MyViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyViewController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithNibName</span><span class="p">:</span><span class="s">@&quot;MyViewController&quot;</span> <span class="nl">bundle</span><span class="p">:</span><span class="n">bundle</span><span class="p">];</span>
+
+<span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController</span><span class="p">:</span><span class="n">viewController</span> <span class="nl">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span></code></pre></div>
+
+
+<p>Yes, it&rsquo;s that simple, that obvious, though it&rsquo;s not listed anywhere. I believe
+to be prudent and convenient to write about it in order to help anyone who
+encounter themselves in the same situation as I did.</p>
 
   
   
@@ -193,6 +217,10 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/cicada-2014/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -202,13 +230,23 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
 </header>
 
 <div class="entry-content">
-  <p><!--:en-->
-<p style="text-align: justify;">This morning, Cicada 3301 went back to active! In his/hers <a href="https://twitter.com/1231507051321" target="_blank">Twitter account</a> used on last year's challenge there was new link to an image posted on imgur.</p>
-<p><a href="http://127.0.0.1:4000/images/zN4h51m.jpg"><img class="size-full wp-image-311" alt="First Chapter" src="http://127.0.0.1:4000/images/zN4h51m.jpg" width="547" height="557" /></a></p>
-<p style="text-align: justify;">Reproducing the tradicional previous steps, by extracting the image using <a href="http://www.outguess.org/" target="_blank">outguess</a> we came onto a message, once again signed. Its authenticity could be proved using Cicada's previous known <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;search=0x181F01E57A35090F" target="_blank">public key</a>.</p>
-<p style="text-align: justify;">Now let's get our hands dirty! The first task was easy, since it's steps were already elucidated on previous years. Now things start to get interesting.</p>
-<p style="text-align: justify;">If you're interested in following the challenge progress, <a href="http://uncovering-cicada.wikia.com/wiki/CICADA_3301_2014_PUZZLE" target="_blank">Uncovering Cicada</a> is on a good pace.</p>
-<p style="text-align: justify;">Good luck, and good hunting!</p>
+  <p>This morning, Cicada 3301 went back to active! In his/hers <a href="https://twitter.com/1231507051321">Twitter account</a>
+used on last year&rsquo;s challenge there was new link to an image posted on imgur.</p>
+
+<p><a href="/images/zN4h51m.jpg"><img src="/images/zN4h51m.jpg" alt="First Chapter" /></a></p>
+
+<p>Reproducing the tradicional previous steps, by extracting the image using
+<a href="http://www.outguess.org/">outguess</a> we came onto a message, once again signed.
+Its authenticity could be proved using Cicada&rsquo;s previous known
+<a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;amp;search=0x181F01E57A35090F">public key</a>.</p>
+
+<p>Now let&rsquo;s get our hands dirty! The first task was easy, since it&rsquo;s steps were
+already elucidated on previous years. Now things start to get interesting.</p>
+
+<p>If you&rsquo;re interested in following the challenge progress, <a href="http://uncovering-cicada.wikia.com/wiki/CICADA_3301_2014_PUZZLE">Uncovering Cicada</a>
+is on a good pace.</p>
+
+<p>Good luck, and good hunting!</p>
 
   
   
@@ -238,6 +276,10 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/autolayout-is-hell-on-earth/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -247,14 +289,48 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
 </header>
 
 <div class="entry-content">
-  <p><!--:en-->
-<p style="text-align: justify;">I believe that every iOS developer is already aware of Apple's new directive forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using this tool created by the son of a devil called <em>autolayout</em>.<em><br />
-</em></p>
-<p style="text-align: justify;">Anyone that has already used <em>autolayout</em> knows that margin, width, height and other properties are calculated in runtime, therefore, they consume sometimes unnecessary CPU time. For some inescrutable reason, Apple decided to create this new concept from scratch to ease working with different sized screens, while they could easily reuse existing CSS concepts like <em>margin</em>, <em>padding</em>, among others. In addition to being extremely confusing (a <code>UIView's</code> margin <em>constraints</em> are in its <em>superview</em>), having a pitiful syntax (“V:|-(-5)-[view1]-(&gt;=10)-[view2]-(912837)-|”), <em>autolayout</em> also makes everything slow.</p>
-<p style="text-align: justify;"><strong>Protip:</strong> if you're configuring your <em>coinstraints</em> via code, <span style="text-decoration: underline;">never</span> forget seting <code>self.translatesAutoresizingMaskIntoConstraints = NO</code> in your view. It took me a couple of coffee cups to realise this was the reason why my <em>constraints</em> weren't being executing along with <code>[self layoutIfNeeded]</code>.</p>
-<p style="text-align: justify;">I recently had to work with a <code>UICollectionView</code> and the scroll was getting really laggy. Anytime a new cell was loaded, the framerate dropped. After spending a few hours trying to find the root of the problem with a couple of friends (we even considered the problem being the SDK's <code>dequeue</code> thanks to <em>Profiler</em>) some inspired insight hit us and we decided to disable <em>autolayout</em> on the <code>UICollectionViewCell's</code> xib and everything flowed like a beautiful stream under the morning sunlight of tropical woods. So let us analise what happened: Apple created a new concept, from the grounds, that theoretically would solve all problems when working with screens of different sizes, but this devilish concept is composed of runtime calculated values that ruin the <em>app's</em> smoothness. Yep, it gets hard to work happily...</p>
-<p style="text-align: justify;">This view that is the <code>UICollectionView's</code> cell will not have <em>autolayout</em>. Nobody knows what will happen when we submit the <em>app</em> to the Appstore and we sincerely hope that Apple doesn't mind this view that, although is not explicitly using <em>frames</em>, also is not configured to accept <em>autolayout</em>.</p>
-<p style="text-align: justify;">I'm yet to find an iOS developer that has nothing to complain about this weird invention, but, as usual, Apple's "this is what we want, so deal with it" policy doesn't give us any alternatives. Instead of easing developers' work, they're making our daily lives every more difficult while <del>Android scores another point</del> Apple is walking backwards.</p>
+  <p>I believe that every iOS developer is already aware of Apple&rsquo;s new directive
+forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new
+iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using
+this tool created by the son of a devil called <em>autolayout</em>.</p>
+
+<p>Anyone that has already used <em>autolayout</em> knows that margin, width, height and
+other properties are calculated in runtime, therefore, they consume sometimes
+unnecessary CPU time. For some inescrutable reason, Apple decided to create this
+new concept from scratch to ease working with different sized screens, while
+they could easily reuse existing CSS concepts like <em>margin</em>, <em>padding</em>, among
+others. In addition to being extremely confusing (a <code>UIView's</code> margin
+<em>constraints</em> are in its <em>superview</em>), having a pitiful syntax 
+<code>(“V:|-(-5)-[view1]-(&gt;=10)-[view2]-(912837)-|”)</code>, <em>autolayout</em> also makes
+ everything slow.</p>
+
+<p><strong>Protip:</strong> if you&rsquo;re configuring your <em>coinstraints</em> via code, <strong>never</strong> forget
+seting <code>self.translatesAutoresizingMaskIntoConstraints = NO</code> in your view. It
+took me a couple of coffee cups to realise this was the reason why my 
+<em>constraints</em> weren&rsquo;t being executing along with <code>[self layoutIfNeeded]</code>.</p>
+
+<p>I recently had to work with a <code>UICollectionView</code> and the scroll was getting
+really laggy. Anytime a new cell was loaded, the framerate dropped. After
+spending a few hours trying to find the root of the problem with a couple of
+friends (we even considered the problem being the SDK's <code>dequeue</code> thanks to 
+<em>Profiler</em>) some inspired insight hit us and we decided to disable <em>autolayout</em>
+on the <code>UICollectionViewCell's</code> xib and everything flowed like a beautiful
+stream under the morning sunlight of tropical woods. So let us analise what
+happened: Apple created a new concept, from the grounds, that theoretically
+would solve all problems when working with screens of different sizes, but this
+devilish concept is composed of runtime calculated values that ruin the <em>app&rsquo;s</em>
+smoothness. Yep, it gets hard to work happily&hellip;</p>
+
+<p>This view that is the <code>UICollectionView's</code> cell will not have <em>autolayout</em>.
+Nobody knows what will happen when we submit the <em>app</em> to the Appstore and we
+sincerely hope that Apple doesn&rsquo;t mind this view that, although is not
+explicitly using <em>frames</em>, also is not configured to accept <em>autolayout</em>.</p>
+
+<p>I&rsquo;m yet to find an iOS developer that has nothing to complain about this weird
+invention, but, as usual, Apple&rsquo;s &ldquo;this is what we want, so deal with it&rdquo; policy
+doesn&rsquo;t give us any alternatives. Instead of easing developers' work, they&rsquo;re
+making our daily lives every more difficult while <del>Android scores another
+point</del> Apple is walking backwards.</p>
 
   
   
@@ -284,6 +360,10 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/cocoapod-badges/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -293,20 +373,77 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
 </header>
 
 <div class="entry-content">
-  <p><!--:en-->
-<p style="text-align: justify;">In any kind of environment, visual marks ease and enhance the comprehension of information. Countless researches studied the best way to display data, which colors induce what emotions, the association of geometric shapes with pre-formed concepts. The fact is that a sign or plaque draws much more attention than plain text. After all, an image is worth a thousand words, therefore, an image sends a much more significant message than some written words.</p>
-<p style="text-align: justify;">That's one of the reasons many development tools have featured <em>badges</em> (or <em>shields)</em> to inform the status of an application/framework/library/<em>etcetera</em>. It's the case of <a href="http://about.travis-ci.org/docs/user/status-images/" target="_blank">Travis CI</a>, <a href="https://codeclimate.com/changelog/510d4fde56b102523a0004bf" target="_blank">Code Climate</a>, <a href="http://blog.tech-angels.com/post/43141047457/gemnasium-v3-aka-gemnasium" target="_blank">Gemnasium</a>, among others, all following <a href="https://github.com/olivierlacan/shields" target="_blank">olivierlacan/shields</a>' trend, available Github.</p>
-<p style="text-align: justify;">I'm an iOS developer and previously have worked with Python/Django (though I still fool around) and I've always found very interesting this creative way of sharing the state of a service dynamically, but sadly, there were no solution to Python nor iOS featuring <em>badges</em> (except for Travis CI for tests). But, recently, appeared - out of nowhere - <a href="https://pypip.in/" target="_blank">pypip</a>'s <em>shields</em> for Python packages that allows the visualisation of the latest available version of a package on <a href="http://pypi.python.org" target="_blank">pypi</a> or how many downloads some <em>release </em>had<em>.</em> When I came aware if it I resented for taking so long for solution so simple and effective to come up (or at least for <span style="text-decoration: underline;">I</span> to discover it)... but it got over the top when I found out... or better, <span style="text-decoration: underline;">did not found out<em></em></span> a similar solution for <a href="http://cocoapods.org" target="_blank">Cocoapods</a>.</p>
-<p style="text-align: justify;">I'm one of those who doesn't miss a chance to solve a problem and endeavour an opportunity. That's how the <a href="http://fjcaetano.github.io/cocoapod-badges/" target="_blank">Cocoapod Badges</a> project started. Since Cocoapods doesn't provide an API, any info on the number of <em>users/downloads</em>, nor any kind of useful data, it proved to be a challenge, and all I could use had to be what was at hand: the latest version of a <em>pod</em>. But even though, mistaken are those who thought it easy. As mentioned, there's no API!</p>
-<h1 style="text-align: justify;">Cocoapod Badges <img class=" alignnone" title="NSStringMask 1.1.2" alt="NSStringMask 1.1.2" src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" width="120" height="18" /></h1>
-<p style="text-align: justify;">Digging through Cocoapod's and <a href="http://cocoadocs.org" target="_blank">Cocoadocs</a>' websites, I tried, first, to use the <a href="http://cocoadocs.org/documents.jsonp" target="_blank">documents.jsonp</a> file that I found in the <em>source</em> of the <em>pod</em>'s documentation website, however, I soon gave up for realising that its update frequency is too high (above one hour). At last, I had to content with the unfortunate <code>/search?q=</code> requested when searching for a <em>pod</em> in Cocoapod's main page. At first, it looked like an excellent solution since it returned a <code>json</code> object with some info, until I realised that inside the object was a string with some <code>html</code> code and only inside that code was the <em>pod</em>'s latest version. "<em>God dammit!</em>" Now I have to run a request on a "pseudo-<em>webservice</em>" and parse it with <code>XPATH</code> to get the latest version!</p>
-<p style="text-align: justify;">Super easy! But, as my mother would on a brazilian saying: "<em>few shit is silliness</em>". The damned "API" doesn't return the requested <em>pod</em>, but anything with the searched string. To get something more useful, I figured that <code>/search?q=name:POD_NAME</code> searches only in the <em>pod</em>'s name and not in its description, what significantly reduces the results, specially when dealing with popular <em>pods</em> such as <a href="http://afnetworking.github.io/AFNetworking/index.html" target="_blank">AFNetworking</a>.</p>
-<p style="text-align: justify;">After all that suffering, I finally got the information I wanted, but then, how do I show it in an image? Olivier Lacan's repo, that enabled all the existing <em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code>.SVG</code> vectorial files that render <code>xml</code> data to images. So, accidentally, I double-clicked the <code>.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news! As the information about the version is in plain text inside the <code>xml</code>, all I had to do was to set the <code>mimetype</code> so Django could provide the file as an image.</p>
-<p style="text-align: justify;">1 <a href="http://heroku.com" target="_blank">Heroku</a> <em>dyno</em> later and the service is available fulltime (depending on Cocoapods website) through the images' url:</p>
-<blockquote>
-<pre><code>http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></pre>
-</blockquote>
-<p style="text-align: justify;">All you have to do is replace the <code>$PODNAME</code> with the name of the pod you want. Simple and easy, isn't it? Use it at will! And suport the Github repo!</p>
+  <p>In any kind of environment, visual marks ease and enhance the comprehension of
+information. Countless researches studied the best way to display data, which
+colors induce what emotions, the association of geometric shapes with pre-formed
+concepts. The fact is that a sign or plaque draws much more attention than plain
+text. After all, an image is worth a thousand words, therefore, an image sends a
+much more significant message than some written words.</p>
+
+<p>That&rsquo;s one of the reasons many development tools have featured <em>badges</em> (or 
+<em>shields)</em> to inform the status of an application/framework/library/<em>etcetera</em>.
+It&rsquo;s the case of <a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI</a>, 
+<a href="https://codeclimate.com/changelog/510d4fde56b102523a0004bf">Code Climate</a>, 
+<a href="http://blog.tech-angels.com/post/43141047457/gemnasium-v3-aka-gemnasium">Gemnasium</a>,
+among others, all following <a href="https://github.com/olivierlacan/shields">olivierlacan/shields`</a>
+trend, available Github.</p>
+
+<p>I&rsquo;m an iOS developer and previously have worked with Python/Django (though I
+still fool around) and I&rsquo;ve always found very interesting this creative way of
+sharing the state of a service dynamically, but sadly, there were no solution to
+Python nor iOS featuring <em>badges</em> (except for Travis CI for tests). But,
+recently, appeared - out of nowhere - <a href="https://pypip.in/">pypip&rsquo;s</a> <em>shields</em> for
+Python packages that allows the visualisation of the latest available version of
+a package on <a href="http://pypi.python.org">pypi</a> or how many downloads some <em>release
+</em>had<em>.</em> When I came aware if it I resented for taking so long for solution so
+simple and effective to come up (or at least for <strong>I</strong> to discover it)&hellip; but it
+got over the top when I found out&hellip; or better, <strong>did not found out</strong> a similar
+solution for <a href="http://cocoapods.org">Cocoapods</a>.</p>
+
+<p>I&rsquo;m one of those who doesn&rsquo;t miss a chance to solve a problem and endeavour an
+opportunity. That&rsquo;s how the <a href="http://fjcaetano.github.io/cocoapod-badges/">Cocoapod Badges</a> 
+project started. Since Cocoapods doesn&rsquo;t provide an API, any info on the number
+of <em>users/downloads</em>, nor any kind of useful data, it proved to be a challenge,
+and all I could use had to be what was at hand: the latest version of a <em>pod</em>.
+But even though, mistaken are those who thought it easy. As mentioned, there&rsquo;s
+no API!</p>
+
+<h1>Cocoapod Badges <img src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" alt="NSStringMask 1.1.2" /></h1>
+
+<p>Digging through Cocoapod&rsquo;s and <a href="http://cocoadocs.org">Cocoadocs'</a> websites, I
+tried, first, to use the <a href="http://cocoadocs.org/documents.jsonp">documents.jsonp</a> 
+file that I found in the <em>source</em> of the <em>pod</em>&rsquo;s documentation website, however,
+I soon gave up for realising that its update frequency is too high (above one
+hour). At last, I had to content with the unfortunate <code>/search?q=</code> requested
+when searching for a <em>pod</em> in Cocoapod&rsquo;s main page. At first, it looked like an
+excellent solution since it returned a <code>json</code> object with some info, until I
+realised that inside the object was a string with some <code>html</code> code and only
+inside that code was the <em>pod</em>&rsquo;s latest version. &ldquo;<em>God dammit!</em>&rdquo; Now I have to
+run a request on a &ldquo;pseudo-<em>webservice</em>&rdquo; and parse it with <code>XPATH</code> to get the
+latest version!</p>
+
+<p>Super easy! But, as my mother would on a brazilian saying: &ldquo;<em>few shit is
+silliness</em>&rdquo;. The damned &ldquo;API&rdquo; doesn&rsquo;t return the requested <em>pod</em>, but anything
+with the searched string. To get something more useful, I figured that 
+<code>/search?q=name:POD_NAME</code> searches only in the <em>pod</em>&rsquo;s name and not in its
+description, what significantly reduces the results, specially when dealing with
+popular <em>pods</em> such as <a href="http://afnetworking.github.io/AFNetworking/index.html">AFNetworking</a>.</p>
+
+<p>After all that suffering, I finally got the information I wanted, but then, how
+do I show it in an image? Olivier Lacan&rsquo;s repo, that enabled all the existing 
+<em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code>.SVG</code> vectorial
+files that render <code>xml</code> data to images. So, accidentally, I double-clicked the 
+<code>.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news!
+As the information about the version is in plain text inside the <code>xml</code>, all I
+had to do was to set the <code>mimetype</code> so Django could provide the file as an image.</p>
+
+<p>1 <a href="http://heroku.com">Heroku</a> <em>dyno</em> later and the service is available fulltime
+(depending on Cocoapods website) through the images' url:</p>
+
+<blockquote><p><code>http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></p></blockquote>
+
+<p>All you have to do is replace the <code>$PODNAME</code> with the name of the pod you want.
+Simple and easy, isn&rsquo;t it? Use it at will! And suport the Github repo!</p>
 
   
   
@@ -336,6 +473,10 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
       </span>
     </span>
     
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/documentation-and-objective-c/#disqus_thread">Comment</a>
+      </span>
+    
   </div><!-- /.entry-meta -->
   
     <h1 class="entry-title">
@@ -345,19 +486,106 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
 </header>
 
 <div class="entry-content">
-  <p><!--:en-->
-<div>
-<p style="text-align: justify;">This is an article I originally wrote for the brazilian online magazine <a href="http://www.devmedia.com.br/aprenda-a-documentar-seus-projetos-em-objective-c-revista-mobile-magazine-48/27964">DevMedia's Mobile Magazine</a>. This first part is the article's introduction, so seat back and relax. Soon I'll post the second - and final - part with a tutorial to the Apple like documentation generator <a href="http://gentlebytes.com/appledoc/">appledoc</a>.</p>
-<p style="text-align: justify;">"In the agile programming environment, using methodologies such as SCRUM, Agile and Lean, we can't always document our sources. After all, pragmatics as we developers are, why would we lose time if the documentation won't be compiled, won't do any difference in the code's performance and demands a considerable slice of our time? But despite all that, the lack of documentation hurts. A lot.</p>
-<p style="text-align: justify;">Who's familiarised, knows that in the ultra accelerated rhythm of <em>startups</em>, where everything is at the top of the list, there's not always time to apply some of the good programming technics that aren't crucial to the sanity and speed of the code. Oftenly, there's no time to formally test classes and methods because of the virtually null due time that is given. It's easy to find developers awake all night in <em>hackatons</em> to successfully deliver <em>that key</em> feature that will make "the whole difference". Test? Document? Review? There's so much to do and so little time!</p>
-<p style="text-align: justify;">That's the reality of many young developers who enter this ultra competitive environment searching for the dream of running their own companies. The responsibilty of satisfying potential investors, the pressure for deploys and the client's needs frequently obfuscate technics that improve development and maintenance experiences, but that are not considered primordial to the construction of an application. How often didn't I went back to an undocumented code done less than two months before and thought "<em>what the flock does this loop do?</em>" or "<em>why, on earth, is this class here and not there?</em>" Of course, when those lines of code were written, everything made perfect sense, but the moment those <em>ifs</em> and <em>fors</em> went out of the conscious mind, their meaning were long gone. After all, quoting the chinese saying: "<em>the ink is better than memory</em>".</p>
-<p style="text-align: justify;">So let us document. It doesn't hurt, doesn't make you fat and isn't illegal. Actually, documenting is like eating vegetables: no one really likes it, but we do it hopping that, in the end, it's worth the result. But unlike the vegetables, it's proved that documenting helps. Contrary to the common thought, the time spent documenting a day's work is reasonably irrelevant and the benefit in return is definitely worthy. With practice and experience, no more than 30 minutes can be lost documenting everything that was made in a whole day. That way, the developer stays focused in his activity and doesn't deviates doing other stuff that draws his attention or stand in his way of writing the best possible algorithm. Therefore, don't wait until the end of the week, when the work pile up, part of the features were already forgotten and we're all dying to that ice-cold friday-night-beer. Personally, I recommend documenting in the end of the day. In my case, it's always the last thing I do before leaving, because everything is still fresh in memory and the amount of code produced in one day doesn't compare to what's done in one week. If that's not enough, I realised that I do a final unconscious revision before the final <em>commit</em> when I'm passing by the code documenting it.</p>
-<p style="text-align: justify;">A well documented code is good for everybody. What would be of us without the independent frameworks, packages and repositories used daily if they weren't documented, or even had a bad documentation? Even senior programmers, frequently, return to Apple's documentation to a better understanding of Cocoa's classes. Whether consulting a less used protocol, or lower level functions to manage <em>sockets</em>, <em>threads</em> or <em>semaphores</em>. Nobody can remember everything, so don't try it, you're not an elephant. It's not rare to find developers who use the documentation as a last resource to understanding some tool. This line of thought makes sense if we think that we want everything to be as explained as possible so we don't lose any time trying to interpretate any possible use, when trying to comprehend some feature. But we must never forget that even when visiting forums, asking more experienced developers or reading articles in blogs, EVERYTHING had a documentation as basis. Well, even this article wouldn't exist if wasn't for <a href="http://gentlebytes.com/appledoc/">appledoc</a>'s documentation.</p>
-<p style="text-align: justify;">Documenting - or at least commenting - source codes is fundamental to the intelligibility of the code. Implementing these technics with developers that never done it, oftenly is seen with prejudice and suspicion that are common to the staunch and stubborn nature of young programmers. I must confess that I didn't wanted to document when people first told me to. Moreover, because of it's so unusual syntax, it's interesting to verbalize what's developed in ObjC to ease it's lecture, specially by more unexperienced programmers.</p>
-<p style="text-align: justify;">As time goes by, with the expansion of the <em>startup</em>, the pressure and need of code documentation is felt. Contrary to many programming languages - such as Java with it's hideous GUI Javadoc - Objective-C doesn't have an "official" documentation generator. In our <em>quest</em> to find a differentiated framework, which could make us feel as if we were really making difference, we found the excellent <a href="http://gentlebytes.com/appledoc/">appledoc</a> that, using code comments <em>à la</em> Javadoc, generates Apple like documentation, with a docset <em>automagically</em> installed in XCode, static HTML sources which can be uploaded to a cloud (<em>vide</em> <a href="http://fjcaetano.github.io/NSStringMask/1.1.2/">NSStringMask</a> which uses <a href="http://gentlebytes.com/appledoc/">appledoc</a>) and an interface identical to Cocoa's.</p>
-<p style="text-align: justify;">Among <a href="http://gentlebytes.com/appledoc/">appledoc</a>'s already described advantages, are also the documentation parsing through code comments, wich allow the developer to consult the documentation without the need of opening a new window, since everything is in the code. The integration with XCode allows the visualisation of tooltips with quick access to the documentation by simply holding the <em>Option</em> key and clicking a method or class. Moreover, by "compiling" <a href="http://gentlebytes.com/appledoc/">appledoc</a> in your documented project, the library's docset is already imported to your <em>Organizer</em>. Simple or not? But, undoubtedly, <a href="http://gentlebytes.com/appledoc/">appledoc</a>'s main advantage is it's interface that's identical to Apple's documentation. I think it's very unlikely that there's any ObjC developer that has never read Cocoa's documentation, be the one embedded on XCode or the on in Apples developers portal. By reusing the known model, it terminates the problem of having to familiarise to a new layout."</p>
-<p style="text-align: justify;">Soon I'll be posting the second part with a tutorial.</p>
-</div>
+  <p>This is an article I originally wrote for the brazilian online magazine
+<a href="http://www.devmedia.com.br/aprenda-a-documentar-seus-projetos-em-objective-c-revista-mobile-magazine-48/27964">DevMedia&rsquo;s Mobile Magazine</a>.
+This first part is the article&rsquo;s introduction, so seat back and relax. Soon I&rsquo;ll
+post the second - and final - part with a tutorial to the Apple like
+documentation generator <a href="http://gentlebytes.com/appledoc/">appledoc</a>.</p>
+
+<p>&ldquo;In the agile programming environment, using methodologies such as SCRUM, Agile
+and Lean, we can&rsquo;t always document our sources. After all, pragmatics as we
+developers are, why would we lose time if the documentation won&rsquo;t be compiled,
+won&rsquo;t do any difference in the code&rsquo;s performance and demands a considerable
+slice of our time? But despite all that, the lack of documentation hurts. A lot.</p>
+
+<p>Who&rsquo;s familiarised, knows that in the ultra accelerated rhythm of <em>startups</em>,
+where everything is at the top of the list, there&rsquo;s not always time to apply
+some of the good programming technics that aren&rsquo;t crucial to the sanity and
+speed of the code. Oftenly, there&rsquo;s no time to formally test classes and methods
+because of the virtually null due time that is given. It&rsquo;s easy to find
+developers awake all night in <em>hackatons</em> to successfully deliver <em>that key</em>
+feature that will make &ldquo;the whole difference&rdquo;. Test? Document? Review? There&rsquo;s
+so much to do and so little time!</p>
+
+<p>That&rsquo;s the reality of many young developers who enter this ultra competitive
+environment searching for the dream of running their own companies. The
+responsibilty of satisfying potential investors, the pressure for deploys and
+the client&rsquo;s needs frequently obfuscate technics that improve development and
+maintenance experiences, but that are not considered primordial to the
+construction of an application. How often didn&rsquo;t I went back to an undocumented
+code done less than two months before and thought &ldquo;<em>what the flock does this
+loop do?</em>&rdquo; or &ldquo;<em>why, on earth, is this class here and not there?</em>&rdquo; Of course,
+when those lines of code were written, everything made perfect sense, but the
+moment those <em>ifs</em> and <em>fors</em> went out of the conscious mind, their meaning were
+long gone. After all, quoting the chinese saying: &ldquo;<em>the ink is better than memory</em>&rdquo;.</p>
+
+<p>So let us document. It doesn&rsquo;t hurt, doesn&rsquo;t make you fat and isn&rsquo;t illegal.
+Actually, documenting is like eating vegetables: no one really likes it, but we
+do it hopping that, in the end, it&rsquo;s worth the result. But unlike the vegetables,
+it&rsquo;s proved that documenting helps. Contrary to the common thought, the time
+spent documenting a day&rsquo;s work is reasonably irrelevant and the benefit in return
+is definitely worthy. With practice and experience, no more than 30 minutes can
+be lost documenting everything that was made in a whole day. That way, the
+developer stays focused in his activity and doesn&rsquo;t deviates doing other stuff
+that draws his attention or stand in his way of writing the best possible
+algorithm. Therefore, don&rsquo;t wait until the end of the week, when the work pile
+up, part of the features were already forgotten and we&rsquo;re all dying to that
+ice-cold friday-night-beer. Personally, I recommend documenting in the end of
+the day. In my case, it&rsquo;s always the last thing I do before leaving, because
+everything is still fresh in memory and the amount of code produced in one day
+doesn&rsquo;t compare to what&rsquo;s done in one week. If that&rsquo;s not enough, I realised
+that I do a final unconscious revision before the final <em>commit</em> when I&rsquo;m
+passing by the code documenting it.</p>
+
+<p>A well documented code is good for everybody. What would be of us without the
+independent frameworks, packages and repositories used daily if they weren&rsquo;t
+documented, or even had a bad documentation? Even senior programmers, frequently,
+return to Apple&rsquo;s documentation to a better understanding of Cocoa&rsquo;s classes.
+Whether consulting a less used protocol, or lower level functions to manage
+<em>sockets</em>, <em>threads</em> or <em>semaphores</em>. Nobody can remember everything, so don&rsquo;t
+try it, you&rsquo;re not an elephant. It&rsquo;s not rare to find developers who use the
+documentation as a last resource to understanding some tool. This line of thought
+makes sense if we think that we want everything to be as explained as possible
+so we don&rsquo;t lose any time trying to interpretate any possible use, when trying
+to comprehend some feature. But we must never forget that even when visiting
+forums, asking more experienced developers or reading articles in blogs,
+EVERYTHING had a documentation as basis. Well, even this article wouldn&rsquo;t exist
+if wasn&rsquo;t for <a href="http://gentlebytes.com/appledoc/">appledoc</a>&rsquo;s documentation.</p>
+
+<p>Documenting - or at least commenting - source codes is fundamental to the
+intelligibility of the code. Implementing these technics with developers that
+never done it, oftenly is seen with prejudice and suspicion that are common to
+the staunch and stubborn nature of young programmers. I must confess that I
+didn&rsquo;t wanted to document when people first told me to. Moreover, because of
+it&rsquo;s so unusual syntax, it&rsquo;s interesting to verbalize what&rsquo;s developed in ObjC
+to ease it&rsquo;s lecture, specially by more unexperienced programmers.</p>
+
+<p>As time goes by, with the expansion of the <em>startup</em>, the pressure and need of
+code documentation is felt. Contrary to many programming languages - such as
+Java with it&rsquo;s hideous GUI Javadoc - Objective-C doesn&rsquo;t have an &ldquo;official&rdquo;
+documentation generator. In our <em>quest</em> to find a differentiated framework, which
+could make us feel as if we were really making difference, we found the excellent
+<a href="http://gentlebytes.com/appledoc/">appledoc</a> that, using code comments <em>à la</em>
+Javadoc, generates Apple like documentation, with a docset <em>automagically</em>
+installed in XCode, static HTML sources which can be uploaded to a cloud (<em>vide</em> 
+<a href="http://fjcaetano.github.io/NSStringMask/1.1.2/">NSStringMask</a> which uses
+<a href="http://gentlebytes.com/appledoc/">appledoc</a>) and an interface identical to Cocoa&rsquo;s.</p>
+
+<p>Among <a href="http://gentlebytes.com/appledoc/">appledoc</a>)&rsquo;s already described advantages,
+are also the documentation parsing through code comments, wich allow the developer
+to consult the documentation without the need of opening a new window, since
+everything is in the code. The integration with XCode allows the visualisation of
+tooltips with quick access to the documentation by simply holding the <em>Option</em>
+key and clicking a method or class. Moreover, by &ldquo;compiling&rdquo; <a href="http://gentlebytes.com/appledoc/">appledoc</a>)
+in your documented project, the library&rsquo;s docset is already imported to your
+<em>Organizer</em>. Simple or not? But, undoubtedly, <a href="http://gentlebytes.com/appledoc/">appledoc</a>)&rsquo;s
+main advantage is it&rsquo;s interface that&rsquo;s identical to Apple&rsquo;s documentation. I
+think it&rsquo;s very unlikely that there&rsquo;s any ObjC developer that has never read
+Cocoa&rsquo;s documentation, be the one embedded on XCode or the on in Apples developers
+portal. By reusing the known model, it terminates the problem of having to
+familiarise to a new layout."</p>
+
+<p>Soon I&rsquo;ll be posting the second part with a tutorial.</p>
 
   
   

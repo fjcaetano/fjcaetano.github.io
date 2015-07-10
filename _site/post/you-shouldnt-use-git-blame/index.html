@@ -77,7 +77,7 @@
 			<a href="#">About</a>
 			<ul class="dl-submenu">
 				<li>
-					<img src="" alt="Flávio Caetano photo" class="author-photo">
+					<img src="/images/avatar.png" alt="Flávio Caetano photo" class="author-photo">
 					<h4>Flávio Caetano</h4>
 					<p></p>
 				</li>
@@ -91,6 +91,9 @@
 				
 				<li>
 					<a href="https://github.com/fjcaetano"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826"><i class="fa fa-linkedin"></i> LinkedIn</a>
 				</li>
 			</ul><!-- /.dl-submenu -->
 		</li>
@@ -126,13 +129,17 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p><!--:en--></p>
-<p style="text-align: justify;">Have you ever used <em>git-blame</em> to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with "default" <em>git-blame</em> and Xcode's blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
-<p style="text-align: justify;">Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I'm the one who fixes what is not according. Therefore, my name comes up in Xcode's blame view more  often than others.</p>
-<p style="text-align: justify;">If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <em>git-blame</em> command line with the "-n" option. It'll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
-<p style="text-align: justify;">Or maybe, even better, get the changelog and the names of who touched a specific line of code with <em>git-log</em> "-L" option:</p>
-<p style="text-align: justify;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img class="size-medium wp-image-941 alignnone" alt="git-log -L" src="http://127.0.0.1:4000/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" width="250" height="300" /></a></p>
-<p style="text-align: justify;"><span style="line-height: 1.5;">Thanks to: </span><a style="line-height: 1.5;" href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file" target="_blank">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
+      <p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn&rsquo;t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with &ldquo;default" <code>git-blame</code> and Xcode&rsquo;s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
+
+<p>Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I&rsquo;m the one who fixes what is not according. Therefore, my name comes up in Xcode&rsquo;s blame view more  often than others.</p>
+
+<p>If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <code>git-blame</code> command line with the &ldquo;-n&rdquo; option. It&rsquo;ll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
+
+<p>Or maybe, even better, get the changelog and the names of who touched a specific line of code with <code>git-log</code> &ldquo;-L&rdquo; option:</p>
+
+<p><a href="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
+
+<p>Thanks to: <a href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#git" title="Pages tagged git" class="tag">git</a></span>
@@ -174,7 +181,7 @@
         </div><!-- /.read-more-list -->
       </div><!-- /.read-more -->
     
-    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
   </article>
 </div><!-- /#main -->
 
@@ -204,6 +211,24 @@
     })();
   </script>
 
+
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'flaviocaetanoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://127.0.0.1:4000/post/you-shouldnt-use-git-blame/';
+        var disqus_url = 'http://127.0.0.1:4000/post/you-shouldnt-use-git-blame/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

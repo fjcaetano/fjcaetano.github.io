@@ -77,7 +77,7 @@
 			<a href="#">About</a>
 			<ul class="dl-submenu">
 				<li>
-					<img src="" alt="Flávio Caetano photo" class="author-photo">
+					<img src="/images/avatar.png" alt="Flávio Caetano photo" class="author-photo">
 					<h4>Flávio Caetano</h4>
 					<p></p>
 				</li>
@@ -91,6 +91,9 @@
 				
 				<li>
 					<a href="https://github.com/fjcaetano"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826"><i class="fa fa-linkedin"></i> LinkedIn</a>
 				</li>
 			</ul><!-- /.dl-submenu -->
 		</li>
@@ -126,37 +129,48 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p><!--:en-->
-<p style="text-align: justify;">How would you explain the following code never getting into the <em>if</em> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
-<pre class="lang:objc decode:true">for (UIView *subview in view.subviews)
-{
-    CGFloat subviewAlpha = subview.alpha;
-    CGFloat myAlpha = 0.15f;
-    if (subviewAlpha == myAlpha &amp;&amp;
-        [subview isKindOfClass:NSClassFromString(@"_UIPopoverViewBackgroundComponentView")])
-    {
-        subview.alpha = 0.f;
-    }
- }</pre>
-<p style="text-align: justify;">Printing the value also proved to be pointless:</p>
-<pre class="lang:objc decode:true">NSLog(@"%f", subviewAlpha);
-// output: 0.150000
+      <p>How would you explain the following code never getting into the <code>if</code> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
 
-NSLog(@"%f", myAlpha);
-// output: 0.150000</pre>
-<p style="text-align: justify;">Finally, XCode's debugger shed a dim of light to the real issue. It showed that the true value of <em>subviewAlpha</em> is 0.14999999999999999, and as a floating point it's accurate. Meanwhile the value of <em>myAlpha</em> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
-<p style="text-align: justify;">Jumping to <em>CGFloat</em> definition, we can see that it may be an alias to float or double, depending on the system's architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros" target="_blank">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424" target="_blank">@gustavocsb</a>, for the link).</p>
-<p style="text-align: center;"><a href="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img class="size-medium wp-image-781 aligncenter" alt="Screen Shot 2014-06-28 at 12.53.35 AM" src="http://127.0.0.1:4000/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" width="300" height="130" /></a></p>
-<p style="text-align: justify;">As usual, I solved it the more elegant way I could. "Hey, if <em>CGFloat</em> is bipolar, let it tell me how to read it!"</p>
-<pre class="lang:objc decode:true">for (UIView *subview in view.subviews)
-{
-    if (subview.alpha == (CGFloat)0.15 &amp;&amp;
-        [subview isKindOfClass:NSClassFromString(@"_UIPopoverViewBackgroundComponentView")])
-    {
-        subview.alpha = 0.f;
-    }
- }</pre>
-<p style="text-align: justify;">Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <em>typecast</em> it.</p>
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">CGFloat</span> <span class="n">subviewAlpha</span> <span class="o">=</span> <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span><span class="p">;</span>
+    <span class="n">CGFloat</span> <span class="n">myAlpha</span> <span class="o">=</span> <span class="mf">0.15f</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">subviewAlpha</span> <span class="o">==</span> <span class="n">myAlpha</span> <span class="o">&amp;&amp;</span>
+        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
+    <span class="p">{</span>
+        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+    <span class="p">}</span>
+ <span class="p">}</span></code></pre></div>
+
+
+<p>Printing the value also proved to be pointless:</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">subviewAlpha</span><span class="p">);</span>
+<span class="c1">// output: 0.150000</span>
+
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">myAlpha</span><span class="p">);</span>
+<span class="c1">// output: 0.150000</span></code></pre></div>
+
+
+<p>Finally, XCode&rsquo;s debugger shed a dim of light to the real issue. It showed that the true value of <code>subviewAlpha</code> is 0.14999999999999999, and as a floating point it&rsquo;s accurate. Meanwhile the value of <code>myAlpha</code> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
+
+<p>Jumping to <code>CGFloat</code> definition, we can see that it may be an alias to float or double, depending on the system&rsquo;s architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424">@gustavocsb</a>, for the link).</p>
+
+<p><a href="/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img src="/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" alt="" /></a></p>
+
+<p>As usual, I solved it the more elegant way I could. &ldquo;Hey, if <code>CGFloat</code> is bipolar, let it tell me how to read it!&rdquo;</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">==</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="mf">0.15</span> <span class="o">&amp;&amp;</span>
+        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
+    <span class="p">{</span>
+        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+    <span class="p">}</span>
+ <span class="p">}</span></code></pre></div>
+
+
+<p> Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <code>typecast</code> it.</p>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#objective-c" title="Pages tagged objective-c" class="tag">objective-c</a></span>
@@ -180,7 +194,7 @@ NSLog(@"%f", myAlpha);
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
             <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used git-blame to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others...&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming othe...&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
@@ -198,7 +212,7 @@ NSLog(@"%f", myAlpha);
         </div><!-- /.read-more-list -->
       </div><!-- /.read-more -->
     
-    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
   </article>
 </div><!-- /#main -->
 
@@ -228,6 +242,24 @@ NSLog(@"%f", myAlpha);
     })();
   </script>
 
+
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'flaviocaetanoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://127.0.0.1:4000/post/this-is-when-a-cgfloat-may-be-a-double/';
+        var disqus_url = 'http://127.0.0.1:4000/post/this-is-when-a-cgfloat-may-be-a-double/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

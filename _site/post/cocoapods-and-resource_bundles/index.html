@@ -77,7 +77,7 @@
 			<a href="#">About</a>
 			<ul class="dl-submenu">
 				<li>
-					<img src="" alt="Flávio Caetano photo" class="author-photo">
+					<img src="/images/avatar.png" alt="Flávio Caetano photo" class="author-photo">
 					<h4>Flávio Caetano</h4>
 					<p></p>
 				</li>
@@ -91,6 +91,9 @@
 				
 				<li>
 					<a href="https://github.com/fjcaetano"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826"><i class="fa fa-linkedin"></i> LinkedIn</a>
 				</li>
 			</ul><!-- /.dl-submenu -->
 		</li>
@@ -126,20 +129,37 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p><!--:en-->
-<p style="text-align: justify;">Anyone that have recently developed any pods for Cocoapods know that resources should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles" target="_blank"><code>resource_bundles</code></a> option. What is quite hard to figure out is how, exactly, to access those resources once they're set up in the <em>bundle</em>. It seems obvious now that I got it working, but I struggle a lot since there wasn't anything in Stackoverflow or anywhere else that provided the answer I came up with.</p>
-<p style="text-align: justify;">After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in a "resources" folder within the Pods project, but none of them are added in the target's "Copy bundle resources". For that reason, I couldn't access any of the Pod's images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
-<p style="text-align: justify;"><code>'Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Could not load NIB in bundle:<{PATH_TO_APP}> (loaded)' with name '{VIEW_CONTROLLER_NAME}'</code></p>
-<p style="text-align: justify;">The obvious solution that wasn't listed anywhere is using the Cocoapods generated bundle (which the folder actually doesn't exist) as a <code>NSBundle</code>:</p>
-<pre class="lang:objc decode:true">NSString *bundlePath             = [[NSBundle mainBundle] pathForResource:@"MyBundle" ofType:@"bundle"];
+      <p>Anyone that have recently developed any pods for Cocoapods know that resources
+should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code>resource_bundles</code></a>
+option. What is quite hard to figure out is how, exactly, to access those
+resources once they&rsquo;re set up in the <code>bundle</code>. It seems obvious now that I got
+it working, but I struggle a lot since there wasn&rsquo;t anything in Stackoverflow or
+anywhere else that provided the answer I came up with.</p>
 
-NSBundle *bundle                 = [NSBundle bundleWithPath:bundlePath];
+<p>After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in
+a &ldquo;resources&rdquo; folder within the Pods project, but none of them are added in the
+target&rsquo;s &ldquo;Copy bundle resources&rdquo;. For that reason, I couldn&rsquo;t access any of the
+Pod&rsquo;s images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
 
-MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"MyViewController" bundle:bundle];
+<blockquote><p>&lsquo;Terminating app due to uncaught exception 'NSInternalInconsistencyException&rsquo;,
+reason: &lsquo;Could not load NIB in bundle:&lt;{PATH_TO_APP}> (loaded)&rsquo; with name
+&lsquo;{VIEW_CONTROLLER_NAME}&rsquo;</p></blockquote>
 
-[self.navigationController pushViewController:viewController animated:YES];</pre>
-<p style="text-align: justify;">Yes, it's that simple, that obvious, though it's not listed anywhere. I believe to be prudent and convenient to write about it in order to help anyone who encounter themselves in the same situation as I did.</p>
-<p style="text-align: justify;">
+<p>The obvious solution that wasn&rsquo;t listed anywhere is using the Cocoapods
+generated bundle (which the folder actually doesn&rsquo;t exist) as a <code>NSBundle</code>:</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="bp">NSString</span> <span class="o">*</span><span class="n">bundlePath</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource</span><span class="p">:</span><span class="s">@&quot;MyBundle&quot;</span> <span class="nl">ofType</span><span class="p">:</span><span class="s">@&quot;bundle&quot;</span><span class="p">];</span>
+
+<span class="bp">NSBundle</span> <span class="o">*</span><span class="n">bundle</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSBundle</span> <span class="nl">bundleWithPath</span><span class="p">:</span><span class="n">bundlePath</span><span class="p">];</span>
+
+<span class="n">MyViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyViewController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithNibName</span><span class="p">:</span><span class="s">@&quot;MyViewController&quot;</span> <span class="nl">bundle</span><span class="p">:</span><span class="n">bundle</span><span class="p">];</span>
+
+<span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController</span><span class="p">:</span><span class="n">viewController</span> <span class="nl">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span></code></pre></div>
+
+
+<p>Yes, it&rsquo;s that simple, that obvious, though it&rsquo;s not listed anywhere. I believe
+to be prudent and convenient to write about it in order to help anyone who
+encounter themselves in the same situation as I did.</p>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#objective-c" title="Pages tagged objective-c" class="tag">objective-c</a></span>
@@ -163,7 +183,7 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
             <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used git-blame to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others...&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming othe...&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
@@ -181,7 +201,7 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
         </div><!-- /.read-more-list -->
       </div><!-- /.read-more -->
     
-    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
   </article>
 </div><!-- /#main -->
 
@@ -211,6 +231,24 @@ MyViewController *viewController = [[MyViewController alloc] initWithNibName:@"M
     })();
   </script>
 
+
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'flaviocaetanoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://127.0.0.1:4000/post/cocoapods-and-resource_bundles/';
+        var disqus_url = 'http://127.0.0.1:4000/post/cocoapods-and-resource_bundles/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

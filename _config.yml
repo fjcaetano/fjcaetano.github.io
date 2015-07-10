@@ -6,36 +6,11 @@ url: http://127.0.0.1:4000
 title: License to Kill -9
 subtitle: Tales from an iOS Dev
 author: Flávio Caetano
-simple_search: https://www.google.com/search
 description: Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.
-
-# Owner/author information
-owner:
-  name:           Flávio Caetano
-  avatar:         avatar.jpg
-  bio:            "Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order."
-  email:          flavio@vieiracaetano.com
-  # Social networking links used in footer. Update and remove as you like.
-  twitter:        flavio_caetano
-  facebook:
-  github:         fjcaetano
-  stackexchange:
-  linkedin:
-  instagram:
-  flickr:
-  tumblr:
-  # google plus id, include the '+', eg +mmistakes
-  google_plus:
-
-# Default date format is "ordinal" (resulting in "July 22nd 2007")
-# You can customize the format as defined in
-# http://www.ruby-doc.org/core-1.9.2/Time.html#method-i-strftime
-# Additionally, %o will give you the ordinal representation of the day
-date_format: "ordinal"
+avatar:      /images/avatar.png
 
 # RSS / Email (optional) subscription links (change if using something like Feedburner)
 subscribe_rss: /atom.xml
-subscribe_email:
 # RSS feeds can list your email address if you like
 email: flavio@vieiracaetano.com
 
@@ -47,9 +22,6 @@ email: flavio@vieiracaetano.com
 # root: /
 permalink: /post/:title/
 source: source
-# destination: public
-# plugins: plugins
-code_dir: downloads/code
 category_dir: blog/categories
 markdown: rdiscount
 rdiscount:
@@ -60,7 +32,6 @@ rdiscount:
 highlighter: pygments # default python pygments have been replaced by pygments.rb
 
 paginate: 5          # Posts per page on the blog index
-# paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
 excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
 excerpt_separator: "<!--more-->"
@@ -81,6 +52,9 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 #   3rd Party Settings    #
 # ----------------------- #
 
+# Linkedin
+linkedin_profile: https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826
+
 # Github repositories
 github_user: fjcaetano
 github_repo_count: 0
@@ -92,7 +66,7 @@ twitter_user: flavio_caetano
 twitter_tweet_button: true
 
 # Disqus Comments
-disqus_short_name:
+disqus_short_name: flaviocaetanoblog
 disqus_show_comment_count: false
 
 # Google Analytics
