@@ -141,6 +141,11 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
                <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div>
 
 
+
+
+<!-- more -->
+
+
 <p>But don&rsquo;t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
 
 <div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>

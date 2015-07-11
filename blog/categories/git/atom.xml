@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | License to Kill -9]]></title>
   <link href="http://fjcaetano.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://fjcaetano.github.io/"/>
-  <updated>2015-07-10T22:28:32-03:00</updated>
+  <updated>2015-07-10T22:56:11-03:00</updated>
   <id>http://fjcaetano.github.io/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -19,6 +19,9 @@
     <updated>2014-07-23T17:22:57-03:00</updated>
     <id>http://fjcaetano.github.io/post/you-shouldnt-use-git-blame</id>
     <content type="html"><![CDATA[<p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn&rsquo;t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with &ldquo;default" <code>git-blame</code> and Xcode&rsquo;s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
+
+<!-- more -->
+
 
 <p>Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I&rsquo;m the one who fixes what is not according. Therefore, my name comes up in Xcode&rsquo;s blame view more  often than others.</p>
 

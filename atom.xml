@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://fjcaetano.github.io/atom.xml" rel="self"/>
   <link href="http://fjcaetano.github.io/"/>
-  <updated>2015-07-10T22:28:32-03:00</updated>
+  <updated>2015-07-10T22:56:11-03:00</updated>
   <id>http://fjcaetano.github.io/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -19,6 +19,9 @@
     <updated>2014-07-23T17:22:57-03:00</updated>
     <id>http://fjcaetano.github.io/post/you-shouldnt-use-git-blame</id>
     <content type="html"><![CDATA[<p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn&rsquo;t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with &ldquo;default" <code>git-blame</code> and Xcode&rsquo;s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
+
+<!-- more -->
+
 
 <p>Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I&rsquo;m the one who fixes what is not according. Therefore, my name comes up in Xcode&rsquo;s blame view more  often than others.</p>
 
@@ -49,6 +52,11 @@
         <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
     <span class="p">}</span>
  <span class="p">}</span></code></pre></div>
+
+
+
+
+<!-- more -->
 
 
 <p>Printing the value also proved to be pointless:</p>
@@ -89,6 +97,9 @@
     <id>http://fjcaetano.github.io/post/memoirs-of-a-wwdc-rookie</id>
     <content type="html"><![CDATA[<p>This year I went to Apple&rsquo;s WWDC for the first time. I got the chance to be where every iOS developer wanted to be. The place where stuff happened. The place with the best among all. The place that mattered.</p>
 
+<!-- more -->
+
+
 <p>We got to San Francisco the weekend before the conference and left the weekend after, so we had some time to explore a new city I didn&rsquo;t know. First of all, the food is great. I had the <a href="http://www.yelp.com/biz/super-duper-burgers-san-francisco-3">best burger</a>, the <a href="http://www.yelp.com/biz/r-and-g-lounge-san-francisco">best chinese</a> and the <a href="http://www.yelp.com/biz/tonys-pizza-napoletana-san-francisco">best pizza</a> I&rsquo;ve ever had. And I&rsquo;m a foodie. Just Yelp it and be happy. There&rsquo;s a lot of tourism you can do in SF, some of the things we did were visiting Alcatraz, bike to Sausalito and drive to the Silicon Valley and visit the great tech companies HQs.</p>
 
 <p>Monday, when the WWDC starts, we got out of the hotel at 4:30am and got to the keynote line at around 4:45am and it was already huge. Honestly, I was skeptical about the keynote being all of what people say. But, as a first timer I thought I just had to go and see. We had bought beach chairs at Target in the Sunday and sat in the line and got to know new people, exchange ideas, do some networking. Despite the cold and sleepiness, the line itself was already worthy of the effort. But, thankfully, <strong>everything</strong> was worthy. Sure, some say we had the best keynote since the iPhone, but if you&rsquo;re a first timer, do find time and motivation to go to the keynote.</p>
@@ -114,6 +125,9 @@
 for sure what will happen to Objective-C, but one can only guess it won&rsquo;t be
 around for long. My guess is that Apple will be accepting ObjC apps up till iOS
 10, but that is just my guest.</p>
+
+<!-- more -->
+
 
 <p>By attending to the WWDC I had the opportunity of directly contacting Apple&rsquo;s
 engineers and insights most of people couldn&rsquo;t, so in the next posts I&rsquo;ll cover
@@ -199,6 +213,11 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
 <div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nl">registerClass</span><span class="p">:</span><span class="nb">nil</span>
         <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span>
                <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div>
+
+
+
+
+<!-- more -->
 
 
 <p>But don&rsquo;t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Objective-c | License to Kill -9]]></title>
   <link href="http://fjcaetano.github.io/blog/categories/objective-c/atom.xml" rel="self"/>
   <link href="http://fjcaetano.github.io/"/>
-  <updated>2015-07-10T22:28:32-03:00</updated>
+  <updated>2015-07-10T22:56:11-03:00</updated>
   <id>http://fjcaetano.github.io/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -30,6 +30,9 @@
         <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
     <span class="p">}</span>
  <span class="p">}</span></code></pre></div></p>
+
+<!-- more -->
+
 
 <p>Printing the value also proved to be pointless:</p>
 
@@ -72,6 +75,9 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
 <p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nl">registerClass</span><span class="p">:</span><span class="nb">nil</span>
         <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span>
                <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div></p>
+
+<!-- more -->
+
 
 <p>But don&rsquo;t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
 

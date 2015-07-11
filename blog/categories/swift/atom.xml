@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | License to Kill -9]]></title>
   <link href="http://fjcaetano.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://fjcaetano.github.io/"/>
-  <updated>2015-07-10T22:28:32-03:00</updated>
+  <updated>2015-07-10T22:56:11-03:00</updated>
   <id>http://fjcaetano.github.io/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -22,6 +22,9 @@
 for sure what will happen to Objective-C, but one can only guess it won&rsquo;t be
 around for long. My guess is that Apple will be accepting ObjC apps up till iOS
 10, but that is just my guest.</p>
+
+<!-- more -->
+
 
 <p>By attending to the WWDC I had the opportunity of directly contacting Apple&rsquo;s
 engineers and insights most of people couldn&rsquo;t, so in the next posts I&rsquo;ll cover
