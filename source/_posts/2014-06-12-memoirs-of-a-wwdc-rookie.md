@@ -19,6 +19,8 @@ image:
 
 This year I went to Apple's WWDC for the first time. I got the chance to be where every iOS developer wanted to be. The place where stuff happened. The place with the best among all. The place that mattered.
 
+<!-- more -->
+
 We got to San Francisco the weekend before the conference and left the weekend after, so we had some time to explore a new city I didn't know. First of all, the food is great. I had the [best burger](http://www.yelp.com/biz/super-duper-burgers-san-francisco-3), the [best chinese](http://www.yelp.com/biz/r-and-g-lounge-san-francisco) and the [best pizza](http://www.yelp.com/biz/tonys-pizza-napoletana-san-francisco) I've ever had. And I'm a foodie. Just Yelp it and be happy. There's a lot of tourism you can do in SF, some of the things we did were visiting Alcatraz, bike to Sausalito and drive to the Silicon Valley and visit the great tech companies HQs.
 
 Monday, when the WWDC starts, we got out of the hotel at 4:30am and got to the keynote line at around 4:45am and it was already huge. Honestly, I was skeptical about the keynote being all of what people say. But, as a first timer I thought I just had to go and see. We had bought beach chairs at Target in the Sunday and sat in the line and got to know new people, exchange ideas, do some networking. Despite the cold and sleepiness, the line itself was already worthy of the effort. But, thankfully, **everything** was worthy. Sure, some say we had the best keynote since the iPhone, but if you're a first timer, do find time and motivation to go to the keynote.

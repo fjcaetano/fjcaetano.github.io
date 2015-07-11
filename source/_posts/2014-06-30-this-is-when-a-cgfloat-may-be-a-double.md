@@ -32,6 +32,8 @@ for (UIView *subview in view.subviews)
  }
 {% endhighlight %}
 
+<!-- more -->
+
 Printing the value also proved to be pointless:
 
 {% highlight objc %}

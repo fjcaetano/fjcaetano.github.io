@@ -24,6 +24,8 @@ for sure what will happen to Objective-C, but one can only guess it won't be
 around for long. My guess is that Apple will be accepting ObjC apps up till iOS
 10, but that is just my guest.
 
+<!-- more -->
+
 By attending to the WWDC I had the opportunity of directly contacting Apple's
 engineers and insights most of people couldn't, so in the next posts I'll cover
 the basics of Swift.

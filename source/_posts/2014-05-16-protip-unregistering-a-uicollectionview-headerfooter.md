@@ -31,6 +31,8 @@ with `nil` class as stated in [Apple's docs](https://developer.apple.com/libr
                withReuseIdentifier:kHEADER_IDENTIFIER];
 {% endhighlight %}
 
+<!-- more -->
+
 But don't forget to overwrite the [`[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:)
 
 {% highlight objc %}

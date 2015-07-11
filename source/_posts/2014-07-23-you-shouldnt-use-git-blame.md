@@ -19,6 +19,8 @@ image:
 
 Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with "default" `git-blame` and Xcode's blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.
 
+<!-- more -->
+
 Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I'm the one who fixes what is not according. Therefore, my name comes up in Xcode's blame view more  often than others.
 
 If you really need to find out whoever wrote that dreadful condition that crashes your app, use the `git-blame` command line with the "-n" option. It'll show the name of the person that first introduced that line and, quite probably, wrote it.
