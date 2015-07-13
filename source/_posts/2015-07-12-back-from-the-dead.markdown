@@ -4,6 +4,7 @@ title: Back From The Dead
 date: 2015-07-12 17:26:26 -0300
 comments: true
 share: true
+published: false
 github_repo: https://github.com/fjcaetano/fjcaetano.github.io
 image:
   feature: /images/amsterdam.png
