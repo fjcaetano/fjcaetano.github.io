@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -123,7 +125,7 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="/post/protip-unregistering-a-uicollectionview-headerfooter/" rel="bookmark" title="Protip: Unregistering a UICollectionView header/footer">Protip: Unregistering a UICollectionView header/footer</a></h1>
+          <h1 class="entry-title"><a href="/post/protip-unregistering-a-uicollectionview-headerfooter/" rel="bookmark" title="Protip: Unregistering a UICollectionView header/footer">Protip: Unregistering a UICollectionView Header/footer</a></h1>
         
         <h2>May 16, 2014</h2>
       </div><!-- /.header-title-wrap -->
@@ -133,26 +135,21 @@
       
 
       <p>You can unregister a UICollectionView supplementary view by re-registering it
-with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple&rsquo;s docs</a>.
+with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple’s docs</a>.
 (Remember to use the same <code>reuseIdentifier</code>).</p>
 
 <div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nl">registerClass</span><span class="p">:</span><span class="nb">nil</span>
         <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span>
                <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div>
 
-
-
-
 <!-- more -->
 
-
-<p>But don&rsquo;t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
+<p>But don’t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
 
 <div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">CGSizeZero</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
-
 
 <p>Header or footer, depending on your need.</p>
 
@@ -174,23 +171,23 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
+            <a href="/post/back-from-the-dead/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <h3><a href="/post/back-from-the-dead/" title="Back From The Dead">Back From The Dead</a></h3>
+            <p>Finally! After long overdue, this lovely little blog has been updated. Andupgraded. From one press to another. So long Wordpress, hello &hellip;&hellip; <a href="/post/back-from-the-dead/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
-              <span>Published on June 30, 2014</span>
+              <h4><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h4>
+              <span>Published on July 23, 2014</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
-              <span>Published on June 12, 2014</span>
+              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
+              <span>Published on June 30, 2014</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->

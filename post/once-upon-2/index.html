@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -116,7 +118,7 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="/post/once-upon-2/" rel="bookmark" title="Once Upon a Time, There Was Nothing (part. 2)">Once Upon a Time, There Was Nothing (part. 2)</a></h1>
+          <h1 class="entry-title"><a href="/post/once-upon-2/" rel="bookmark" title="Once Upon a Time, There Was Nothing (part. 2)">Once Upon a Time, There Was Nothing (Part. 2)</a></h1>
         
         <h2>December 13, 2012</h2>
       </div><!-- /.header-title-wrap -->
@@ -124,46 +126,45 @@
     <div class="entry-content">
 
       
-      <a href="https://github.com/fjcaetano/django-admin-thumbnail"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+      <a href="https://github.com/fjcaetano/django-admin-thumbnail" target="_blank"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
       
 
-      <p>One of the main reasons I like Django is it&rsquo;s awesome auto-generated admin
-interface. It&rsquo;s  just awesome. When you start to play with it and discover apps
+      <p>One of the main reasons I like Django is it’s awesome auto-generated admin
+interface. It’s  just awesome. When you start to play with it and discover apps
 like <a href="https://bitbucket.org/izi/django-admin-tools/wiki/Home">django-admin-tools</a>,
 the faded <a href="http://code.google.com/p/django-jqmobile/">jq-mobile</a> and other cool 
 stuff you realise how versatile Django really is.</p>
 
-<h1>The Context</h1>
+<h1 id="the-context">The Context</h1>
 
 <p>When I started learning Django I created a small manager for some of my hobbies.
 The first one was a book manager in which I have a log of <strong>every single</strong> book
-I&rsquo;ve ever read, <strong>when</strong> I read it, <strong>where</strong> the book is located, if it's 
-<strong>borrowed</strong> to somebody, a &ldquo;<strong>GIVE IT BACK TO ME</strong>&rdquo; button that sends an email
+I’ve ever read, <strong>when</strong> I read it, <strong>where</strong> the book is located, if it’s 
+<strong>borrowed</strong> to somebody, a “<strong>GIVE IT BACK TO ME</strong>” button that sends an email
 with that exact message to whoever has it, and so on. Among everything, I also
-added a field for the book&rsquo;s <em>cover</em> but I never really used it.</p>
+added a field for the book’s <em>cover</em> but I never really used it.</p>
 
-<p>More recently, I restarted to improve my card deck collection (yes, I&rsquo;m weird)
-and added this new feature to my Django manager. But this time, since it&rsquo;s
+<p>More recently, I restarted to improve my card deck collection (yes, I’m weird)
+and added this new feature to my Django manager. But this time, since it’s
 cataloging a collection and decks are mainly visual, the photos of the decks are 
 <strong><em>very</em></strong> important. Yes, I said image<strong><em>S</em></strong>. Each deck has five photos:</p>
 
 <ul>
-<li>The Front of the Box</li>
-<li>The Back of the Box</li>
-<li>The Back of the Cards</li>
-<li>The Joker</li>
-<li>The Ace of Spades</li>
+  <li>The Front of the Box</li>
+  <li>The Back of the Box</li>
+  <li>The Back of the Cards</li>
+  <li>The Joker</li>
+  <li>The Ace of Spades</li>
 </ul>
 
-
-<p>There are decks with a different back for each card, but that&rsquo;s not important,.
-Those are the options I&rsquo;m contemplating. But, since not all of them are opened
-(I have one numbered deck that goes to 2500 copies. I won&rsquo;t open it. Never!) only 
+<p>There are decks with a different back for each card, but that’s not important,.
+Those are the options I’m contemplating. But, since not all of them are opened
+(I have one numbered deck that goes to 2500 copies. I won’t open it. Never!) only 
 the first two images are requirements.</p>
 
 <p>So, now that you are aware of the context, this is when the problem (and the fun) started.</p>
 
-<h2>The Problem</h2>
+<h2 id="the-problem">The Problem</h2>
 
 <p>I started looking for some Django solution that could easily show thumbnails for
 my images in my admin module. Guess what was my surprise when I realised there
@@ -172,27 +173,27 @@ was <em>N**one</em>.</p>
 <p>There was absolutely nothing that would do what wanted and needed. The closest
 things I found were the automatic thumbnail creator <a href="https://github.com/sorl/sorl-thumbnail">sorl-thumbnail</a>
 and <a href="http://www.acedevs.com/blog/2011/07/11/django-admin-list-view-thumbnails/">Ace Devs solution</a> 
-which didn&rsquo;t solve my problem. Dude, my images have 1936x2592 pixels of resolution.
-I can&rsquo;t just show them as they are.</p>
+which didn’t solve my problem. Dude, my images have 1936x2592 pixels of resolution.
+I can’t just show them as they are.</p>
 
-<p>That&rsquo;s when I realised I would have to develop a new solution for that.</p>
+<p>That’s when I realised I would have to develop a new solution for that.</p>
 
-<h1>The Solution (aka The Fun Part)</h1>
+<h1 id="the-solution-aka-the-fun-part">The Solution (aka The Fun Part)</h1>
 
-<p>I&rsquo;m a modest guy, I don&rsquo;t like bragging about what I do.</p>
+<p>I’m a modest guy, I don’t like bragging about what I do.</p>
 
 <p>No forget it. Bullshit. I do like to show everyone what I did. Specially when I
-think it&rsquo;s awesome, I mean, It&rsquo;s awesome. Don&rsquo;t you like sharing awesome stuff
-with your friends? Dude, I&rsquo;m even writing an article about it! In <strong>TWO</strong> languages!</p>
+think it’s awesome, I mean, It’s awesome. Don’t you like sharing awesome stuff
+with your friends? Dude, I’m even writing an article about it! In <strong>TWO</strong> languages!</p>
 
 <p>So, what I did was basically to join and improve those two solutions I found.
-&ldquo;<strong>Basically</strong>&rdquo; because, in the deep, it was a little more complex than that.</p>
+“<strong>Basically</strong>” because, in the deep, it was a little more complex than that.</p>
 
 <p>I came up with the stupidest yet simplest name I could find:
 <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a>. I
-know, it&rsquo;s über stupid. But it&rsquo;s also simple, so it works.</p>
+know, it’s über stupid. But it’s also simple, so it works.</p>
 
-<h2>django-admin-thumbnail</h2>
+<h2 id="django-admin-thumbnail">django-admin-thumbnail</h2>
 
 <p>The package automatically works on your <em>list_display</em> of your <em>ModelAdmin</em>. It
 <em>automagically</em> detects your <em>ImageFields</em>, converts it to thumbnail (physically
@@ -207,7 +208,7 @@ displays to you in a user friendly way.</p>
 <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> is
 localizable but, currently, only <code>pt-BR</code> and <code>en-US</code> are the officially supported
 languages. If you want it to be in your language, just send me your <code>.po</code> file
-and I&rsquo;ll validate it and share. It&rsquo;s ridiculous, there are only two tags. Give it a try!</p>
+and I’ll validate it and share. It’s ridiculous, there are only two tags. Give it a try!</p>
 
 <p>When I finished, I realised how simple and effective it was. I had to share it
 with the community. So I took the opportunity to create my first <em>python package</em>.
@@ -216,13 +217,13 @@ It was a pain in the ass because the documentation is lame, specially the
 <em>reStructured Text</em> working until I found the <a href="http://pypi.python.org/pypi/py2html">py2html</a> 
 command.</p>
 
-<h1>Wrap and Finish</h1>
+<h1 id="wrap-and-finish">Wrap and Finish</h1>
 
-<p>That&rsquo;s it. If you want to know more about <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> 
-just click the link and it will send you to the Github repository. There&rsquo;s a
-quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/0.1.1">Here&rsquo;s the link for the python package</a></p>
+<p>That’s it. If you want to know more about <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> 
+just click the link and it will send you to the Github repository. There’s a
+quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/0.1.1">Here’s the link for the python package</a></p>
 
-<p>If you have any trouble to use it, don&rsquo;t hesitate to send me a message.</p>
+<p>If you have any trouble to use it, don’t hesitate to send me a message.</p>
 
 <p>Have fun!</p>
 
@@ -244,23 +245,23 @@ quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
+            <a href="/post/back-from-the-dead/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <h3><a href="/post/back-from-the-dead/" title="Back From The Dead">Back From The Dead</a></h3>
+            <p>Finally! After long overdue, this lovely little blog has been updated. Andupgraded. From one press to another. So long Wordpress, hello &hellip;&hellip; <a href="/post/back-from-the-dead/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
-              <span>Published on June 30, 2014</span>
+              <h4><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h4>
+              <span>Published on July 23, 2014</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
-              <span>Published on June 12, 2014</span>
+              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
+              <span>Published on June 30, 2014</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->

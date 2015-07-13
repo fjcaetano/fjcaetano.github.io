@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://fjcaetano.github.io/atom.xml" rel="self"/>
   <link href="http://fjcaetano.github.io/"/>
-  <updated>2015-07-10T22:56:11-03:00</updated>
+  <updated>2015-07-12T21:21:19-03:00</updated>
   <id>http://fjcaetano.github.io/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -14,24 +14,44 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Back From the Dead]]></title>
+    <link href="http://fjcaetano.github.io/post/back-from-the-dead/"/>
+    <updated>2015-07-12T17:26:26-03:00</updated>
+    <id>http://fjcaetano.github.io/post/back-from-the-dead</id>
+    <content type="html"><![CDATA[<p>Finally! After long overdue, this lovely little blog has been updated. And
+upgraded. From one press to another. So long Wordpress, hello Octopress! And
+we’re now hosted on Github. So, if I ever get lucky and have a truly successful
+post, there’s no need to worry with the blog being down.</p>
+
+<!-- more -->
+
+<p>Anyways, this is just a note to get you on your toes for what’s coming. True
+updates will arrive shortly.</p>
+
+<p>P.S. I’m using the <a href="https://github.com/jez/hpstr-theme/" target="_blank">HPSTR</a> theme and I’m
+still getting around it, but all the feature images you may see here from now on
+are my own. I’ll try and remember to link them to a bigger picture.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[You Shouldn't Use Git Blame to Blame on People]]></title>
     <link href="http://fjcaetano.github.io/post/you-shouldnt-use-git-blame/"/>
     <updated>2014-07-23T17:22:57-03:00</updated>
     <id>http://fjcaetano.github.io/post/you-shouldnt-use-git-blame</id>
-    <content type="html"><![CDATA[<p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn&rsquo;t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with &ldquo;default" <code>git-blame</code> and Xcode&rsquo;s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
+    <content type="html"><![CDATA[<p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn’t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with “default” <code>git-blame</code> and Xcode’s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
 
 <!-- more -->
 
+<p>Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I’m the one who fixes what is not according. Therefore, my name comes up in Xcode’s blame view more  often than others.</p>
 
-<p>Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I&rsquo;m the one who fixes what is not according. Therefore, my name comes up in Xcode&rsquo;s blame view more  often than others.</p>
+<p>If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <code>git-blame</code> command line with the “-n” option. It’ll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
 
-<p>If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <code>git-blame</code> command line with the &ldquo;-n&rdquo; option. It&rsquo;ll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
-
-<p>Or maybe, even better, get the changelog and the names of who touched a specific line of code with <code>git-log</code> &ldquo;-L&rdquo; option:</p>
+<p>Or maybe, even better, get the changelog and the names of who touched a specific line of code with <code>git-log</code> “-L” option:</p>
 
 <p><a href="http://fjcaetano.github.io/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="http://fjcaetano.github.io/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
 
-<p>Thanks to: <a href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
+<p>Thanks to: <a href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file" target="_blank">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
 ]]></content>
   </entry>
   
@@ -42,51 +62,71 @@
     <id>http://fjcaetano.github.io/post/this-is-when-a-cgfloat-may-be-a-double</id>
     <content type="html"><![CDATA[<p>How would you explain the following code never getting into the <code>if</code> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
 
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">CGFloat</span> <span class="n">subviewAlpha</span> <span class="o">=</span> <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span><span class="p">;</span>
-    <span class="n">CGFloat</span> <span class="n">myAlpha</span> <span class="o">=</span> <span class="mf">0.15f</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">subviewAlpha</span> <span class="o">==</span> <span class="n">myAlpha</span> <span class="o">&amp;&amp;</span>
-        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
-    <span class="p">{</span>
-        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
-    <span class="p">}</span>
- <span class="p">}</span></code></pre></div>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="objc"><span class="line"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="n">CGFloat</span> <span class="n">subviewAlpha</span> <span class="o">=</span> <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span><span class="p">;</span>
+</span><span class="line">    <span class="n">CGFloat</span> <span class="n">myAlpha</span> <span class="o">=</span> <span class="mf">0.15f</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">subviewAlpha</span> <span class="o">==</span> <span class="n">myAlpha</span> <span class="o">&amp;&amp;</span>
+</span><span class="line">        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <!-- more -->
 
-
 <p>Printing the value also proved to be pointless:</p>
 
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">subviewAlpha</span><span class="p">);</span>
-<span class="c1">// output: 0.150000</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="objc"><span class="line"><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">subviewAlpha</span><span class="p">);</span>
+</span><span class="line"><span class="c1">// output: 0.150000</span>
+</span><span class="line">
+</span><span class="line"><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">myAlpha</span><span class="p">);</span>
+</span><span class="line"><span class="c1">// output: 0.150000</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">myAlpha</span><span class="p">);</span>
-<span class="c1">// output: 0.150000</span></code></pre></div>
+<p>Finally, XCode’s debugger shed a dim of light to the real issue. It showed that the true value of <code>subviewAlpha</code> is 0.14999999999999999, and as a floating point it’s accurate. Meanwhile the value of <code>myAlpha</code> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
 
-
-<p>Finally, XCode&rsquo;s debugger shed a dim of light to the real issue. It showed that the true value of <code>subviewAlpha</code> is 0.14999999999999999, and as a floating point it&rsquo;s accurate. Meanwhile the value of <code>myAlpha</code> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
-
-<p>Jumping to <code>CGFloat</code> definition, we can see that it may be an alias to float or double, depending on the system&rsquo;s architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424">@gustavocsb</a>, for the link).</p>
+<p>Jumping to <code>CGFloat</code> definition, we can see that it may be an alias to float or double, depending on the system’s architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424">@gustavocsb</a>, for the link).</p>
 
 <p><a href="http://fjcaetano.github.io/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img src="http://fjcaetano.github.io/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" alt="" /></a></p>
 
-<p>As usual, I solved it the more elegant way I could. &ldquo;Hey, if <code>CGFloat</code> is bipolar, let it tell me how to read it!&rdquo;</p>
+<p>As usual, I solved it the more elegant way I could. “Hey, if <code>CGFloat</code> is bipolar, let it tell me how to read it!”</p>
 
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">==</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="mf">0.15</span> <span class="o">&amp;&amp;</span>
-        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
-    <span class="p">{</span>
-        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
-    <span class="p">}</span>
- <span class="p">}</span></code></pre></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="objc"><span class="line"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">==</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="mf">0.15</span> <span class="o">&amp;&amp;</span>
+</span><span class="line">        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<p> Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <code>typecast</code> it.</p>
+<p>Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <code>typecast</code> it.</p>
 ]]></content>
   </entry>
   
@@ -95,22 +135,23 @@
     <link href="http://fjcaetano.github.io/post/memoirs-of-a-wwdc-rookie/"/>
     <updated>2014-06-12T12:14:56-03:00</updated>
     <id>http://fjcaetano.github.io/post/memoirs-of-a-wwdc-rookie</id>
-    <content type="html"><![CDATA[<p>This year I went to Apple&rsquo;s WWDC for the first time. I got the chance to be where every iOS developer wanted to be. The place where stuff happened. The place with the best among all. The place that mattered.</p>
+    <content type="html"><![CDATA[<p>This year I went to Apple’s WWDC for the first time. I got the chance to be where every iOS developer wanted to be. The place where stuff happened. The place with the best among all. The place that mattered.</p>
 
 <!-- more -->
 
+<p>We got to San Francisco the weekend before the conference and left the weekend after, so we had some time to explore a new city I didn’t know. First of all, the food is great. I had the <a href="http://www.yelp.com/biz/super-duper-burgers-san-francisco-3">best burger</a>, the <a href="http://www.yelp.com/biz/r-and-g-lounge-san-francisco">best chinese</a> and the <a href="http://www.yelp.com/biz/tonys-pizza-napoletana-san-francisco">best pizza</a> I’ve ever had. And I’m a foodie. Just Yelp it and be happy. There’s a lot of tourism you can do in SF, some of the things we did were visiting Alcatraz, bike to Sausalito and drive to the Silicon Valley and visit the great tech companies HQs.</p>
 
-<p>We got to San Francisco the weekend before the conference and left the weekend after, so we had some time to explore a new city I didn&rsquo;t know. First of all, the food is great. I had the <a href="http://www.yelp.com/biz/super-duper-burgers-san-francisco-3">best burger</a>, the <a href="http://www.yelp.com/biz/r-and-g-lounge-san-francisco">best chinese</a> and the <a href="http://www.yelp.com/biz/tonys-pizza-napoletana-san-francisco">best pizza</a> I&rsquo;ve ever had. And I&rsquo;m a foodie. Just Yelp it and be happy. There&rsquo;s a lot of tourism you can do in SF, some of the things we did were visiting Alcatraz, bike to Sausalito and drive to the Silicon Valley and visit the great tech companies HQs.</p>
+<p>Monday, when the WWDC starts, we got out of the hotel at 4:30am and got to the keynote line at around 4:45am and it was already huge. Honestly, I was skeptical about the keynote being all of what people say. But, as a first timer I thought I just had to go and see. We had bought beach chairs at Target in the Sunday and sat in the line and got to know new people, exchange ideas, do some networking. Despite the cold and sleepiness, the line itself was already worthy of the effort. But, thankfully, <strong>everything</strong> was worthy. Sure, some say we had the best keynote since the iPhone, but if you’re a first timer, do find time and motivation to go to the keynote.</p>
 
-<p>Monday, when the WWDC starts, we got out of the hotel at 4:30am and got to the keynote line at around 4:45am and it was already huge. Honestly, I was skeptical about the keynote being all of what people say. But, as a first timer I thought I just had to go and see. We had bought beach chairs at Target in the Sunday and sat in the line and got to know new people, exchange ideas, do some networking. Despite the cold and sleepiness, the line itself was already worthy of the effort. But, thankfully, <strong>everything</strong> was worthy. Sure, some say we had the best keynote since the iPhone, but if you&rsquo;re a first timer, do find time and motivation to go to the keynote.</p>
+<p>Throughout the WWDC, the sessions were outstanding. Me and my team split up to cover the maximum ground we could. Later we would get together to share what we learned and who we met. One thing I regret is not going to more labs. I was too focused on the sessions and lost this opportunity. Have this in mind: the sessions are streamed. Everyone can see it and you don’t have to be at the WWDC to keep up to it. Tête-à-tête with Apple engineers is a one-of-a-kind experience. You can only do it by being there. The Design Lab lines can get pretty overwhelming. There were already people waiting outside the Moscone at 7am and Apple’s designers insight of your app is priceless. This is my main advice:</p>
 
-<p>Throughout the WWDC, the sessions were outstanding. Me and my team split up to cover the maximum ground we could. Later we would get together to share what we learned and who we met. One thing I regret is not going to more labs. I was too focused on the sessions and lost this opportunity. Have this in mind: the sessions are streamed. Everyone can see it and you don&rsquo;t have to be at the WWDC to keep up to it. Tête-à-tête with Apple engineers is a one-of-a-kind experience. You can only do it by being there. The Design Lab lines can get pretty overwhelming. There were already people waiting outside the Moscone at 7am and Apple&rsquo;s designers insight of your app is priceless. This is my main advice:</p>
+<blockquote>
+  <p>Prioritise people time rather than session time. Don’t interrupt a conversation to go to a session. Sessions must be you’re last resource. If you have nothing to do, go see one.</p>
+</blockquote>
 
-<blockquote><p>Prioritise people time rather than session time. Don&rsquo;t interrupt a conversation to go to a session. Sessions must be you&rsquo;re last resource. If you have nothing to do, go see one.</p></blockquote>
+<p>It’s easy to see great faces there. Tim Cook wandered about, Craig Federighi took selfies with whoever asked him, Steve Streza and his green hair was everywhere, Marco Arment, John Gruber, Aaron Hillegass and his cowboy hat… if you see someone you admire, go and talk to them. Lose your shyness. They are mostly great people and will be happy to talk to you and give you advice. There were also outstanding folks at the AltConf. Great talkers like Matt Thompson and Orta Therox that only attended to the AltConf.</p>
 
-<p>It&rsquo;s easy to see great faces there. Tim Cook wandered about, Craig Federighi took selfies with whoever asked him, Steve Streza and his green hair was everywhere, Marco Arment, John Gruber, Aaron Hillegass and his cowboy hat&hellip; if you see someone you admire, go and talk to them. Lose your shyness. They are mostly great people and will be happy to talk to you and give you advice. There were also outstanding folks at the AltConf. Great talkers like Matt Thompson and Orta Therox that only attended to the AltConf.</p>
-
-<p>Go to parties and get togethers. Get to know people. Lot&rsquo;s of companies promote after parties at their HQs. Twitter, Github, Foursquare, Pinterest, Yelp, Dropbox, Pebble, Square&hellip; these are just some of the <a href="https://github.com/orta/wwdc_parties_2014">after parties</a>. Worst case scenario, you get to eat and drink for free and get to know their office.</p>
+<p>Go to parties and get togethers. Get to know people. Lot’s of companies promote after parties at their HQs. Twitter, Github, Foursquare, Pinterest, Yelp, Dropbox, Pebble, Square… these are just some of the <a href="https://github.com/orta/wwdc_parties_2014">after parties</a>. Worst case scenario, you get to eat and drink for free and get to know their office.</p>
 
 <p>Basically, my advice is the same my mom gave to me over and over: go outside and talk to people.</p>
 ]]></content>
@@ -122,45 +163,43 @@
     <updated>2014-06-04T13:57:21-03:00</updated>
     <id>http://fjcaetano.github.io/post/swift-for-dummies</id>
     <content type="html"><![CDATA[<p>At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows
-for sure what will happen to Objective-C, but one can only guess it won&rsquo;t be
+for sure what will happen to Objective-C, but one can only guess it won’t be
 around for long. My guess is that Apple will be accepting ObjC apps up till iOS
 10, but that is just my guest.</p>
 
 <!-- more -->
 
-
-<p>By attending to the WWDC I had the opportunity of directly contacting Apple&rsquo;s
-engineers and insights most of people couldn&rsquo;t, so in the next posts I&rsquo;ll cover
+<p>By attending to the WWDC I had the opportunity of directly contacting Apple’s
+engineers and insights most of people couldn’t, so in the next posts I’ll cover
 the basics of Swift.</p>
 
-<p>It doesn&rsquo;t matter if you&rsquo;re new to iOS or an experienced programmer. Now, we&rsquo;re
+<p>It doesn’t matter if you’re new to iOS or an experienced programmer. Now, we’re
 all in the same boat. We all have to learn Swift from scratch, so forget
 everything you know about Objective-C and get ready to learn this brand new
 language. By the way, its potential is overwhelming.</p>
 
-<h2>The basics</h2>
+<h2 id="the-basics">The basics</h2>
 
 <p>As far as I could tell, Swift borrows concepts from Python, Javascript and even
-Java. It&rsquo;s syntax also resembles these languages very much.</p>
+Java. It’s syntax also resembles these languages very much.</p>
 
-<p>You can forget about pointers for now, most of what we&rsquo;ll be using in Swift is
+<p>You can forget about pointers for now, most of what we’ll be using in Swift is
 passed through references. No more asterisk (woohoo \o/).</p>
 
-<p>Swift plays with the concepts of variables and constants. There&rsquo;s no type
+<p>Swift plays with the concepts of variables and constants. There’s no type
 definition to neither of those just the declares var, for variables, and <code>let</code>
-for constants. As you may have figured out, constants can&rsquo;t be altered. We&rsquo;ll
+for constants. As you may have figured out, constants can’t be altered. We’ll
 cover when to use it in a few steps.</p>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="s">&quot;this is getting good&quot;</span>
 
 <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></div>
 
-
 <p>Yep, there are no semi-colons at the end of statements.</p>
 
 <p>Switches are extremely powerful. <code>Cases</code> can be variables, strings, even a range
- of numbers. Also, cases don&rsquo;t automatically fall through the next condition, so
-  there&rsquo;s no need to <code>break</code>.</p>
+ of numbers. Also, cases don’t automatically fall through the next condition, so
+  there’s no need to <code>break</code>.</p>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
     <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
@@ -178,15 +217,14 @@ cover when to use it in a few steps.</p>
         <span class="c1">// something unimplemented</span>
 <span class="p">}</span></code></pre></div>
 
-
-<p>There&rsquo;s also no need for surrounding parenthesis when working with conditions,
-unless it&rsquo;s a complex condition, as usual. Switches in Swift (yep, try saying
+<p>There’s also no need for surrounding parenthesis when working with conditions,
+unless it’s a complex condition, as usual. Switches in Swift (yep, try saying
 that three times) are exhaustive. That means that you must either supply <code>cases</code>
 for every possible condition or a <code>default</code> to handle everything else.
-XCode will error at compile time if you don&rsquo;t.</p>
+XCode will error at compile time if you don’t.</p>
 
-<p>The final topic of this post is how you&rsquo;ll print output to the console. It&rsquo;s as
-simple as calling <code>println()</code> (it&rsquo;s a function) and you&rsquo;re done.
+<p>The final topic of this post is how you’ll print output to the console. It’s as
+simple as calling <code>println()</code> (it’s a function) and you’re done.
 Formatting strings is also awsome:</p>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Flavio&quot;</span>
@@ -194,9 +232,8 @@ Formatting strings is also awsome:</p>
 <span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello \(name)!&quot;</span><span class="p">)</span>
 <span class="c1">// Hello Flavio!</span></code></pre></div>
 
-
 <p>This is enough to get started and get familiar with Swift. Go ahead, poke it
-around, but don&rsquo;t try to get fancy just yet. I&rsquo;ll be covering more in the next
+around, but don’t try to get fancy just yet. I’ll be covering more in the next
 few days.</p>
 ]]></content>
   </entry>
@@ -207,26 +244,21 @@ few days.</p>
     <updated>2014-05-16T16:33:52-03:00</updated>
     <id>http://fjcaetano.github.io/post/protip-unregistering-a-uicollectionview-headerfooter</id>
     <content type="html"><![CDATA[<p>You can unregister a UICollectionView supplementary view by re-registering it
-with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple&rsquo;s docs</a>.
+with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple’s docs</a>.
 (Remember to use the same <code>reuseIdentifier</code>).</p>
 
 <div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nl">registerClass</span><span class="p">:</span><span class="nb">nil</span>
         <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span>
                <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div>
 
-
-
-
 <!-- more -->
 
-
-<p>But don&rsquo;t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
+<p>But don’t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
 
 <div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">CGSizeZero</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
-
 
 <p>Header or footer, depending on your need.</p>
 ]]></content>
@@ -240,21 +272,23 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
     <content type="html"><![CDATA[<p>Anyone that have recently developed any pods for Cocoapods know that resources
 should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code>resource_bundles</code></a>
 option. What is quite hard to figure out is how, exactly, to access those
-resources once they&rsquo;re set up in the <code>bundle</code>. It seems obvious now that I got
-it working, but I struggle a lot since there wasn&rsquo;t anything in Stackoverflow or
+resources once they’re set up in the <code>bundle</code>. It seems obvious now that I got
+it working, but I struggle a lot since there wasn’t anything in Stackoverflow or
 anywhere else that provided the answer I came up with.</p>
 
 <p>After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in
-a &ldquo;resources&rdquo; folder within the Pods project, but none of them are added in the
-target&rsquo;s &ldquo;Copy bundle resources&rdquo;. For that reason, I couldn&rsquo;t access any of the
-Pod&rsquo;s images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
+a “resources” folder within the Pods project, but none of them are added in the
+target’s “Copy bundle resources”. For that reason, I couldn’t access any of the
+Pod’s images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
 
-<blockquote><p>&lsquo;Terminating app due to uncaught exception 'NSInternalInconsistencyException&rsquo;,
-reason: &lsquo;Could not load NIB in bundle:&lt;{PATH_TO_APP}> (loaded)&rsquo; with name
-&lsquo;{VIEW_CONTROLLER_NAME}&rsquo;</p></blockquote>
+<blockquote>
+  <p>‘Terminating app due to uncaught exception ‘NSInternalInconsistencyException’,
+reason: ‘Could not load NIB in bundle:&lt;{PATH_TO_APP}&gt; (loaded)’ with name
+‘{VIEW_CONTROLLER_NAME}’</p>
+</blockquote>
 
-<p>The obvious solution that wasn&rsquo;t listed anywhere is using the Cocoapods
-generated bundle (which the folder actually doesn&rsquo;t exist) as a <code>NSBundle</code>:</p>
+<p>The obvious solution that wasn’t listed anywhere is using the Cocoapods
+generated bundle (which the folder actually doesn’t exist) as a <code>NSBundle</code>:</p>
 
 <div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="bp">NSString</span> <span class="o">*</span><span class="n">bundlePath</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource</span><span class="p">:</span><span class="s">@&quot;MyBundle&quot;</span> <span class="nl">ofType</span><span class="p">:</span><span class="s">@&quot;bundle&quot;</span><span class="p">];</span>
 
@@ -264,8 +298,7 @@ generated bundle (which the folder actually doesn&rsquo;t exist) as a <code>NSBu
 
 <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController</span><span class="p">:</span><span class="n">viewController</span> <span class="nl">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span></code></pre></div>
 
-
-<p>Yes, it&rsquo;s that simple, that obvious, though it&rsquo;s not listed anywhere. I believe
+<p>Yes, it’s that simple, that obvious, though it’s not listed anywhere. I believe
 to be prudent and convenient to write about it in order to help anyone who
 encounter themselves in the same situation as I did.</p>
 ]]></content>
@@ -277,19 +310,19 @@ encounter themselves in the same situation as I did.</p>
     <updated>2014-01-06T14:19:11-02:00</updated>
     <id>http://fjcaetano.github.io/post/cicada-2014</id>
     <content type="html"><![CDATA[<p>This morning, Cicada 3301 went back to active! In his/hers <a href="https://twitter.com/1231507051321">Twitter account</a>
-used on last year&rsquo;s challenge there was new link to an image posted on imgur.</p>
+used on last year’s challenge there was new link to an image posted on imgur.</p>
 
 <p><a href="http://fjcaetano.github.io/images/zN4h51m.jpg"><img src="http://fjcaetano.github.io/images/zN4h51m.jpg" alt="First Chapter" /></a></p>
 
 <p>Reproducing the tradicional previous steps, by extracting the image using
 <a href="http://www.outguess.org/">outguess</a> we came onto a message, once again signed.
-Its authenticity could be proved using Cicada&rsquo;s previous known
-<a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;amp;search=0x181F01E57A35090F">public key</a>.</p>
+Its authenticity could be proved using Cicada’s previous known
+<a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;search=0x181F01E57A35090F">public key</a>.</p>
 
-<p>Now let&rsquo;s get our hands dirty! The first task was easy, since it&rsquo;s steps were
+<p>Now let’s get our hands dirty! The first task was easy, since it’s steps were
 already elucidated on previous years. Now things start to get interesting.</p>
 
-<p>If you&rsquo;re interested in following the challenge progress, <a href="http://uncovering-cicada.wikia.com/wiki/CICADA_3301_2014_PUZZLE">Uncovering Cicada</a>
+<p>If you’re interested in following the challenge progress, <a href="http://uncovering-cicada.wikia.com/wiki/CICADA_3301_2014_PUZZLE">Uncovering Cicada</a>
 is on a good pace.</p>
 
 <p>Good luck, and good hunting!</p>
@@ -301,7 +334,7 @@ is on a good pace.</p>
     <link href="http://fjcaetano.github.io/post/autolayout-is-hell-on-earth/"/>
     <updated>2013-09-12T11:24:56-03:00</updated>
     <id>http://fjcaetano.github.io/post/autolayout-is-hell-on-earth</id>
-    <content type="html"><![CDATA[<p>I believe that every iOS developer is already aware of Apple&rsquo;s new directive
+    <content type="html"><![CDATA[<p>I believe that every iOS developer is already aware of Apple’s new directive
 forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new
 iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using
 this tool created by the son of a devil called <em>autolayout</em>.</p>
@@ -316,31 +349,31 @@ others. In addition to being extremely confusing (a <code>UIView's</code> marg
 <code>(“V:|-(-5)-[view1]-(&gt;=10)-[view2]-(912837)-|”)</code>, <em>autolayout</em> also makes
  everything slow.</p>
 
-<p><strong>Protip:</strong> if you&rsquo;re configuring your <em>coinstraints</em> via code, <strong>never</strong> forget
+<p><strong>Protip:</strong> if you’re configuring your <em>coinstraints</em> via code, <strong>never</strong> forget
 seting <code>self.translatesAutoresizingMaskIntoConstraints = NO</code> in your view. It
 took me a couple of coffee cups to realise this was the reason why my 
-<em>constraints</em> weren&rsquo;t being executing along with <code>[self layoutIfNeeded]</code>.</p>
+<em>constraints</em> weren’t being executing along with <code>[self layoutIfNeeded]</code>.</p>
 
 <p>I recently had to work with a <code>UICollectionView</code> and the scroll was getting
 really laggy. Anytime a new cell was loaded, the framerate dropped. After
 spending a few hours trying to find the root of the problem with a couple of
-friends (we even considered the problem being the SDK's <code>dequeue</code> thanks to 
+friends (we even considered the problem being the SDK’s <code>dequeue</code> thanks to 
 <em>Profiler</em>) some inspired insight hit us and we decided to disable <em>autolayout</em>
 on the <code>UICollectionViewCell's</code> xib and everything flowed like a beautiful
 stream under the morning sunlight of tropical woods. So let us analise what
 happened: Apple created a new concept, from the grounds, that theoretically
 would solve all problems when working with screens of different sizes, but this
-devilish concept is composed of runtime calculated values that ruin the <em>app&rsquo;s</em>
-smoothness. Yep, it gets hard to work happily&hellip;</p>
+devilish concept is composed of runtime calculated values that ruin the <em>app’s</em>
+smoothness. Yep, it gets hard to work happily…</p>
 
 <p>This view that is the <code>UICollectionView's</code> cell will not have <em>autolayout</em>.
 Nobody knows what will happen when we submit the <em>app</em> to the Appstore and we
-sincerely hope that Apple doesn&rsquo;t mind this view that, although is not
+sincerely hope that Apple doesn’t mind this view that, although is not
 explicitly using <em>frames</em>, also is not configured to accept <em>autolayout</em>.</p>
 
-<p>I&rsquo;m yet to find an iOS developer that has nothing to complain about this weird
-invention, but, as usual, Apple&rsquo;s &ldquo;this is what we want, so deal with it&rdquo; policy
-doesn&rsquo;t give us any alternatives. Instead of easing developers' work, they&rsquo;re
+<p>I’m yet to find an iOS developer that has nothing to complain about this weird
+invention, but, as usual, Apple’s “this is what we want, so deal with it” policy
+doesn’t give us any alternatives. Instead of easing developers’ work, they’re
 making our daily lives every more difficult while <del>Android scores another
 point</del> Apple is walking backwards.</p>
 ]]></content>
@@ -358,57 +391,57 @@ concepts. The fact is that a sign or plaque draws much more attention than plain
 text. After all, an image is worth a thousand words, therefore, an image sends a
 much more significant message than some written words.</p>
 
-<p>That&rsquo;s one of the reasons many development tools have featured <em>badges</em> (or 
+<p>That’s one of the reasons many development tools have featured <em>badges</em> (or 
 <em>shields)</em> to inform the status of an application/framework/library/<em>etcetera</em>.
-It&rsquo;s the case of <a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI</a>, 
+It’s the case of <a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI</a>, 
 <a href="https://codeclimate.com/changelog/510d4fde56b102523a0004bf">Code Climate</a>, 
 <a href="http://blog.tech-angels.com/post/43141047457/gemnasium-v3-aka-gemnasium">Gemnasium</a>,
 among others, all following <a href="https://github.com/olivierlacan/shields">olivierlacan/shields`</a>
 trend, available Github.</p>
 
-<p>I&rsquo;m an iOS developer and previously have worked with Python/Django (though I
-still fool around) and I&rsquo;ve always found very interesting this creative way of
+<p>I’m an iOS developer and previously have worked with Python/Django (though I
+still fool around) and I’ve always found very interesting this creative way of
 sharing the state of a service dynamically, but sadly, there were no solution to
 Python nor iOS featuring <em>badges</em> (except for Travis CI for tests). But,
-recently, appeared - out of nowhere - <a href="https://pypip.in/">pypip&rsquo;s</a> <em>shields</em> for
+recently, appeared - out of nowhere - <a href="https://pypip.in/">pypip’s</a> <em>shields</em> for
 Python packages that allows the visualisation of the latest available version of
 a package on <a href="http://pypi.python.org">pypi</a> or how many downloads some <em>release
-</em>had<em>.</em> When I came aware if it I resented for taking so long for solution so
-simple and effective to come up (or at least for <strong>I</strong> to discover it)&hellip; but it
-got over the top when I found out&hellip; or better, <strong>did not found out</strong> a similar
+*had</em>.* When I came aware if it I resented for taking so long for solution so
+simple and effective to come up (or at least for <strong>I</strong> to discover it)… but it
+got over the top when I found out… or better, <strong>did not found out</strong> a similar
 solution for <a href="http://cocoapods.org">Cocoapods</a>.</p>
 
-<p>I&rsquo;m one of those who doesn&rsquo;t miss a chance to solve a problem and endeavour an
-opportunity. That&rsquo;s how the <a href="http://fjcaetano.github.io/cocoapod-badges/">Cocoapod Badges</a> 
-project started. Since Cocoapods doesn&rsquo;t provide an API, any info on the number
+<p>I’m one of those who doesn’t miss a chance to solve a problem and endeavour an
+opportunity. That’s how the <a href="http://fjcaetano.github.io/cocoapod-badges/">Cocoapod Badges</a> 
+project started. Since Cocoapods doesn’t provide an API, any info on the number
 of <em>users/downloads</em>, nor any kind of useful data, it proved to be a challenge,
 and all I could use had to be what was at hand: the latest version of a <em>pod</em>.
-But even though, mistaken are those who thought it easy. As mentioned, there&rsquo;s
+But even though, mistaken are those who thought it easy. As mentioned, there’s
 no API!</p>
 
-<h1>Cocoapod Badges <img src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" alt="NSStringMask 1.1.2" /></h1>
+<h1 id="cocoapod-badgesnsstringmask-112httpscocoapod-badgesherokuappcomvnsstringmaskbadgepng">Cocoapod Badges <img src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" alt="NSStringMask 1.1.2" /></h1>
 
-<p>Digging through Cocoapod&rsquo;s and <a href="http://cocoadocs.org">Cocoadocs'</a> websites, I
+<p>Digging through Cocoapod’s and <a href="http://cocoadocs.org">Cocoadocs’</a> websites, I
 tried, first, to use the <a href="http://cocoadocs.org/documents.jsonp">documents.jsonp</a> 
-file that I found in the <em>source</em> of the <em>pod</em>&rsquo;s documentation website, however,
+file that I found in the <em>source</em> of the <em>pod</em>’s documentation website, however,
 I soon gave up for realising that its update frequency is too high (above one
 hour). At last, I had to content with the unfortunate <code>/search?q=</code> requested
-when searching for a <em>pod</em> in Cocoapod&rsquo;s main page. At first, it looked like an
+when searching for a <em>pod</em> in Cocoapod’s main page. At first, it looked like an
 excellent solution since it returned a <code>json</code> object with some info, until I
 realised that inside the object was a string with some <code>html</code> code and only
-inside that code was the <em>pod</em>&rsquo;s latest version. &ldquo;<em>God dammit!</em>&rdquo; Now I have to
-run a request on a &ldquo;pseudo-<em>webservice</em>&rdquo; and parse it with <code>XPATH</code> to get the
+inside that code was the <em>pod</em>’s latest version. “<em>God dammit!</em>” Now I have to
+run a request on a “pseudo-<em>webservice</em>” and parse it with <code>XPATH</code> to get the
 latest version!</p>
 
-<p>Super easy! But, as my mother would on a brazilian saying: &ldquo;<em>few shit is
-silliness</em>&rdquo;. The damned &ldquo;API&rdquo; doesn&rsquo;t return the requested <em>pod</em>, but anything
+<p>Super easy! But, as my mother would on a brazilian saying: “<em>few shit is
+silliness</em>”. The damned “API” doesn’t return the requested <em>pod</em>, but anything
 with the searched string. To get something more useful, I figured that 
-<code>/search?q=name:POD_NAME</code> searches only in the <em>pod</em>&rsquo;s name and not in its
+<code>/search?q=name:POD_NAME</code> searches only in the <em>pod</em>’s name and not in its
 description, what significantly reduces the results, specially when dealing with
 popular <em>pods</em> such as <a href="http://afnetworking.github.io/AFNetworking/index.html">AFNetworking</a>.</p>
 
 <p>After all that suffering, I finally got the information I wanted, but then, how
-do I show it in an image? Olivier Lacan&rsquo;s repo, that enabled all the existing 
+do I show it in an image? Olivier Lacan’s repo, that enabled all the existing 
 <em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code>.SVG</code> vectorial
 files that render <code>xml</code> data to images. So, accidentally, I double-clicked the 
 <code>.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news!
@@ -416,12 +449,14 @@ As the information about the version is in plain text inside the <code>xml</cod
 had to do was to set the <code>mimetype</code> so Django could provide the file as an image.</p>
 
 <p>1 <a href="http://heroku.com">Heroku</a> <em>dyno</em> later and the service is available fulltime
-(depending on Cocoapods website) through the images' url:</p>
+(depending on Cocoapods website) through the images’ url:</p>
 
-<blockquote><p><code>http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></p></blockquote>
+<blockquote>
+  <p><code>http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></p>
+</blockquote>
 
 <p>All you have to do is replace the <code>$PODNAME</code> with the name of the pod you want.
-Simple and easy, isn&rsquo;t it? Use it at will! And suport the Github repo!</p>
+Simple and easy, isn’t it? Use it at will! And suport the Github repo!</p>
 ]]></content>
   </entry>
   
@@ -431,105 +466,105 @@ Simple and easy, isn&rsquo;t it? Use it at will! And suport the Github repo!</p>
     <updated>2013-05-24T16:18:54-03:00</updated>
     <id>http://fjcaetano.github.io/post/documentation-and-objective-c</id>
     <content type="html"><![CDATA[<p>This is an article I originally wrote for the brazilian online magazine
-<a href="http://www.devmedia.com.br/aprenda-a-documentar-seus-projetos-em-objective-c-revista-mobile-magazine-48/27964">DevMedia&rsquo;s Mobile Magazine</a>.
-This first part is the article&rsquo;s introduction, so seat back and relax. Soon I&rsquo;ll
+<a href="http://www.devmedia.com.br/aprenda-a-documentar-seus-projetos-em-objective-c-revista-mobile-magazine-48/27964">DevMedia’s Mobile Magazine</a>.
+This first part is the article’s introduction, so seat back and relax. Soon I’ll
 post the second - and final - part with a tutorial to the Apple like
 documentation generator <a href="http://gentlebytes.com/appledoc/">appledoc</a>.</p>
 
-<p>&ldquo;In the agile programming environment, using methodologies such as SCRUM, Agile
-and Lean, we can&rsquo;t always document our sources. After all, pragmatics as we
-developers are, why would we lose time if the documentation won&rsquo;t be compiled,
-won&rsquo;t do any difference in the code&rsquo;s performance and demands a considerable
+<p>“In the agile programming environment, using methodologies such as SCRUM, Agile
+and Lean, we can’t always document our sources. After all, pragmatics as we
+developers are, why would we lose time if the documentation won’t be compiled,
+won’t do any difference in the code’s performance and demands a considerable
 slice of our time? But despite all that, the lack of documentation hurts. A lot.</p>
 
-<p>Who&rsquo;s familiarised, knows that in the ultra accelerated rhythm of <em>startups</em>,
-where everything is at the top of the list, there&rsquo;s not always time to apply
-some of the good programming technics that aren&rsquo;t crucial to the sanity and
-speed of the code. Oftenly, there&rsquo;s no time to formally test classes and methods
-because of the virtually null due time that is given. It&rsquo;s easy to find
+<p>Who’s familiarised, knows that in the ultra accelerated rhythm of <em>startups</em>,
+where everything is at the top of the list, there’s not always time to apply
+some of the good programming technics that aren’t crucial to the sanity and
+speed of the code. Oftenly, there’s no time to formally test classes and methods
+because of the virtually null due time that is given. It’s easy to find
 developers awake all night in <em>hackatons</em> to successfully deliver <em>that key</em>
-feature that will make &ldquo;the whole difference&rdquo;. Test? Document? Review? There&rsquo;s
+feature that will make “the whole difference”. Test? Document? Review? There’s
 so much to do and so little time!</p>
 
-<p>That&rsquo;s the reality of many young developers who enter this ultra competitive
+<p>That’s the reality of many young developers who enter this ultra competitive
 environment searching for the dream of running their own companies. The
 responsibilty of satisfying potential investors, the pressure for deploys and
-the client&rsquo;s needs frequently obfuscate technics that improve development and
+the client’s needs frequently obfuscate technics that improve development and
 maintenance experiences, but that are not considered primordial to the
-construction of an application. How often didn&rsquo;t I went back to an undocumented
-code done less than two months before and thought &ldquo;<em>what the flock does this
-loop do?</em>&rdquo; or &ldquo;<em>why, on earth, is this class here and not there?</em>&rdquo; Of course,
+construction of an application. How often didn’t I went back to an undocumented
+code done less than two months before and thought “<em>what the flock does this
+loop do?</em>” or “<em>why, on earth, is this class here and not there?</em>” Of course,
 when those lines of code were written, everything made perfect sense, but the
 moment those <em>ifs</em> and <em>fors</em> went out of the conscious mind, their meaning were
-long gone. After all, quoting the chinese saying: &ldquo;<em>the ink is better than memory</em>&rdquo;.</p>
+long gone. After all, quoting the chinese saying: “<em>the ink is better than memory</em>”.</p>
 
-<p>So let us document. It doesn&rsquo;t hurt, doesn&rsquo;t make you fat and isn&rsquo;t illegal.
+<p>So let us document. It doesn’t hurt, doesn’t make you fat and isn’t illegal.
 Actually, documenting is like eating vegetables: no one really likes it, but we
-do it hopping that, in the end, it&rsquo;s worth the result. But unlike the vegetables,
-it&rsquo;s proved that documenting helps. Contrary to the common thought, the time
-spent documenting a day&rsquo;s work is reasonably irrelevant and the benefit in return
+do it hopping that, in the end, it’s worth the result. But unlike the vegetables,
+it’s proved that documenting helps. Contrary to the common thought, the time
+spent documenting a day’s work is reasonably irrelevant and the benefit in return
 is definitely worthy. With practice and experience, no more than 30 minutes can
 be lost documenting everything that was made in a whole day. That way, the
-developer stays focused in his activity and doesn&rsquo;t deviates doing other stuff
+developer stays focused in his activity and doesn’t deviates doing other stuff
 that draws his attention or stand in his way of writing the best possible
-algorithm. Therefore, don&rsquo;t wait until the end of the week, when the work pile
-up, part of the features were already forgotten and we&rsquo;re all dying to that
+algorithm. Therefore, don’t wait until the end of the week, when the work pile
+up, part of the features were already forgotten and we’re all dying to that
 ice-cold friday-night-beer. Personally, I recommend documenting in the end of
-the day. In my case, it&rsquo;s always the last thing I do before leaving, because
+the day. In my case, it’s always the last thing I do before leaving, because
 everything is still fresh in memory and the amount of code produced in one day
-doesn&rsquo;t compare to what&rsquo;s done in one week. If that&rsquo;s not enough, I realised
-that I do a final unconscious revision before the final <em>commit</em> when I&rsquo;m
+doesn’t compare to what’s done in one week. If that’s not enough, I realised
+that I do a final unconscious revision before the final <em>commit</em> when I’m
 passing by the code documenting it.</p>
 
 <p>A well documented code is good for everybody. What would be of us without the
-independent frameworks, packages and repositories used daily if they weren&rsquo;t
+independent frameworks, packages and repositories used daily if they weren’t
 documented, or even had a bad documentation? Even senior programmers, frequently,
-return to Apple&rsquo;s documentation to a better understanding of Cocoa&rsquo;s classes.
+return to Apple’s documentation to a better understanding of Cocoa’s classes.
 Whether consulting a less used protocol, or lower level functions to manage
-<em>sockets</em>, <em>threads</em> or <em>semaphores</em>. Nobody can remember everything, so don&rsquo;t
-try it, you&rsquo;re not an elephant. It&rsquo;s not rare to find developers who use the
+<em>sockets</em>, <em>threads</em> or <em>semaphores</em>. Nobody can remember everything, so don’t
+try it, you’re not an elephant. It’s not rare to find developers who use the
 documentation as a last resource to understanding some tool. This line of thought
 makes sense if we think that we want everything to be as explained as possible
-so we don&rsquo;t lose any time trying to interpretate any possible use, when trying
+so we don’t lose any time trying to interpretate any possible use, when trying
 to comprehend some feature. But we must never forget that even when visiting
 forums, asking more experienced developers or reading articles in blogs,
-EVERYTHING had a documentation as basis. Well, even this article wouldn&rsquo;t exist
-if wasn&rsquo;t for <a href="http://gentlebytes.com/appledoc/">appledoc</a>&rsquo;s documentation.</p>
+EVERYTHING had a documentation as basis. Well, even this article wouldn’t exist
+if wasn’t for <a href="http://gentlebytes.com/appledoc/">appledoc</a>’s documentation.</p>
 
 <p>Documenting - or at least commenting - source codes is fundamental to the
 intelligibility of the code. Implementing these technics with developers that
 never done it, oftenly is seen with prejudice and suspicion that are common to
 the staunch and stubborn nature of young programmers. I must confess that I
-didn&rsquo;t wanted to document when people first told me to. Moreover, because of
-it&rsquo;s so unusual syntax, it&rsquo;s interesting to verbalize what&rsquo;s developed in ObjC
-to ease it&rsquo;s lecture, specially by more unexperienced programmers.</p>
+didn’t wanted to document when people first told me to. Moreover, because of
+it’s so unusual syntax, it’s interesting to verbalize what’s developed in ObjC
+to ease it’s lecture, specially by more unexperienced programmers.</p>
 
 <p>As time goes by, with the expansion of the <em>startup</em>, the pressure and need of
 code documentation is felt. Contrary to many programming languages - such as
-Java with it&rsquo;s hideous GUI Javadoc - Objective-C doesn&rsquo;t have an &ldquo;official&rdquo;
+Java with it’s hideous GUI Javadoc - Objective-C doesn’t have an “official”
 documentation generator. In our <em>quest</em> to find a differentiated framework, which
 could make us feel as if we were really making difference, we found the excellent
 <a href="http://gentlebytes.com/appledoc/">appledoc</a> that, using code comments <em>à la</em>
 Javadoc, generates Apple like documentation, with a docset <em>automagically</em>
 installed in XCode, static HTML sources which can be uploaded to a cloud (<em>vide</em> 
 <a href="http://fjcaetano.github.io/NSStringMask/1.1.2/">NSStringMask</a> which uses
-<a href="http://gentlebytes.com/appledoc/">appledoc</a>) and an interface identical to Cocoa&rsquo;s.</p>
+<a href="http://gentlebytes.com/appledoc/">appledoc</a>) and an interface identical to Cocoa’s.</p>
 
-<p>Among <a href="http://gentlebytes.com/appledoc/">appledoc</a>)&rsquo;s already described advantages,
+<p>Among <a href="http://gentlebytes.com/appledoc/">appledoc</a>)’s already described advantages,
 are also the documentation parsing through code comments, wich allow the developer
 to consult the documentation without the need of opening a new window, since
 everything is in the code. The integration with XCode allows the visualisation of
 tooltips with quick access to the documentation by simply holding the <em>Option</em>
-key and clicking a method or class. Moreover, by &ldquo;compiling&rdquo; <a href="http://gentlebytes.com/appledoc/">appledoc</a>)
-in your documented project, the library&rsquo;s docset is already imported to your
-<em>Organizer</em>. Simple or not? But, undoubtedly, <a href="http://gentlebytes.com/appledoc/">appledoc</a>)&rsquo;s
-main advantage is it&rsquo;s interface that&rsquo;s identical to Apple&rsquo;s documentation. I
-think it&rsquo;s very unlikely that there&rsquo;s any ObjC developer that has never read
-Cocoa&rsquo;s documentation, be the one embedded on XCode or the on in Apples developers
+key and clicking a method or class. Moreover, by “compiling” <a href="http://gentlebytes.com/appledoc/">appledoc</a>)
+in your documented project, the library’s docset is already imported to your
+<em>Organizer</em>. Simple or not? But, undoubtedly, <a href="http://gentlebytes.com/appledoc/">appledoc</a>)’s
+main advantage is it’s interface that’s identical to Apple’s documentation. I
+think it’s very unlikely that there’s any ObjC developer that has never read
+Cocoa’s documentation, be the one embedded on XCode or the on in Apples developers
 portal. By reusing the known model, it terminates the problem of having to
-familiarise to a new layout."</p>
+familiarise to a new layout.”</p>
 
-<p>Soon I&rsquo;ll be posting the second part with a tutorial.</p>
+<p>Soon I’ll be posting the second part with a tutorial.</p>
 ]]></content>
   </entry>
   
@@ -538,36 +573,36 @@ familiarise to a new layout."</p>
     <link href="http://fjcaetano.github.io/post/nsstringmask/"/>
     <updated>2013-05-16T14:27:10-03:00</updated>
     <id>http://fjcaetano.github.io/post/nsstringmask</id>
-    <content type="html"><![CDATA[<p>When developing, we often come across code we&rsquo;ve seen hundreds of times that we
-just copy and paste from project to project. Sometimes it&rsquo;s so banal that it&rsquo;s
+    <content type="html"><![CDATA[<p>When developing, we often come across code we’ve seen hundreds of times that we
+just copy and paste from project to project. Sometimes it’s so banal that it’s
 not worth trying to improve, change or even modularize it. Ctrl-C + Ctrl-V may
 be the cheapest and fastest solution, ergo, the best.</p>
 
 <p>This is the kind of situation we see when masks must be applied to <em>text fields</em>
 such as Social Security Numbers (SSN), Telephones, Zip Codes, and so on. Those
 awful few dozens of lines we copy from one <code>textField:shouldChangeCharactersInRange:replacementString:</code>
-to the other. It never changes because it works. There&rsquo;s no need to improve it.
-It&rsquo;s always the same. But I&rsquo;ve got tired of it. That nasty code that, in a well
-structured class, can be as a mole in a beautiful woman&rsquo;s face.</p>
+to the other. It never changes because it works. There’s no need to improve it.
+It’s always the same. But I’ve got tired of it. That nasty code that, in a well
+structured class, can be as a mole in a beautiful woman’s face.</p>
 
 <p>A few days ago I got some spare time and I started working on something I though
 could come handy. So how do you simplify and generalise this problem that every
-developer has to face at least once? Easy! <em>Regex</em>! Wait.. You sure it&rsquo;s easy? I&rsquo;ll
-tell you, it wasn&rsquo;t easy, but we&rsquo;re talking about patterns in varying occasions
-and, as I visualised it, <em>regex</em> is the best, simplest and most &ldquo;approachable&rdquo;
+developer has to face at least once? Easy! <em>Regex</em>! Wait.. You sure it’s easy? I’ll
+tell you, it wasn’t easy, but we’re talking about patterns in varying occasions
+and, as I visualised it, <em>regex</em> is the best, simplest and most “approachable”
 solution. I mean, everybody knows a little bit of <em>regex</em>.</p>
 
 <p>While modelling, I wanted to make it as simple and as clean as possible, therefore,
-for now, there are only two classes, and only one method you&rsquo;ll really use, but
+for now, there are only two classes, and only one method you’ll really use, but
 you can read the <a href="http://fjcaetano.github.io/NSStringMask/">complete documentation</a>.
-From now on, I&rsquo;ll present a superficial approach to introduce this small library.</p>
+From now on, I’ll present a superficial approach to introduce this small library.</p>
 
 <p>Fork the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a>!</p>
 
-<h2>NSStringMask</h2>
+<h2 id="nsstringmask">NSStringMask</h2>
 
 <p>The NSStringMask is the main class responsible for applying your masks to the
-NSStrings. Among it&rsquo;s methods the only noteworthy is
+NSStrings. Among it’s methods the only noteworthy is
 <a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/maskString:withPattern:placeholder:"><code>[NSStringMask maskString:withPattern:placeholder:]</code></a>.</p>
 
 <p>It formats the given <code>string</code> based on the <code>pattern</code> you provide, filling the
@@ -575,19 +610,19 @@ voids with the <code>placeholder</code>. It automatically creates an instance of
 NSRegularExpression with the option <code>CaseInsensitive</code>, so if you need a different
 option, you may use the alternate method which expects a <em>regex</em> instead of <code>pattern</code>.</p>
 
-<p>There&rsquo;s also an alternative method that receives no <code>placeholder</code> (same as <code>nil</code>),
+<p>There’s also an alternative method that receives no <code>placeholder</code> (same as <code>nil</code>),
 in this case, when the given <code>string</code> is shorter than expected, instead of
 applying the mask, the method will return a cleaned <em>string</em> having only the
 valid characters based on <a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/validCharactersForString:"><code>validCharactersForString:</code></a>.</p>
 
-<h3>Important Note</h3>
+<h3 id="important-note">Important Note</h3>
 
-<p>Doesn&rsquo;t matter if providing a <code>pattern</code> or an instance of <em>regex</em>, the regular
+<p>Doesn’t matter if providing a <code>pattern</code> or an instance of <em>regex</em>, the regular
 expression <strong>must</strong> have capturing groups (parentheses). This is because the
 class understands that everything that is not within parentheses is part of the
 mask and must be interpreted as literal characters!</p>
 
-<p>Suppose you&rsquo;re formatting a SSN, whose <em>regex</em> pattern is <code>\d{3}-\d{2}-\d{3}</code>.
+<p>Suppose you’re formatting a SSN, whose <em>regex</em> pattern is <code>\d{3}-\d{2}-\d{3}</code>.
 If you provide that <em>regex</em>/pattern, nothing will be formatted because the class
 will think that <code>\d{3}</code> is part of the mask, and not 3 numbers that should go there.</p>
 
@@ -601,18 +636,17 @@ will think that <code>\d{3}</code> is part of the mask, and not 3 numbers that s
 <span class="bp">NSString</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskString</span><span class="p">:</span><span class="s">@&quot;12345678&quot;</span> <span class="nl">withPattern</span><span class="p">:</span><span class="s">@&quot;\d{3}-\d{2}-\d{3}&quot;</span><span class="p">];</span>
 <span class="c1">// result = nil</span></code></pre></div>
 
-
 <p><strong>Obs</strong>: If Xcode is showing a <em>warning</em> about unknown escape sequences, try
 adding double slashes (<code>\\d</code>)</p>
 
-<h2>UITextFieldMask</h2>
+<h2 id="uitextfieldmask">UITextFieldMask</h2>
 
 <p>This is a subclass of UITextField, so you can set your <em>nibs</em> to use this class
 and automatically apply masks to your <em>text fields</em>.</p>
 
-<p>Obviously, you must provide a mask to transform your <em>strings</em>, and it&rsquo;s
+<p>Obviously, you must provide a mask to transform your <em>strings</em>, and it’s
 recommended that you do so when initialising your <em>view</em> or <em>view controller</em>.
-So you should set the text field&rsquo;s mask inside <code>viewDidLoad</code> or <code>awakeFromNib</code>.</p>
+So you should set the text field’s mask inside <code>viewDidLoad</code> or <code>awakeFromNib</code>.</p>
 
 <p>Suppose you have a <em>view</em> with an <em>outlet</em> to an UITextFieldMask named <code>textFieldMask</code>:</p>
 
@@ -624,21 +658,20 @@ So you should set the text field&rsquo;s mask inside <code>viewDidLoad</code> or
     <span class="n">textFieldMask</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">self</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
 
-
 <p>A question for you: what does that mask accepts?</p>
 
-<h2>Installation</h2>
+<h2 id="installation">Installation</h2>
 
 <p>You can install it from <a href="http://cocoadocs.org/docsets/NSStringMask">Cocoa Pods</a>,
 or clone the project from the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a>
 and copy the files in the folder <code>Classes</code>.</p>
 
-<h3>Helpful stuff</h3>
+<h3 id="helpful-stuff">Helpful stuff</h3>
 
-<p>I&rsquo;ve also created <a href="https://gist.github.com/fjcaetano/5600452">this gist</a> with
+<p>I’ve also created <a href="https://gist.github.com/fjcaetano/5600452">this gist</a> with
 some common patterns. Feel free to improve it!</p>
 
-<div><script src='https://gist.github.com/5600452.js'></script>
+<div><script src="https://gist.github.com/5600452.js"></script>
 <noscript><pre><code>These are a few patterns commonly used.
 
 1 - Digits only: (\\d+)
@@ -655,8 +688,6 @@ Brasil:
 4 - Telefone: (\\d{2}) (\\d{4})-(\\d{4})
 </code></pre></noscript></div>
 
-
-
 ]]></content>
   </entry>
   
@@ -666,60 +697,61 @@ Brasil:
     <updated>2013-04-03T15:25:36-03:00</updated>
     <id>http://fjcaetano.github.io/post/best-xcode-tip</id>
     <content type="html"><![CDATA[<p>Tired of having to find out where an exception occurred, that was only captured
-in the <em>main()</em>? Now I&rsquo;m going to show you the best Xcode tip that no one talks
-about. Don&rsquo;t ask me why.</p>
+in the <em>main()</em>? Now I’m going to show you the best Xcode tip that no one talks
+about. Don’t ask me why.</p>
 
 <p>These are the very few steps that will save your life and make your day better.</p>
 
-<h2>Creating an &ldquo;Exception Breakpoint&rdquo;</h2>
+<h2 id="creating-an-exception-breakpoint">Creating an “Exception Breakpoint”</h2>
 
 <p>The first thing to do is to access the Breakpoint Navigator, which is the little
-breakpoint marker on the top of your Project Navigator. If you didn&rsquo;t know, the
+breakpoint marker on the top of your Project Navigator. If you didn’t know, the
 Breakpoint Navigator show all your breakpoints in your project, where you can
 easily manage them. (Click on the image to see it bigger)</p>
 
 <p><a href="http://fjcaetano.github.io/images/best-xcode-hint-1.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-1.png" alt="best-xcode-hint-1" /></a></p>
 
-<p>Now that you&rsquo;re in the Breakpoint Navigator, click on the little &ldquo;+&rdquo; button on
+<p>Now that you’re in the Breakpoint Navigator, click on the little “+” button on
 the bottom left of the screen. A little dialog window will show up and choose the
-&ldquo;Add Exception Breakpoint…&rdquo; option.</p>
+“Add Exception Breakpoint…” option.</p>
 
 <p><a href="http://fjcaetano.github.io/images/best-xcode-hint-3.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-3.png" alt="best-xcode-hint-3" /></a></p>
 
-<p>Then, the Xcode will ask you some information about the breakpoint you&rsquo;re creating:</p>
+<p>Then, the Xcode will ask you some information about the breakpoint you’re creating:</p>
 
 <p><a href="http://fjcaetano.github.io/images/best-xcode-hint-4.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-4.png" alt="best-xcode-hint-4" /></a></p>
 
 <ul>
-<li>Exception: There are three options: &ldquo;All&rdquo; to get all types of exceptions; &ldquo;C++&rdquo; to get only C++ exceptions; and &ldquo;Objective-C&rdquo; to get only ObjC exceptions. I like to leave it as &ldquo;All&rdquo;.</li>
-<li>Break: Leave it as &ldquo;On Throw&rdquo;. This way, the execution will stop when your code throws an exception and not when it catches, which is the default on <em>main()</em>.</li>
-<li>Action: You can set some action to be performed when the breakpoint is reached like run an Apple Script, shell command and others. I&rsquo;ve never used it.</li>
-<li>Options: if you check this option, your code won&rsquo;t stop when the breakpoint hits, making it useless. So leave it unchecked.</li>
+  <li>Exception: There are three options: “All” to get all types of exceptions; “C++” to get only C++ exceptions; and “Objective-C” to get only ObjC exceptions. I like to leave it as “All”.</li>
+  <li>Break: Leave it as “On Throw”. This way, the execution will stop when your code throws an exception and not when it catches, which is the default on <em>main()</em>.</li>
+  <li>Action: You can set some action to be performed when the breakpoint is reached like run an Apple Script, shell command and others. I’ve never used it.</li>
+  <li>Options: if you check this option, your code won’t stop when the breakpoint hits, making it useless. So leave it unchecked.</li>
 </ul>
 
+<p>Congratulations! You’ve successfully created an Exception Breakpoint that will
+stop whenever something odd happens! Let’s try it out!</p>
 
-<p>Congratulations! You&rsquo;ve successfully created an Exception Breakpoint that will
-stop whenever something odd happens! Let&rsquo;s try it out!</p>
-
-<p>As an example I&rsquo;ve created an empty array and tried to access the object at index
-0, which doesn&rsquo;t exists. This is what happened:</p>
+<p>As an example I’ve created an empty array and tried to access the object at index
+0, which doesn’t exists. This is what happened:</p>
 
 <p><a href="http://fjcaetano.github.io/images/best-xcode-hint-5.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-5.png" alt="best-xcode-hint-5" /></a></p>
 
 <p>Whoa! The Xcode stopped precisely where the problem was! Quite awesome, huh? But,
-sometimes, it&rsquo;s not that easy to visualise what the problem really is, so if
-that&rsquo;s happening to you, just hit &ldquo;<em>play</em>&rdquo;, and the code will keep executing as
-if your breakpoint doesn&rsquo;t exists. What happens now, is the <em>main()</em> catching
+sometimes, it’s not that easy to visualise what the problem really is, so if
+that’s happening to you, just hit “<em>play</em>”, and the code will keep executing as
+if your breakpoint doesn’t exists. What happens now, is the <em>main()</em> catching
 whatever exceptions that may happen.</p>
 
 <p>So you can look at the console to see what the problem was:</p>
 
 <p><a href="http://fjcaetano.github.io/images/best-xcode-hint-6.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-6.png" alt="best-xcode-hint-6" /></a></p>
 
-<blockquote><p>&ldquo;-[__NSArrayI objectAtIndex:]: index 0 beyond bounds for empty array&rdquo;</p></blockquote>
+<blockquote>
+  <p>”-[__NSArrayI objectAtIndex:]: index 0 beyond bounds for empty array”</p>
+</blockquote>
 
-<p>Ta daa! I know it&rsquo;s not perfect. It won&rsquo;t get any <em>signals</em> (SIGABRT, SIGTRAP),
-<em>flags</em> or <em>bad access</em> kinds of witchcraft, but I think it&rsquo;s super helpful and
+<p>Ta daa! I know it’s not perfect. It won’t get any <em>signals</em> (SIGABRT, SIGTRAP),
+<em>flags</em> or <em>bad access</em> kinds of witchcraft, but I think it’s super helpful and
 I think you guys should know.</p>
 ]]></content>
   </entry>
@@ -730,28 +762,28 @@ I think you guys should know.</p>
     <updated>2013-01-16T20:42:01-02:00</updated>
     <id>http://fjcaetano.github.io/post/sqlite-modelling</id>
     <content type="html"><![CDATA[<p>SQLite sucks. I think everybody knows, but I had to say it. But, sometimes, we
-have no choice other than using it. Even though it&rsquo;s horrible and we know we`ll
+have no choice other than using it. Even though it’s horrible and we know we`ll
 be frustrated, once in a lifetime, SQLite may be the best choice. Wether developing
 a program with a tiny or fast persistence. Sure there are other alternatives that
-may suit you best, but the platform we&rsquo;re using may not support it.</p>
+may suit you best, but the platform we’re using may not support it.</p>
 
-<p>For instance, I&rsquo;m currently working on an iPad app that will have a fairly big
+<p>For instance, I’m currently working on an iPad app that will have a fairly big
 amount of data which must be available offline and it will have to be updated
 sometimes. The best solution we came with is a background server task wich will
 build an SQLite database populated with the most recent data and, when the user
 requests, the iPad will download the whole database, overwriting any existing ones.</p>
 
-<p>I&rsquo;m no DBA, but I don&rsquo;t think anyone writes database creation scripts anymore.
-At least not for the usual <code>CREATE TABLE</code>, etc. I&rsquo;m mostly a MySQL guy and, for
-a long time, I&rsquo;ve been using <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>
+<p>I’m no DBA, but I don’t think anyone writes database creation scripts anymore.
+At least not for the usual <code>CREATE TABLE</code>, etc. I’m mostly a MySQL guy and, for
+a long time, I’ve been using <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>
 to create my DB models and syncing with my existing database. It automatically
 creates everything that needs to be created and alter all tables that must be
-altered without losing any data (most of the time). It&rsquo;s pretty good and I never
+altered without losing any data (most of the time). It’s pretty good and I never
 had any problems with it.</p>
 
-<p>Now, back to listing reasons why SQLite sucks (dude, you can&rsquo;t add a constraint
-when altering a table!). As any platform/framework with no &ldquo;official&rdquo; team, SQLite
-depends on the community to increase it&rsquo;s awesomeness. Therefore, as everybody
+<p>Now, back to listing reasons why SQLite sucks (dude, you can’t add a constraint
+when altering a table!). As any platform/framework with no “official” team, SQLite
+depends on the community to increase it’s awesomeness. Therefore, as everybody
 knows SQLite <em>is not awesome</em>, no one really waste time developing a <em>good</em>
 administration tool for it. What may happen, is a company own a DB management
 program (such as <a href="http://www.navicat.com/">Navicat</a>) and something like this goes by:</p>
@@ -763,44 +795,43 @@ don't you think people will notice we're ignoring SQLite?
 </code></pre>
 
 <p>Unfortunately, there are no really good tools to work with SQLite available.
-&ldquo;Hey, what about <a href="http://www.navicat.com/">Navicat</a>?&rdquo; It&rsquo;s okay, but I found tons
-of bugs in the Mac version. If that&rsquo;s not enough, are you really willing to pay
+“Hey, what about <a href="http://www.navicat.com/">Navicat</a>?” It’s okay, but I found tons
+of bugs in the Mac version. If that’s not enough, are you really willing to pay
 to use a management tool for a free, open source database? But if you search deep
 enough - like the 3rd page of Google - there are also some weird stuff that
 appears such as <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a> (for Mac). When I see
-things I like that I think &ldquo;why the hell would people lose time developing
-something for SQLite?&rdquo; But hey, there are weirdos for everything, so I&rsquo;d like to
+things I like that I think “why the hell would people lose time developing
+something for SQLite?” But hey, there are weirdos for everything, so I’d like to
 thank for the <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a> team for being strange
 enough to create it.</p>
 
-<p>Even though it&rsquo;s not the best tool ever, <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a>
-sure comes in handy and helps a lot, but it doesn&rsquo;t solve the mentioned problem
+<p>Even though it’s not the best tool ever, <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a>
+sure comes in handy and helps a lot, but it doesn’t solve the mentioned problem
 of modelling your SQLite database and not dealing with SQL scripts. So, searching
 for something that would fill this void I found <a href="http://www.henlich.de/software/sqlite-export-plugin-for-mysql-workbench/">this excellent script</a>
 in Lua for <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a> that
-<em>automagically</em> generates the SQLite CREATE script from a model. It&rsquo;s super easy
+<em>automagically</em> generates the SQLite CREATE script from a model. It’s super easy
 to install and use. Just follow this steps:</p>
 
 <ul>
-<li>Download the .lua script (duh!)</li>
-<li>Click in the &ldquo;Scripting&rdquo; menu in <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>.</li>
-<li>Click &ldquo;Install Plugin/Module&rdquo;.</li>
-<li>Choose the downloaded .lua script.</li>
-<li>???</li>
-<li>Profit.</li>
+  <li>Download the .lua script (duh!)</li>
+  <li>Click in the “Scripting” menu in <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>.</li>
+  <li>Click “Install Plugin/Module”.</li>
+  <li>Choose the downloaded .lua script.</li>
+  <li>???</li>
+  <li>Profit.</li>
 </ul>
 
-
-<p>That&rsquo;s it. Now, if you want to try, open a model, click the &ldquo;Plugins&rdquo; menu and
-under &ldquo;Utilities&rdquo; there must be an option named &ldquo;Export SQLite CREATE Script&rdquo;
+<p>That’s it. Now, if you want to try, open a model, click the “Plugins” menu and
+under “Utilities” there must be an option named “Export SQLite CREATE Script”
 which may be the first one. Just click it and choose where to save the .sql script
 and execute it. <em>Voilà</em>! If you have any problems executing the generated script,
 you may need to comment the <code>BEGIN;</code> at the top and the <code>COMMIT;</code> at the bottom
 of the .sql script.</p>
 
-<p>Super easy, isn&rsquo;t it? Give it a try. Even if, like me, you hate SQLite. The plugin
-solves the modelling problem, but creates a new one, because you can&rsquo;t <code>ALTER</code> an
-existing table since it only generates the <code>CREATE</code> script. But if that&rsquo;s not a
+<p>Super easy, isn’t it? Give it a try. Even if, like me, you hate SQLite. The plugin
+solves the modelling problem, but creates a new one, because you can’t <code>ALTER</code> an
+existing table since it only generates the <code>CREATE</code> script. But if that’s not a
 problem go for it and be happy. When I found it, life suddenly became joyful again.</p>
 ]]></content>
   </entry>
@@ -810,25 +841,25 @@ problem go for it and be happy. When I found it, life suddenly became joyful aga
     <link href="http://fjcaetano.github.io/post/the-tale-of-luck/"/>
     <updated>2012-12-27T18:40:44-02:00</updated>
     <id>http://fjcaetano.github.io/post/the-tale-of-luck</id>
-    <content type="html"><![CDATA[<p>&ldquo;Once upon a time, there was a tiny invisible force named <em>Luck</em>. Everybody loved
+    <content type="html"><![CDATA[<p>“Once upon a time, there was a tiny invisible force named <em>Luck</em>. Everybody loved
 it and gave it gifts, hoping that, when needed, <em>Luck</em> would come for them. But
-<em>Luck</em> had a younger sibling called <em>Bad Luck</em>, who hated <em>Luck</em> with all it&rsquo;s
+<em>Luck</em> had a younger sibling called <em>Bad Luck</em>, who hated <em>Luck</em> with all it’s
 strength and always tried to be the opposite of <em>Luck</em>, because, while everybody
 smiled and cheered for <em>Luck</em>, no one liked when <em>Bad Luck</em> was around. People
 twisted their noses at <em>Bad Luck</em> and everybody blamed it for every bad thing that
-happened in their lives.&rdquo;</p>
+happened in their lives.”</p>
 
 <p>This is that time of year when joy and happiness take over people. Some folks are
-going on vacations and we won&rsquo;t see again for a while, and every single one of
-them, without exception, while saying goodbye, wish &ldquo;happy holidays, and good
-luck!&rdquo; If there&rsquo;s one thing I can&rsquo;t understand is this misconception people have
-on <em>luck</em> and <em>bad luck</em>. I see all those people on new year&rsquo;s eve wearing white,
-jumping waves, and doing all kinds of foolishness hoping it &ldquo;will bring them good
-luck&rdquo; and I can&rsquo;t understand.</p>
+going on vacations and we won’t see again for a while, and every single one of
+them, without exception, while saying goodbye, wish “happy holidays, and good
+luck!” If there’s one thing I can’t understand is this misconception people have
+on <em>luck</em> and <em>bad luck</em>. I see all those people on new year’s eve wearing white,
+jumping waves, and doing all kinds of foolishness hoping it “will bring them good
+luck” and I can’t understand.</p>
 
-<p>Luck isn&rsquo;t something you can &ldquo;force&rdquo; or hope to come. &ldquo;Luck&rdquo; is the name we give
+<p>Luck isn’t something you can “force” or hope to come. “Luck” is the name we give
 for a chain of events that, coincidentally, affect you in a good (<em>luckily</em>) or
-bad (<em>unluckily</em>) way. Let&rsquo;s picture an hypothetical scenario: you&rsquo;re riding a
+bad (<em>unluckily</em>) way. Let’s picture an hypothetical scenario: you’re riding a
 bike and, right before you cross another street, you hit a pedestrian. Was bad
 luck that put that asshole there, right? Now, what if, one second after you hit
 him, a car goes by at 60mph crossing the street you are at. Not so bad luck hitting
@@ -836,27 +867,27 @@ that good citizen now, huh? So, although the result is the same, the denominatio
 we give to that chain of events changed because of one single variable: some
 douchebag driving his car while talking on the phone. So, what was bad luck for
 you, became luck. But what about for that poor guy you hit? For him, independently
-of the result, he&rsquo;s still pretty banged up, so he <em>had</em> bad luck. It didn&rsquo;t
-randomly pointed at him and said &ldquo;you, sir, are gonna get screwed!&rdquo; It did just
+of the result, he’s still pretty banged up, so he <em>had</em> bad luck. It didn’t
+randomly pointed at him and said “you, sir, are gonna get screwed!” It did just
 happened. Bad Luck. When you do something that goes badly and you knew the odds
-were against you, that&rsquo;s not bad luck. It&rsquo;s not the universe flipping you the
-finger and screaming &ldquo;fuck you, Jimmywobble!&rdquo; That&rsquo;s stupidity. <em>YOLO</em> my ass!</p>
+were against you, that’s not bad luck. It’s not the universe flipping you the
+finger and screaming “fuck you, Jimmywobble!” That’s stupidity. <em>YOLO</em> my ass!</p>
 
-<p>I not always wear white on new year&rsquo;s eve, but when I do, it&rsquo;s not because I think
-it will bring me peace in the upcoming year. It&rsquo;s because I want to get into the
+<p>I not always wear white on new year’s eve, but when I do, it’s not because I think
+it will bring me peace in the upcoming year. It’s because I want to get into the
 spirit of the party. Those thousands of people in white, happy, drunk and with
 the promise of better things to come are what drive me to join them and put on a
 white shirt.</p>
 
-<p>But don&rsquo;t think I&rsquo;m crazy just yet. If I&rsquo;m walking down the street and I see a
-ladder landing on a wall, of course I&rsquo;ll pass around it. Not only I do not want
-anything to fall on my head, but hey, what if I&rsquo;m wrong? Why would I bet against
-it when I don&rsquo;t know if it will get angry and come back to bite me in the ass?</p>
+<p>But don’t think I’m crazy just yet. If I’m walking down the street and I see a
+ladder landing on a wall, of course I’ll pass around it. Not only I do not want
+anything to fall on my head, but hey, what if I’m wrong? Why would I bet against
+it when I don’t know if it will get angry and come back to bite me in the ass?</p>
 
-<p>So, in this year&rsquo;s ending, I wish that every single little incident that happens
-to you in 2013 may be chained to good fortune. I hope that slam you&rsquo;ll give with
-your pinky finger in your table helps you find that earring you&rsquo;re looking for
-for three years. Or that tongue bite you&rsquo;ll have may lead you into meeting some
+<p>So, in this year’s ending, I wish that every single little incident that happens
+to you in 2013 may be chained to good fortune. I hope that slam you’ll give with
+your pinky finger in your table helps you find that earring you’re looking for
+for three years. Or that tongue bite you’ll have may lead you into meeting some
 super hot nurse.</p>
 
 <p>So I wish you well in the new year. I hope you all the best.</p>
@@ -870,43 +901,42 @@ super hot nurse.</p>
     <link href="http://fjcaetano.github.io/post/once-upon-2/"/>
     <updated>2012-12-13T18:35:00-02:00</updated>
     <id>http://fjcaetano.github.io/post/once-upon-2</id>
-    <content type="html"><![CDATA[<p>One of the main reasons I like Django is it&rsquo;s awesome auto-generated admin
-interface. It&rsquo;s  just awesome. When you start to play with it and discover apps
+    <content type="html"><![CDATA[<p>One of the main reasons I like Django is it’s awesome auto-generated admin
+interface. It’s  just awesome. When you start to play with it and discover apps
 like <a href="https://bitbucket.org/izi/django-admin-tools/wiki/Home">django-admin-tools</a>,
 the faded <a href="http://code.google.com/p/django-jqmobile/">jq-mobile</a> and other cool 
 stuff you realise how versatile Django really is.</p>
 
-<h1>The Context</h1>
+<h1 id="the-context">The Context</h1>
 
 <p>When I started learning Django I created a small manager for some of my hobbies.
 The first one was a book manager in which I have a log of <strong>every single</strong> book
-I&rsquo;ve ever read, <strong>when</strong> I read it, <strong>where</strong> the book is located, if it's 
-<strong>borrowed</strong> to somebody, a &ldquo;<strong>GIVE IT BACK TO ME</strong>&rdquo; button that sends an email
+I’ve ever read, <strong>when</strong> I read it, <strong>where</strong> the book is located, if it’s 
+<strong>borrowed</strong> to somebody, a “<strong>GIVE IT BACK TO ME</strong>” button that sends an email
 with that exact message to whoever has it, and so on. Among everything, I also
-added a field for the book&rsquo;s <em>cover</em> but I never really used it.</p>
+added a field for the book’s <em>cover</em> but I never really used it.</p>
 
-<p>More recently, I restarted to improve my card deck collection (yes, I&rsquo;m weird)
-and added this new feature to my Django manager. But this time, since it&rsquo;s
+<p>More recently, I restarted to improve my card deck collection (yes, I’m weird)
+and added this new feature to my Django manager. But this time, since it’s
 cataloging a collection and decks are mainly visual, the photos of the decks are 
 <strong><em>very</em></strong> important. Yes, I said image<strong><em>S</em></strong>. Each deck has five photos:</p>
 
 <ul>
-<li>The Front of the Box</li>
-<li>The Back of the Box</li>
-<li>The Back of the Cards</li>
-<li>The Joker</li>
-<li>The Ace of Spades</li>
+  <li>The Front of the Box</li>
+  <li>The Back of the Box</li>
+  <li>The Back of the Cards</li>
+  <li>The Joker</li>
+  <li>The Ace of Spades</li>
 </ul>
 
-
-<p>There are decks with a different back for each card, but that&rsquo;s not important,.
-Those are the options I&rsquo;m contemplating. But, since not all of them are opened
-(I have one numbered deck that goes to 2500 copies. I won&rsquo;t open it. Never!) only 
+<p>There are decks with a different back for each card, but that’s not important,.
+Those are the options I’m contemplating. But, since not all of them are opened
+(I have one numbered deck that goes to 2500 copies. I won’t open it. Never!) only 
 the first two images are requirements.</p>
 
 <p>So, now that you are aware of the context, this is when the problem (and the fun) started.</p>
 
-<h2>The Problem</h2>
+<h2 id="the-problem">The Problem</h2>
 
 <p>I started looking for some Django solution that could easily show thumbnails for
 my images in my admin module. Guess what was my surprise when I realised there
@@ -915,27 +945,27 @@ was <em>N**one</em>.</p>
 <p>There was absolutely nothing that would do what wanted and needed. The closest
 things I found were the automatic thumbnail creator <a href="https://github.com/sorl/sorl-thumbnail">sorl-thumbnail</a>
 and <a href="http://www.acedevs.com/blog/2011/07/11/django-admin-list-view-thumbnails/">Ace Devs solution</a> 
-which didn&rsquo;t solve my problem. Dude, my images have 1936x2592 pixels of resolution.
-I can&rsquo;t just show them as they are.</p>
+which didn’t solve my problem. Dude, my images have 1936x2592 pixels of resolution.
+I can’t just show them as they are.</p>
 
-<p>That&rsquo;s when I realised I would have to develop a new solution for that.</p>
+<p>That’s when I realised I would have to develop a new solution for that.</p>
 
-<h1>The Solution (aka The Fun Part)</h1>
+<h1 id="the-solution-aka-the-fun-part">The Solution (aka The Fun Part)</h1>
 
-<p>I&rsquo;m a modest guy, I don&rsquo;t like bragging about what I do.</p>
+<p>I’m a modest guy, I don’t like bragging about what I do.</p>
 
 <p>No forget it. Bullshit. I do like to show everyone what I did. Specially when I
-think it&rsquo;s awesome, I mean, It&rsquo;s awesome. Don&rsquo;t you like sharing awesome stuff
-with your friends? Dude, I&rsquo;m even writing an article about it! In <strong>TWO</strong> languages!</p>
+think it’s awesome, I mean, It’s awesome. Don’t you like sharing awesome stuff
+with your friends? Dude, I’m even writing an article about it! In <strong>TWO</strong> languages!</p>
 
 <p>So, what I did was basically to join and improve those two solutions I found.
-&ldquo;<strong>Basically</strong>&rdquo; because, in the deep, it was a little more complex than that.</p>
+“<strong>Basically</strong>” because, in the deep, it was a little more complex than that.</p>
 
 <p>I came up with the stupidest yet simplest name I could find:
 <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a>. I
-know, it&rsquo;s über stupid. But it&rsquo;s also simple, so it works.</p>
+know, it’s über stupid. But it’s also simple, so it works.</p>
 
-<h2>django-admin-thumbnail</h2>
+<h2 id="django-admin-thumbnail">django-admin-thumbnail</h2>
 
 <p>The package automatically works on your <em>list_display</em> of your <em>ModelAdmin</em>. It
 <em>automagically</em> detects your <em>ImageFields</em>, converts it to thumbnail (physically
@@ -950,7 +980,7 @@ displays to you in a user friendly way.</p>
 <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> is
 localizable but, currently, only <code>pt-BR</code> and <code>en-US</code> are the officially supported
 languages. If you want it to be in your language, just send me your <code>.po</code> file
-and I&rsquo;ll validate it and share. It&rsquo;s ridiculous, there are only two tags. Give it a try!</p>
+and I’ll validate it and share. It’s ridiculous, there are only two tags. Give it a try!</p>
 
 <p>When I finished, I realised how simple and effective it was. I had to share it
 with the community. So I took the opportunity to create my first <em>python package</em>.
@@ -959,13 +989,13 @@ It was a pain in the ass because the documentation is lame, specially the
 <em>reStructured Text</em> working until I found the <a href="http://pypi.python.org/pypi/py2html">py2html</a> 
 command.</p>
 
-<h1>Wrap and Finish</h1>
+<h1 id="wrap-and-finish">Wrap and Finish</h1>
 
-<p>That&rsquo;s it. If you want to know more about <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> 
-just click the link and it will send you to the Github repository. There&rsquo;s a
-quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/0.1.1">Here&rsquo;s the link for the python package</a></p>
+<p>That’s it. If you want to know more about <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> 
+just click the link and it will send you to the Github repository. There’s a
+quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/0.1.1">Here’s the link for the python package</a></p>
 
-<p>If you have any trouble to use it, don&rsquo;t hesitate to send me a message.</p>
+<p>If you have any trouble to use it, don’t hesitate to send me a message.</p>
 
 <p>Have fun!</p>
 ]]></content>
@@ -978,31 +1008,30 @@ quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/
     <id>http://fjcaetano.github.io/post/once-upon</id>
     <content type="html"><![CDATA[<p>Hi there, stranger.</p>
 
-<p>If you found this blog, you&rsquo;re probably my friend or already know what I do for
-a living. But anyways I&rsquo;m a mobile app developer (I mean, iOS developer), Python
+<p>If you found this blog, you’re probably my friend or already know what I do for
+a living. But anyways I’m a mobile app developer (I mean, iOS developer), Python
 fan and Django explorer.</p>
 
-<p>In this blog, which I&rsquo;ll try to update at least once a month, I&rsquo;ll primarily talk
+<p>In this blog, which I’ll try to update at least once a month, I’ll primarily talk
 about my approaches in some aspects of my developer life, but if I digress and
 start talking about karting, movies, cooking or anything, please, bare with me 
-for I&rsquo;ll eventually come back to topic &ndash; or not. Those are some of my current
+for I’ll eventually come back to topic – or not. Those are some of my current
 hobbies and, in the future, more wil come and some will be forgotten.</p>
 
-<p>That&rsquo;s me. Oh, btw, my name is Flávio (duh!), I&rsquo;m 22 brazilian and you can reach
-me at <a href="mailto:flavio@vieiracaetano.com">flavio@vieiracaetano.com</a>.</p>
+<p>That’s me. Oh, btw, my name is Flávio (duh!), I’m 22 brazilian and you can reach
+me at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#102;&#108;&#097;&#118;&#105;&#111;&#064;&#118;&#105;&#101;&#105;&#114;&#097;&#099;&#097;&#101;&#116;&#097;&#110;&#111;&#046;&#099;&#111;&#109;">&#102;&#108;&#097;&#118;&#105;&#111;&#064;&#118;&#105;&#101;&#105;&#114;&#097;&#099;&#097;&#101;&#116;&#097;&#110;&#111;&#046;&#099;&#111;&#109;</a>.</p>
 
 <p>These are some of my links you may find interesting:</p>
 
 <ul>
-<li><a href="https://github.com/fjcaetano">Github Profile</a></li>
-<li><a href="http://flaviocaetano.com">Personal Page</a></li>
-<li><a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826">LinkedIn Profile</a></li>
+  <li><a href="https://github.com/fjcaetano">Github Profile</a></li>
+  <li><a href="http://flaviocaetano.com">Personal Page</a></li>
+  <li><a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826">LinkedIn Profile</a></li>
 </ul>
 
-
-<p>That&rsquo;s it for now. Soon will finish the next article I&rsquo;m currently working on
-and, when I&rsquo;m satisfied &ndash; which will probably be never, but I&rsquo;ll post it anyway
-&ndash; we&rsquo;ll talk more.</p>
+<p>That’s it for now. Soon will finish the next article I’m currently working on
+and, when I’m satisfied – which will probably be never, but I’ll post it anyway
+– we’ll talk more.</p>
 
 <p>See you next time.</p>
 ]]></content>

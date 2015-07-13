@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://fjcaetano.github.io/post/back-from-the-dead/</loc>
+    <lastmod>2015-07-12T17:26:26-03:00</lastmod>
+  </url>
+  <url>
     <loc>http://fjcaetano.github.io/post/you-shouldnt-use-git-blame/</loc>
     <lastmod>2014-07-23T17:22:57-03:00</lastmod>
   </url>

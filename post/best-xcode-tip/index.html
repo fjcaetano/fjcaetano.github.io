@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -126,60 +128,61 @@
       
 
       <p>Tired of having to find out where an exception occurred, that was only captured
-in the <em>main()</em>? Now I&rsquo;m going to show you the best Xcode tip that no one talks
-about. Don&rsquo;t ask me why.</p>
+in the <em>main()</em>? Now I’m going to show you the best Xcode tip that no one talks
+about. Don’t ask me why.</p>
 
 <p>These are the very few steps that will save your life and make your day better.</p>
 
-<h2>Creating an &ldquo;Exception Breakpoint&rdquo;</h2>
+<h2 id="creating-an-exception-breakpoint">Creating an “Exception Breakpoint”</h2>
 
 <p>The first thing to do is to access the Breakpoint Navigator, which is the little
-breakpoint marker on the top of your Project Navigator. If you didn&rsquo;t know, the
+breakpoint marker on the top of your Project Navigator. If you didn’t know, the
 Breakpoint Navigator show all your breakpoints in your project, where you can
 easily manage them. (Click on the image to see it bigger)</p>
 
 <p><a href="/images/best-xcode-hint-1.png"><img src="/images/best-xcode-hint-1.png" alt="best-xcode-hint-1" /></a></p>
 
-<p>Now that you&rsquo;re in the Breakpoint Navigator, click on the little &ldquo;+&rdquo; button on
+<p>Now that you’re in the Breakpoint Navigator, click on the little “+” button on
 the bottom left of the screen. A little dialog window will show up and choose the
-&ldquo;Add Exception Breakpoint…&rdquo; option.</p>
+“Add Exception Breakpoint…” option.</p>
 
 <p><a href="/images/best-xcode-hint-3.png"><img src="/images/best-xcode-hint-3.png" alt="best-xcode-hint-3" /></a></p>
 
-<p>Then, the Xcode will ask you some information about the breakpoint you&rsquo;re creating:</p>
+<p>Then, the Xcode will ask you some information about the breakpoint you’re creating:</p>
 
 <p><a href="/images/best-xcode-hint-4.png"><img src="/images/best-xcode-hint-4.png" alt="best-xcode-hint-4" /></a></p>
 
 <ul>
-<li>Exception: There are three options: &ldquo;All&rdquo; to get all types of exceptions; &ldquo;C++&rdquo; to get only C++ exceptions; and &ldquo;Objective-C&rdquo; to get only ObjC exceptions. I like to leave it as &ldquo;All&rdquo;.</li>
-<li>Break: Leave it as &ldquo;On Throw&rdquo;. This way, the execution will stop when your code throws an exception and not when it catches, which is the default on <em>main()</em>.</li>
-<li>Action: You can set some action to be performed when the breakpoint is reached like run an Apple Script, shell command and others. I&rsquo;ve never used it.</li>
-<li>Options: if you check this option, your code won&rsquo;t stop when the breakpoint hits, making it useless. So leave it unchecked.</li>
+  <li>Exception: There are three options: “All” to get all types of exceptions; “C++” to get only C++ exceptions; and “Objective-C” to get only ObjC exceptions. I like to leave it as “All”.</li>
+  <li>Break: Leave it as “On Throw”. This way, the execution will stop when your code throws an exception and not when it catches, which is the default on <em>main()</em>.</li>
+  <li>Action: You can set some action to be performed when the breakpoint is reached like run an Apple Script, shell command and others. I’ve never used it.</li>
+  <li>Options: if you check this option, your code won’t stop when the breakpoint hits, making it useless. So leave it unchecked.</li>
 </ul>
 
+<p>Congratulations! You’ve successfully created an Exception Breakpoint that will
+stop whenever something odd happens! Let’s try it out!</p>
 
-<p>Congratulations! You&rsquo;ve successfully created an Exception Breakpoint that will
-stop whenever something odd happens! Let&rsquo;s try it out!</p>
-
-<p>As an example I&rsquo;ve created an empty array and tried to access the object at index
-0, which doesn&rsquo;t exists. This is what happened:</p>
+<p>As an example I’ve created an empty array and tried to access the object at index
+0, which doesn’t exists. This is what happened:</p>
 
 <p><a href="/images/best-xcode-hint-5.png"><img src="/images/best-xcode-hint-5.png" alt="best-xcode-hint-5" /></a></p>
 
 <p>Whoa! The Xcode stopped precisely where the problem was! Quite awesome, huh? But,
-sometimes, it&rsquo;s not that easy to visualise what the problem really is, so if
-that&rsquo;s happening to you, just hit &ldquo;<em>play</em>&rdquo;, and the code will keep executing as
-if your breakpoint doesn&rsquo;t exists. What happens now, is the <em>main()</em> catching
+sometimes, it’s not that easy to visualise what the problem really is, so if
+that’s happening to you, just hit “<em>play</em>”, and the code will keep executing as
+if your breakpoint doesn’t exists. What happens now, is the <em>main()</em> catching
 whatever exceptions that may happen.</p>
 
 <p>So you can look at the console to see what the problem was:</p>
 
 <p><a href="/images/best-xcode-hint-6.png"><img src="/images/best-xcode-hint-6.png" alt="best-xcode-hint-6" /></a></p>
 
-<blockquote><p>&ldquo;-[__NSArrayI objectAtIndex:]: index 0 beyond bounds for empty array&rdquo;</p></blockquote>
+<blockquote>
+  <p>”-[__NSArrayI objectAtIndex:]: index 0 beyond bounds for empty array”</p>
+</blockquote>
 
-<p>Ta daa! I know it&rsquo;s not perfect. It won&rsquo;t get any <em>signals</em> (SIGABRT, SIGTRAP),
-<em>flags</em> or <em>bad access</em> kinds of witchcraft, but I think it&rsquo;s super helpful and
+<p>Ta daa! I know it’s not perfect. It won’t get any <em>signals</em> (SIGABRT, SIGTRAP),
+<em>flags</em> or <em>bad access</em> kinds of witchcraft, but I think it’s super helpful and
 I think you guys should know.</p>
 
       <footer class="entry-meta">
@@ -200,23 +203,23 @@ I think you guys should know.</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
+            <a href="/post/back-from-the-dead/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <h3><a href="/post/back-from-the-dead/" title="Back From The Dead">Back From The Dead</a></h3>
+            <p>Finally! After long overdue, this lovely little blog has been updated. Andupgraded. From one press to another. So long Wordpress, hello &hellip;&hellip; <a href="/post/back-from-the-dead/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
-              <span>Published on June 30, 2014</span>
+              <h4><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h4>
+              <span>Published on July 23, 2014</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
-              <span>Published on June 12, 2014</span>
+              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
+              <span>Published on June 30, 2014</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->

@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -123,7 +125,7 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" rel="bookmark" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h1>
+          <h1 class="entry-title"><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" rel="bookmark" title="This is when a CGFloat may be a double">This Is When a CGFloat May Be a Double</a></h1>
         
         <h2>June 30, 2014</h2>
       </div><!-- /.header-title-wrap -->
@@ -134,51 +136,71 @@
 
       <p>How would you explain the following code never getting into the <code>if</code> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
 
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">CGFloat</span> <span class="n">subviewAlpha</span> <span class="o">=</span> <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span><span class="p">;</span>
-    <span class="n">CGFloat</span> <span class="n">myAlpha</span> <span class="o">=</span> <span class="mf">0.15f</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">subviewAlpha</span> <span class="o">==</span> <span class="n">myAlpha</span> <span class="o">&amp;&amp;</span>
-        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
-    <span class="p">{</span>
-        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
-    <span class="p">}</span>
- <span class="p">}</span></code></pre></div>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="objc"><span class="line"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="n">CGFloat</span> <span class="n">subviewAlpha</span> <span class="o">=</span> <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span><span class="p">;</span>
+</span><span class="line">    <span class="n">CGFloat</span> <span class="n">myAlpha</span> <span class="o">=</span> <span class="mf">0.15f</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">subviewAlpha</span> <span class="o">==</span> <span class="n">myAlpha</span> <span class="o">&amp;&amp;</span>
+</span><span class="line">        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <!-- more -->
 
-
 <p>Printing the value also proved to be pointless:</p>
 
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">subviewAlpha</span><span class="p">);</span>
-<span class="c1">// output: 0.150000</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="objc"><span class="line"><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">subviewAlpha</span><span class="p">);</span>
+</span><span class="line"><span class="c1">// output: 0.150000</span>
+</span><span class="line">
+</span><span class="line"><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">myAlpha</span><span class="p">);</span>
+</span><span class="line"><span class="c1">// output: 0.150000</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%f&quot;</span><span class="p">,</span> <span class="n">myAlpha</span><span class="p">);</span>
-<span class="c1">// output: 0.150000</span></code></pre></div>
+<p>Finally, XCode’s debugger shed a dim of light to the real issue. It showed that the true value of <code>subviewAlpha</code> is 0.14999999999999999, and as a floating point it’s accurate. Meanwhile the value of <code>myAlpha</code> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
 
-
-<p>Finally, XCode&rsquo;s debugger shed a dim of light to the real issue. It showed that the true value of <code>subviewAlpha</code> is 0.14999999999999999, and as a floating point it&rsquo;s accurate. Meanwhile the value of <code>myAlpha</code> was 0.15000000596046448, so logically they are different. But what could be causing this singularity?</p>
-
-<p>Jumping to <code>CGFloat</code> definition, we can see that it may be an alias to float or double, depending on the system&rsquo;s architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424">@gustavocsb</a>, for the link).</p>
+<p>Jumping to <code>CGFloat</code> definition, we can see that it may be an alias to float or double, depending on the system’s architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424">@gustavocsb</a>, for the link).</p>
 
 <p><a href="/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img src="/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" alt="" /></a></p>
 
-<p>As usual, I solved it the more elegant way I could. &ldquo;Hey, if <code>CGFloat</code> is bipolar, let it tell me how to read it!&rdquo;</p>
+<p>As usual, I solved it the more elegant way I could. “Hey, if <code>CGFloat</code> is bipolar, let it tell me how to read it!”</p>
 
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">==</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="mf">0.15</span> <span class="o">&amp;&amp;</span>
-        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
-    <span class="p">{</span>
-        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
-    <span class="p">}</span>
- <span class="p">}</span></code></pre></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="objc"><span class="line"><span class="k">for</span> <span class="p">(</span><span class="bp">UIView</span> <span class="o">*</span><span class="n">subview</span> <span class="k">in</span> <span class="n">view</span><span class="p">.</span><span class="n">subviews</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">==</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="mf">0.15</span> <span class="o">&amp;&amp;</span>
+</span><span class="line">        <span class="p">[</span><span class="n">subview</span> <span class="nl">isKindOfClass</span><span class="p">:</span><span class="n">NSClassFromString</span><span class="p">(</span><span class="s">@&quot;_UIPopoverViewBackgroundComponentView&quot;</span><span class="p">)])</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">        <span class="n">subview</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<p> Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <code>typecast</code> it.</p>
+<p>Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, <code>typecast</code> it.</p>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#objective-c" title="Pages tagged objective-c" class="tag">objective-c</a></span>
@@ -198,23 +220,23 @@
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
+            <a href="/post/back-from-the-dead/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <h3><a href="/post/back-from-the-dead/" title="Back From The Dead">Back From The Dead</a></h3>
+            <p>Finally! After long overdue, this lovely little blog has been updated. Andupgraded. From one press to another. So long Wordpress, hello &hellip;&hellip; <a href="/post/back-from-the-dead/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
-              <span>Published on June 12, 2014</span>
+              <h4><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h4>
+              <span>Published on July 23, 2014</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/swift-for-dummies/" title="Swift for Dummies">Swift for Dummies</a></h4>
-              <span>Published on June 04, 2014</span>
+              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
+              <span>Published on June 12, 2014</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->

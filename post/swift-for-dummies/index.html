@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -133,45 +135,43 @@
       
 
       <p>At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows
-for sure what will happen to Objective-C, but one can only guess it won&rsquo;t be
+for sure what will happen to Objective-C, but one can only guess it won’t be
 around for long. My guess is that Apple will be accepting ObjC apps up till iOS
 10, but that is just my guest.</p>
 
 <!-- more -->
 
-
-<p>By attending to the WWDC I had the opportunity of directly contacting Apple&rsquo;s
-engineers and insights most of people couldn&rsquo;t, so in the next posts I&rsquo;ll cover
+<p>By attending to the WWDC I had the opportunity of directly contacting Apple’s
+engineers and insights most of people couldn’t, so in the next posts I’ll cover
 the basics of Swift.</p>
 
-<p>It doesn&rsquo;t matter if you&rsquo;re new to iOS or an experienced programmer. Now, we&rsquo;re
+<p>It doesn’t matter if you’re new to iOS or an experienced programmer. Now, we’re
 all in the same boat. We all have to learn Swift from scratch, so forget
 everything you know about Objective-C and get ready to learn this brand new
 language. By the way, its potential is overwhelming.</p>
 
-<h2>The basics</h2>
+<h2 id="the-basics">The basics</h2>
 
 <p>As far as I could tell, Swift borrows concepts from Python, Javascript and even
-Java. It&rsquo;s syntax also resembles these languages very much.</p>
+Java. It’s syntax also resembles these languages very much.</p>
 
-<p>You can forget about pointers for now, most of what we&rsquo;ll be using in Swift is
+<p>You can forget about pointers for now, most of what we’ll be using in Swift is
 passed through references. No more asterisk (woohoo \o/).</p>
 
-<p>Swift plays with the concepts of variables and constants. There&rsquo;s no type
+<p>Swift plays with the concepts of variables and constants. There’s no type
 definition to neither of those just the declares var, for variables, and <code>let</code>
-for constants. As you may have figured out, constants can&rsquo;t be altered. We&rsquo;ll
+for constants. As you may have figured out, constants can’t be altered. We’ll
 cover when to use it in a few steps.</p>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="s">&quot;this is getting good&quot;</span>
 
 <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></div>
 
-
 <p>Yep, there are no semi-colons at the end of statements.</p>
 
 <p>Switches are extremely powerful. <code>Cases</code> can be variables, strings, even a range
- of numbers. Also, cases don&rsquo;t automatically fall through the next condition, so
-  there&rsquo;s no need to <code>break</code>.</p>
+ of numbers. Also, cases don’t automatically fall through the next condition, so
+  there’s no need to <code>break</code>.</p>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
     <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
@@ -189,15 +189,14 @@ cover when to use it in a few steps.</p>
         <span class="c1">// something unimplemented</span>
 <span class="p">}</span></code></pre></div>
 
-
-<p>There&rsquo;s also no need for surrounding parenthesis when working with conditions,
-unless it&rsquo;s a complex condition, as usual. Switches in Swift (yep, try saying
+<p>There’s also no need for surrounding parenthesis when working with conditions,
+unless it’s a complex condition, as usual. Switches in Swift (yep, try saying
 that three times) are exhaustive. That means that you must either supply <code>cases</code>
 for every possible condition or a <code>default</code> to handle everything else.
-XCode will error at compile time if you don&rsquo;t.</p>
+XCode will error at compile time if you don’t.</p>
 
-<p>The final topic of this post is how you&rsquo;ll print output to the console. It&rsquo;s as
-simple as calling <code>println()</code> (it&rsquo;s a function) and you&rsquo;re done.
+<p>The final topic of this post is how you’ll print output to the console. It’s as
+simple as calling <code>println()</code> (it’s a function) and you’re done.
 Formatting strings is also awsome:</p>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Flavio&quot;</span>
@@ -205,9 +204,8 @@ Formatting strings is also awsome:</p>
 <span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello \(name)!&quot;</span><span class="p">)</span>
 <span class="c1">// Hello Flavio!</span></code></pre></div>
 
-
 <p>This is enough to get started and get familiar with Swift. Go ahead, poke it
-around, but don&rsquo;t try to get fancy just yet. I&rsquo;ll be covering more in the next
+around, but don’t try to get fancy just yet. I’ll be covering more in the next
 few days.</p>
 
       <footer class="entry-meta">
@@ -228,23 +226,23 @@ few days.</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
+            <a href="/post/back-from-the-dead/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <h3><a href="/post/back-from-the-dead/" title="Back From The Dead">Back From The Dead</a></h3>
+            <p>Finally! After long overdue, this lovely little blog has been updated. Andupgraded. From one press to another. So long Wordpress, hello &hellip;&hellip; <a href="/post/back-from-the-dead/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
-              <span>Published on June 30, 2014</span>
+              <h4><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h4>
+              <span>Published on July 23, 2014</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
-              <span>Published on June 12, 2014</span>
+              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
+              <span>Published on June 30, 2014</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->

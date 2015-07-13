@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -116,7 +118,7 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="/post/nsstringmask/" rel="bookmark" title="NSStringMask: Simplifying masks">NSStringMask: Simplifying masks</a></h1>
+          <h1 class="entry-title"><a href="/post/nsstringmask/" rel="bookmark" title="NSStringMask: Simplifying masks">NSStringMask: Simplifying Masks</a></h1>
         
         <h2>May 16, 2013</h2>
       </div><!-- /.header-title-wrap -->
@@ -124,39 +126,39 @@
     <div class="entry-content">
 
       
-      <a href="https://github.com/fjcaetano/NSStringMask"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+      <a href="https://github.com/fjcaetano/NSStringMask" target="_blank"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
       
 
-      <p>When developing, we often come across code we&rsquo;ve seen hundreds of times that we
-just copy and paste from project to project. Sometimes it&rsquo;s so banal that it&rsquo;s
+      <p>When developing, we often come across code we’ve seen hundreds of times that we
+just copy and paste from project to project. Sometimes it’s so banal that it’s
 not worth trying to improve, change or even modularize it. Ctrl-C + Ctrl-V may
 be the cheapest and fastest solution, ergo, the best.</p>
 
 <p>This is the kind of situation we see when masks must be applied to <em>text fields</em>
 such as Social Security Numbers (SSN), Telephones, Zip Codes, and so on. Those
 awful few dozens of lines we copy from one <code>textField:shouldChangeCharactersInRange:replacementString:</code>
-to the other. It never changes because it works. There&rsquo;s no need to improve it.
-It&rsquo;s always the same. But I&rsquo;ve got tired of it. That nasty code that, in a well
-structured class, can be as a mole in a beautiful woman&rsquo;s face.</p>
+to the other. It never changes because it works. There’s no need to improve it.
+It’s always the same. But I’ve got tired of it. That nasty code that, in a well
+structured class, can be as a mole in a beautiful woman’s face.</p>
 
 <p>A few days ago I got some spare time and I started working on something I though
 could come handy. So how do you simplify and generalise this problem that every
-developer has to face at least once? Easy! <em>Regex</em>! Wait.. You sure it&rsquo;s easy? I&rsquo;ll
-tell you, it wasn&rsquo;t easy, but we&rsquo;re talking about patterns in varying occasions
-and, as I visualised it, <em>regex</em> is the best, simplest and most &ldquo;approachable&rdquo;
+developer has to face at least once? Easy! <em>Regex</em>! Wait.. You sure it’s easy? I’ll
+tell you, it wasn’t easy, but we’re talking about patterns in varying occasions
+and, as I visualised it, <em>regex</em> is the best, simplest and most “approachable”
 solution. I mean, everybody knows a little bit of <em>regex</em>.</p>
 
 <p>While modelling, I wanted to make it as simple and as clean as possible, therefore,
-for now, there are only two classes, and only one method you&rsquo;ll really use, but
+for now, there are only two classes, and only one method you’ll really use, but
 you can read the <a href="http://fjcaetano.github.io/NSStringMask/">complete documentation</a>.
-From now on, I&rsquo;ll present a superficial approach to introduce this small library.</p>
+From now on, I’ll present a superficial approach to introduce this small library.</p>
 
 <p>Fork the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a>!</p>
 
-<h2>NSStringMask</h2>
+<h2 id="nsstringmask">NSStringMask</h2>
 
 <p>The NSStringMask is the main class responsible for applying your masks to the
-NSStrings. Among it&rsquo;s methods the only noteworthy is
+NSStrings. Among it’s methods the only noteworthy is
 <a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/maskString:withPattern:placeholder:"><code>[NSStringMask maskString:withPattern:placeholder:]</code></a>.</p>
 
 <p>It formats the given <code>string</code> based on the <code>pattern</code> you provide, filling the
@@ -164,19 +166,19 @@ voids with the <code>placeholder</code>. It automatically creates an instance of
 NSRegularExpression with the option <code>CaseInsensitive</code>, so if you need a different
 option, you may use the alternate method which expects a <em>regex</em> instead of <code>pattern</code>.</p>
 
-<p>There&rsquo;s also an alternative method that receives no <code>placeholder</code> (same as <code>nil</code>),
+<p>There’s also an alternative method that receives no <code>placeholder</code> (same as <code>nil</code>),
 in this case, when the given <code>string</code> is shorter than expected, instead of
 applying the mask, the method will return a cleaned <em>string</em> having only the
 valid characters based on <a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/validCharactersForString:"><code>validCharactersForString:</code></a>.</p>
 
-<h3>Important Note</h3>
+<h3 id="important-note">Important Note</h3>
 
-<p>Doesn&rsquo;t matter if providing a <code>pattern</code> or an instance of <em>regex</em>, the regular
+<p>Doesn’t matter if providing a <code>pattern</code> or an instance of <em>regex</em>, the regular
 expression <strong>must</strong> have capturing groups (parentheses). This is because the
 class understands that everything that is not within parentheses is part of the
 mask and must be interpreted as literal characters!</p>
 
-<p>Suppose you&rsquo;re formatting a SSN, whose <em>regex</em> pattern is <code>\d{3}-\d{2}-\d{3}</code>.
+<p>Suppose you’re formatting a SSN, whose <em>regex</em> pattern is <code>\d{3}-\d{2}-\d{3}</code>.
 If you provide that <em>regex</em>/pattern, nothing will be formatted because the class
 will think that <code>\d{3}</code> is part of the mask, and not 3 numbers that should go there.</p>
 
@@ -190,18 +192,17 @@ will think that <code>\d{3}</code> is part of the mask, and not 3 numbers that s
 <span class="bp">NSString</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskString</span><span class="p">:</span><span class="s">@&quot;12345678&quot;</span> <span class="nl">withPattern</span><span class="p">:</span><span class="s">@&quot;\d{3}-\d{2}-\d{3}&quot;</span><span class="p">];</span>
 <span class="c1">// result = nil</span></code></pre></div>
 
-
 <p><strong>Obs</strong>: If Xcode is showing a <em>warning</em> about unknown escape sequences, try
 adding double slashes (<code>\\d</code>)</p>
 
-<h2>UITextFieldMask</h2>
+<h2 id="uitextfieldmask">UITextFieldMask</h2>
 
 <p>This is a subclass of UITextField, so you can set your <em>nibs</em> to use this class
 and automatically apply masks to your <em>text fields</em>.</p>
 
-<p>Obviously, you must provide a mask to transform your <em>strings</em>, and it&rsquo;s
+<p>Obviously, you must provide a mask to transform your <em>strings</em>, and it’s
 recommended that you do so when initialising your <em>view</em> or <em>view controller</em>.
-So you should set the text field&rsquo;s mask inside <code>viewDidLoad</code> or <code>awakeFromNib</code>.</p>
+So you should set the text field’s mask inside <code>viewDidLoad</code> or <code>awakeFromNib</code>.</p>
 
 <p>Suppose you have a <em>view</em> with an <em>outlet</em> to an UITextFieldMask named <code>textFieldMask</code>:</p>
 
@@ -213,21 +214,20 @@ So you should set the text field&rsquo;s mask inside <code>viewDidLoad</code> or
     <span class="n">textFieldMask</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">self</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
 
-
 <p>A question for you: what does that mask accepts?</p>
 
-<h2>Installation</h2>
+<h2 id="installation">Installation</h2>
 
 <p>You can install it from <a href="http://cocoadocs.org/docsets/NSStringMask">Cocoa Pods</a>,
 or clone the project from the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a>
 and copy the files in the folder <code>Classes</code>.</p>
 
-<h3>Helpful stuff</h3>
+<h3 id="helpful-stuff">Helpful stuff</h3>
 
-<p>I&rsquo;ve also created <a href="https://gist.github.com/fjcaetano/5600452">this gist</a> with
+<p>I’ve also created <a href="https://gist.github.com/fjcaetano/5600452">this gist</a> with
 some common patterns. Feel free to improve it!</p>
 
-<div><script src='https://gist.github.com/5600452.js'></script>
+<div><script src="https://gist.github.com/5600452.js"></script>
 <noscript><pre><code>These are a few patterns commonly used.
 
 1 - Digits only: (\\d+)
@@ -243,8 +243,6 @@ Brasil:
 3 - CEP: (\\d{2}).(\\d{3})-(\\d{3})
 4 - Telefone: (\\d{2}) (\\d{4})-(\\d{4})
 </code></pre></noscript></div>
-
-
 
 
       <footer class="entry-meta">
@@ -265,23 +263,23 @@ Brasil:
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
+            <a href="/post/back-from-the-dead/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <h3><a href="/post/back-from-the-dead/" title="Back From The Dead">Back From The Dead</a></h3>
+            <p>Finally! After long overdue, this lovely little blog has been updated. Andupgraded. From one press to another. So long Wordpress, hello &hellip;&hellip; <a href="/post/back-from-the-dead/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
-              <span>Published on June 30, 2014</span>
+              <h4><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h4>
+              <span>Published on July 23, 2014</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
-              <span>Published on June 12, 2014</span>
+              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
+              <span>Published on June 30, 2014</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->

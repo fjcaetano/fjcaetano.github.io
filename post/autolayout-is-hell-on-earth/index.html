@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -125,7 +127,7 @@
 
       
 
-      <p>I believe that every iOS developer is already aware of Apple&rsquo;s new directive
+      <p>I believe that every iOS developer is already aware of Apple’s new directive
 forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new
 iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using
 this tool created by the son of a devil called <em>autolayout</em>.</p>
@@ -140,31 +142,31 @@ others. In addition to being extremely confusing (a <code>UIView's</code> marg
 <code>(“V:|-(-5)-[view1]-(&gt;=10)-[view2]-(912837)-|”)</code>, <em>autolayout</em> also makes
  everything slow.</p>
 
-<p><strong>Protip:</strong> if you&rsquo;re configuring your <em>coinstraints</em> via code, <strong>never</strong> forget
+<p><strong>Protip:</strong> if you’re configuring your <em>coinstraints</em> via code, <strong>never</strong> forget
 seting <code>self.translatesAutoresizingMaskIntoConstraints = NO</code> in your view. It
 took me a couple of coffee cups to realise this was the reason why my 
-<em>constraints</em> weren&rsquo;t being executing along with <code>[self layoutIfNeeded]</code>.</p>
+<em>constraints</em> weren’t being executing along with <code>[self layoutIfNeeded]</code>.</p>
 
 <p>I recently had to work with a <code>UICollectionView</code> and the scroll was getting
 really laggy. Anytime a new cell was loaded, the framerate dropped. After
 spending a few hours trying to find the root of the problem with a couple of
-friends (we even considered the problem being the SDK's <code>dequeue</code> thanks to 
+friends (we even considered the problem being the SDK’s <code>dequeue</code> thanks to 
 <em>Profiler</em>) some inspired insight hit us and we decided to disable <em>autolayout</em>
 on the <code>UICollectionViewCell's</code> xib and everything flowed like a beautiful
 stream under the morning sunlight of tropical woods. So let us analise what
 happened: Apple created a new concept, from the grounds, that theoretically
 would solve all problems when working with screens of different sizes, but this
-devilish concept is composed of runtime calculated values that ruin the <em>app&rsquo;s</em>
-smoothness. Yep, it gets hard to work happily&hellip;</p>
+devilish concept is composed of runtime calculated values that ruin the <em>app’s</em>
+smoothness. Yep, it gets hard to work happily…</p>
 
 <p>This view that is the <code>UICollectionView's</code> cell will not have <em>autolayout</em>.
 Nobody knows what will happen when we submit the <em>app</em> to the Appstore and we
-sincerely hope that Apple doesn&rsquo;t mind this view that, although is not
+sincerely hope that Apple doesn’t mind this view that, although is not
 explicitly using <em>frames</em>, also is not configured to accept <em>autolayout</em>.</p>
 
-<p>I&rsquo;m yet to find an iOS developer that has nothing to complain about this weird
-invention, but, as usual, Apple&rsquo;s &ldquo;this is what we want, so deal with it&rdquo; policy
-doesn&rsquo;t give us any alternatives. Instead of easing developers' work, they&rsquo;re
+<p>I’m yet to find an iOS developer that has nothing to complain about this weird
+invention, but, as usual, Apple’s “this is what we want, so deal with it” policy
+doesn’t give us any alternatives. Instead of easing developers’ work, they’re
 making our daily lives every more difficult while <del>Android scores another
 point</del> Apple is walking backwards.</p>
 
@@ -186,23 +188,23 @@ point</del> Apple is walking backwards.</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
+            <a href="/post/back-from-the-dead/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
-            <p>Have you ever used `git-blame` to blame on people? I have and I was wrong more often than I was right. When I wasn't the one blaming others &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
+            <h3><a href="/post/back-from-the-dead/" title="Back From The Dead">Back From The Dead</a></h3>
+            <p>Finally! After long overdue, this lovely little blog has been updated. Andupgraded. From one press to another. So long Wordpress, hello &hellip;&hellip; <a href="/post/back-from-the-dead/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
-              <span>Published on June 30, 2014</span>
+              <h4><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h4>
+              <span>Published on July 23, 2014</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
-              <span>Published on June 12, 2014</span>
+              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
+              <span>Published on June 30, 2014</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->

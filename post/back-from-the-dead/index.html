@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta http-equiv="cleartype" content="on">
 
-<title>Cocoapods and Resource_bundles - License to Kill -9</title>
+<title>Back From the Dead - License to Kill -9</title>
 <meta name="author" content="Flávio Caetano">
 
 
@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="objective-c ">
+<meta name="keywords" content=" ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -31,10 +31,10 @@
 <!-- Twitter Cards -->
 
   
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:image" content"">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/images/amsterdam.png"
   
-  <meta name="twitter:title" content="Cocoapods and resource_bundles">
+  <meta name="twitter:title" content="Back From The Dead">
   <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
   <meta name="twitter:creator" content="@flavio_caetano">
 
@@ -42,15 +42,15 @@
 <!-- Open Graph -->
 <meta property="og:local" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:url" content="http://fjcaetano.github.io/post/cocoapods-and-resource_bundles">
-<meta property="og:title" content="Cocoapods and resource_bundles">
+<meta property="og:url" content="http://fjcaetano.github.io/post/back-from-the-dead">
+<meta property="og:title" content="Back From The Dead">
 <meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-  <meta property="og:image" content="">
+  <meta property="og:image" content="/images/amsterdam.png">
 
 <meta property="og:site_name" content="License to Kill -9">
 
-<link rel="canonical" href="http://fjcaetano.github.io/post/cocoapods-and-resource_bundles">
+<link rel="canonical" href="http://fjcaetano.github.io/post/back-from-the-dead">
 <link href="/favicon.png" rel="icon">
 <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -68,7 +68,7 @@
 
 </head>
 
-<body id="post" >
+<body id="post" class="feature">
 
 <!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
 <nav id="dl-menu" class="dl-menuwrapper" role="navigation">
@@ -112,64 +112,54 @@
 
 
 
+<div class="entry-header">
+  <div class="image-credit">Image source: <a href="http://flaviocaetano.vsco.co/media/55786e8078a4e95b178b4577" target="_blank">Flávio Caetano</a></div><!-- /.image-credit -->
+  <div class="entry-image">
+    <img src="/images/amsterdam.png" alt="Back From The Dead">
+  </div><!-- /.entry-image -->
+</div><!-- /.entry-header -->
+
 
 <div id="main" role="main">
   <article class="hentry">
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="/post/cocoapods-and-resource_bundles/" rel="bookmark" title="Cocoapods and resource_bundles">Cocoapods and Resource_bundles</a></h1>
+          <h1 class="entry-title"><a href="/post/back-from-the-dead/" rel="bookmark" title="Back From The Dead">Back From the Dead</a></h1>
         
-        <h2>April 15, 2014</h2>
+        <h2>July 12, 2015</h2>
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
 
       
+      <a href="https://github.com/fjcaetano/fjcaetano.github.io" target="_blank"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+      
 
-      <p>Anyone that have recently developed any pods for Cocoapods know that resources
-should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code>resource_bundles</code></a>
-option. What is quite hard to figure out is how, exactly, to access those
-resources once they’re set up in the <code>bundle</code>. It seems obvious now that I got
-it working, but I struggle a lot since there wasn’t anything in Stackoverflow or
-anywhere else that provided the answer I came up with.</p>
+      <p>Finally! After long overdue, this lovely little blog has been updated. And
+upgraded. From one press to another. So long Wordpress, hello Octopress! And
+we’re now hosted on Github. So, if I ever get lucky and have a truly successful
+post, there’s no need to worry with the blog being down.</p>
 
-<p>After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in
-a “resources” folder within the Pods project, but none of them are added in the
-target’s “Copy bundle resources”. For that reason, I couldn’t access any of the
-Pod’s images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
+<!-- more -->
 
-<blockquote>
-  <p>‘Terminating app due to uncaught exception ‘NSInternalInconsistencyException’,
-reason: ‘Could not load NIB in bundle:&lt;{PATH_TO_APP}&gt; (loaded)’ with name
-‘{VIEW_CONTROLLER_NAME}’</p>
-</blockquote>
+<p>Anyways, this is just a note to get you on your toes for what’s coming. True
+updates will arrive shortly.</p>
 
-<p>The obvious solution that wasn’t listed anywhere is using the Cocoapods
-generated bundle (which the folder actually doesn’t exist) as a <code>NSBundle</code>:</p>
-
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="bp">NSString</span> <span class="o">*</span><span class="n">bundlePath</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource</span><span class="p">:</span><span class="s">@&quot;MyBundle&quot;</span> <span class="nl">ofType</span><span class="p">:</span><span class="s">@&quot;bundle&quot;</span><span class="p">];</span>
-
-<span class="bp">NSBundle</span> <span class="o">*</span><span class="n">bundle</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSBundle</span> <span class="nl">bundleWithPath</span><span class="p">:</span><span class="n">bundlePath</span><span class="p">];</span>
-
-<span class="n">MyViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyViewController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithNibName</span><span class="p">:</span><span class="s">@&quot;MyViewController&quot;</span> <span class="nl">bundle</span><span class="p">:</span><span class="n">bundle</span><span class="p">];</span>
-
-<span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController</span><span class="p">:</span><span class="n">viewController</span> <span class="nl">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span></code></pre></div>
-
-<p>Yes, it’s that simple, that obvious, though it’s not listed anywhere. I believe
-to be prudent and convenient to write about it in order to help anyone who
-encounter themselves in the same situation as I did.</p>
+<p>P.S. I’m using the <a href="https://github.com/jez/hpstr-theme/" target="_blank">HPSTR</a> theme and I’m
+still getting around it, but all the feature images you may see here from now on
+are my own. I’ll try and remember to link them to a bigger picture.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#objective-c" title="Pages tagged objective-c" class="tag">objective-c</a></span>
-        <span><a href="/post/cocoapods-and-resource_bundles/" rel="bookmark" title="Cocoapods and resource_bundles">Cocoapods and resource_bundles</a> was published on <span class="entry-date date published updated"><time datetime="2014-04-15T17:12:13-03:00">April 15, 2014</time></span></span>
+        <span class="entry-tags"></span>
+        <span><a href="/post/back-from-the-dead/" rel="bookmark" title="Back From The Dead">Back From The Dead</a> was published on <span class="entry-date date published updated"><time datetime="2015-07-12T17:26:26-03:00">July 12, 2015</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
           <ul class="socialcount socialcount-small inline-list">
-            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=/post/cocoapods-and-resource_bundles/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=/post/cocoapods-and-resource_bundles/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-            <li class="googleplus"><a href="https://plus.google.com/share?url=/post/cocoapods-and-resource_bundles/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=/post/back-from-the-dead/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=/post/back-from-the-dead/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+            <li class="googleplus"><a href="https://plus.google.com/share?url=/post/back-from-the-dead/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
           </ul>
         </div><!-- /.social-share -->
       </footer>
@@ -178,23 +168,23 @@ encounter themselves in the same situation as I did.</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/back-from-the-dead/" class="btn">Read More</a>
+            <a href="/post/you-shouldnt-use-git-blame/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/back-from-the-dead/" title="Back From The Dead">Back From The Dead</a></h3>
-            <p>Finally! After long overdue, this lovely little blog has been updated. Andupgraded. From one press to another. So long Wordpress, hello &hellip;&hellip; <a href="/post/back-from-the-dead/"> Continue reading</a></p>
+            <h3><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h3>
+            <p>Have you ever used git-blame to blame on people? I have and I was wrong more often than I was right. When I wasn’t the one blaming others, &hellip;&hellip; <a href="/post/you-shouldnt-use-git-blame/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h4>
-              <span>Published on July 23, 2014</span>
+              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
+              <span>Published on June 30, 2014</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double">This is when a CGFloat may be a double</a></h4>
-              <span>Published on June 30, 2014</span>
+              <h4><a href="/post/memoirs-of-a-wwdc-rookie/" title="Memoirs of a WWDC Rookie">Memoirs of a WWDC Rookie</a></h4>
+              <span>Published on June 12, 2014</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -238,8 +228,8 @@ encounter themselves in the same situation as I did.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://fjcaetano.github.io/post/cocoapods-and-resource_bundles/';
-        var disqus_url = 'http://fjcaetano.github.io/post/cocoapods-and-resource_bundles/';
+        var disqus_identifier = 'http://fjcaetano.github.io/post/back-from-the-dead/';
+        var disqus_url = 'http://fjcaetano.github.io/post/back-from-the-dead/';
         var disqus_script = 'embed.js';
       
     (function () {

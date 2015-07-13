@@ -109,7 +109,7 @@
 
 
   <div class="entry-header">
-    
+    <div class="image-credit">Image source: <a href="http://flaviocaetano.vsco.co/media/559ef75c2c331e8f438b456b" target="_blank">Flávio Caetano</a></div><!-- /.image-credit -->
     
       <div class="entry-image">
         <img src="/images/feature_image.jpg" alt="">
@@ -125,6 +125,149 @@
 
   <div id="main" role="main">
     
+
+<article class="hentry">
+  
+  <a href="https://github.com/fjcaetano/django-admin-thumbnail" target="_blank"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+  
+
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
+      <time datetime="2012-12-13T18:35:00-02:00">
+        <a href="/post/once-upon-2/">December 13, 2012</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/once-upon-2/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/post/once-upon-2/" rel="bookmark" title="Once Upon a Time, There Was Nothing (Part. 2)" itemprop="url">Once Upon a Time, There Was Nothing (Part. 2)</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>One of the main reasons I like Django is it’s awesome auto-generated admin
+interface. It’s  just awesome. When you start to play with it and discover apps
+like <a href="https://bitbucket.org/izi/django-admin-tools/wiki/Home">django-admin-tools</a>,
+the faded <a href="http://code.google.com/p/django-jqmobile/">jq-mobile</a> and other cool 
+stuff you realise how versatile Django really is.</p>
+
+<h1 id="the-context">The Context</h1>
+
+<p>When I started learning Django I created a small manager for some of my hobbies.
+The first one was a book manager in which I have a log of <strong>every single</strong> book
+I’ve ever read, <strong>when</strong> I read it, <strong>where</strong> the book is located, if it’s 
+<strong>borrowed</strong> to somebody, a “<strong>GIVE IT BACK TO ME</strong>” button that sends an email
+with that exact message to whoever has it, and so on. Among everything, I also
+added a field for the book’s <em>cover</em> but I never really used it.</p>
+
+<p>More recently, I restarted to improve my card deck collection (yes, I’m weird)
+and added this new feature to my Django manager. But this time, since it’s
+cataloging a collection and decks are mainly visual, the photos of the decks are 
+<strong><em>very</em></strong> important. Yes, I said image<strong><em>S</em></strong>. Each deck has five photos:</p>
+
+<ul>
+  <li>The Front of the Box</li>
+  <li>The Back of the Box</li>
+  <li>The Back of the Cards</li>
+  <li>The Joker</li>
+  <li>The Ace of Spades</li>
+</ul>
+
+<p>There are decks with a different back for each card, but that’s not important,.
+Those are the options I’m contemplating. But, since not all of them are opened
+(I have one numbered deck that goes to 2500 copies. I won’t open it. Never!) only 
+the first two images are requirements.</p>
+
+<p>So, now that you are aware of the context, this is when the problem (and the fun) started.</p>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>I started looking for some Django solution that could easily show thumbnails for
+my images in my admin module. Guess what was my surprise when I realised there
+was <em>N**one</em>.</p>
+
+<p>There was absolutely nothing that would do what wanted and needed. The closest
+things I found were the automatic thumbnail creator <a href="https://github.com/sorl/sorl-thumbnail">sorl-thumbnail</a>
+and <a href="http://www.acedevs.com/blog/2011/07/11/django-admin-list-view-thumbnails/">Ace Devs solution</a> 
+which didn’t solve my problem. Dude, my images have 1936x2592 pixels of resolution.
+I can’t just show them as they are.</p>
+
+<p>That’s when I realised I would have to develop a new solution for that.</p>
+
+<h1 id="the-solution-aka-the-fun-part">The Solution (aka The Fun Part)</h1>
+
+<p>I’m a modest guy, I don’t like bragging about what I do.</p>
+
+<p>No forget it. Bullshit. I do like to show everyone what I did. Specially when I
+think it’s awesome, I mean, It’s awesome. Don’t you like sharing awesome stuff
+with your friends? Dude, I’m even writing an article about it! In <strong>TWO</strong> languages!</p>
+
+<p>So, what I did was basically to join and improve those two solutions I found.
+“<strong>Basically</strong>” because, in the deep, it was a little more complex than that.</p>
+
+<p>I came up with the stupidest yet simplest name I could find:
+<a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a>. I
+know, it’s über stupid. But it’s also simple, so it works.</p>
+
+<h2 id="django-admin-thumbnail">django-admin-thumbnail</h2>
+
+<p>The package automatically works on your <em>list_display</em> of your <em>ModelAdmin</em>. It
+<em>automagically</em> detects your <em>ImageFields</em>, converts it to thumbnail (physically
+allocated) using <a href="https://github.com/sorl/sorl-thumbnail">sorl-thumbnail</a> and
+displays to you in a user friendly way.</p>
+
+<p>This is how it looks when you hover your cursor over an <em>ImageField</em> in your model grid.</p>
+
+<p><a href="/images/thumb_image.png"><img src="/images/thumb_image.png" alt="" /></a></p>
+
+<p>The image is in portuguese. Imagem = Image, Abrir Imagem = Open Image.
+<a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> is
+localizable but, currently, only <code>pt-BR</code> and <code>en-US</code> are the officially supported
+languages. If you want it to be in your language, just send me your <code>.po</code> file
+and I’ll validate it and share. It’s ridiculous, there are only two tags. Give it a try!</p>
+
+<p>When I finished, I realised how simple and effective it was. I had to share it
+with the community. So I took the opportunity to create my first <em>python package</em>.
+It was a pain in the ass because the documentation is lame, specially the
+<em>long-description</em> part. I had to generate it a zillion times to get the
+<em>reStructured Text</em> working until I found the <a href="http://pypi.python.org/pypi/py2html">py2html</a> 
+command.</p>
+
+<h1 id="wrap-and-finish">Wrap and Finish</h1>
+
+<p>That’s it. If you want to know more about <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> 
+just click the link and it will send you to the Github repository. There’s a
+quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/0.1.1">Here’s the link for the python package</a></p>
+
+<p>If you have any trouble to use it, don’t hesitate to send me a message.</p>
+
+<p>Have fun!</p>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
 
 <article class="hentry">
   
@@ -161,31 +304,30 @@
 <div class="entry-content">
   <p>Hi there, stranger.</p>
 
-<p>If you found this blog, you&rsquo;re probably my friend or already know what I do for
-a living. But anyways I&rsquo;m a mobile app developer (I mean, iOS developer), Python
+<p>If you found this blog, you’re probably my friend or already know what I do for
+a living. But anyways I’m a mobile app developer (I mean, iOS developer), Python
 fan and Django explorer.</p>
 
-<p>In this blog, which I&rsquo;ll try to update at least once a month, I&rsquo;ll primarily talk
+<p>In this blog, which I’ll try to update at least once a month, I’ll primarily talk
 about my approaches in some aspects of my developer life, but if I digress and
 start talking about karting, movies, cooking or anything, please, bare with me 
-for I&rsquo;ll eventually come back to topic &ndash; or not. Those are some of my current
+for I’ll eventually come back to topic – or not. Those are some of my current
 hobbies and, in the future, more wil come and some will be forgotten.</p>
 
-<p>That&rsquo;s me. Oh, btw, my name is Flávio (duh!), I&rsquo;m 22 brazilian and you can reach
-me at <a href="mailto:flavio@vieiracaetano.com">flavio@vieiracaetano.com</a>.</p>
+<p>That’s me. Oh, btw, my name is Flávio (duh!), I’m 22 brazilian and you can reach
+me at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#102;&#108;&#097;&#118;&#105;&#111;&#064;&#118;&#105;&#101;&#105;&#114;&#097;&#099;&#097;&#101;&#116;&#097;&#110;&#111;&#046;&#099;&#111;&#109;">&#102;&#108;&#097;&#118;&#105;&#111;&#064;&#118;&#105;&#101;&#105;&#114;&#097;&#099;&#097;&#101;&#116;&#097;&#110;&#111;&#046;&#099;&#111;&#109;</a>.</p>
 
 <p>These are some of my links you may find interesting:</p>
 
 <ul>
-<li><a href="https://github.com/fjcaetano">Github Profile</a></li>
-<li><a href="http://flaviocaetano.com">Personal Page</a></li>
-<li><a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826">LinkedIn Profile</a></li>
+  <li><a href="https://github.com/fjcaetano">Github Profile</a></li>
+  <li><a href="http://flaviocaetano.com">Personal Page</a></li>
+  <li><a href="https://www.linkedin.com/pub/fl%C3%A1vio-j-vieira-caetano/1a/785/826">LinkedIn Profile</a></li>
 </ul>
 
-
-<p>That&rsquo;s it for now. Soon will finish the next article I&rsquo;m currently working on
-and, when I&rsquo;m satisfied &ndash; which will probably be never, but I&rsquo;ll post it anyway
-&ndash; we&rsquo;ll talk more.</p>
+<p>That’s it for now. Soon will finish the next article I’m currently working on
+and, when I’m satisfied – which will probably be never, but I’ll post it anyway
+– we’ll talk more.</p>
 
 <p>See you next time.</p>
 
@@ -239,7 +381,7 @@ and, when I&rsquo;m satisfied &ndash; which will probably be never, but I&rsquo
 
 
 
-          
+
   
 
 </body>
