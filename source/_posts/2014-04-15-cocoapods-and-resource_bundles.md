@@ -11,8 +11,6 @@ type: post
 published: true
 share: true
 comments: true
-image:
-  feature: /images/curacao-island-in-caribbean-sea-header.jpg
 ---
 
 Anyone that have recently developed any pods for Cocoapods know that resources

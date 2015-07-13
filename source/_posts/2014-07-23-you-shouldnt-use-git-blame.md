@@ -29,4 +29,4 @@ Or maybe, even better, get the changelog and the names of who touched a specific
 
 [![git-log -L](/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png)](/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png)
 
-Thanks to: [http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file](http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file)
+Thanks to: <http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file>{:target="_blank"}

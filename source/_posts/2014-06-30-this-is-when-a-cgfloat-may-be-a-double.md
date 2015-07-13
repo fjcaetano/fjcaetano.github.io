@@ -16,10 +16,9 @@ image:
   feature: /images/computer-data-analytics-blue-background-website-header.jpg
 comments: true
 ---
-
 How would you explain the following code never getting into the `if` clause? Bear in mind I already knew it to be true at least once. I was an absolute true.
 
-{% highlight objc %}
+``` objc
 for (UIView *subview in view.subviews)
 {
     CGFloat subviewAlpha = subview.alpha;
@@ -30,19 +29,19 @@ for (UIView *subview in view.subviews)
         subview.alpha = 0.f;
     }
  }
-{% endhighlight %}
+```
 
 <!-- more -->
 
 Printing the value also proved to be pointless:
 
-{% highlight objc %}
+``` objc
 NSLog(@"%f", subviewAlpha);
 // output: 0.150000
 
 NSLog(@"%f", myAlpha);
 // output: 0.150000
-{% endhighlight %}
+```
 
 Finally, XCode's debugger shed a dim of light to the real issue. It showed that the true value of `subviewAlpha` is 0.14999999999999999, and as a floating point it's accurate. Meanwhile the value of `myAlpha` was 0.15000000596046448, so logically they are different. But what could be causing this singularity?
 
@@ -52,7 +51,7 @@ Jumping to `CGFloat` definition, we can see that it may be an alias to float or
 
 As usual, I solved it the more elegant way I could. "Hey, if `CGFloat` is bipolar, let it tell me how to read it!"
 
-{% highlight objc %}
+``` objc
 for (UIView *subview in view.subviews)
 {
     if (subview.alpha == (CGFloat)0.15 &&
@@ -61,6 +60,6 @@ for (UIView *subview in view.subviews)
         subview.alpha = 0.f;
     }
  }
-{% endhighlight %}
+```
 
  Conclusion, always have in mind that typings and comparisons  may not be as obvious as they seem. Be careful and, when in doubt, `typecast` it.

@@ -1,3 +1,5 @@
+{% capture titlecased %}{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}{% endcapture %}
+
 {% include doctype.html %}
 <head>
 {% include head.html %}
@@ -10,7 +12,7 @@
 
 {% if page.image.feature %}
 <div class="entry-header">
-  {% if page.image.credit %}<div class="image-credit">Image source: {% if page.image.creditlink %}<a href="{{ page.image.creditlink }}">{% endif %}{{ page.image.credit }}{% if page.image.creditlink %}</a>{% endif %}</div><!-- /.image-credit -->{% endif %}
+  {% if page.image.credit %}<div class="image-credit">Image source: {% if page.image.creditlink %}<a href="{{ page.image.creditlink }}" target="_blank">{% endif %}{{ page.image.credit }}{% if page.image.creditlink %}</a>{% endif %}</div><!-- /.image-credit -->{% endif %}
   <div class="entry-image">
     <img src="{{ page.image.feature }}" alt="{{ page.title }}">
   </div><!-- /.entry-image -->
@@ -22,9 +24,9 @@
     <header class="header-title">
       <div class="header-title-wrap">
         {% if page.external_url %}
-          <h1 class="entry-title"><a href="{{ page.external_url }}">{{ page.title }}</a></h1>
+          <h1 class="entry-title"><a href="{{ page.external_url }}">{{ titlecased }}</a></h1>
         {% else %}
-          <h1 class="entry-title"><a href="{{ root_url }}{{ page.url }}" rel="bookmark" title="{{ page.title }}">{{ page.title }}</a></h1>
+          <h1 class="entry-title"><a href="{{ root_url }}{{ page.url }}" rel="bookmark" title="{{ page.title }}">{{ titlecased }}</a></h1>
         {% endif %}
         <h2>{{ page.date | date: "%B %d, %Y" }}</h2>
       </div><!-- /.header-title-wrap -->
@@ -32,7 +34,7 @@
     <div class="entry-content">
 
       {% if page.github_repo %}
-      <a href="{{ page.github_repo }}"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+      <a href="{{ page.github_repo }}" target="_blank"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
       {% endif %}
 
       {{ content }}
