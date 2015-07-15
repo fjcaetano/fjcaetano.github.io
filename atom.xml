@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[License to Kill -9]]></title>
-  <link href="http://fjcaetano.github.io/atom.xml" rel="self"/>
-  <link href="http://fjcaetano.github.io/"/>
-  <updated>2015-07-14T17:36:42-03:00</updated>
-  <id>http://fjcaetano.github.io/</id>
+  <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
+  <link href="http://blog.flaviocaetano.com/"/>
+  <updated>2015-07-14T19:19:46-03:00</updated>
+  <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
     <email><![CDATA[flavio@vieiracaetano.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Back From the Dead]]></title>
-    <link href="http://fjcaetano.github.io/post/back-from-the-dead/"/>
+    <link href="http://blog.flaviocaetano.com/post/back-from-the-dead/"/>
     <updated>2015-07-12T17:26:26-03:00</updated>
-    <id>http://fjcaetano.github.io/post/back-from-the-dead</id>
+    <id>http://blog.flaviocaetano.com/post/back-from-the-dead</id>
     <content type="html"><![CDATA[<p>Finally! After long overdue, this lovely little blog has been updated. And
 upgraded. From one press to another. So long Wordpress, hello Octopress! And
 we’re now hosted on Github. So, if I ever get lucky and have a truly successful
@@ -36,9 +36,9 @@ are my own. I’ll try and remember to link them to a bigger picture.</p>
   
   <entry>
     <title type="html"><![CDATA[You Shouldn't Use Git Blame to Blame on People]]></title>
-    <link href="http://fjcaetano.github.io/post/you-shouldnt-use-git-blame/"/>
+    <link href="http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame/"/>
     <updated>2014-07-23T17:22:57-03:00</updated>
-    <id>http://fjcaetano.github.io/post/you-shouldnt-use-git-blame</id>
+    <id>http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame</id>
     <content type="html"><![CDATA[<p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn’t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with “default” <code>git-blame</code> and Xcode’s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
 
 <!-- more -->
@@ -49,7 +49,7 @@ are my own. I’ll try and remember to link them to a bigger picture.</p>
 
 <p>Or maybe, even better, get the changelog and the names of who touched a specific line of code with <code>git-log</code> “-L” option:</p>
 
-<p><a href="http://fjcaetano.github.io/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="http://fjcaetano.github.io/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="http://blog.flaviocaetano.com/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
 
 <p>Thanks to: <a href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file" target="_blank">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
 ]]></content>
@@ -57,9 +57,9 @@ are my own. I’ll try and remember to link them to a bigger picture.</p>
   
   <entry>
     <title type="html"><![CDATA[This Is When a CGFloat May Be a Double]]></title>
-    <link href="http://fjcaetano.github.io/post/this-is-when-a-cgfloat-may-be-a-double/"/>
+    <link href="http://blog.flaviocaetano.com/post/this-is-when-a-cgfloat-may-be-a-double/"/>
     <updated>2014-06-30T11:00:29-03:00</updated>
-    <id>http://fjcaetano.github.io/post/this-is-when-a-cgfloat-may-be-a-double</id>
+    <id>http://blog.flaviocaetano.com/post/this-is-when-a-cgfloat-may-be-a-double</id>
     <content type="html"><![CDATA[<p>How would you explain the following code never getting into the <code>if</code> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
@@ -104,7 +104,7 @@ are my own. I’ll try and remember to link them to a bigger picture.</p>
 
 <p>Jumping to <code>CGFloat</code> definition, we can see that it may be an alias to float or double, depending on the system’s architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424">@gustavocsb</a>, for the link).</p>
 
-<p><a href="http://fjcaetano.github.io/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img src="http://fjcaetano.github.io/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" alt="" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img src="http://blog.flaviocaetano.com/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" alt="" /></a></p>
 
 <p>As usual, I solved it the more elegant way I could. “Hey, if <code>CGFloat</code> is bipolar, let it tell me how to read it!”</p>
 
@@ -132,9 +132,9 @@ are my own. I’ll try and remember to link them to a bigger picture.</p>
   
   <entry>
     <title type="html"><![CDATA[Memoirs of a WWDC Rookie]]></title>
-    <link href="http://fjcaetano.github.io/post/memoirs-of-a-wwdc-rookie/"/>
+    <link href="http://blog.flaviocaetano.com/post/memoirs-of-a-wwdc-rookie/"/>
     <updated>2014-06-12T12:14:56-03:00</updated>
-    <id>http://fjcaetano.github.io/post/memoirs-of-a-wwdc-rookie</id>
+    <id>http://blog.flaviocaetano.com/post/memoirs-of-a-wwdc-rookie</id>
     <content type="html"><![CDATA[<p>This year I went to Apple’s WWDC for the first time. I got the chance to be where every iOS developer wanted to be. The place where stuff happened. The place with the best among all. The place that mattered.</p>
 
 <!-- more -->
@@ -159,9 +159,9 @@ are my own. I’ll try and remember to link them to a bigger picture.</p>
   
   <entry>
     <title type="html"><![CDATA[Swift for Dummies]]></title>
-    <link href="http://fjcaetano.github.io/post/swift-for-dummies/"/>
+    <link href="http://blog.flaviocaetano.com/post/swift-for-dummies/"/>
     <updated>2014-06-04T13:57:21-03:00</updated>
-    <id>http://fjcaetano.github.io/post/swift-for-dummies</id>
+    <id>http://blog.flaviocaetano.com/post/swift-for-dummies</id>
     <content type="html"><![CDATA[<p>At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows
 for sure what will happen to Objective-C, but one can only guess it won’t be
 around for long. My guess is that Apple will be accepting ObjC apps up till iOS
@@ -240,9 +240,9 @@ few days.</p>
   
   <entry>
     <title type="html"><![CDATA[Protip: Unregistering a UICollectionView Header/footer]]></title>
-    <link href="http://fjcaetano.github.io/post/protip-unregistering-a-uicollectionview-headerfooter/"/>
+    <link href="http://blog.flaviocaetano.com/post/protip-unregistering-a-uicollectionview-headerfooter/"/>
     <updated>2014-05-16T16:33:52-03:00</updated>
-    <id>http://fjcaetano.github.io/post/protip-unregistering-a-uicollectionview-headerfooter</id>
+    <id>http://blog.flaviocaetano.com/post/protip-unregistering-a-uicollectionview-headerfooter</id>
     <content type="html"><![CDATA[<p>You can unregister a UICollectionView supplementary view by re-registering it
 with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple’s docs</a>.
 (Remember to use the same <code>reuseIdentifier</code>).</p>
@@ -266,9 +266,9 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
   
   <entry>
     <title type="html"><![CDATA[Cocoapods and Resource_bundles]]></title>
-    <link href="http://fjcaetano.github.io/post/cocoapods-and-resource_bundles/"/>
+    <link href="http://blog.flaviocaetano.com/post/cocoapods-and-resource_bundles/"/>
     <updated>2014-04-15T17:12:13-03:00</updated>
-    <id>http://fjcaetano.github.io/post/cocoapods-and-resource_bundles</id>
+    <id>http://blog.flaviocaetano.com/post/cocoapods-and-resource_bundles</id>
     <content type="html"><![CDATA[<p>Anyone that have recently developed any pods for Cocoapods know that resources
 should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code>resource_bundles</code></a>
 option. What is quite hard to figure out is how, exactly, to access those
@@ -306,13 +306,13 @@ encounter themselves in the same situation as I did.</p>
   
   <entry>
     <title type="html"><![CDATA[Cicada 3301 Lives!]]></title>
-    <link href="http://fjcaetano.github.io/post/cicada-2014/"/>
+    <link href="http://blog.flaviocaetano.com/post/cicada-2014/"/>
     <updated>2014-01-06T14:19:11-02:00</updated>
-    <id>http://fjcaetano.github.io/post/cicada-2014</id>
+    <id>http://blog.flaviocaetano.com/post/cicada-2014</id>
     <content type="html"><![CDATA[<p>This morning, Cicada 3301 went back to active! In his/hers <a href="https://twitter.com/1231507051321">Twitter account</a>
 used on last year’s challenge there was new link to an image posted on imgur.</p>
 
-<p><a href="http://fjcaetano.github.io/images/zN4h51m.jpg"><img src="http://fjcaetano.github.io/images/zN4h51m.jpg" alt="First Chapter" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/images/zN4h51m.jpg"><img src="http://blog.flaviocaetano.com/images/zN4h51m.jpg" alt="First Chapter" /></a></p>
 
 <p>Reproducing the tradicional previous steps, by extracting the image using
 <a href="http://www.outguess.org/">outguess</a> we came onto a message, once again signed.
@@ -331,9 +331,9 @@ is on a good pace.</p>
   
   <entry>
     <title type="html"><![CDATA[Autolayout Is Hell on Earth]]></title>
-    <link href="http://fjcaetano.github.io/post/autolayout-is-hell-on-earth/"/>
+    <link href="http://blog.flaviocaetano.com/post/autolayout-is-hell-on-earth/"/>
     <updated>2013-09-12T11:24:56-03:00</updated>
-    <id>http://fjcaetano.github.io/post/autolayout-is-hell-on-earth</id>
+    <id>http://blog.flaviocaetano.com/post/autolayout-is-hell-on-earth</id>
     <content type="html"><![CDATA[<p>I believe that every iOS developer is already aware of Apple’s new directive
 forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new
 iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using
@@ -381,9 +381,9 @@ point</del> Apple is walking backwards.</p>
   
   <entry>
     <title type="html"><![CDATA[Cocoapod Badges]]></title>
-    <link href="http://fjcaetano.github.io/post/cocoapod-badges/"/>
+    <link href="http://blog.flaviocaetano.com/post/cocoapod-badges/"/>
     <updated>2013-06-03T16:15:45-03:00</updated>
-    <id>http://fjcaetano.github.io/post/cocoapod-badges</id>
+    <id>http://blog.flaviocaetano.com/post/cocoapod-badges</id>
     <content type="html"><![CDATA[<p>In any kind of environment, visual marks ease and enhance the comprehension of
 information. Countless researches studied the best way to display data, which
 colors induce what emotions, the association of geometric shapes with pre-formed
@@ -462,9 +462,9 @@ Simple and easy, isn’t it? Use it at will! And suport the Github repo!</p>
   
   <entry>
     <title type="html"><![CDATA[Documentation and Objective-C (Part 1)]]></title>
-    <link href="http://fjcaetano.github.io/post/documentation-and-objective-c/"/>
+    <link href="http://blog.flaviocaetano.com/post/documentation-and-objective-c/"/>
     <updated>2013-05-24T16:18:54-03:00</updated>
-    <id>http://fjcaetano.github.io/post/documentation-and-objective-c</id>
+    <id>http://blog.flaviocaetano.com/post/documentation-and-objective-c</id>
     <content type="html"><![CDATA[<p>This is an article I originally wrote for the brazilian online magazine
 <a href="http://www.devmedia.com.br/aprenda-a-documentar-seus-projetos-em-objective-c-revista-mobile-magazine-48/27964">DevMedia’s Mobile Magazine</a>.
 This first part is the article’s introduction, so seat back and relax. Soon I’ll
@@ -570,9 +570,9 @@ familiarise to a new layout.”</p>
   
   <entry>
     <title type="html"><![CDATA[NSStringMask: Simplifying Masks]]></title>
-    <link href="http://fjcaetano.github.io/post/nsstringmask/"/>
+    <link href="http://blog.flaviocaetano.com/post/nsstringmask/"/>
     <updated>2013-05-16T14:27:10-03:00</updated>
-    <id>http://fjcaetano.github.io/post/nsstringmask</id>
+    <id>http://blog.flaviocaetano.com/post/nsstringmask</id>
     <content type="html"><![CDATA[<p>When developing, we often come across code we’ve seen hundreds of times that we
 just copy and paste from project to project. Sometimes it’s so banal that it’s
 not worth trying to improve, change or even modularize it. Ctrl-C + Ctrl-V may
@@ -693,9 +693,9 @@ Brasil:
   
   <entry>
     <title type="html"><![CDATA[The Best XCode Tip No One Ever Gave You]]></title>
-    <link href="http://fjcaetano.github.io/post/best-xcode-tip/"/>
+    <link href="http://blog.flaviocaetano.com/post/best-xcode-tip/"/>
     <updated>2013-04-03T15:25:36-03:00</updated>
-    <id>http://fjcaetano.github.io/post/best-xcode-tip</id>
+    <id>http://blog.flaviocaetano.com/post/best-xcode-tip</id>
     <content type="html"><![CDATA[<p>Tired of having to find out where an exception occurred, that was only captured
 in the <em>main()</em>? Now I’m going to show you the best Xcode tip that no one talks
 about. Don’t ask me why.</p>
@@ -709,17 +709,17 @@ breakpoint marker on the top of your Project Navigator. If you didn’t know, th
 Breakpoint Navigator show all your breakpoints in your project, where you can
 easily manage them. (Click on the image to see it bigger)</p>
 
-<p><a href="http://fjcaetano.github.io/images/best-xcode-hint-1.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-1.png" alt="best-xcode-hint-1" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-1.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-1.png" alt="best-xcode-hint-1" /></a></p>
 
 <p>Now that you’re in the Breakpoint Navigator, click on the little “+” button on
 the bottom left of the screen. A little dialog window will show up and choose the
 “Add Exception Breakpoint…” option.</p>
 
-<p><a href="http://fjcaetano.github.io/images/best-xcode-hint-3.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-3.png" alt="best-xcode-hint-3" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-3.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-3.png" alt="best-xcode-hint-3" /></a></p>
 
 <p>Then, the Xcode will ask you some information about the breakpoint you’re creating:</p>
 
-<p><a href="http://fjcaetano.github.io/images/best-xcode-hint-4.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-4.png" alt="best-xcode-hint-4" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-4.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-4.png" alt="best-xcode-hint-4" /></a></p>
 
 <ul>
   <li>Exception: There are three options: “All” to get all types of exceptions; “C++” to get only C++ exceptions; and “Objective-C” to get only ObjC exceptions. I like to leave it as “All”.</li>
@@ -734,7 +734,7 @@ stop whenever something odd happens! Let’s try it out!</p>
 <p>As an example I’ve created an empty array and tried to access the object at index
 0, which doesn’t exists. This is what happened:</p>
 
-<p><a href="http://fjcaetano.github.io/images/best-xcode-hint-5.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-5.png" alt="best-xcode-hint-5" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-5.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-5.png" alt="best-xcode-hint-5" /></a></p>
 
 <p>Whoa! The Xcode stopped precisely where the problem was! Quite awesome, huh? But,
 sometimes, it’s not that easy to visualise what the problem really is, so if
@@ -744,7 +744,7 @@ whatever exceptions that may happen.</p>
 
 <p>So you can look at the console to see what the problem was:</p>
 
-<p><a href="http://fjcaetano.github.io/images/best-xcode-hint-6.png"><img src="http://fjcaetano.github.io/images/best-xcode-hint-6.png" alt="best-xcode-hint-6" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-6.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-6.png" alt="best-xcode-hint-6" /></a></p>
 
 <blockquote>
   <p>”-[__NSArrayI objectAtIndex:]: index 0 beyond bounds for empty array”</p>
@@ -758,9 +758,9 @@ I think you guys should know.</p>
   
   <entry>
     <title type="html"><![CDATA[SQLite Modelling]]></title>
-    <link href="http://fjcaetano.github.io/post/sqlite-modelling/"/>
+    <link href="http://blog.flaviocaetano.com/post/sqlite-modelling/"/>
     <updated>2013-01-16T20:42:01-02:00</updated>
-    <id>http://fjcaetano.github.io/post/sqlite-modelling</id>
+    <id>http://blog.flaviocaetano.com/post/sqlite-modelling</id>
     <content type="html"><![CDATA[<p>SQLite sucks. I think everybody knows, but I had to say it. But, sometimes, we
 have no choice other than using it. Even though it’s horrible and we know we`ll
 be frustrated, once in a lifetime, SQLite may be the best choice. Wether developing
@@ -838,9 +838,9 @@ problem go for it and be happy. When I found it, life suddenly became joyful aga
   
   <entry>
     <title type="html"><![CDATA[The Tale of Luck]]></title>
-    <link href="http://fjcaetano.github.io/post/the-tale-of-luck/"/>
+    <link href="http://blog.flaviocaetano.com/post/the-tale-of-luck/"/>
     <updated>2012-12-27T18:40:44-02:00</updated>
-    <id>http://fjcaetano.github.io/post/the-tale-of-luck</id>
+    <id>http://blog.flaviocaetano.com/post/the-tale-of-luck</id>
     <content type="html"><![CDATA[<p>“Once upon a time, there was a tiny invisible force named <em>Luck</em>. Everybody loved
 it and gave it gifts, hoping that, when needed, <em>Luck</em> would come for them. But
 <em>Luck</em> had a younger sibling called <em>Bad Luck</em>, who hated <em>Luck</em> with all it’s
@@ -898,9 +898,9 @@ super hot nurse.</p>
   
   <entry>
     <title type="html"><![CDATA[Once Upon a Time, There Was Nothing (Part. 2)]]></title>
-    <link href="http://fjcaetano.github.io/post/once-upon-2/"/>
+    <link href="http://blog.flaviocaetano.com/post/once-upon-2/"/>
     <updated>2012-12-13T18:35:00-02:00</updated>
-    <id>http://fjcaetano.github.io/post/once-upon-2</id>
+    <id>http://blog.flaviocaetano.com/post/once-upon-2</id>
     <content type="html"><![CDATA[<p>One of the main reasons I like Django is it’s awesome auto-generated admin
 interface. It’s  just awesome. When you start to play with it and discover apps
 like <a href="https://bitbucket.org/izi/django-admin-tools/wiki/Home">django-admin-tools</a>,
@@ -974,7 +974,7 @@ displays to you in a user friendly way.</p>
 
 <p>This is how it looks when you hover your cursor over an <em>ImageField</em> in your model grid.</p>
 
-<p><a href="http://fjcaetano.github.io/images/thumb_image.png"><img src="http://fjcaetano.github.io/images/thumb_image.png" alt="" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/images/thumb_image.png"><img src="http://blog.flaviocaetano.com/images/thumb_image.png" alt="" /></a></p>
 
 <p>The image is in portuguese. Imagem = Image, Abrir Imagem = Open Image.
 <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> is
@@ -1003,9 +1003,9 @@ quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/
   
   <entry>
     <title type="html"><![CDATA[Once Upon a Time, There Was Nothing]]></title>
-    <link href="http://fjcaetano.github.io/post/once-upon/"/>
+    <link href="http://blog.flaviocaetano.com/post/once-upon/"/>
     <updated>2012-11-21T13:55:49-02:00</updated>
-    <id>http://fjcaetano.github.io/post/once-upon</id>
+    <id>http://blog.flaviocaetano.com/post/once-upon</id>
     <content type="html"><![CDATA[<p>Hi there, stranger.</p>
 
 <p>If you found this blog, you’re probably my friend or already know what I do for

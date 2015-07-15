@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://fjcaetano.github.io/sitemap.xml 
+Sitemap: http://blog.flaviocaetano.com/sitemap.xml 

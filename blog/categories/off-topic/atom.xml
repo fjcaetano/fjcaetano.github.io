@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Off-topic | License to Kill -9]]></title>
-  <link href="http://fjcaetano.github.io/blog/categories/off-topic/atom.xml" rel="self"/>
-  <link href="http://fjcaetano.github.io/"/>
-  <updated>2015-07-14T17:36:42-03:00</updated>
-  <id>http://fjcaetano.github.io/</id>
+  <link href="http://blog.flaviocaetano.com/blog/categories/off-topic/atom.xml" rel="self"/>
+  <link href="http://blog.flaviocaetano.com/"/>
+  <updated>2015-07-14T19:19:46-03:00</updated>
+  <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
     <email><![CDATA[flavio@vieiracaetano.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cicada 3301 Lives!]]></title>
-    <link href="http://fjcaetano.github.io/post/cicada-2014/"/>
+    <link href="http://blog.flaviocaetano.com/post/cicada-2014/"/>
     <updated>2014-01-06T14:19:11-02:00</updated>
-    <id>http://fjcaetano.github.io/post/cicada-2014</id>
+    <id>http://blog.flaviocaetano.com/post/cicada-2014</id>
     <content type="html"><![CDATA[<p>This morning, Cicada 3301 went back to active! In his/hers <a href="https://twitter.com/1231507051321">Twitter account</a>
 used on last year’s challenge there was new link to an image posted on imgur.</p>
 
@@ -40,9 +40,9 @@ is on a good pace.</p>
   
   <entry>
     <title type="html"><![CDATA[The Tale of Luck]]></title>
-    <link href="http://fjcaetano.github.io/post/the-tale-of-luck/"/>
+    <link href="http://blog.flaviocaetano.com/post/the-tale-of-luck/"/>
     <updated>2012-12-27T18:40:44-02:00</updated>
-    <id>http://fjcaetano.github.io/post/the-tale-of-luck</id>
+    <id>http://blog.flaviocaetano.com/post/the-tale-of-luck</id>
     <content type="html"><![CDATA[<p>“Once upon a time, there was a tiny invisible force named <em>Luck</em>. Everybody loved
 it and gave it gifts, hoping that, when needed, <em>Luck</em> would come for them. But
 <em>Luck</em> had a younger sibling called <em>Bad Luck</em>, who hated <em>Luck</em> with all it’s
@@ -100,9 +100,9 @@ super hot nurse.</p>
   
   <entry>
     <title type="html"><![CDATA[Once Upon a Time, There Was Nothing]]></title>
-    <link href="http://fjcaetano.github.io/post/once-upon/"/>
+    <link href="http://blog.flaviocaetano.com/post/once-upon/"/>
     <updated>2012-11-21T13:55:49-02:00</updated>
-    <id>http://fjcaetano.github.io/post/once-upon</id>
+    <id>http://blog.flaviocaetano.com/post/once-upon</id>
     <content type="html"><![CDATA[<p>Hi there, stranger.</p>
 
 <p>If you found this blog, you’re probably my friend or already know what I do for

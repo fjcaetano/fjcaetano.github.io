@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Objective-c | License to Kill -9]]></title>
-  <link href="http://fjcaetano.github.io/blog/categories/objective-c/atom.xml" rel="self"/>
-  <link href="http://fjcaetano.github.io/"/>
-  <updated>2015-07-14T17:36:42-03:00</updated>
-  <id>http://fjcaetano.github.io/</id>
+  <link href="http://blog.flaviocaetano.com/blog/categories/objective-c/atom.xml" rel="self"/>
+  <link href="http://blog.flaviocaetano.com/"/>
+  <updated>2015-07-14T19:19:46-03:00</updated>
+  <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
     <email><![CDATA[flavio@vieiracaetano.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[This Is When a CGFloat May Be a Double]]></title>
-    <link href="http://fjcaetano.github.io/post/this-is-when-a-cgfloat-may-be-a-double/"/>
+    <link href="http://blog.flaviocaetano.com/post/this-is-when-a-cgfloat-may-be-a-double/"/>
     <updated>2014-06-30T11:00:29-03:00</updated>
-    <id>http://fjcaetano.github.io/post/this-is-when-a-cgfloat-may-be-a-double</id>
+    <id>http://blog.flaviocaetano.com/post/this-is-when-a-cgfloat-may-be-a-double</id>
     <content type="html"><![CDATA[<p>How would you explain the following code never getting into the <code>if</code> clause? Bear in mind I already knew it to be true at least once. I was an absolute true.</p>
 
 <p><code>objc
@@ -70,9 +70,9 @@ for (UIView *subview in view.subviews)
   
   <entry>
     <title type="html"><![CDATA[Protip: Unregistering a UICollectionView Header/footer]]></title>
-    <link href="http://fjcaetano.github.io/post/protip-unregistering-a-uicollectionview-headerfooter/"/>
+    <link href="http://blog.flaviocaetano.com/post/protip-unregistering-a-uicollectionview-headerfooter/"/>
     <updated>2014-05-16T16:33:52-03:00</updated>
-    <id>http://fjcaetano.github.io/post/protip-unregistering-a-uicollectionview-headerfooter</id>
+    <id>http://blog.flaviocaetano.com/post/protip-unregistering-a-uicollectionview-headerfooter</id>
     <content type="html"><![CDATA[<p>You can unregister a UICollectionView supplementary view by re-registering it
 with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple’s docs</a>.
 (Remember to use the same <code>reuseIdentifier</code>).</p>
@@ -96,9 +96,9 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
   
   <entry>
     <title type="html"><![CDATA[Cocoapods and Resource_bundles]]></title>
-    <link href="http://fjcaetano.github.io/post/cocoapods-and-resource_bundles/"/>
+    <link href="http://blog.flaviocaetano.com/post/cocoapods-and-resource_bundles/"/>
     <updated>2014-04-15T17:12:13-03:00</updated>
-    <id>http://fjcaetano.github.io/post/cocoapods-and-resource_bundles</id>
+    <id>http://blog.flaviocaetano.com/post/cocoapods-and-resource_bundles</id>
     <content type="html"><![CDATA[<p>Anyone that have recently developed any pods for Cocoapods know that resources
 should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code>resource_bundles</code></a>
 option. What is quite hard to figure out is how, exactly, to access those
@@ -136,9 +136,9 @@ encounter themselves in the same situation as I did.</p>
   
   <entry>
     <title type="html"><![CDATA[Autolayout Is Hell on Earth]]></title>
-    <link href="http://fjcaetano.github.io/post/autolayout-is-hell-on-earth/"/>
+    <link href="http://blog.flaviocaetano.com/post/autolayout-is-hell-on-earth/"/>
     <updated>2013-09-12T11:24:56-03:00</updated>
-    <id>http://fjcaetano.github.io/post/autolayout-is-hell-on-earth</id>
+    <id>http://blog.flaviocaetano.com/post/autolayout-is-hell-on-earth</id>
     <content type="html"><![CDATA[<p>I believe that every iOS developer is already aware of Apple’s new directive
 forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new
 iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using
@@ -186,9 +186,9 @@ point</del> Apple is walking backwards.</p>
   
   <entry>
     <title type="html"><![CDATA[Cocoapod Badges]]></title>
-    <link href="http://fjcaetano.github.io/post/cocoapod-badges/"/>
+    <link href="http://blog.flaviocaetano.com/post/cocoapod-badges/"/>
     <updated>2013-06-03T16:15:45-03:00</updated>
-    <id>http://fjcaetano.github.io/post/cocoapod-badges</id>
+    <id>http://blog.flaviocaetano.com/post/cocoapod-badges</id>
     <content type="html"><![CDATA[<p>In any kind of environment, visual marks ease and enhance the comprehension of
 information. Countless researches studied the best way to display data, which
 colors induce what emotions, the association of geometric shapes with pre-formed
