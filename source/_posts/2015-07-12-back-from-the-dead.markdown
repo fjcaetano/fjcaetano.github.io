@@ -7,7 +7,7 @@ share: true
 published: true
 github_repo: https://github.com/fjcaetano/fjcaetano.github.io
 image:
-  feature: /images/amsterdam.png
+  feature: /images/amsterdam.jpg
   credit: Flávio Caetano
   creditlink: http://flaviocaetano.vsco.co/media/55786e8078a4e95b178b4577
 ---

@@ -7,6 +7,9 @@ body {
 
 // Main
 // --------------------------------------------------
+p {
+	text-align: justify;
+}
 .entry,
 .hentry {
 	@include clearfix();
