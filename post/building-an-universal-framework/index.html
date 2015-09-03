@@ -136,13 +136,13 @@
       <a href="https://gist.github.com/fjcaetano/16bc1f84981262f911d7" target="_blank"><img style="/* position: absolute; */ margin: -50px -80px;float: right;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
       
 
-      <p>These days I had to convert the core of an iOS app to a framework that could be shared between projects. It was fairly simple considering the “new” framework products available in XCode. I managed to build it with the desired public headers, copied it from the “Products” folder to the new project and everything flowed smoothly.</p>
+      <p>These days I had to convert the core of an iOS app to a framework that could be shared between projects. It was fairly simple considering the “new” framework products available in Xcode. I managed to build it with the desired public headers, copied it from the “Products” folder to the new project and everything flowed smoothly.</p>
 
 <!-- more -->
 
-<p>Then, in the last “funcional tests” to check that all gears were lubed, I tried running the new project agains the iOS Simulator. Not surprisingly, XCode complained that <code>symbol(s) not found for architecture x86_64</code>. Building the framework against the simulator solved it, but, on the other side of the scale, I couldn’t build against the devices anymore. Of course, I would have to build a fat library that supported both architectures.</p>
+<p>Then, in the last “funcional tests” to check that all gears were lubed, I tried running the new project against the iOS Simulator. Not surprisingly, Xcode complained that <code>symbol(s) not found for architecture x86_64</code>. Building the framework against the simulator solved it, but, on the other side of the scale, I couldn’t run it against the devices anymore. Of course, I would have to build a fat library that supported both architectures.</p>
 
-<p><a href="http://spin.atomicobject.com/2011/12/13/building-a-universal-framework-for-ios/" target="_blank">After</a> <a href="http://stackoverflow.com/questions/31575580/ios-universal-framework-with-iphoneos-and-iphonesimulator-architectures" target="_blank">extensively</a> <a href="http://stackoverflow.com/questions/27284192/xcode6-creating-fat-static-library-ios-universal-framework" target="_blank">searching</a>, I finally found something worthy on <a href="http://www.raywenderlich.com/41377/creating-a-static-library-in-ios-tutorial" target="_blank">this Ray Wenderlich article</a> (where else?), but it still wasn’t quite what I exepected. Aside the fact that it’s an article from 2013, it’s focused on creating an Static Library, and the solution is to create an Aggregate target with a build script. But I could work on that script. It was feasible. This is the original script:</p>
+<p><a href="http://spin.atomicobject.com/2011/12/13/building-a-universal-framework-for-ios/" target="_blank">After</a> <a href="http://stackoverflow.com/questions/31575580/ios-universal-framework-with-iphoneos-and-iphonesimulator-architectures" target="_blank">extensively</a> <a href="http://stackoverflow.com/questions/27284192/xcode6-creating-fat-static-library-ios-universal-framework" target="_blank">searching</a>, I finally found something worthy on <a href="http://www.raywenderlich.com/41377/creating-a-static-library-in-ios-tutorial" target="_blank">this Ray Wenderlich article</a> (where else?), but it still wasn’t quite what I expected. Aside the fact that it’s an article from 2013, it’s focused on creating an Static Library, and the solution is to create an Aggregate target with a build script. But I could work on that. It was feasible. This is the original script:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -176,7 +176,7 @@
 </span><span class="line">cp -R <span class="s2">&quot;${BUILD_DIR}/${CONFIGURATION}-iphoneos/include&quot;</span> <span class="s2">&quot;${UNIVERSAL_OUTPUTFOLDER}/&quot;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>First of all, it wouldn’t work for me because I’m using workspaces instead of a <code>xcodeproj</code>, partly because of Cocoapods. So using <code>xcodebuild -target</code> wouldn’t cut. Secondly, I wanted this script to be run when I archive the framework project, so it’s run with the correct configuration, the correct environment variables, etc, etc. Last, the script is actually redundant if you think of running it as I intended. You wouldn’t have to build the project again for the SDK <code>iphoneos</code>. Archiving the target would already did that, so I would only have to build against the <code>iphonesimulator</code> SDK and then combine the executables.</p>
+<p>First of all, it wouldn’t work because I’m using workspaces instead of a <code>xcodeproj</code>, partly because of Cocoapods. So using <code>xcodebuild -target</code> wouldn’t cut. Secondly, I wanted this script to be run when I archive the framework project, so it’d be run with the correct configuration, the correct environment variables, etc, etc. Lastly, the script is actually redundant if you think of running it as I intended. You wouldn’t have to build the project again for the SDK <code>iphoneos</code>. Archiving the target would already do that, so I would only have to build against the <code>iphonesimulator</code> SDK and then combine the executables.</p>
 
 <p>Having in mind that I wanted the universal build to be created when I archived the framework target, I edited my scheme and added the script as a “Run Script” phase in “Post-actions”:</p>
 
@@ -221,7 +221,7 @@ yes | cp -Rf &quot;${UNIVERSAL_OUTPUTFOLDER}/${FULL_PRODUCT_NAME}&quot; &quot;${
 
 fi</code></pre></noscript></div>
 
-<p>As you can see on step 3, I move the universal build to the archive product path. So when I export the archive after Xcode’s Organizer shows up, the final product already has the universal build:</p>
+<p>As you can see, on step 3 I move the universal build to the archive product path. So when I export the archive after Xcode’s Organizer shows up, the final product already has the universal build:</p>
 
 <p><a href="/images/universal_framework.png"><img src="/images/universal_framework.png" alt="Universal Framework" /></a></p>
 
