@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://blog.flaviocaetano.com/post/building-an-universal-framework/</loc>
+    <lastmod>2015-09-03T17:41:16-03:00</lastmod>
+  </url>
+  <url>
     <loc>http://blog.flaviocaetano.com/post/back-from-the-dead/</loc>
     <lastmod>2015-07-12T17:26:26-03:00</lastmod>
   </url>
@@ -103,5 +107,8 @@
   </url>
   <url>
     <loc>http://blog.flaviocaetano.com/blog/categories/git/</loc>
+  </url>
+  <url>
+    <loc>http://blog.flaviocaetano.com/blog/categories/bash/</loc>
   </url>
 </urlset>
