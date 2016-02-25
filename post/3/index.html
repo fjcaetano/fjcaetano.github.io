@@ -134,6 +134,92 @@
 <header>
   
   
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
+      <time datetime="2013-09-12T11:24:56-03:00">
+        <a href="/post/autolayout-is-hell-on-earth/">September 12, 2013</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/autolayout-is-hell-on-earth/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/post/autolayout-is-hell-on-earth/" rel="bookmark" title="Autolayout Is Hell on Earth" itemprop="url">Autolayout Is Hell on Earth</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>I believe that every iOS developer is already aware of Apple’s new directive
+forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new
+iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using
+this tool created by the son of a devil called <em>autolayout</em>.</p>
+
+<p>Anyone that has already used <em>autolayout</em> knows that margin, width, height and
+other properties are calculated in runtime, therefore, they consume sometimes
+unnecessary CPU time. For some inescrutable reason, Apple decided to create this
+new concept from scratch to ease working with different sized screens, while
+they could easily reuse existing CSS concepts like <em>margin</em>, <em>padding</em>, among
+others. In addition to being extremely confusing (a <code>UIView's</code> margin
+<em>constraints</em> are in its <em>superview</em>), having a pitiful syntax 
+<code>(“V:|-(-5)-[view1]-(&gt;=10)-[view2]-(912837)-|”)</code>, <em>autolayout</em> also makes
+ everything slow.</p>
+
+<p><strong>Protip:</strong> if you’re configuring your <em>coinstraints</em> via code, <strong>never</strong> forget
+seting <code>self.translatesAutoresizingMaskIntoConstraints = NO</code> in your view. It
+took me a couple of coffee cups to realise this was the reason why my 
+<em>constraints</em> weren’t being executing along with <code>[self layoutIfNeeded]</code>.</p>
+
+<p>I recently had to work with a <code>UICollectionView</code> and the scroll was getting
+really laggy. Anytime a new cell was loaded, the framerate dropped. After
+spending a few hours trying to find the root of the problem with a couple of
+friends (we even considered the problem being the SDK’s <code>dequeue</code> thanks to 
+<em>Profiler</em>) some inspired insight hit us and we decided to disable <em>autolayout</em>
+on the <code>UICollectionViewCell's</code> xib and everything flowed like a beautiful
+stream under the morning sunlight of tropical woods. So let us analise what
+happened: Apple created a new concept, from the grounds, that theoretically
+would solve all problems when working with screens of different sizes, but this
+devilish concept is composed of runtime calculated values that ruin the <em>app’s</em>
+smoothness. Yep, it gets hard to work happily…</p>
+
+<p>This view that is the <code>UICollectionView's</code> cell will not have <em>autolayout</em>.
+Nobody knows what will happen when we submit the <em>app</em> to the Appstore and we
+sincerely hope that Apple doesn’t mind this view that, although is not
+explicitly using <em>frames</em>, also is not configured to accept <em>autolayout</em>.</p>
+
+<p>I’m yet to find an iOS developer that has nothing to complain about this weird
+invention, but, as usual, Apple’s “this is what we want, so deal with it” policy
+doesn’t give us any alternatives. Instead of easing developers’ work, they’re
+making our daily lives every more difficult while <del>Android scores another
+point</del> Apple is walking backwards.</p>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  
+  
     <a href="https://github.com/fjcaetano/cocoapod-badges" target="_blank"><img class="github-ribbon" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
   
   <div class="entry-meta">
@@ -651,122 +737,6 @@ I think you guys should know.</p>
 
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  
-
-
-
-<header>
-  
-  
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2013-01-16T20:42:01-02:00">
-        <a href="/post/sqlite-modelling/">January 16, 2013</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/post/sqlite-modelling/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/post/sqlite-modelling/" rel="bookmark" title="SQLite Modelling" itemprop="url">SQLite Modelling</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>SQLite sucks. I think everybody knows, but I had to say it. But, sometimes, we
-have no choice other than using it. Even though it’s horrible and we know we`ll
-be frustrated, once in a lifetime, SQLite may be the best choice. Wether developing
-a program with a tiny or fast persistence. Sure there are other alternatives that
-may suit you best, but the platform we’re using may not support it.</p>
-
-<p>For instance, I’m currently working on an iPad app that will have a fairly big
-amount of data which must be available offline and it will have to be updated
-sometimes. The best solution we came with is a background server task wich will
-build an SQLite database populated with the most recent data and, when the user
-requests, the iPad will download the whole database, overwriting any existing ones.</p>
-
-<p>I’m no DBA, but I don’t think anyone writes database creation scripts anymore.
-At least not for the usual <code>CREATE TABLE</code>, etc. I’m mostly a MySQL guy and, for
-a long time, I’ve been using <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>
-to create my DB models and syncing with my existing database. It automatically
-creates everything that needs to be created and alter all tables that must be
-altered without losing any data (most of the time). It’s pretty good and I never
-had any problems with it.</p>
-
-<p>Now, back to listing reasons why SQLite sucks (dude, you can’t add a constraint
-when altering a table!). As any platform/framework with no “official” team, SQLite
-depends on the community to increase it’s awesomeness. Therefore, as everybody
-knows SQLite <em>is not awesome</em>, no one really waste time developing a <em>good</em>
-administration tool for it. What may happen, is a company own a DB management
-program (such as <a href="http://www.navicat.com/">Navicat</a>) and something like this goes by:</p>
-
-<pre><code>- Hey, we're supporting MySQL, SQL Server, MongoDB, Cassandra, NoSQL and Postgree,
-don't you think people will notice we're ignoring SQLite?
-
-- God dammit *gasps*, add support to it too... but don't lose too much time with it!
-</code></pre>
-
-<p>Unfortunately, there are no really good tools to work with SQLite available.
-“Hey, what about <a href="http://www.navicat.com/">Navicat</a>?” It’s okay, but I found tons
-of bugs in the Mac version. If that’s not enough, are you really willing to pay
-to use a management tool for a free, open source database? But if you search deep
-enough - like the 3rd page of Google - there are also some weird stuff that
-appears such as <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a> (for Mac). When I see
-things I like that I think “why the hell would people lose time developing
-something for SQLite?” But hey, there are weirdos for everything, so I’d like to
-thank for the <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a> team for being strange
-enough to create it.</p>
-
-<p>Even though it’s not the best tool ever, <a href="http://sqlitestudio.one.pl/">SQLiteStudio</a>
-sure comes in handy and helps a lot, but it doesn’t solve the mentioned problem
-of modelling your SQLite database and not dealing with SQL scripts. So, searching
-for something that would fill this void I found <a href="http://www.henlich.de/software/sqlite-export-plugin-for-mysql-workbench/">this excellent script</a>
-in Lua for <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a> that
-<em>automagically</em> generates the SQLite CREATE script from a model. It’s super easy
-to install and use. Just follow this steps:</p>
-
-<ul>
-  <li>Download the .lua script (duh!)</li>
-  <li>Click in the “Scripting” menu in <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>.</li>
-  <li>Click “Install Plugin/Module”.</li>
-  <li>Choose the downloaded .lua script.</li>
-  <li>???</li>
-  <li>Profit.</li>
-</ul>
-
-<p>That’s it. Now, if you want to try, open a model, click the “Plugins” menu and
-under “Utilities” there must be an option named “Export SQLite CREATE Script”
-which may be the first one. Just click it and choose where to save the .sql script
-and execute it. <em>Voilà</em>! If you have any problems executing the generated script,
-you may need to comment the <code>BEGIN;</code> at the top and the <code>COMMIT;</code> at the bottom
-of the .sql script.</p>
-
-<p>Super easy, isn’t it? Give it a try. Even if, like me, you hate SQLite. The plugin
-solves the modelling problem, but creates a new one, because you can’t <code>ALTER</code> an
-existing table since it only generates the <code>CREATE</code> script. But if that’s not a
-problem go for it and be happy. When I found it, life suddenly became joyful again.</p>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
 
 <div class="pagination">
   
@@ -784,7 +754,7 @@ problem go for it and be happy. When I found it, life suddenly became joyful aga
 
   <div class="footer-wrapper">
     <footer role="contentinfo">
-      <span>&copy; 2015 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+      <span>&copy; 2016 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
     </footer>
   </div><!-- /.footer-wrapper -->

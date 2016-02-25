@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2015-09-03T19:29:51-03:00</updated>
+  <updated>2016-02-25T18:13:24-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,83 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RxWebSocket]]></title>
+    <link href="http://blog.flaviocaetano.com/post/rxwebsocket/"/>
+    <updated>2016-02-25T15:55:42-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/rxwebsocket</id>
+    <content type="html"><![CDATA[<p>Recently we had to integrate a chat-like comment feature to our new <a href="https://itunes.apple.com/us/app/winnin-battle-best-videos./id1073178885" target="_blank">Winnin App</a>
+Our backend team decided to build it using websockets, so when it came to the
+app implementation, my first thought was to search for an opensource swift framework
+that did confirm to the <a href="http://tools.ietf.org/html/rfc6455" target="_blank">Websocket Protocol</a>.
+We decided to go with <a href="https://github.com/daltoniam/Starscream" target="_blank">Starscream</a> since
+it seemed simple and reliable enough.</p>
+
+<!-- more -->
+
+<p>In the first drafts of the new app, a decision was made to adopt reactive programming
+in the app, more specifically <a href="https://github.com/ReactiveX/RxSwift" target="_blank">RxSwift</a>. Many sprints later, we’ve limited our
+Rx use to cross-object events and network communications. Not surprisingly, we
+wanted to use websockets reactively.</p>
+
+<h2 id="rxwebsockettargetblank"><a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a></h2>
+
+<p>We designed RxWebSocket to be as lightweight as possible, truly, just making an
+abstraction layer over <a href="https://github.com/daltoniam/Starscream" target="_blank">Starscream</a> to make it reactive.</p>
+
+<p>All you need is to listen to the <code>stream</code> property which is an <code>Observable&lt;StreamEvent&gt;</code>.</p>
+
+<p><code>swift
+public enum StreamEvent {
+    case Connect
+    case Disconnect(NSError?)
+    case Pong
+    case Text(String)
+    case Data(NSData)
+  }
+</code></p>
+
+<p>Using an enum as the element type allows us to have every interaction with the
+websocket server in one property that is also easily filtered by message type. If
+we need to know when the websocket connects, we can simply filter the stream:</p>
+
+<p><code>swift
+socket.stream
+  .filter {
+    switch $0 {
+    case .Connect: return true
+    default: return false
+    }
+  }
+</code></p>
+
+<p>If your websocket messages the client with a JSON object that you need to parse:</p>
+
+<p><code>swift
+socket.stream
+  .flatMap { event -&gt; Observable&lt;AnyObject&gt; in
+    switch event {
+    case .Text(let text):
+      return Observable.just(try NSJSONSerialization.JSONObjectWithData(text.dataUsingEncoding(NSUTF8StringEncoding)!, options: .AllowFragments))
+    default: return Observable.empty()
+    }
+  }
+</code></p>
+
+<p>We know it’s still crude and quite simple, which is our intention, but we’ll improve
+<a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a> with time. Every suggestion, comment, critic, PR, 
+etcetera is welcome.</p>
+
+<p>You can check an actual implementation in the example project or by running
+<code>bash
+pod try RxWebSocket
+</code></p>
+
+<p>Enjoy!</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Swift for Dummies]]></title>

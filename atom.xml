@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2015-09-03T19:29:51-03:00</updated>
+  <updated>2016-02-25T18:13:24-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,102 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RxWebSocket]]></title>
+    <link href="http://blog.flaviocaetano.com/post/rxwebsocket/"/>
+    <updated>2016-02-25T15:55:42-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/rxwebsocket</id>
+    <content type="html"><![CDATA[<p>Recently we had to integrate a chat-like comment feature to our new <a href="https://itunes.apple.com/us/app/winnin-battle-best-videos./id1073178885" target="_blank">Winnin App</a>
+Our backend team decided to build it using websockets, so when it came to the
+app implementation, my first thought was to search for an opensource swift framework
+that did confirm to the <a href="http://tools.ietf.org/html/rfc6455" target="_blank">Websocket Protocol</a>.
+We decided to go with <a href="https://github.com/daltoniam/Starscream" target="_blank">Starscream</a> since
+it seemed simple and reliable enough.</p>
+
+<!-- more -->
+
+<p>In the first drafts of the new app, a decision was made to adopt reactive programming
+in the app, more specifically <a href="https://github.com/ReactiveX/RxSwift" target="_blank">RxSwift</a>. Many sprints later, we’ve limited our
+Rx use to cross-object events and network communications. Not surprisingly, we
+wanted to use websockets reactively.</p>
+
+<h2 id="rxwebsockettargetblank"><a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a></h2>
+
+<p>We designed RxWebSocket to be as lightweight as possible, truly, just making an
+abstraction layer over <a href="https://github.com/daltoniam/Starscream" target="_blank">Starscream</a> to make it reactive.</p>
+
+<p>All you need is to listen to the <code>stream</code> property which is an <code>Observable&lt;StreamEvent&gt;</code>.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">public</span> <span class="k">enum</span> <span class="n">StreamEvent</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">case</span> <span class="n">Connect</span>
+</span><span class="line">    <span class="k">case</span> <span class="n">Disconnect</span><span class="p">(</span><span class="bp">NSError</span><span class="o">?</span><span class="p">)</span>
+</span><span class="line">    <span class="k">case</span> <span class="n">Pong</span>
+</span><span class="line">    <span class="k">case</span> <span class="n">Text</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+</span><span class="line">    <span class="k">case</span> <span class="n">Data</span><span class="p">(</span><span class="bp">NSData</span><span class="p">)</span>
+</span><span class="line">  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Using an enum as the element type allows us to have every interaction with the
+websocket server in one property that is also easily filtered by message type. If
+we need to know when the websocket connects, we can simply filter the stream:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">socket</span><span class="p">.</span><span class="n">stream</span>
+</span><span class="line">  <span class="p">.</span><span class="n">filter</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">switch</span> <span class="err">$</span><span class="mi">0</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">case</span> <span class="p">.</span><span class="nl">Connect</span><span class="p">:</span> <span class="k">return</span> <span class="nb">true</span>
+</span><span class="line">    <span class="k">default</span><span class="o">:</span> <span class="k">return</span> <span class="nb">false</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If your websocket messages the client with a JSON object that you need to parse:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">socket</span><span class="p">.</span><span class="n">stream</span>
+</span><span class="line">  <span class="p">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="n">event</span> <span class="o">-&gt;</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">AnyObject</span><span class="o">&gt;</span> <span class="k">in</span>
+</span><span class="line">    <span class="k">switch</span> <span class="n">event</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">case</span> <span class="p">.</span><span class="n">Text</span><span class="p">(</span><span class="k">let</span> <span class="n">text</span><span class="p">)</span><span class="o">:</span>
+</span><span class="line">      <span class="k">return</span> <span class="n">Observable</span><span class="p">.</span><span class="n">just</span><span class="p">(</span><span class="n">try</span> <span class="bp">NSJSONSerialization</span><span class="p">.</span><span class="n">JSONObjectWithData</span><span class="p">(</span><span class="n">text</span><span class="p">.</span><span class="n">dataUsingEncoding</span><span class="p">(</span><span class="n">NSUTF8StringEncoding</span><span class="p">)</span><span class="o">!</span><span class="p">,</span> <span class="nl">options</span><span class="p">:</span> <span class="p">.</span><span class="n">AllowFragments</span><span class="p">))</span>
+</span><span class="line">    <span class="k">default</span><span class="o">:</span> <span class="k">return</span> <span class="n">Observable</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We know it’s still crude and quite simple, which is our intention, but we’ll improve
+<a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a> with time. Every suggestion, comment, critic, PR, 
+etcetera is welcome.</p>
+
+<p>You can check an actual implementation in the example project or by running</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">pod try RxWebSocket
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Enjoy!</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Building an Universal Framework]]></title>
