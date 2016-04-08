@@ -7,7 +7,7 @@ categories:
   - Swift
 comments: true
 share: true
-published: false
+published: true
 tags:
 - xcode swift organization
 ---
