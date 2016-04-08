@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2016-04-08T18:04:08-03:00</updated>
+  <updated>2016-04-08T18:30:41-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,190 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A Better Way to Organize Swift Classes]]></title>
+    <link href="http://blog.flaviocaetano.com/post/a-better-way-to-organize-swift-classes/"/>
+    <updated>2016-04-08T16:36:53-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/a-better-way-to-organize-swift-classes</id>
+    <content type="html"><![CDATA[<blockquote><p>Code organization is a matter of hygiene</p><footer><strong>Mattt Thompson</strong> <cite><a href="http://nshipster.com/pragma/#organizing-your-code">nshipster.com/pragma/&hellip;</a></cite></footer></blockquote>
+
+<p>Having a clean, organized code means that anyone can easily maintain it. There
+will be no hassles when trying to read and understand it. Being able to rapidly
+find a method based on it’s scope is a gift. So I thought I’d show you my way of
+organizing properties and methods within a class.</p>
+
+<!-- more -->
+
+<h2 id="always-use-mark">Always use MARK</h2>
+
+<p>If you don’t use the source navigator to browse through your classes’ methods,
+you’re doing it wrong.</p>
+
+<p><a href="http://blog.flaviocaetano.com/images/swift-organization/scope-grouping.png" target="_blank"><img src="http://blog.flaviocaetano.com/images/swift-organization/scope-grouping.png" alt="Scope Grouping" /></a></p>
+
+<p>Absolutely <strong>always</strong> use <code>// MARK:</code> to segment your code. Use it followed by hyphen to separate your
+extensions and without it to separate your code logic. Use mark to separate your
+properties from your methods. You may also use it to group your methods by their scope. Use
+comments to group your properties by their meaning.</p>
+
+<p><img src="http://blog.flaviocaetano.com/images/swift-organization/mark.png" alt="// MARK:" /></p>
+
+<h2 id="properties-and-overridden-methods-go-first">Properties And Overridden Methods Go First</h2>
+
+<p>One of the most important things of a subclass is knowing how it differs from its
+parent, therefore, what should come first in your class file are your class’
+properties and overridden methods.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="k">class</span> <span class="nl">UserTableViewCell</span><span class="p">:</span> <span class="bp">UITableViewCell</span> <span class="p">{</span>
+</span><span class="line">  <span class="k">var</span> <span class="nl">user</span><span class="p">:</span> <span class="n">UserViewModel</span><span class="o">!</span> <span class="p">{</span>
+</span><span class="line">    <span class="kr">didSet</span> <span class="p">{</span>
+</span><span class="line">      <span class="n">setupUser</span><span class="p">()</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// MARK: Outlets</span>
+</span><span class="line">
+</span><span class="line">  <span class="p">@</span><span class="kt">IBOutlet</span> <span class="n">private</span> <span class="k">weak</span> <span class="k">var</span> <span class="nl">titleLabel</span><span class="p">:</span> <span class="bp">UILabel</span><span class="o">!</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// MARK: - Overridden Methods</span>
+</span><span class="line">
+</span><span class="line">  <span class="kr">override</span> <span class="k">func</span> <span class="n">prepareForReuse</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="nb">super</span><span class="p">.</span><span class="n">prepareForReuse</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">cleanUp</span><span class="p">()</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Using this organization methodology, it’d be of great advantage if we could declare
+properties in class extensions, however, since it’s not possible for obvious reasons,
+all your properties must be declared inside the class declaration.</p>
+
+<h2 id="put-your-public-methods-in-an-extension">Put Your Public Methods In An Extension</h2>
+
+<p>Right after your class declaration, add an extension to implement your public
+methods. That will make clear that they’re not protocol nor private methods.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="c1">// MARK: - Public Methods</span>
+</span><span class="line"><span class="k">extension</span> <span class="n">UserTableViewCell</span> <span class="p">{</span>
+</span><span class="line">  <span class="c1">// View Manipulation</span>
+</span><span class="line">  <span class="k">func</span> <span class="n">disable</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">func</span> <span class="n">select</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">backgroundColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">greenColor</span><span class="p">()</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// MARK: Update User</span>
+</span><span class="line">  <span class="k">func</span> <span class="n">setUserStatus</span><span class="p">(</span><span class="nl">status</span><span class="p">:</span> <span class="n">UserStatus</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">user</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+</span><span class="line">    <span class="n">backgroundColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">blueColor</span><span class="p">()</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="use-extensions-for-implementing-protocols">Use Extensions For Implementing Protocols</h2>
+
+<p>This way you’re automatically grouping methods by their scope. Also, thanks to
+Swift compiler, this way it’s easier to navigate through errors.</p>
+
+<p><a href="http://blog.flaviocaetano.com/images/swift-organization/delegate-error.png" target="_blank"><img src="http://blog.flaviocaetano.com/images/swift-organization/delegate-error.png" alt="Protocol Errors" /></a></p>
+
+<h2 id="leave-your-private-methods-last">Leave Your Private Methods Last</h2>
+
+<p>Put your helpers and private methods in the last extension of the file. This way
+you can scroll directly to the bottom to add a new method and you’ll know exactly
+where to look at when searching for a helper method. Again: don’t forget to group
+the methods by what they do.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="c1">// MARK: - Private Methods</span>
+</span><span class="line"><span class="k">extension</span> <span class="n">PromotedUsersTableViewCell</span> <span class="p">{</span>
+</span><span class="line">  <span class="c1">// Resource Methods</span>
+</span><span class="line">  <span class="n">private</span> <span class="k">func</span> <span class="n">loadUser</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">UserResource</span><span class="p">.</span><span class="n">load</span><span class="p">()</span> <span class="p">{</span> <span class="n">user</span> <span class="k">in</span>
+</span><span class="line">      <span class="nb">self</span><span class="p">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">private</span> <span class="k">func</span> <span class="n">loadMoreStuff</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="c1">// Load it</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="c1">// MARK: View Setup</span>
+</span><span class="line">  <span class="n">private</span> <span class="k">func</span> <span class="n">setupUser</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">titleLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="n">name</span>
+</span><span class="line">    <span class="n">backgroundColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">whiteColor</span><span class="p">()</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I hope this makes your code as clear as possible. Since I’ve started doing this,
+I never have to scroll through a class looking for some method or property. Honestly,
+few things get me more upset than random properties thrown around some class.</p>
+
+<p>If you have any suggestions to this organization methodology, let me know. The
+cleaner the better.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[RxWebSocket]]></title>
@@ -875,7 +1059,7 @@ some common patterns. Feel free to improve it!</p>
 
 Brasil:
 1 - CPF: (\\d{3}).(\\d{3}).(\\d{3})-(\\d{2})
-2 - RG: (\\d{2}).(\\d{3}).(\\d{3})-(\\d)
+2 - RG: (\\d{2}).(\\d{3}).(\\d{3})-(\\d|x|X)
 3 - CEP: (\\d{2}).(\\d{3})-(\\d{3})
 4 - Telefone: (\\d{2}) (\\d{4})-(\\d{4})
 </code></pre></noscript></div>
