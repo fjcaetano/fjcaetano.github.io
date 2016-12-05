@@ -134,6 +134,60 @@
 <header>
   
     <div class="entry-image-index">
+      <a href="http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame/" title="You Shouldn't Use Git Blame to Blame on People"><img src="/images/computer-keyboard-stones-on-grass-background-header.jpg" alt="You Shouldn't Use Git Blame to Blame on People"></a>
+    </div><!-- /.entry-image -->
+  
+  
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
+      <time datetime="2014-07-23T17:22:57-03:00">
+        <a href="/post/you-shouldnt-use-git-blame/">July 23, 2014</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/you-shouldnt-use-git-blame/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/post/you-shouldnt-use-git-blame/" rel="bookmark" title="You Shouldn't Use Git Blame to Blame on People" itemprop="url">You Shouldn't Use Git Blame to Blame on People</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn’t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with “default” <code>git-blame</code> and Xcode’s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
+
+
+  
+  
+    <footer>
+      <a class="btn" rel="full-article" href="/post/you-shouldnt-use-git-blame/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
+    </footer>
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  
+    <div class="entry-image-index">
       <a href="http://blog.flaviocaetano.com/post/this-is-when-a-cgfloat-may-be-a-double/" title="This is when a CGFloat may be a double"><img src="/images/computer-data-analytics-blue-background-website-header.jpg" alt="This is when a CGFloat may be a double"></a>
     </div><!-- /.entry-image -->
   
@@ -364,82 +418,6 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
     <footer>
       <a class="btn" rel="full-article" href="/post/protip-unregistering-a-uicollectionview-headerfooter/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
     </footer>
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  
-  
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2014-04-15T17:12:13-03:00">
-        <a href="/post/cocoapods-and-resource_bundles/">April 15, 2014</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/post/cocoapods-and-resource_bundles/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/post/cocoapods-and-resource_bundles/" rel="bookmark" title="Cocoapods and Resource_bundles" itemprop="url">Cocoapods and Resource_bundles</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>Anyone that have recently developed any pods for Cocoapods know that resources
-should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code>resource_bundles</code></a>
-option. What is quite hard to figure out is how, exactly, to access those
-resources once they’re set up in the <code>bundle</code>. It seems obvious now that I got
-it working, but I struggle a lot since there wasn’t anything in Stackoverflow or
-anywhere else that provided the answer I came up with.</p>
-
-<p>After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in
-a “resources” folder within the Pods project, but none of them are added in the
-target’s “Copy bundle resources”. For that reason, I couldn’t access any of the
-Pod’s images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
-
-<blockquote>
-  <p>‘Terminating app due to uncaught exception ‘NSInternalInconsistencyException’,
-reason: ‘Could not load NIB in bundle:&lt;{PATH_TO_APP}&gt; (loaded)’ with name
-‘{VIEW_CONTROLLER_NAME}’</p>
-</blockquote>
-
-<p>The obvious solution that wasn’t listed anywhere is using the Cocoapods
-generated bundle (which the folder actually doesn’t exist) as a <code>NSBundle</code>:</p>
-
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="bp">NSString</span> <span class="o">*</span><span class="n">bundlePath</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource</span><span class="p">:</span><span class="s">@&quot;MyBundle&quot;</span> <span class="nl">ofType</span><span class="p">:</span><span class="s">@&quot;bundle&quot;</span><span class="p">];</span>
-
-<span class="bp">NSBundle</span> <span class="o">*</span><span class="n">bundle</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSBundle</span> <span class="nl">bundleWithPath</span><span class="p">:</span><span class="n">bundlePath</span><span class="p">];</span>
-
-<span class="n">MyViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyViewController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithNibName</span><span class="p">:</span><span class="s">@&quot;MyViewController&quot;</span> <span class="nl">bundle</span><span class="p">:</span><span class="n">bundle</span><span class="p">];</span>
-
-<span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController</span><span class="p">:</span><span class="n">viewController</span> <span class="nl">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span></code></pre></div>
-
-<p>Yes, it’s that simple, that obvious, though it’s not listed anywhere. I believe
-to be prudent and convenient to write about it in order to help anyone who
-encounter themselves in the same situation as I did.</p>
-
-  
   
 </div><!-- /.entry-content -->
 

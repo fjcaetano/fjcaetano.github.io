@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://blog.flaviocaetano.com/post/this-is-how-to-override-extension-methods/</loc>
+    <lastmod>2016-12-05T13:46:08-02:00</lastmod>
+  </url>
+  <url>
     <loc>http://blog.flaviocaetano.com/post/a-better-way-to-organize-swift-classes/</loc>
     <lastmod>2016-04-08T16:36:53-03:00</lastmod>
   </url>
@@ -84,10 +88,10 @@
     <loc>http://blog.flaviocaetano.com/categories/</loc>
   </url>
   <url>
-    <loc>http://blog.flaviocaetano.com/archives/</loc>
+    <loc>http://blog.flaviocaetano.com/blog/archives/</loc>
   </url>
   <url>
-    <loc>http://blog.flaviocaetano.com/blog/archives/</loc>
+    <loc>http://blog.flaviocaetano.com/archives/</loc>
   </url>
   <url>
     <loc>http://blog.flaviocaetano.com/</loc>
@@ -127,5 +131,8 @@
   </url>
   <url>
     <loc>http://blog.flaviocaetano.com/post/4/</loc>
+  </url>
+  <url>
+    <loc>http://blog.flaviocaetano.com/post/5/</loc>
   </url>
 </urlset>
