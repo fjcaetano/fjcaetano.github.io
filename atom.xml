@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2016-12-05T15:04:08-02:00</updated>
+  <updated>2017-03-16T18:00:01-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,117 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Bugreport 101]]></title>
+    <link href="http://blog.flaviocaetano.com/post/bugreport-101/"/>
+    <updated>2017-03-16T09:00:00-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/bugreport-101</id>
+    <content type="html"><![CDATA[<blockquote>
+  <p>This post is a translation from Portuguese, originally written to the <a href="http://equinocios.com/comunidade/2017/03/10/Bugreport-101/" target="_blank">equinociOS</a> magazine.</p>
+</blockquote>
+
+<p>It’s very easy to find developers that have found some kind of bug in third party code. Whether it’s in an external lib, or in Apple’s SDK. Our code, beautiful and sparkly, with undesired behavior caused by people that aren’t even in our company. At the same time, it isn’t hard finding devs that have reported some of these bugs to those responsible by the code, or that have contributed in any way to its resolution. But, it’s not so easy to find developers that have reported some kind of inconsistency to Apple.</p>
+
+<p>The lack of material on <em>bugreport</em>, may it be motivational or guidelines, emphasize this fact. Frequent are the reports without relevant information, with confidential data, or identical copies of previous reports without addition of any new data.</p>
+
+<!-- more -->
+
+<p>In the sphere of Apple platforms development, doesn’t matter how individualistic you are. Even if you don’t use any third party libraries, we’re all under Apple’s SDK dome. May your code be as bulletproof to outside developers as it is, we’re all subject to the hits and misses of Apple’s developers.</p>
+
+<p><img src="https://mlkshk-ada.kxcdn.com/r/ZE20" alt="Computer gone" /></p>
+
+<h2 id="shed-a-light-on-the-problem">Shed a light on the problem</h2>
+
+<p>The main reason to report a bug isn’t obvious. Tools of issue tracking were created to report incidents, i.e. to draw attention to an unexpected behavior.</p>
+
+<p><img src="http://blog.flaviocaetano.com/images/bugreport/will_smith.png" alt="No keyboard detected, press any key to continue" /></p>
+
+<p>Secondly, the resolution of the bug motivates the report. If there’s a workaround, or any way to avoid the problem in hand, fixing the bug might not have priority.</p>
+
+<p>Nonetheless, we can never forget those who maintain these libraries. Reporting an issue demonstrates support to the code we use and to the people that build it, therefore, do not apologize for reporting a bug: appreciate the creation of that library.</p>
+
+<h2 id="bugreport-is-money">Bugreport is money</h2>
+
+<p>Big companies have so much need of help that they turned Bug Bounty programs commonplace. The demand for reports on <em>exploits</em> and vulnerabilities is so big that Facebook, Github, Google, Microsoft and many other companies recognize and reward those who discover and resolve bugs before these inconsistencies become public.</p>
+
+<p>In 2016 the US Department of Defense announced their Bug Bounty program called <a href="https://www.defense.gov/News/Article/Article/684616/dod-invites-vetted-specialists-to-hack-the-pentagon" target="_blank">Hack the Pentagon</a> in which security specialists where invited to attack the Pentagon’s public pages in search of security breaches. <a href="https://en.wikipedia.org/wiki/Bug_bounty_program#Notable_programs" target="_blank">More than US$71,000 were paid</a> in rewards.</p>
+
+<p>Also in 2016, <a href="https://techcrunch.com/2016/08/04/apple-announces-long-awaited-bug-bounty-program/" target="_blank">Apple announced</a> their Bug Bounty program. Some say of rewards of up to US$200,000, but joining the program is only possible through invitations.</p>
+
+<iframe src="//giphy.com/embed/QVgU7wEY0RlV6" width="480" height="271" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe>
+
+<h2 id="steps-for-a-good-report">4 steps for a good report</h2>
+
+<p>Several platforms offer report templates. Github itself provides the <a href="https://github.com/blog/1184-contributing-guidelines" target="_blank">CONTRIBUTING guidelines</a> file so that each repository documents how to report and contribute to code development. However, with so many possibilities and without a standard, it’s not always easy to be concise when redacting a report.</p>
+
+<p><img src="http://blog.flaviocaetano.com/images/bugreport/pc_lab.png" alt="I have no idea what I'm doing" /></p>
+
+<h4 id="be-clear-about-the-inconsistency">1. Be clear about the inconsistency</h4>
+
+<p>In the introduction, be clear about the obtained behavior. What was expected? What is actually happening?</p>
+
+<h4 id="define-the-steps-to-reproduce-the-bug">2. Define the steps to reproduce the bug</h4>
+
+<p>Include the steps for reproduction and inform if the behavior is intermittent. It’s okay if you can’t reproduce the bug every single time, but say so and be sure that the provided steps lead to some inconsistency.</p>
+
+<h4 id="include-snippets-of-code">3. Include snippets of code</h4>
+
+<p>If it’s a report to Apple, always attach a project or playground containing the bug reproduction in your radar. If it’s an issue on Github, you may include snippets of code or even links to repositories containing an example project or playground.</p>
+
+<h4 id="suggest-a-fix-or-workaround">4. Suggest a fix or workaround</h4>
+
+<p>If you know what’s causing the bug or where it’s triggered, suggestions of fixes are more than welcome. Or, even better, fix the inconsistency and open a <em>pull request</em> with the solution.</p>
+
+<h2 id="bugreports-to-github">Bugreports to Github</h2>
+
+<p>I believe Github require extra special caring when reporting incidents, after all, in open-source repositories, people contribute out of good-will and, although they may be responsible for the code, it’s nobody’s job to fix the errors and inconsistencies affecting you.</p>
+
+<p>It is important not to be afraid of saying something wrong. The iOS community, specially, is super receptive and tolerant. No one will point fingers, or make fun if you say something incorrect. At most, you will be corrected politely.</p>
+
+<p><img src="http://blog.flaviocaetano.com/images/bugreport/nelson_haha.jpg" alt="Nelson: HAHA" /></p>
+
+<p>The common language of the internet is the English Language, but not everyone is fluent and even less have it as native tongue. Don’t be embarrassed nor afraid of speaking English. It is common to find people from all over the world making grammar mistakes and nobody is corrected, ignored, or bullied because they didn’t spoke perfect English. We make mistakes even when writing in our own language, what to say of an idiom that isn’t our own (this post might even have a few). Remember that practice leads to perfection.</p>
+
+<p>You also need to have in mind that the projects and libraries in Github are communitarian, consequently, as in every democracy, <em>per se</em>, it is common that corrections and increment proposals are thoroughly debated before coming to an agreement on how to proceed. Therefore, be coherent, have patience, and know how to argument listening to the opposing side. This might be a fantastic opportunity for you to deepen your knowledge on that tool and also receive comments on your code from amazing developers that create and maintain the most used libraries in the world. So listen and learn!</p>
+
+<h2 id="bugreports-to-apple">Bugreports to Apple</h2>
+
+<p>Apple has <a href="http://bugreport.apple.com/" target="_blank">its portal</a> where issues and feature requests may be reported. With an interface of doubtful taste (doesn’t seem like Jony Ive).</p>
+
+<p><a href="http://blog.flaviocaetano.com/images/bugreport/apple_bugreport.png" target="_blank"><img src="http://blog.flaviocaetano.com/images/bugreport/apple_bugreport.png" alt="Apple Bugreport Portal" /></a></p>
+
+<p>For those of whom that don’t like the portal, there’s also <a href="http://www.quickradar.com/" target="_blank">QuickRadar</a> that provides a much cleaner interface and doesn’t require you to login every time you report an issue, besides also offering a simple template in a single text field.</p>
+
+<p><a href="http://blog.flaviocaetano.com/images/bugreport/quickradar.png" target="_blank"><img src="http://blog.flaviocaetano.com/images/bugreport/quickradar.png" alt="QuickRadar" /></a></p>
+
+<p>Bugs reported to Apple are private for security reasons. Although the bulk of bugs may be behavioral, there are vulnerabilities and security breaches that might be exploited to leverage users and that can’t become public to avoid exposure. Because of this, appeared <a href="https://openradar.appspot.com" target="_blank">OpenRadar</a>, that tries to mirror Apple’s portal, where developers replicate their reports to make them public. One of the advantages of QuickRadar is sending your issues automatically to OpenRadar as well, relieving the need of filling everything twice.</p>
+
+<p>OpenRadar also provides the possibility of commenting on issue pages, which adds a much richer dynamic on the interaction with the community. In 2016 I reported a bug on <code>UICollectionView</code> that Apple engineers discarded as being the designed behavior. I disagreed of the decision because it isn’t how it worked before but <del>since a documented bug is a feature</del> I asked that it would be added to the documentation - request that was ignored - and, on <a href="https://openradar.appspot.com/radar?id=5022915414196224#ag9zfm9wZW5yYWRhci1ocmRyFAsSB0NvbW1lbnQYgICAiNan7QoM" target="_blank">rdar://28323532</a>, we can see that user <strong>nicolas.millasseau</strong> also disagrees with the engineers decision.</p>
+
+<h2 id="report-duplicates">Report duplicates</h2>
+
+<p>Don’t be shy nor demotivated if your bugs are being flagged as duplicates. It is unlikely to be the first to report an incident, which makes the occurrence of duplicates even more common, but it doesn’t diminish its relevance, since the greater the amount of people being affected by a problem, more the issue’s priority tends to rise. Furthermore, duplicates present different approaches to an inconsistency.</p>
+
+<p>Consequently, when reporting a duplicate, you are providing more information which might help in the resolution of an incident. It may be that you are being able to reproduce the bug in a different manner, or that you might know a solution or workaround to what happened, or even that your <em>crashlog</em> has complementary data to previous reports.</p>
+
+<p>On Github, there’s somewhat of a controversy regarding 👍. I believe it to be important to add <code>+1</code> to issues as a way of flagging a duplicate, because it describes that there are more people being affected by that inconsistency, however there are those who believe that it doesn’t add nothing to the issue. In that regard, on <a href="https://developer.apple.com/videos/play/wwdc2016/213/" target="_blank">session 213 of the WWDC</a>, Apple’s engineers request that, when reporting a radar, one shouldn’t simply copy and paste an existing one because it does not add information nor increase the issue’s priority.</p>
+
+<p>If any of your radars is flagged as a duplicate, you will be informed the <code>id</code> of the original issue, which may be searched on OpenRadar, where you can read comments to know if there’s a workaround, what is its current status (if it’s updated), and what the community is talking about it in general.</p>
+
+<h2 id="deal-with-it-">Deal with it 🕶</h2>
+
+<blockquote>
+  <p>“Don’t introduce problems; present solutions” - myself</p>
+</blockquote>
+
+<p>Take this mantra in your life: “complain less”. If you have the power to change something, do not complain: change it! If you don’t have the power required to change, what point there is in complaining? When dealing with a situation, whether at work, at home, or on the street, do not introduce a problem: present a solution. This doesn’t mean you should report less bugs, quite on the contrary! Reporting an issue is the first step to solving it.</p>
+
+<p>If you report a bug, whenever possible, present a fix or, at least, a workaround for it. If it’s on Github, submit a <em>pull-request</em>. Be pro-active and resolve your own issues instead of waiting on others to fix them for you.</p>
+
+<p>There’s no point on crying without acting. Shed a light on the problem. Be part of the solution. Improve the tools you use on your daily basis. Diminish your pain. Optimize your time. Help the community grow. Meanwhile, you’ll grow with it.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Declarations From Extensions Cannot Be Overridden. Are You Sure?]]></title>
@@ -1335,111 +1446,6 @@ super hot nurse.</p>
 <p>So I wish you well in the new year. I hope you all the best.</p>
 
 <p>And good luck.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Once Upon a Time, There Was Nothing (Part. 2)]]></title>
-    <link href="http://blog.flaviocaetano.com/post/once-upon-2/"/>
-    <updated>2012-12-13T18:35:00-02:00</updated>
-    <id>http://blog.flaviocaetano.com/post/once-upon-2</id>
-    <content type="html"><![CDATA[<p>One of the main reasons I like Django is it’s awesome auto-generated admin
-interface. It’s  just awesome. When you start to play with it and discover apps
-like <a href="https://bitbucket.org/izi/django-admin-tools/wiki/Home">django-admin-tools</a>,
-the faded <a href="http://code.google.com/p/django-jqmobile/">jq-mobile</a> and other cool 
-stuff you realise how versatile Django really is.</p>
-
-<h1 id="the-context">The Context</h1>
-
-<p>When I started learning Django I created a small manager for some of my hobbies.
-The first one was a book manager in which I have a log of <strong>every single</strong> book
-I’ve ever read, <strong>when</strong> I read it, <strong>where</strong> the book is located, if it’s 
-<strong>borrowed</strong> to somebody, a “<strong>GIVE IT BACK TO ME</strong>” button that sends an email
-with that exact message to whoever has it, and so on. Among everything, I also
-added a field for the book’s <em>cover</em> but I never really used it.</p>
-
-<p>More recently, I restarted to improve my card deck collection (yes, I’m weird)
-and added this new feature to my Django manager. But this time, since it’s
-cataloging a collection and decks are mainly visual, the photos of the decks are 
-<strong><em>very</em></strong> important. Yes, I said image<strong><em>S</em></strong>. Each deck has five photos:</p>
-
-<ul>
-  <li>The Front of the Box</li>
-  <li>The Back of the Box</li>
-  <li>The Back of the Cards</li>
-  <li>The Joker</li>
-  <li>The Ace of Spades</li>
-</ul>
-
-<p>There are decks with a different back for each card, but that’s not important,.
-Those are the options I’m contemplating. But, since not all of them are opened
-(I have one numbered deck that goes to 2500 copies. I won’t open it. Never!) only 
-the first two images are requirements.</p>
-
-<p>So, now that you are aware of the context, this is when the problem (and the fun) started.</p>
-
-<h2 id="the-problem">The Problem</h2>
-
-<p>I started looking for some Django solution that could easily show thumbnails for
-my images in my admin module. Guess what was my surprise when I realised there
-was <em>N**one</em>.</p>
-
-<p>There was absolutely nothing that would do what wanted and needed. The closest
-things I found were the automatic thumbnail creator <a href="https://github.com/sorl/sorl-thumbnail">sorl-thumbnail</a>
-and <a href="http://www.acedevs.com/blog/2011/07/11/django-admin-list-view-thumbnails/">Ace Devs solution</a> 
-which didn’t solve my problem. Dude, my images have 1936x2592 pixels of resolution.
-I can’t just show them as they are.</p>
-
-<p>That’s when I realised I would have to develop a new solution for that.</p>
-
-<h1 id="the-solution-aka-the-fun-part">The Solution (aka The Fun Part)</h1>
-
-<p>I’m a modest guy, I don’t like bragging about what I do.</p>
-
-<p>No forget it. Bullshit. I do like to show everyone what I did. Specially when I
-think it’s awesome, I mean, It’s awesome. Don’t you like sharing awesome stuff
-with your friends? Dude, I’m even writing an article about it! In <strong>TWO</strong> languages!</p>
-
-<p>So, what I did was basically to join and improve those two solutions I found.
-“<strong>Basically</strong>” because, in the deep, it was a little more complex than that.</p>
-
-<p>I came up with the stupidest yet simplest name I could find:
-<a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a>. I
-know, it’s über stupid. But it’s also simple, so it works.</p>
-
-<h2 id="django-admin-thumbnail">django-admin-thumbnail</h2>
-
-<p>The package automatically works on your <em>list_display</em> of your <em>ModelAdmin</em>. It
-<em>automagically</em> detects your <em>ImageFields</em>, converts it to thumbnail (physically
-allocated) using <a href="https://github.com/sorl/sorl-thumbnail">sorl-thumbnail</a> and
-displays to you in a user friendly way.</p>
-
-<p>This is how it looks when you hover your cursor over an <em>ImageField</em> in your model grid.</p>
-
-<p><a href="http://blog.flaviocaetano.com/images/thumb_image.png"><img src="http://blog.flaviocaetano.com/images/thumb_image.png" alt="" /></a></p>
-
-<p>The image is in portuguese. Imagem = Image, Abrir Imagem = Open Image.
-<a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> is
-localizable but, currently, only <code>pt-BR</code> and <code>en-US</code> are the officially supported
-languages. If you want it to be in your language, just send me your <code>.po</code> file
-and I’ll validate it and share. It’s ridiculous, there are only two tags. Give it a try!</p>
-
-<p>When I finished, I realised how simple and effective it was. I had to share it
-with the community. So I took the opportunity to create my first <em>python package</em>.
-It was a pain in the ass because the documentation is lame, specially the
-<em>long-description</em> part. I had to generate it a zillion times to get the
-<em>reStructured Text</em> working until I found the <a href="http://pypi.python.org/pypi/py2html">py2html</a> 
-command.</p>
-
-<h1 id="wrap-and-finish">Wrap and Finish</h1>
-
-<p>That’s it. If you want to know more about <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> 
-just click the link and it will send you to the Github repository. There’s a
-quick start guide. <a href="http://pypi.python.org/pypi/django_admin_thumbnail/0.1.1">Here’s the link for the python package</a></p>
-
-<p>If you have any trouble to use it, don’t hesitate to send me a message.</p>
-
-<p>Have fun!</p>
 ]]></content>
   </entry>
   
