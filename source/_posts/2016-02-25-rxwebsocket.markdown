@@ -13,6 +13,8 @@ tags:
 share: true
 comments: true
 github_repo: https://github.com/fjcaetano/RxWebSocket
+image:
+  feature: /images/abstract-2.jpg
 ---
 
 Recently we had to integrate a chat-like comment feature to our new [Winnin App][]{:target="_blank"}
@@ -74,7 +76,7 @@ socket.stream
 ```
 
 We know it's still crude and quite simple, which is our intention, but we'll improve
-[RxWebSocket][]{:target="_blank"} with time. Every suggestion, comment, critic, PR, 
+[RxWebSocket][]{:target="_blank"} with time. Every suggestion, comment, critic, PR,
 etcetera is welcome.
 
 You can check an actual implementation in the example project or by running

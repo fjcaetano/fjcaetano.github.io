@@ -9,6 +9,8 @@ share: true
 published: true
 tags:
 - swift extensions objective-c dispatch
+image:
+  feature: /images/abstract-4.jpg
 ---
 
 If you found this post, it's likely that you have already encountered the following compile error:
@@ -47,7 +49,7 @@ class TeleportMachine: Spaceship {
     }
 }
 ```
-There you go. We have successfully drilled a wormhole through Swift's fabric, all the way to Objective-C's dynamic dispatch. There are limitations to this, of course. This is possible because our `Spaceship` class is a subclass of NSObject. Make it a root class, and our universe falls apart. 
+There you go. We have successfully drilled a wormhole through Swift's fabric, all the way to Objective-C's dynamic dispatch. There are limitations to this, of course. This is possible because our `Spaceship` class is a subclass of NSObject. Make it a root class, and our universe falls apart.
 
 Unfortunately, if you try and make `travel(to:)` generic, you'll be using a Swift-only feature, which means you're not exploiting the ObjC bridge.
 

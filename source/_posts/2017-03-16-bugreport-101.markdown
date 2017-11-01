@@ -9,6 +9,8 @@ share: true
 published: true
 tags:
 - apple github open-source report bugreport openradar quickradar
+image:
+  feature: /images/abstract-3.jpg
 ---
 
 > This post is a translation from Portuguese, originally written to the [equinociOS](http://equinocios.com/comunidade/2017/03/10/Bugreport-101/){:target="_blank"} magazine.

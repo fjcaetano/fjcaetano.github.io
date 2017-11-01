@@ -7,6 +7,8 @@ categories:
 - Fastlane
 share: true
 published: true
+image:
+  feature: /images/abstract-5.jpg
 tags:
 - fastlane ruby codecov coverage tests
 github_repo: https://gist.github.com/fjcaetano/04126b3051f6cd6aebe041bb1dfe14e9

@@ -10,6 +10,8 @@ share: true
 published: true
 tags:
 - xcode swift organization
+image:
+  feature: /images/abstract-1.jpg
 ---
 
 {% blockquote Mattt Thompson http://nshipster.com/pragma/#organizing-your-code %}
