@@ -99,7 +99,7 @@
 		<li>
 			<a href="#">Posts</a>
 			<ul class="dl-submenu">
-				<li><a href="/archives/">Archives</a></li>
+				<li><a href="/posts/">All Posts</a></li>
 				<li><a href="/categories/">All Categories</a></li>
 			</ul>
 		</li>
@@ -109,7 +109,7 @@
 
 
   <div class="entry-header">
-    <div class="image-credit">Image source: <a href="http://flaviocaetano.vsco.co/media/559ef75c2c331e8f438b456b" target="_blank">Flávio Caetano</a></div><!-- /.image-credit -->
+    <div class="image-credit">Image source: <a href="http://flaviocaetano.vsco.co/media/559ef75c2c331e8f438b456b">Flávio Caetano</a></div><!-- /.image-credit -->
     
       <div class="entry-image">
         <img src="/images/feature_image.jpg" alt="">
@@ -132,8 +132,121 @@
 
 
 <header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
+      <time datetime="2013-06-03T16:15:45-03:00">
+        <a href="/post/cocoapod-badges/">June 03, 2013</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/cocoapod-badges/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/post/cocoapod-badges/" rel="bookmark" title="Cocoapod Badges" itemprop="url">Cocoapod Badges</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>In any kind of environment, visual marks ease and enhance the comprehension of
+information. Countless researches studied the best way to display data, which
+colors induce what emotions, the association of geometric shapes with pre-formed
+concepts. The fact is that a sign or plaque draws much more attention than plain
+text. After all, an image is worth a thousand words, therefore, an image sends a
+much more significant message than some written words.</p>
+
+<p>That’s one of the reasons many development tools have featured <em>badges</em> (or 
+<em>shields)</em> to inform the status of an application/framework/library/<em>etcetera</em>.
+It’s the case of <a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI</a>, 
+<a href="https://codeclimate.com/changelog/510d4fde56b102523a0004bf">Code Climate</a>, 
+<a href="http://blog.tech-angels.com/post/43141047457/gemnasium-v3-aka-gemnasium">Gemnasium</a>,
+among others, all following <a href="https://github.com/olivierlacan/shields">olivierlacan/shields`</a>
+trend, available Github.</p>
+
+<p>I’m an iOS developer and previously have worked with Python/Django (though I
+still fool around) and I’ve always found very interesting this creative way of
+sharing the state of a service dynamically, but sadly, there were no solution to
+Python nor iOS featuring <em>badges</em> (except for Travis CI for tests). But,
+recently, appeared - out of nowhere - <a href="https://pypip.in/">pypip’s</a> <em>shields</em> for
+Python packages that allows the visualisation of the latest available version of
+a package on <a href="http://pypi.python.org">pypi</a> or how many downloads some <em>release
+*had</em>.* When I came aware if it I resented for taking so long for solution so
+simple and effective to come up (or at least for <strong>I</strong> to discover it)… but it
+got over the top when I found out… or better, <strong>did not found out</strong> a similar
+solution for <a href="http://cocoapods.org">Cocoapods</a>.</p>
+
+<p>I’m one of those who doesn’t miss a chance to solve a problem and endeavour an
+opportunity. That’s how the <a href="http://fjcaetano.github.io/cocoapod-badges/">Cocoapod Badges</a> 
+project started. Since Cocoapods doesn’t provide an API, any info on the number
+of <em>users/downloads</em>, nor any kind of useful data, it proved to be a challenge,
+and all I could use had to be what was at hand: the latest version of a <em>pod</em>.
+But even though, mistaken are those who thought it easy. As mentioned, there’s
+no API!</p>
+
+<h1 id="cocoapod-badgesnsstringmask-112httpscocoapod-badgesherokuappcomvnsstringmaskbadgepng">Cocoapod Badges <img src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" alt="NSStringMask 1.1.2" /></h1>
+
+<p>Digging through Cocoapod’s and <a href="http://cocoadocs.org">Cocoadocs’</a> websites, I
+tried, first, to use the <a href="http://cocoadocs.org/documents.jsonp">documents.jsonp</a> 
+file that I found in the <em>source</em> of the <em>pod</em>’s documentation website, however,
+I soon gave up for realising that its update frequency is too high (above one
+hour). At last, I had to content with the unfortunate <code>/search?q=</code> requested
+when searching for a <em>pod</em> in Cocoapod’s main page. At first, it looked like an
+excellent solution since it returned a <code>json</code> object with some info, until I
+realised that inside the object was a string with some <code>html</code> code and only
+inside that code was the <em>pod</em>’s latest version. “<em>God dammit!</em>” Now I have to
+run a request on a “pseudo-<em>webservice</em>” and parse it with <code>XPATH</code> to get the
+latest version!</p>
+
+<p>Super easy! But, as my mother would on a brazilian saying: “<em>few shit is
+silliness</em>”. The damned “API” doesn’t return the requested <em>pod</em>, but anything
+with the searched string. To get something more useful, I figured that 
+<code>/search?q=name:POD_NAME</code> searches only in the <em>pod</em>’s name and not in its
+description, what significantly reduces the results, specially when dealing with
+popular <em>pods</em> such as <a href="http://afnetworking.github.io/AFNetworking/index.html">AFNetworking</a>.</p>
+
+<p>After all that suffering, I finally got the information I wanted, but then, how
+do I show it in an image? Olivier Lacan’s repo, that enabled all the existing 
+<em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code>.SVG</code> vectorial
+files that render <code>xml</code> data to images. So, accidentally, I double-clicked the 
+<code>.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news!
+As the information about the version is in plain text inside the <code>xml</code>, all I
+had to do was to set the <code>mimetype</code> so Django could provide the file as an image.</p>
+
+<p>1 <a href="http://heroku.com">Heroku</a> <em>dyno</em> later and the service is available fulltime
+(depending on Cocoapods website) through the images’ url:</p>
+
+<blockquote>
+  <p><code>http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></p>
+</blockquote>
+
+<p>All you have to do is replace the <code>$PODNAME</code> with the name of the pod you want.
+Simple and easy, isn’t it? Use it at will! And suport the Github repo!</p>
+
   
   
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
       <time datetime="2013-05-24T16:18:54-03:00">
@@ -276,10 +389,6 @@ familiarise to a new layout.”</p>
 
 
 <header>
-  
-  
-    <a href="https://github.com/fjcaetano/NSStringMask" target="_blank"><img class="github-ribbon" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
-  
   <div class="entry-meta">
     <span class="entry-date date published updated">
       <time datetime="2013-05-16T14:27:10-03:00">
@@ -437,8 +546,6 @@ Brasil:
 
 
 <header>
-  
-  
   <div class="entry-meta">
     <span class="entry-date date published updated">
       <time datetime="2013-04-03T15:25:36-03:00">
@@ -538,8 +645,6 @@ I think you guys should know.</p>
 
 
 <header>
-  
-  
   <div class="entry-meta">
     <span class="entry-date date published updated">
       <time datetime="2013-01-16T20:42:01-02:00">
@@ -637,102 +742,6 @@ of the .sql script.</p>
 solves the modelling problem, but creates a new one, because you can’t <code>ALTER</code> an
 existing table since it only generates the <code>CREATE</code> script. But if that’s not a
 problem go for it and be happy. When I found it, life suddenly became joyful again.</p>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  
-  
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2012-12-27T18:40:44-02:00">
-        <a href="/post/the-tale-of-luck/">December 27, 2012</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/post/the-tale-of-luck/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/post/the-tale-of-luck/" rel="bookmark" title="The Tale of Luck" itemprop="url">The Tale of Luck</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>“Once upon a time, there was a tiny invisible force named <em>Luck</em>. Everybody loved
-it and gave it gifts, hoping that, when needed, <em>Luck</em> would come for them. But
-<em>Luck</em> had a younger sibling called <em>Bad Luck</em>, who hated <em>Luck</em> with all it’s
-strength and always tried to be the opposite of <em>Luck</em>, because, while everybody
-smiled and cheered for <em>Luck</em>, no one liked when <em>Bad Luck</em> was around. People
-twisted their noses at <em>Bad Luck</em> and everybody blamed it for every bad thing that
-happened in their lives.”</p>
-
-<p>This is that time of year when joy and happiness take over people. Some folks are
-going on vacations and we won’t see again for a while, and every single one of
-them, without exception, while saying goodbye, wish “happy holidays, and good
-luck!” If there’s one thing I can’t understand is this misconception people have
-on <em>luck</em> and <em>bad luck</em>. I see all those people on new year’s eve wearing white,
-jumping waves, and doing all kinds of foolishness hoping it “will bring them good
-luck” and I can’t understand.</p>
-
-<p>Luck isn’t something you can “force” or hope to come. “Luck” is the name we give
-for a chain of events that, coincidentally, affect you in a good (<em>luckily</em>) or
-bad (<em>unluckily</em>) way. Let’s picture an hypothetical scenario: you’re riding a
-bike and, right before you cross another street, you hit a pedestrian. Was bad
-luck that put that asshole there, right? Now, what if, one second after you hit
-him, a car goes by at 60mph crossing the street you are at. Not so bad luck hitting
-that good citizen now, huh? So, although the result is the same, the denomination
-we give to that chain of events changed because of one single variable: some
-douchebag driving his car while talking on the phone. So, what was bad luck for
-you, became luck. But what about for that poor guy you hit? For him, independently
-of the result, he’s still pretty banged up, so he <em>had</em> bad luck. It didn’t
-randomly pointed at him and said “you, sir, are gonna get screwed!” It did just
-happened. Bad Luck. When you do something that goes badly and you knew the odds
-were against you, that’s not bad luck. It’s not the universe flipping you the
-finger and screaming “fuck you, Jimmywobble!” That’s stupidity. <em>YOLO</em> my ass!</p>
-
-<p>I not always wear white on new year’s eve, but when I do, it’s not because I think
-it will bring me peace in the upcoming year. It’s because I want to get into the
-spirit of the party. Those thousands of people in white, happy, drunk and with
-the promise of better things to come are what drive me to join them and put on a
-white shirt.</p>
-
-<p>But don’t think I’m crazy just yet. If I’m walking down the street and I see a
-ladder landing on a wall, of course I’ll pass around it. Not only I do not want
-anything to fall on my head, but hey, what if I’m wrong? Why would I bet against
-it when I don’t know if it will get angry and come back to bite me in the ass?</p>
-
-<p>So, in this year’s ending, I wish that every single little incident that happens
-to you in 2013 may be chained to good fortune. I hope that slam you’ll give with
-your pinky finger in your table helps you find that earring you’re looking for
-for three years. Or that tongue bite you’ll have may lead you into meeting some
-super hot nurse.</p>
-
-<p>So I wish you well in the new year. I hope you all the best.</p>
-
-<p>And good luck.</p>
 
   
   
