@@ -75,7 +75,7 @@ Open your project's `Info.plist` file and add two entries:
 These values may also be sent as parameters to `ReCaptcha()` init. In this case,
 the parameters will override the values in the `Info.plist`.
 
-### Code
+## Code
 
 Before starting the validation, you must call the `configureWebView(_:)` method.
 This is for when the webview needs to be presented for the user to complete the
@@ -94,7 +94,7 @@ which will already have a superview that is provided when starting the validatio
 The `configureWebView(_:)` won't necessarily be called. Only if the invisible
 validation is not possible.
 
-#### Validation
+### Validation
 
 To start the validation, _per se_, you must call the `validate(on:)` method.
 
@@ -131,9 +131,21 @@ unexpected message to the API. Shouldn't happen, so, if it does, be sure to
 error could be thrown is if JavaScript sends an error. Shouldn't happen, but if
 it does, don't be shy and [open an issue][].
 
+## Firewall bypass
+
+If your firewall is blocking Google's ReCaptcha, or if you're behind the [Great
+Firewall of China], you may use an alternate endpoint for the JS API that points
+to `https://www.recaptcha.net/recaptcha/api.js`:
+
+``` swift
+try ReCaptcha(endpoint: .alternate)
+```
+
+The default value for the `endpoint` parameter points the API to `https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit`
+
 ## Documentation
 
-The full documentation is available [here](http://cocoadocs.org/docsets/ReCaptcha/){:target="\_blank"}.
+The full documentation is available [here](http://fjcaetano.github.io/ReCaptcha){:target="\_blank"}.
 
 [ReCaptcha]: https://github.com/fjcaetano/ReCaptcha
 {:target="\_blank"}
@@ -148,4 +160,6 @@ The full documentation is available [here](http://cocoadocs.org/docsets/ReCaptch
 [RxSwift]: https://github.com/ReactiveX/RxSwift
 {:target="\_blank"}
 [open an issue]: https://github.com/fjcaetano/ReCaptcha/issues
+{:target="\_blank"}
+[Great Firewall of China]: https://en.wikipedia.org/wiki/Great_Firewall
 {:target="\_blank"}
