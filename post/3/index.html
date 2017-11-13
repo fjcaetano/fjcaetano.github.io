@@ -99,7 +99,7 @@
 		<li>
 			<a href="#">Posts</a>
 			<ul class="dl-submenu">
-				<li><a href="/posts/">All Posts</a></li>
+				<li><a href="/archives/">Archives</a></li>
 				<li><a href="/categories/">All Categories</a></li>
 			</ul>
 		</li>
@@ -109,7 +109,7 @@
 
 
   <div class="entry-header">
-    <div class="image-credit">Image source: <a href="http://flaviocaetano.vsco.co/media/559ef75c2c331e8f438b456b">Flávio Caetano</a></div><!-- /.image-credit -->
+    <div class="image-credit">Image source: <a href="http://flaviocaetano.vsco.co/media/559ef75c2c331e8f438b456b" target="_blank">Flávio Caetano</a></div><!-- /.image-credit -->
     
       <div class="entry-image">
         <img src="/images/feature_image.jpg" alt="">
@@ -132,6 +132,56 @@
 
 
 <header>
+  
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
+      <time datetime="2014-06-12T12:14:56-03:00">
+        <a href="/post/memoirs-of-a-wwdc-rookie/">June 12, 2014</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/memoirs-of-a-wwdc-rookie/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/post/memoirs-of-a-wwdc-rookie/" rel="bookmark" title="Memoirs of a WWDC Rookie" itemprop="url">Memoirs of a WWDC Rookie</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>This year I went to Apple’s WWDC for the first time. I got the chance to be where every iOS developer wanted to be. The place where stuff happened. The place with the best among all. The place that mattered.</p>
+
+
+  
+  
+    <footer>
+      <a class="btn" rel="full-article" href="/post/memoirs-of-a-wwdc-rookie/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
+    </footer>
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  
   <div class="entry-meta">
     <span class="entry-date date published updated">
       <time datetime="2014-06-04T13:57:21-03:00">
@@ -183,6 +233,7 @@ around for long. My guess is that Apple will be accepting ObjC apps up till iOS
 
 
 <header>
+  
   <div class="entry-meta">
     <span class="entry-date date published updated">
       <time datetime="2014-05-16T16:33:52-03:00">
@@ -237,6 +288,7 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
 
 
 <header>
+  
   <div class="entry-meta">
     <span class="entry-date date published updated">
       <time datetime="2014-04-15T17:12:13-03:00">
@@ -311,6 +363,7 @@ encounter themselves in the same situation as I did.</p>
 
 
 <header>
+  
   <div class="entry-meta">
     <span class="entry-date date published updated">
       <time datetime="2014-01-06T14:19:11-02:00">
@@ -353,90 +406,6 @@ already elucidated on previous years. Now things start to get interesting.</p>
 is on a good pace.</p>
 
 <p>Good luck, and good hunting!</p>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2013-09-12T11:24:56-03:00">
-        <a href="/post/autolayout-is-hell-on-earth/">September 12, 2013</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/post/autolayout-is-hell-on-earth/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/post/autolayout-is-hell-on-earth/" rel="bookmark" title="Autolayout Is Hell on Earth" itemprop="url">Autolayout Is Hell on Earth</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>I believe that every iOS developer is already aware of Apple’s new directive
-forbidding any <em>apps</em> using <em>frame</em> to be submitted to the Appstore when the new
-iOS 7 goes public. That means that ALL new <em>app</em> will have be developed using
-this tool created by the son of a devil called <em>autolayout</em>.</p>
-
-<p>Anyone that has already used <em>autolayout</em> knows that margin, width, height and
-other properties are calculated in runtime, therefore, they consume sometimes
-unnecessary CPU time. For some inescrutable reason, Apple decided to create this
-new concept from scratch to ease working with different sized screens, while
-they could easily reuse existing CSS concepts like <em>margin</em>, <em>padding</em>, among
-others. In addition to being extremely confusing (a <code>UIView's</code> margin
-<em>constraints</em> are in its <em>superview</em>), having a pitiful syntax 
-<code>(“V:|-(-5)-[view1]-(&gt;=10)-[view2]-(912837)-|”)</code>, <em>autolayout</em> also makes
- everything slow.</p>
-
-<p><strong>Protip:</strong> if you’re configuring your <em>coinstraints</em> via code, <strong>never</strong> forget
-seting <code>self.translatesAutoresizingMaskIntoConstraints = NO</code> in your view. It
-took me a couple of coffee cups to realise this was the reason why my 
-<em>constraints</em> weren’t being executing along with <code>[self layoutIfNeeded]</code>.</p>
-
-<p>I recently had to work with a <code>UICollectionView</code> and the scroll was getting
-really laggy. Anytime a new cell was loaded, the framerate dropped. After
-spending a few hours trying to find the root of the problem with a couple of
-friends (we even considered the problem being the SDK’s <code>dequeue</code> thanks to 
-<em>Profiler</em>) some inspired insight hit us and we decided to disable <em>autolayout</em>
-on the <code>UICollectionViewCell's</code> xib and everything flowed like a beautiful
-stream under the morning sunlight of tropical woods. So let us analise what
-happened: Apple created a new concept, from the grounds, that theoretically
-would solve all problems when working with screens of different sizes, but this
-devilish concept is composed of runtime calculated values that ruin the <em>app’s</em>
-smoothness. Yep, it gets hard to work happily…</p>
-
-<p>This view that is the <code>UICollectionView's</code> cell will not have <em>autolayout</em>.
-Nobody knows what will happen when we submit the <em>app</em> to the Appstore and we
-sincerely hope that Apple doesn’t mind this view that, although is not
-explicitly using <em>frames</em>, also is not configured to accept <em>autolayout</em>.</p>
-
-<p>I’m yet to find an iOS developer that has nothing to complain about this weird
-invention, but, as usual, Apple’s “this is what we want, so deal with it” policy
-doesn’t give us any alternatives. Instead of easing developers’ work, they’re
-making our daily lives every more difficult while <del>Android scores another
-point</del> Apple is walking backwards.</p>
 
   
   
