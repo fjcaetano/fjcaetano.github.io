@@ -203,7 +203,7 @@ the reactive extension for the <code>ReCaptcha</code> class.</p>
 <p>These values may also be sent as parameters to <code>ReCaptcha()</code> init. In this case,
 the parameters will override the values in the <code>Info.plist</code>.</p>
 
-<h3 id="code">Code</h3>
+<h2 id="code">Code</h2>
 
 <p>Before starting the validation, you must call the <code>configureWebView(_:)</code> method.
 This is for when the webview needs to be presented for the user to complete the
@@ -225,7 +225,7 @@ which will already have a superview that is provided when starting the validatio
 <p>The <code>configureWebView(_:)</code> won’t necessarily be called. Only if the invisible
 validation is not possible.</p>
 
-<h4 id="validation">Validation</h4>
+<h3 id="validation">Validation</h3>
 
 <p>To start the validation, <em>per se</em>, you must call the <code>validate(on:)</code> method.</p>
 
@@ -266,9 +266,21 @@ error could be thrown is if JavaScript sends an error. Shouldn’t happen, but i
 it does, don’t be shy and <a target="\_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
 </ul>
 
+<h2 id="firewall-bypass">Firewall bypass</h2>
+
+<p>If your firewall is blocking Google’s ReCaptcha, or if you’re behind the <a target="\_blank" href="https://en.wikipedia.org/wiki/Great_Firewall">Great
+Firewall of China</a>, you may use an alternate endpoint for the JS API that points
+to <code>https://www.recaptcha.net/recaptcha/api.js</code>:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">try</span> <span class="n">ReCaptcha</span><span class="p">(</span><span class="nl">endpoint</span><span class="p">:</span> <span class="p">.</span><span class="n">alternate</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The default value for the <code>endpoint</code> parameter points the API to <code>https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit</code></p>
+
 <h2 id="documentation">Documentation</h2>
 
-<p>The full documentation is available <a href="http://cocoadocs.org/docsets/ReCaptcha/" target="\_blank">here</a>.</p>
+<p>The full documentation is available <a href="http://fjcaetano.github.io/ReCaptcha" target="\_blank">here</a>.</p>
 
 
       <footer class="entry-meta">
