@@ -7,6 +7,9 @@ body {
 
 // Main
 // --------------------------------------------------
+p {
+	text-align: justify;
+}
 .entry,
 .hentry {
 	@include clearfix();
@@ -159,7 +162,64 @@ body {
 			margin-bottom: 30px;
 			padding: 50px 80px;
 		}
+
+		&.yearly-index {
+			h2 {
+				text-align: right;
+				padding-bottom: 20px;
+			}
+			.yearly {
+				display: table;
+				table-layout: fixed;
+				width: 100%;
+
+				h1 {
+					display: table-row;
+					a {
+						display: table-cell;
+						vertical-align: top;
+						width: 70%;
+						font-size: 20px;
+						padding-bottom: 40px;
+						@media #{$large} {
+							font-size: 28px;
+						}
+					}
+					time {
+						display: table-cell;
+						font-size: 18px;
+						font-weight: 100;
+						vertical-align: top;
+						width: 120px;
+						white-space: nowrap;
+						text-align: right;
+						line-height: 33px;
+						padding-bottom: 40px;
+						@media #{$large} {
+							font-size: 24px;
+						}
+					}
+				}
+
+
+			}
+		}
 	}
+}
+
+// Github Ribbon
+.github-ribbon {
+	margin-right: -15px;
+	margin-top:  -25px;
+	@media #{$medium} {
+		margin-right: -30px;
+		margin-top:  -30px;
+	}
+	@media #{$large} {
+		margin-right: -80px;
+		margin-top:  -50px;
+	}
+	float: right;
 }
 
 // Footer
