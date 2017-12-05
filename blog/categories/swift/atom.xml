@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2017-11-13T17:54:55-02:00</updated>
+  <updated>2017-12-05T18:27:32-02:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Protip: UIViewControllerAnimatedTransitioning + Snapshots]]></title>
+    <link href="http://blog.flaviocaetano.com/post/protip-uiviewcontrolleranimatedtransitioning-plus-snapshots/"/>
+    <updated>2017-12-05T18:06:12-02:00</updated>
+    <id>http://blog.flaviocaetano.com/post/protip-uiviewcontrolleranimatedtransitioning-plus-snapshots</id>
+    <content type="html"><![CDATA[<p>When creating custom animations for view controller transitions, it is recommended
+to use snapshots of the views being animated. However, UIKit doesn’t always make
+things crystal clear.</p>
+
+<p>If you find yourself with broken autolayout or views incorrectly configured after
+enabling your transition, try <strong>creating the snapshots after adding your view to
+<code>viewContainer</code></strong>.</p>
+
+<!-- more -->
+
+<p>```swift
+func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    guard let fromVC = transitionContext.viewController(forKey: .from),
+        let toVC = transitionContext.viewController(forKey: .to),
+        let fromAnimatedView = fromVC.animatedView.snapshotView(afterScreenUpdates: true),
+        let toAnimatedView = toVC.animatedView.snapshotView(afterScreenUpdates: true) else {
+        return transitionContext.completeTransition(false)
+    }</p>
+
+<pre><code>let containerView = transitionContext.containerView
+
+[fromAnimatedView, toAnimatedView].forEach(transitionContext.addSubview(_:))
+
+// Now you got yourself broken views. Hooray!
+... } ```
+</code></pre>
+
+<p>The code above might not work. Your <code>toVC</code>’s view might end up completely broken
+and your snapshots may have the wrong frame and contents. To fix it, simply move
+the snapshots creation to after adding your destination view controller’s view to
+<code>transitionContext.containerView</code>.</p>
+
+<p>If you just try it after your <code>toVC</code> has ended initializing its views (i.e. after
+<code>viewDidLoad</code> has been called) it won’t work, even if you force the view to be
+loaded. You truly need to create your snapshots after the <code>containerView</code>.</p>
+
+<p>```swift
+func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard let fromVC = transitionContext.viewController(forKey: .from),
+            let toVC = transitionContext.viewController(forKey: .to) else {
+                return transitionContext.completeTransition(false)
+        }</p>
+
+<pre><code>    let containerView = transitionContext.containerView
+
+    [fromAnimatedView, toAnimatedView].forEach(transitionContext.addSubview(_:))
+
+    guard let fromAnimatedView = fromVC.animatedView.snapshotView(afterScreenUpdates: true),
+        let toAnimatedView = toVC.animatedView.snapshotView(afterScreenUpdates: true) else {
+            return transitionContext.completeTransition(true) // toVC.view was already added to the container
+    }
+
+    ...
+} } ```
+</code></pre>
+
+<p>Boom! Done. Now it works 🎉</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ReCaptcha Reaches 1.0]]></title>
@@ -500,87 +566,6 @@ pod try RxWebSocket
 
 <p>Enjoy!</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Swift for Dummies]]></title>
-    <link href="http://blog.flaviocaetano.com/post/swift-for-dummies/"/>
-    <updated>2014-06-04T13:57:21-03:00</updated>
-    <id>http://blog.flaviocaetano.com/post/swift-for-dummies</id>
-    <content type="html"><![CDATA[<p>At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows
-for sure what will happen to Objective-C, but one can only guess it won’t be
-around for long. My guess is that Apple will be accepting ObjC apps up till iOS
-10, but that is just my guest.</p>
-
-<!-- more -->
-
-<p>By attending to the WWDC I had the opportunity of directly contacting Apple’s
-engineers and insights most of people couldn’t, so in the next posts I’ll cover
-the basics of Swift.</p>
-
-<p>It doesn’t matter if you’re new to iOS or an experienced programmer. Now, we’re
-all in the same boat. We all have to learn Swift from scratch, so forget
-everything you know about Objective-C and get ready to learn this brand new
-language. By the way, its potential is overwhelming.</p>
-
-<h2 id="the-basics">The basics</h2>
-
-<p>As far as I could tell, Swift borrows concepts from Python, Javascript and even
-Java. It’s syntax also resembles these languages very much.</p>
-
-<p>You can forget about pointers for now, most of what we’ll be using in Swift is
-passed through references. No more asterisk (woohoo \o/).</p>
-
-<p>Swift plays with the concepts of variables and constants. There’s no type
-definition to neither of those just the declares var, for variables, and <code>let</code>
-for constants. As you may have figured out, constants can’t be altered. We’ll
-cover when to use it in a few steps.</p>
-
-<p><div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="err">“</span><span class="n">this</span> <span class="kt">is</span> <span class="n">getting</span> <span class="n">good</span><span class="err">”</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-
-<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></div></p>
-
-<p>Yep, there are no semi-colons at the end of statements.</p>
-
-<p>Switches are extremely powerful. <code>Cases</code> can be variables, strings, even a range
- of numbers. Also, cases don’t automatically fall through the next condition, so
-  there’s no need to <code>break</code>.</p>
-
-<p><div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
-        <span class="c1">// do something&lt;/p&gt;</span>
-
-<span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">case</span> <span class="nl">someOtherVar</span><span class="p">:</span>
-    <span class="c1">// this is getting wild</span>
-
-<span class="k">case</span> <span class="s">&quot;string&quot;</span><span class="o">:</span>
-    <span class="c1">// holy cow!</span>
-
-<span class="k">case</span> <span class="mf">1..4</span><span class="o">:</span>
-    <span class="c1">// ok, this is awesome</span>
-<span class="k">default</span><span class="o">:</span>
-    <span class="c1">// something unimplemented }</span></code></pre></div>
-</code></pre>
-
-<p>There’s also no need for surrounding parenthesis when working with conditions,
-unless it’s a complex condition, as usual. Switches in Swift (yep, try saying
-that three times) are exhaustive. That means that you must either supply <code>cases</code>
-for every possible condition or a <code>default</code> to handle everything else.
-XCode will error at compile time if you don’t.</p>
-
-<p>The final topic of this post is how you’ll print output to the console. It’s as
-simple as calling <code>println()</code> (it’s a function) and you’re done.
-Formatting strings is also awsome:</p>
-
-<p><div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="err">“</span><span class="n">Flavio</span><span class="err">”</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-
-<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">println</span><span class="p">(</span><span class="err">“</span><span class="n">Hello</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">!</span><span class="err">”</span><span class="p">)</span>
-<span class="c1">// Hello Flavio!</span></code></pre></div></p>
-
-<p>This is enough to get started and get familiar with Swift. Go ahead, poke it
-around, but don’t try to get fancy just yet. I’ll be covering more in the next
-few days.</p>
 ]]></content>
   </entry>
   

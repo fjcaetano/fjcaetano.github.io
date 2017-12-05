@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2017-11-13T17:54:55-02:00</updated>
+  <updated>2017-12-05T18:27:32-02:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,106 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Protip: UIViewControllerAnimatedTransitioning + Snapshots]]></title>
+    <link href="http://blog.flaviocaetano.com/post/protip-uiviewcontrolleranimatedtransitioning-plus-snapshots/"/>
+    <updated>2017-12-05T18:06:12-02:00</updated>
+    <id>http://blog.flaviocaetano.com/post/protip-uiviewcontrolleranimatedtransitioning-plus-snapshots</id>
+    <content type="html"><![CDATA[<p>When creating custom animations for view controller transitions, it is recommended
+to use snapshots of the views being animated. However, UIKit doesn’t always make
+things crystal clear.</p>
+
+<p>If you find yourself with broken autolayout or views incorrectly configured after
+enabling your transition, try <strong>creating the snapshots after adding your view to
+<code>viewContainer</code></strong>.</p>
+
+<!-- more -->
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="k">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nl">transitionContext</span><span class="p">:</span> <span class="bp">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">guard</span> <span class="k">let</span> <span class="n">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">viewController</span><span class="p">(</span><span class="nl">forKey</span><span class="p">:</span> <span class="p">.</span><span class="n">from</span><span class="p">),</span>
+</span><span class="line">        <span class="k">let</span> <span class="n">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">viewController</span><span class="p">(</span><span class="nl">forKey</span><span class="p">:</span> <span class="p">.</span><span class="n">to</span><span class="p">),</span>
+</span><span class="line">        <span class="k">let</span> <span class="n">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="p">.</span><span class="n">animatedView</span><span class="p">.</span><span class="n">snapshotView</span><span class="p">(</span><span class="nl">afterScreenUpdates</span><span class="p">:</span> <span class="nb">true</span><span class="p">),</span>
+</span><span class="line">        <span class="k">let</span> <span class="n">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="p">.</span><span class="n">animatedView</span><span class="p">.</span><span class="n">snapshotView</span><span class="p">(</span><span class="nl">afterScreenUpdates</span><span class="p">:</span> <span class="nb">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">completeTransition</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">let</span> <span class="n">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">containerView</span>
+</span><span class="line">
+</span><span class="line">    <span class="p">[</span><span class="n">fromAnimatedView</span><span class="p">,</span> <span class="n">toAnimatedView</span><span class="p">].</span><span class="n">forEach</span><span class="p">(</span><span class="n">transitionContext</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="nl">_</span><span class="p">:))</span>
+</span><span class="line">
+</span><span class="line">    <span class="c1">// Now you got yourself broken views. Hooray!</span>
+</span><span class="line">    <span class="p">...</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The code above might not work. Your <code>toVC</code>’s view might end up completely broken
+and your snapshots may have the wrong frame and contents. To fix it, simply move
+the snapshots creation to after adding your destination view controller’s view to
+<code>transitionContext.containerView</code>.</p>
+
+<p>If you just try it after your <code>toVC</code> has ended initializing its views (i.e. after
+<code>viewDidLoad</code> has been called) it won’t work, even if you force the view to be
+loaded. You truly need to create your snapshots after the <code>containerView</code>.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="k">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nl">transitionContext</span><span class="p">:</span> <span class="bp">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">func</span> <span class="n">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nl">transitionContext</span><span class="p">:</span> <span class="bp">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="n">guard</span> <span class="k">let</span> <span class="n">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">viewController</span><span class="p">(</span><span class="nl">forKey</span><span class="p">:</span> <span class="p">.</span><span class="n">from</span><span class="p">),</span>
+</span><span class="line">            <span class="k">let</span> <span class="n">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">viewController</span><span class="p">(</span><span class="nl">forKey</span><span class="p">:</span> <span class="p">.</span><span class="n">to</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">completeTransition</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">let</span> <span class="n">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">containerView</span>
+</span><span class="line">
+</span><span class="line">        <span class="p">[</span><span class="n">fromAnimatedView</span><span class="p">,</span> <span class="n">toAnimatedView</span><span class="p">].</span><span class="n">forEach</span><span class="p">(</span><span class="n">transitionContext</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="nl">_</span><span class="p">:))</span>
+</span><span class="line">
+</span><span class="line">        <span class="n">guard</span> <span class="k">let</span> <span class="n">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="p">.</span><span class="n">animatedView</span><span class="p">.</span><span class="n">snapshotView</span><span class="p">(</span><span class="nl">afterScreenUpdates</span><span class="p">:</span> <span class="nb">true</span><span class="p">),</span>
+</span><span class="line">            <span class="k">let</span> <span class="n">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="p">.</span><span class="n">animatedView</span><span class="p">.</span><span class="n">snapshotView</span><span class="p">(</span><span class="nl">afterScreenUpdates</span><span class="p">:</span> <span class="nb">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">completeTransition</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="c1">// toVC.view was already added to the container</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">        <span class="p">...</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Boom! Done. Now it works 🎉</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ReCaptcha Reaches 1.0]]></title>
@@ -1499,71 +1599,6 @@ Brasil:
 4 - Telefone: (\\d{2}) (\\d{4})-(\\d{4})
 </code></pre></noscript></div>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The Best XCode Tip No One Ever Gave You]]></title>
-    <link href="http://blog.flaviocaetano.com/post/best-xcode-tip/"/>
-    <updated>2013-04-03T15:25:36-03:00</updated>
-    <id>http://blog.flaviocaetano.com/post/best-xcode-tip</id>
-    <content type="html"><![CDATA[<p>Tired of having to find out where an exception occurred, that was only captured
-in the <em>main()</em>? Now I’m going to show you the best Xcode tip that no one talks
-about. Don’t ask me why.</p>
-
-<p>These are the very few steps that will save your life and make your day better.</p>
-
-<h2 id="creating-an-exception-breakpoint">Creating an “Exception Breakpoint”</h2>
-
-<p>The first thing to do is to access the Breakpoint Navigator, which is the little
-breakpoint marker on the top of your Project Navigator. If you didn’t know, the
-Breakpoint Navigator show all your breakpoints in your project, where you can
-easily manage them. (Click on the image to see it bigger)</p>
-
-<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-1.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-1.png" alt="best-xcode-hint-1" /></a></p>
-
-<p>Now that you’re in the Breakpoint Navigator, click on the little “+” button on
-the bottom left of the screen. A little dialog window will show up and choose the
-“Add Exception Breakpoint…” option.</p>
-
-<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-3.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-3.png" alt="best-xcode-hint-3" /></a></p>
-
-<p>Then, the Xcode will ask you some information about the breakpoint you’re creating:</p>
-
-<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-4.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-4.png" alt="best-xcode-hint-4" /></a></p>
-
-<ul>
-  <li>Exception: There are three options: “All” to get all types of exceptions; “C++” to get only C++ exceptions; and “Objective-C” to get only ObjC exceptions. I like to leave it as “All”.</li>
-  <li>Break: Leave it as “On Throw”. This way, the execution will stop when your code throws an exception and not when it catches, which is the default on <em>main()</em>.</li>
-  <li>Action: You can set some action to be performed when the breakpoint is reached like run an Apple Script, shell command and others. I’ve never used it.</li>
-  <li>Options: if you check this option, your code won’t stop when the breakpoint hits, making it useless. So leave it unchecked.</li>
-</ul>
-
-<p>Congratulations! You’ve successfully created an Exception Breakpoint that will
-stop whenever something odd happens! Let’s try it out!</p>
-
-<p>As an example I’ve created an empty array and tried to access the object at index
-0, which doesn’t exists. This is what happened:</p>
-
-<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-5.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-5.png" alt="best-xcode-hint-5" /></a></p>
-
-<p>Whoa! The Xcode stopped precisely where the problem was! Quite awesome, huh? But,
-sometimes, it’s not that easy to visualise what the problem really is, so if
-that’s happening to you, just hit “<em>play</em>”, and the code will keep executing as
-if your breakpoint doesn’t exists. What happens now, is the <em>main()</em> catching
-whatever exceptions that may happen.</p>
-
-<p>So you can look at the console to see what the problem was:</p>
-
-<p><a href="http://blog.flaviocaetano.com/images/best-xcode-hint-6.png"><img src="http://blog.flaviocaetano.com/images/best-xcode-hint-6.png" alt="best-xcode-hint-6" /></a></p>
-
-<blockquote>
-  <p>”-[__NSArrayI objectAtIndex:]: index 0 beyond bounds for empty array”</p>
-</blockquote>
-
-<p>Ta daa! I know it’s not perfect. It won’t get any <em>signals</em> (SIGABRT, SIGTRAP),
-<em>flags</em> or <em>bad access</em> kinds of witchcraft, but I think it’s super helpful and
-I think you guys should know.</p>
 ]]></content>
   </entry>
   
