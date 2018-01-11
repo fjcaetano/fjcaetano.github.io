@@ -135,6 +135,81 @@
   
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2014-04-15T17:12:13-03:00">
+        <a href="/post/cocoapods-and-resource_bundles/">April 15, 2014</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/cocoapods-and-resource_bundles/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/post/cocoapods-and-resource_bundles/" rel="bookmark" title="Cocoapods and Resource_bundles" itemprop="url">Cocoapods and Resource_bundles</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>Anyone that have recently developed any pods for Cocoapods know that resources
+should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code>resource_bundles</code></a>
+option. What is quite hard to figure out is how, exactly, to access those
+resources once they’re set up in the <code>bundle</code>. It seems obvious now that I got
+it working, but I struggle a lot since there wasn’t anything in Stackoverflow or
+anywhere else that provided the answer I came up with.</p>
+
+<p>After setting up the <code>resource_bundles</code>, Cocoapods copies the resources found in
+a “resources” folder within the Pods project, but none of them are added in the
+target’s “Copy bundle resources”. For that reason, I couldn’t access any of the
+Pod’s images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
+
+<blockquote>
+  <p>‘Terminating app due to uncaught exception ‘NSInternalInconsistencyException’,
+reason: ‘Could not load NIB in bundle:&lt;{PATH_TO_APP}&gt; (loaded)’ with name
+‘{VIEW_CONTROLLER_NAME}’</p>
+</blockquote>
+
+<p>The obvious solution that wasn’t listed anywhere is using the Cocoapods
+generated bundle (which the folder actually doesn’t exist) as a <code>NSBundle</code>:</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="bp">NSString</span> <span class="o">*</span><span class="n">bundlePath</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource</span><span class="p">:</span><span class="s">@&quot;MyBundle&quot;</span> <span class="nl">ofType</span><span class="p">:</span><span class="s">@&quot;bundle&quot;</span><span class="p">];</span>
+
+<span class="bp">NSBundle</span> <span class="o">*</span><span class="n">bundle</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSBundle</span> <span class="nl">bundleWithPath</span><span class="p">:</span><span class="n">bundlePath</span><span class="p">];</span>
+
+<span class="n">MyViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyViewController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithNibName</span><span class="p">:</span><span class="s">@&quot;MyViewController&quot;</span> <span class="nl">bundle</span><span class="p">:</span><span class="n">bundle</span><span class="p">];</span>
+
+<span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController</span><span class="p">:</span><span class="n">viewController</span> <span class="nl">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span></code></pre></div>
+
+<p>Yes, it’s that simple, that obvious, though it’s not listed anywhere. I believe
+to be prudent and convenient to write about it in order to help anyone who
+encounter themselves in the same situation as I did.</p>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2014-01-06T14:19:11-02:00">
         <a href="/post/cicada-2014/">January 06, 2014</a>
       </time>
@@ -532,166 +607,6 @@ familiarise to a new layout.”</p>
 
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  
-
-
-
-<header>
-  
-    <a href="https://github.com/fjcaetano/NSStringMask" target="_blank"><img class="github-ribbon" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
-  
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2013-05-16T14:27:10-03:00">
-        <a href="/post/nsstringmask/">May 16, 2013</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/post/nsstringmask/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/post/nsstringmask/" rel="bookmark" title="NSStringMask: Simplifying Masks" itemprop="url">NSStringMask: Simplifying Masks</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>When developing, we often come across code we’ve seen hundreds of times that we
-just copy and paste from project to project. Sometimes it’s so banal that it’s
-not worth trying to improve, change or even modularize it. Ctrl-C + Ctrl-V may
-be the cheapest and fastest solution, ergo, the best.</p>
-
-<p>This is the kind of situation we see when masks must be applied to <em>text fields</em>
-such as Social Security Numbers (SSN), Telephones, Zip Codes, and so on. Those
-awful few dozens of lines we copy from one <code>textField:shouldChangeCharactersInRange:replacementString:</code>
-to the other. It never changes because it works. There’s no need to improve it.
-It’s always the same. But I’ve got tired of it. That nasty code that, in a well
-structured class, can be as a mole in a beautiful woman’s face.</p>
-
-<p>A few days ago I got some spare time and I started working on something I though
-could come handy. So how do you simplify and generalise this problem that every
-developer has to face at least once? Easy! <em>Regex</em>! Wait.. You sure it’s easy? I’ll
-tell you, it wasn’t easy, but we’re talking about patterns in varying occasions
-and, as I visualised it, <em>regex</em> is the best, simplest and most “approachable”
-solution. I mean, everybody knows a little bit of <em>regex</em>.</p>
-
-<p>While modelling, I wanted to make it as simple and as clean as possible, therefore,
-for now, there are only two classes, and only one method you’ll really use, but
-you can read the <a href="http://fjcaetano.github.io/NSStringMask/">complete documentation</a>.
-From now on, I’ll present a superficial approach to introduce this small library.</p>
-
-<p>Fork the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a>!</p>
-
-<h2 id="nsstringmask">NSStringMask</h2>
-
-<p>The NSStringMask is the main class responsible for applying your masks to the
-NSStrings. Among it’s methods the only noteworthy is
-<a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/maskString:withPattern:placeholder:"><code>[NSStringMask maskString:withPattern:placeholder:]</code></a>.</p>
-
-<p>It formats the given <code>string</code> based on the <code>pattern</code> you provide, filling the
-voids with the <code>placeholder</code>. It automatically creates an instance of
-NSRegularExpression with the option <code>CaseInsensitive</code>, so if you need a different
-option, you may use the alternate method which expects a <em>regex</em> instead of <code>pattern</code>.</p>
-
-<p>There’s also an alternative method that receives no <code>placeholder</code> (same as <code>nil</code>),
-in this case, when the given <code>string</code> is shorter than expected, instead of
-applying the mask, the method will return a cleaned <em>string</em> having only the
-valid characters based on <a href="http://fjcaetano.github.io/NSStringMask/Classes/NSStringMask.html#//api/name/validCharactersForString:"><code>validCharactersForString:</code></a>.</p>
-
-<h3 id="important-note">Important Note</h3>
-
-<p>Doesn’t matter if providing a <code>pattern</code> or an instance of <em>regex</em>, the regular
-expression <strong>must</strong> have capturing groups (parentheses). This is because the
-class understands that everything that is not within parentheses is part of the
-mask and must be interpreted as literal characters!</p>
-
-<p>Suppose you’re formatting a SSN, whose <em>regex</em> pattern is <code>\d{3}-\d{2}-\d{3}</code>.
-If you provide that <em>regex</em>/pattern, nothing will be formatted because the class
-will think that <code>\d{3}</code> is part of the mask, and not 3 numbers that should go there.</p>
-
-<p>The correct usage is: <code>(\d{3})-(\d{2})-(\d{3})</code></p>
-
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="c1">// RIGHT:</span>
-<span class="bp">NSString</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskString</span><span class="p">:</span><span class="s">@&quot;12345678&quot;</span> <span class="nl">withPattern</span><span class="p">:</span><span class="s">@&quot;(\d{3})-(\d{2})-(\d{3})&quot;</span><span class="p">];</span>
-<span class="c1">// result = @&quot;123-45-678&quot;</span>
-
-<span class="c1">// WRONG:</span>
-<span class="bp">NSString</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskString</span><span class="p">:</span><span class="s">@&quot;12345678&quot;</span> <span class="nl">withPattern</span><span class="p">:</span><span class="s">@&quot;\d{3}-\d{2}-\d{3}&quot;</span><span class="p">];</span>
-<span class="c1">// result = nil</span></code></pre></div>
-
-<p><strong>Obs</strong>: If Xcode is showing a <em>warning</em> about unknown escape sequences, try
-adding double slashes (<code>\\d</code>)</p>
-
-<h2 id="uitextfieldmask">UITextFieldMask</h2>
-
-<p>This is a subclass of UITextField, so you can set your <em>nibs</em> to use this class
-and automatically apply masks to your <em>text fields</em>.</p>
-
-<p>Obviously, you must provide a mask to transform your <em>strings</em>, and it’s
-recommended that you do so when initialising your <em>view</em> or <em>view controller</em>.
-So you should set the text field’s mask inside <code>viewDidLoad</code> or <code>awakeFromNib</code>.</p>
-
-<p>Suppose you have a <em>view</em> with an <em>outlet</em> to an UITextFieldMask named <code>textFieldMask</code>:</p>
-
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">awakeFromNib</span>
-<span class="p">{</span>
-    <span class="n">NSStringMask</span> <span class="o">*</span><span class="n">mask</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSStringMask</span> <span class="nl">maskWithPattern</span><span class="p">:</span><span class="s">@&quot;(\d+)&quot;</span><span class="p">];</span>
-
-    <span class="n">textFieldMask</span><span class="p">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="p">;</span>
-    <span class="n">textFieldMask</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">self</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
-
-<p>A question for you: what does that mask accepts?</p>
-
-<h2 id="installation">Installation</h2>
-
-<p>You can install it from <a href="http://cocoadocs.org/docsets/NSStringMask">Cocoa Pods</a>,
-or clone the project from the <a href="https://github.com/fjcaetano/NSStringMask">Github Repo</a>
-and copy the files in the folder <code>Classes</code>.</p>
-
-<h3 id="helpful-stuff">Helpful stuff</h3>
-
-<p>I’ve also created <a href="https://gist.github.com/fjcaetano/5600452">this gist</a> with
-some common patterns. Feel free to improve it!</p>
-
-<div><script src="https://gist.github.com/5600452.js"></script>
-<noscript><pre><code>These are a few patterns commonly used.
-
-1 - Digits only: (\\d+)
-2 - Names without special characters: ([A-Za-z\\s]+)
-3 - Email: (([\\w\\.\\-]*?@)([\\w\\.\\-]+)(\\.[a-z]{2,4}) # Incompatible with versions previous to 1.1.2 of NSStringMask
-4 - Dates: (\\d{2})/(\\d{2})/(\\d{4})
-5 - SSN: (\\d{3})-(\\d{2})-(\\d{3})
-6 - Telephone: (\\d{3})-(\\d{3})-(\\d{4})
-
-Brasil:
-1 - CPF: (\\d{3}).(\\d{3}).(\\d{3})-(\\d{2})
-2 - RG: (\\d{2}).(\\d{3}).(\\d{3})-(\\d|x|X)
-3 - CEP: (\\d{2}).(\\d{3})-(\\d{3})
-4 - Telefone: (\\d{2}) (\\d{4})-(\\d{4})
-</code></pre></noscript></div>
-
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
 
 <div class="pagination">
   
@@ -709,7 +624,7 @@ Brasil:
 
   <div class="footer-wrapper">
     <footer role="contentinfo">
-      <span>&copy; 2017 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+      <span>&copy; 2018 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
     </footer>
   </div><!-- /.footer-wrapper -->

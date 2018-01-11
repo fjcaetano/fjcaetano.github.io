@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://blog.flaviocaetano.com/post/the-simplest-throttle-slash-debounce-youll-ever-see/</loc>
+<lastmod>2018-01-11T11:12:28-02:00</lastmod>
+</url>
+<url>
 <loc>http://blog.flaviocaetano.com/post/protip-uiviewcontrolleranimatedtransitioning-plus-snapshots/</loc>
 <lastmod>2017-12-05T18:06:12-02:00</lastmod>
 </url>
@@ -156,5 +160,8 @@
 </url>
 <url>
 <loc>http://blog.flaviocaetano.com/post/5/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/post/6/</loc>
 </url>
 </urlset>

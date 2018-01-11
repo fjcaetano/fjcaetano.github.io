@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2017-12-05T18:27:32-02:00</updated>
+  <updated>2018-01-11T11:25:50-02:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The Simplest Throttle/Debounce You'll Ever See]]></title>
+    <link href="http://blog.flaviocaetano.com/post/the-simplest-throttle-slash-debounce-youll-ever-see/"/>
+    <updated>2018-01-11T11:12:28-02:00</updated>
+    <id>http://blog.flaviocaetano.com/post/the-simplest-throttle-slash-debounce-youll-ever-see</id>
+    <content type="html"><![CDATA[<p>One of these days I needed a <em>debounce</em> on Swift to ensure some block of code
+would only be executed once in a period of time. <em>Debounces</em> are quite simple so
+I implemented a first draft of it.</p>
+
+<p>Not long after that, I also needed a <em>throttle</em> to skip repetitive calls to a
+different block of code. Not to different from a <em>debouce</em>, but not quite the
+same.</p>
+
+<!-- more -->
+
+<p>Bouncing around in the interwebs (pun intended), searching for a simple
+implementation for <em>throttle</em>, <a target="\_blank" href="https://gist.github.com/AndreyPanov/f3c9ccdf1afc99b07d919c3f119b4d9b">all</a> <a target="\_blank" href="https://github.com/webadnan/swift-debouncer">I</a> <a target="\_blank" href="https://gist.github.com/simme/b78d10f0b29325743a18c905c5512788">could</a> <a target="\_blank" href="https://stackoverflow.com/questions/27116684/how-can-i-debounce-a-method-call">find</a> <a target="\_blank" href="https://gist.github.com/pixelspark/50afabc9ce29412cca7ef6d6323da7de">was</a>
+<a target="\_blank" href="https://danielemargutti.com/2017/10/19/throttle-in-swift/">nonsense</a>… and
+overcomplicated.</p>
+
+<p>So I created an extension on <code>DispatchQueue</code> (where it should be):</p>
+
+<p><div><script src='https://gist.github.com/ff3e994c4edb4991ab8280f34994beb4.js'></script>
+<noscript><pre><code>import Dispatch
+
+private var throttleWorkItems = [AnyHashable: DispatchWorkItem]()
+private var lastDebounceCallTimes = [AnyHashable: DispatchTime]()
+private let nilContext: AnyHashable = arc4random()
+
+public extension DispatchQueue {
+    /**
+     - parameters:
+         - deadline: The timespan to delay a closure execution
+         - context: The context in which the throttle should be executed
+         - action: The closure to be executed
+
+     Delays a closure execution and ensures no other executions are made during deadline
+     */
+    public func throttle(deadline: DispatchTime, context: AnyHashable? = nil, action: @escaping () -&gt; Void) {
+        let worker = DispatchWorkItem {
+            defer { throttleWorkItems.removeValue(forKey: context ?? nilContext) }
+            action()
+        }
+
+        asyncAfter(deadline: deadline, execute: worker)
+
+        throttleWorkItems[context ?? nilContext]?.cancel()
+        throttleWorkItems[context ?? nilContext] = worker
+    }
+
+    /**
+     - parameters:
+         - interval: The interval in which new calls will be ignored
+         - context: The context in which the debounce should be executed
+         - action: The closure to be executed
+
+     Executes a closure and ensures no other executions will be made during the interval.
+     */
+    public func debounce(interval: Double, context: AnyHashable? = nil, action: @escaping () -&gt; Void) {
+        if let last = lastDebounceCallTimes[context ?? nilContext], last + interval &gt; .now() {
+            return
+        }
+
+        lastDebounceCallTimes[context ?? nilContext] = .now()
+        async(execute: action)
+
+        // Cleanup &amp; release context
+        throttle(deadline: .now() + interval) {
+            lastDebounceCallTimes.removeValue(forKey: context ?? nilContext)
+        }
+    }
+}
+</code></pre></noscript></div>
+</p>
+
+<p><em>TA DAA</em> 🎉</p>
+
+<!-- LINKS -->
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Protip: UIViewControllerAnimatedTransitioning + Snapshots]]></title>
@@ -489,83 +571,6 @@ few things get me more upset than random properties thrown around some class.</p
 
 <p>If you have any suggestions to this organization methodology, let me know. The
 cleaner the better.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[RxWebSocket]]></title>
-    <link href="http://blog.flaviocaetano.com/post/rxwebsocket/"/>
-    <updated>2016-02-25T15:55:42-03:00</updated>
-    <id>http://blog.flaviocaetano.com/post/rxwebsocket</id>
-    <content type="html"><![CDATA[<p>Recently we had to integrate a chat-like comment feature to our new <a href="https://itunes.apple.com/us/app/winnin-battle-best-videos./id1073178885" target="_blank">Winnin App</a>
-Our backend team decided to build it using websockets, so when it came to the
-app implementation, my first thought was to search for an opensource swift framework
-that did confirm to the <a href="http://tools.ietf.org/html/rfc6455" target="_blank">Websocket Protocol</a>.
-We decided to go with <a href="https://github.com/daltoniam/Starscream" target="_blank">Starscream</a> since
-it seemed simple and reliable enough.</p>
-
-<!-- more -->
-
-<p>In the first drafts of the new app, a decision was made to adopt reactive programming
-in the app, more specifically <a href="https://github.com/ReactiveX/RxSwift" target="_blank">RxSwift</a>. Many sprints later, we’ve limited our
-Rx use to cross-object events and network communications. Not surprisingly, we
-wanted to use websockets reactively.</p>
-
-<h2 id="rxwebsockettargetblank"><a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a></h2>
-
-<p>We designed RxWebSocket to be as lightweight as possible, truly, just making an
-abstraction layer over <a href="https://github.com/daltoniam/Starscream" target="_blank">Starscream</a> to make it reactive.</p>
-
-<p>All you need is to listen to the <code>stream</code> property which is an <code>Observable&lt;StreamEvent&gt;</code>.</p>
-
-<p><code>swift
-public enum StreamEvent {
-    case Connect
-    case Disconnect(NSError?)
-    case Pong
-    case Text(String)
-    case Data(NSData)
-  }
-</code></p>
-
-<p>Using an enum as the element type allows us to have every interaction with the
-websocket server in one property that is also easily filtered by message type. If
-we need to know when the websocket connects, we can simply filter the stream:</p>
-
-<p><code>swift
-socket.stream
-  .filter {
-    switch $0 {
-    case .Connect: return true
-    default: return false
-    }
-  }
-</code></p>
-
-<p>If your websocket messages the client with a JSON object that you need to parse:</p>
-
-<p><code>swift
-socket.stream
-  .flatMap { event -&gt; Observable&lt;AnyObject&gt; in
-    switch event {
-    case .Text(let text):
-      return Observable.just(try NSJSONSerialization.JSONObjectWithData(text.dataUsingEncoding(NSUTF8StringEncoding)!, options: .AllowFragments))
-    default: return Observable.empty()
-    }
-  }
-</code></p>
-
-<p>We know it’s still crude and quite simple, which is our intention, but we’ll improve
-<a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a> with time. Every suggestion, comment, critic, PR,
-etcetera is welcome.</p>
-
-<p>You can check an actual implementation in the example project or by running
-<code>bash
-pod try RxWebSocket
-</code></p>
-
-<p>Enjoy!</p>
-
 ]]></content>
   </entry>
   
