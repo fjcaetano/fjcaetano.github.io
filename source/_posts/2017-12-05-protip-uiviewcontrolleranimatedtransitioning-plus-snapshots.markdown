@@ -17,7 +17,7 @@ things crystal clear.
 
 If you find yourself with broken autolayout or views incorrectly configured after
 enabling your transition, try **creating the snapshots after adding your view to
-`viewContainer`**.
+`containerView`**.
 
 <!-- more -->
 
@@ -32,7 +32,7 @@ func animateTransition(using transitionContext: UIViewControllerContextTransitio
 
     let containerView = transitionContext.containerView
 
-    [fromAnimatedView, toAnimatedView].forEach(transitionContext.addSubview(_:))
+    [fromAnimatedView, toAnimatedView].forEach(containerView.addSubview(_:))
 
     // Now you got yourself broken views. Hooray!
     ...
@@ -49,25 +49,22 @@ If you just try it after your `toVC` has ended initializing its views (i.e. afte
 loaded. You truly need to create your snapshots after the `containerView`.
 
 ```swift
-func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromVC = transitionContext.viewController(forKey: .from),
-            let toVC = transitionContext.viewController(forKey: .to) else {
-                return transitionContext.completeTransition(false)
-        }
+  func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+      guard let fromVC = transitionContext.viewController(forKey: .from),
+          let toVC = transitionContext.viewController(forKey: .to) else {
+              return transitionContext.completeTransition(false)
+      }
 
-        let containerView = transitionContext.containerView
+      let containerView = transitionContext.containerView
+      containerView.addSubview(toVC.view)
 
-        [fromAnimatedView, toAnimatedView].forEach(transitionContext.addSubview(_:))
+      guard let fromAnimatedView = fromVC.animatedView.snapshotView(afterScreenUpdates: true),
+          let toAnimatedView = toVC.animatedView.snapshotView(afterScreenUpdates: true) else {
+              return transitionContext.completeTransition(true) // toVC.view was already added to the container
+      }
 
-        guard let fromAnimatedView = fromVC.animatedView.snapshotView(afterScreenUpdates: true),
-            let toAnimatedView = toVC.animatedView.snapshotView(afterScreenUpdates: true) else {
-                return transitionContext.completeTransition(true) // toVC.view was already added to the container
-        }
-
-        ...
-    }
-}
+      ...
+  }
 ```
 
 Boom! Done. Now it works 🎉
