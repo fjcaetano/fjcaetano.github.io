@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-01-11T11:25:50-02:00</updated>
+  <updated>2018-01-15T17:35:52-02:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -105,7 +105,7 @@ things crystal clear.</p>
 
 <p>If you find yourself with broken autolayout or views incorrectly configured after
 enabling your transition, try <strong>creating the snapshots after adding your view to
-<code>viewContainer</code></strong>.</p>
+<code>containerView</code></strong>.</p>
 
 <!-- more -->
 
@@ -134,7 +134,7 @@ enabling your transition, try <strong>creating the snapshots after adding your v
 </span><span class="line">
 </span><span class="line">    <span class="k">let</span> <span class="n">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">containerView</span>
 </span><span class="line">
-</span><span class="line">    <span class="p">[</span><span class="n">fromAnimatedView</span><span class="p">,</span> <span class="n">toAnimatedView</span><span class="p">].</span><span class="n">forEach</span><span class="p">(</span><span class="n">transitionContext</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="nl">_</span><span class="p">:))</span>
+</span><span class="line">    <span class="p">[</span><span class="n">fromAnimatedView</span><span class="p">,</span> <span class="n">toAnimatedView</span><span class="p">].</span><span class="n">forEach</span><span class="p">(</span><span class="n">containerView</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="nl">_</span><span class="p">:))</span>
 </span><span class="line">
 </span><span class="line">    <span class="c1">// Now you got yourself broken views. Hooray!</span>
 </span><span class="line">    <span class="p">...</span>
@@ -166,28 +166,22 @@ loaded. You truly need to create your snapshots after the <code>containerView</c
 <span class="line-number">14</span>
 <span class="line-number">15</span>
 <span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="k">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nl">transitionContext</span><span class="p">:</span> <span class="bp">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">func</span> <span class="n">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nl">transitionContext</span><span class="p">:</span> <span class="bp">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="n">guard</span> <span class="k">let</span> <span class="n">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">viewController</span><span class="p">(</span><span class="nl">forKey</span><span class="p">:</span> <span class="p">.</span><span class="n">from</span><span class="p">),</span>
-</span><span class="line">            <span class="k">let</span> <span class="n">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">viewController</span><span class="p">(</span><span class="nl">forKey</span><span class="p">:</span> <span class="p">.</span><span class="n">to</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class="line">                <span class="k">return</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">completeTransition</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span>
-</span><span class="line">        <span class="p">}</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line">  <span class="k">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nl">transitionContext</span><span class="p">:</span> <span class="bp">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="n">guard</span> <span class="k">let</span> <span class="n">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">viewController</span><span class="p">(</span><span class="nl">forKey</span><span class="p">:</span> <span class="p">.</span><span class="n">from</span><span class="p">),</span>
+</span><span class="line">          <span class="k">let</span> <span class="n">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">viewController</span><span class="p">(</span><span class="nl">forKey</span><span class="p">:</span> <span class="p">.</span><span class="n">to</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">              <span class="k">return</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">completeTransition</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span>
+</span><span class="line">      <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">        <span class="k">let</span> <span class="n">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">containerView</span>
+</span><span class="line">      <span class="k">let</span> <span class="n">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">containerView</span>
+</span><span class="line">      <span class="n">containerView</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="n">toVC</span><span class="p">.</span><span class="n">view</span><span class="p">)</span>
 </span><span class="line">
-</span><span class="line">        <span class="p">[</span><span class="n">fromAnimatedView</span><span class="p">,</span> <span class="n">toAnimatedView</span><span class="p">].</span><span class="n">forEach</span><span class="p">(</span><span class="n">transitionContext</span><span class="p">.</span><span class="n">addSubview</span><span class="p">(</span><span class="nl">_</span><span class="p">:))</span>
+</span><span class="line">      <span class="n">guard</span> <span class="k">let</span> <span class="n">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="p">.</span><span class="n">animatedView</span><span class="p">.</span><span class="n">snapshotView</span><span class="p">(</span><span class="nl">afterScreenUpdates</span><span class="p">:</span> <span class="nb">true</span><span class="p">),</span>
+</span><span class="line">          <span class="k">let</span> <span class="n">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="p">.</span><span class="n">animatedView</span><span class="p">.</span><span class="n">snapshotView</span><span class="p">(</span><span class="nl">afterScreenUpdates</span><span class="p">:</span> <span class="nb">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">              <span class="k">return</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">completeTransition</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="c1">// toVC.view was already added to the container</span>
+</span><span class="line">      <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">        <span class="n">guard</span> <span class="k">let</span> <span class="n">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="p">.</span><span class="n">animatedView</span><span class="p">.</span><span class="n">snapshotView</span><span class="p">(</span><span class="nl">afterScreenUpdates</span><span class="p">:</span> <span class="nb">true</span><span class="p">),</span>
-</span><span class="line">            <span class="k">let</span> <span class="n">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="p">.</span><span class="n">animatedView</span><span class="p">.</span><span class="n">snapshotView</span><span class="p">(</span><span class="nl">afterScreenUpdates</span><span class="p">:</span> <span class="nb">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class="line">                <span class="k">return</span> <span class="n">transitionContext</span><span class="p">.</span><span class="n">completeTransition</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="c1">// toVC.view was already added to the container</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">        <span class="p">...</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
+</span><span class="line">      <span class="p">...</span>
+</span><span class="line">  <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Boom! Done. Now it works 🎉</p>
