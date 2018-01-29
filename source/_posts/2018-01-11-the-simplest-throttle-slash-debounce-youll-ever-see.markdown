@@ -17,7 +17,7 @@ would only be executed once in a period of time. _Debounces_ are quite simple so
 I implemented a first draft of it.
 
 Not long after that, I also needed a _throttle_ to skip repetitive calls to a
-different block of code. Not to different from a _debouce_, but not quite the
+different block of code. Not too different from a _debouce_, but not quite the
 same.
 
 <!-- more -->
