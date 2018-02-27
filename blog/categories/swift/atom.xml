@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-01-29T15:17:12-02:00</updated>
+  <updated>2018-02-27T15:48:00-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,56 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Handling Frames in an AutoLayout Universe]]></title>
+    <link href="http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe/"/>
+    <updated>2018-02-27T15:20:08-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe</id>
+    <content type="html"><![CDATA[<p>As frameworks improves, as our knowledge of it, we should leave <a target="\_blank" href="/post/autolayout-is-hell-on-earth/">our prejudices</a>
+in the past. It is without question that AutoLayout has become much beloved and
+necessary as it moves forward. Its API has improved so drastically as to discard
+the need for third-party libraries.</p>
+
+<p>However, as far as AutoLayout has progressed, it may still be simpler to handle
+frames in some cases. But how to join both worlds without colliding them and
+throwing a bunch of warnings in your console? Or worst: in your IB…</p>
+
+<!-- more -->
+
+<h2 id="customize-layoutsubviews">Customize <code>layoutSubviews</code></h2>
+
+<p>Depending on the simplicity of what you want to achieve, implementing your own
+version of <code>layoutSubviews</code> without relying on the SDK can be simple and effective:</p>
+
+<p><code>swift
+override func layoutSubviews() {
+    _ = subviews.reduce(0) { (x, view) -&gt; CGFloat in
+        let size = view.intrinsicContentSize
+        view.frame = CGRect(
+            origin: CGPoint(x: x, y: 0),
+            size: size)
+        return view.frame.maxX + Constants.spacing
+    }
+}
+</code></p>
+
+<h2 id="adopting-intrinsiccontentsize">Adopting <code>intrinsicContentSize</code></h2>
+
+<p>As you may have noticed in the example above, by overriding <code>intrinsicContentSize</code>
+you can have a view that defines its own size without depending on constraints
+or content.</p>
+
+<p><code>swift
+override var intrinsicContentSize: CGSize {
+    return isExpanded ? Constants.expandedSize : Constants.regularSize
+}
+</code></p>
+
+<p>Btw, it’s animatable 💖</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Simplest Throttle/Debounce You'll Ever See]]></title>
@@ -346,228 +396,12 @@ class Spaceship: NSObject { }</p>
         renderUniverse() // lolwut?
     }
 }
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>There you go. We have successfully drilled a wormhole through Swift’s fabric, all the way to Objective-C’s dynamic dispatch. There are limitations to this, of course. This is possible because our &lt;code&gt;Spaceship&lt;/code&gt; class is a subclass of NSObject. Make it a root class, and our universe falls apart.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;Unfortunately, if you try and make &lt;code&gt;travel(to:)&lt;/code&gt; generic, you’ll be using a Swift-only feature, which means you’re not exploiting the ObjC bridge.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;So go ahead and do all the things you shouldn’t, though you can, even if it’s a bit &lt;em&gt;hacky&lt;/em&gt;.&lt;/p&gt;
-</span><span class='line'>]]&gt;&lt;/content&gt;
-</span><span class='line'>  &lt;/entry&gt;
-</span><span class='line'>  
-</span><span class='line'>  &lt;entry&gt;
-</span><span class='line'>    &lt;title type="html"&gt;&lt;![CDATA[A Better Way to Organize Swift Classes]]&gt;&lt;/title&gt;
-</span><span class='line'>    &lt;link href="http://blog.flaviocaetano.com/post/a-better-way-to-organize-swift-classes/"/&gt;
-</span><span class='line'>    &lt;updated&gt;2016-04-08T16:36:53-03:00&lt;/updated&gt;
-</span><span class='line'>    &lt;id&gt;http://blog.flaviocaetano.com/post/a-better-way-to-organize-swift-classes&lt;/id&gt;
-</span><span class='line'>    &lt;content type="html"&gt;&lt;![CDATA[&lt;p&gt;<blockquote><p></span><span class='line'>Code organization is a matter of hygiene<br/></span><span class='line'></p><footer><strong>Mattt Thompson</strong> <cite><a href='http://nshipster.com/pragma/#organizing-your-code'>nshipster.com/pragma/&hellip;</a></cite></footer></blockquote>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;Having a clean, organized code means that anyone can easily maintain it. There
-</span><span class='line'>will be no hassles when trying to read and understand it. Being able to rapidly
-</span><span class='line'>find a method based on it’s scope is a gift. So I thought I’d show you my way of
-</span><span class='line'>organizing properties and methods within a class.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;!-- more --&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h2 id="always-use-mark"&gt;Always use MARK&lt;/h2&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;If you don’t use the source navigator to browse through your classes’ methods,
-</span><span class='line'>you’re doing it wrong.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;&lt;a href="/images/swift-organization/scope-grouping.png" target="_blank"&gt;&lt;img src="/images/swift-organization/scope-grouping.png" alt="Scope Grouping" /&gt;&lt;/a&gt;&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;Absolutely &lt;strong&gt;always&lt;/strong&gt; use &lt;code&gt;// MARK:&lt;/code&gt; to segment your code. Use it followed by hyphen to separate your
-</span><span class='line'>extensions and without it to separate your code logic. Use mark to separate your
-</span><span class='line'>properties from your methods. You may also use it to group your methods by their scope. Use
-</span><span class='line'>comments to group your properties by their meaning.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;&lt;img src="/images/swift-organization/mark.png" alt="// MARK:" /&gt;&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h2 id="properties-and-overridden-methods-go-first"&gt;Properties And Overridden Methods Go First&lt;/h2&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;One of the most important things of a subclass is knowing how it differs from its
-</span><span class='line'>parent, therefore, what should come first in your class file are your class’
-</span><span class='line'>properties and overridden methods.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;``` swift
-</span><span class='line'>class UserTableViewCell: UITableViewCell {
-</span><span class='line'>  var user: UserViewModel! {
-</span><span class='line'>    didSet {
-</span><span class='line'>      setupUser()
-</span><span class='line'>    }
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;// MARK: Outlets&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;@IBOutlet private weak var titleLabel: UILabel!&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;// MARK: - Overridden Methods&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;override func prepareForReuse() {
-</span><span class='line'>    super.prepareForReuse()&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;cleanUp()   } } ```
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;Using this organization methodology, it’d be of great advantage if we could declare
-</span><span class='line'>properties in class extensions, however, since it’s not possible for obvious reasons,
-</span><span class='line'>all your properties must be declared inside the class declaration.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h2 id="put-your-public-methods-in-an-extension"&gt;Put Your Public Methods In An Extension&lt;/h2&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;Right after your class declaration, add an extension to implement your public
-</span><span class='line'>methods. That will make clear that they’re not protocol nor private methods.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;``` swift
-</span><span class='line'>// MARK: - Public Methods
-</span><span class='line'>extension UserTableViewCell {
-</span><span class='line'>  // View Manipulation
-</span><span class='line'>  func disable() {
-</span><span class='line'>    alpha = 0.3
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;func select() {
-</span><span class='line'>    backgroundColor = UIColor.greenColor()
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;// MARK: Update User
-</span><span class='line'>  func setUserStatus(status: UserStatus) {
-</span><span class='line'>    user.status = status
-</span><span class='line'>    backgroundColor = UIColor.blueColor()
-</span><span class='line'>  }
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure></p>
+```
+There you go. We have successfully drilled a wormhole through Swift’s fabric, all the way to Objective-C’s dynamic dispatch. There are limitations to this, of course. This is possible because our <code>Spaceship</code> class is a subclass of NSObject. Make it a root class, and our universe falls apart.</p>
 
-<h2 id="use-extensions-for-implementing-protocols">Use Extensions For Implementing Protocols</h2>
+<p>Unfortunately, if you try and make <code>travel(to:)</code> generic, you’ll be using a Swift-only feature, which means you’re not exploiting the ObjC bridge.</p>
 
-<p>This way you’re automatically grouping methods by their scope. Also, thanks to
-Swift compiler, this way it’s easier to navigate through errors.</p>
-
-<p><a href="/images/swift-organization/delegate-error.png" target="_blank"><img src="/images/swift-organization/delegate-error.png" alt="Protocol Errors" /></a></p>
-
-<h2 id="leave-your-private-methods-last">Leave Your Private Methods Last</h2>
-
-<p>Put your helpers and private methods in the last extension of the file. This way
-you can scroll directly to the bottom to add a new method and you’ll know exactly
-where to look at when searching for a helper method. Again: don’t forget to group
-the methods by what they do.</p>
-
-<p>``` swift
-// MARK: - Private Methods
-extension PromotedUsersTableViewCell {
-  // Resource Methods
-  private func loadUser() {
-    UserResource.load() { user in
-      self.user = user
-    }
-  }</p>
-
-<p>private func loadMoreStuff() {
-    // Load it
-  }</p>
-
-<pre><code>// MARK: View Setup   private func setupUser() {
-titleLabel.text = user.name
-backgroundColor = UIColor.whiteColor()   } } ```
-</code></pre>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>I hope this makes your code as clear as possible. Since I’ve started doing this,
-I never have to scroll through a class looking for some method or property. Honestly,
-few things get me more upset than random properties thrown around some class.</p>
-
-<p>If you have any suggestions to this organization methodology, let me know. The
-cleaner the better.</p>
+<p>So go ahead and do all the things you shouldn’t, though you can, even if it’s a bit <em>hacky</em>.</p>
 ]]></content>
   </entry>
   

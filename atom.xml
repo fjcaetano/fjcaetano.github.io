@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-01-29T15:17:12-02:00</updated>
+  <updated>2018-02-27T15:48:00-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Handling Frames in an AutoLayout Universe]]></title>
+    <link href="http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe/"/>
+    <updated>2018-02-27T15:20:08-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe</id>
+    <content type="html"><![CDATA[<p>As frameworks improves, as our knowledge of it, we should leave <a target="\_blank" href="http://blog.flaviocaetano.com/post/autolayout-is-hell-on-earth/">our prejudices</a>
+in the past. It is without question that AutoLayout has become much beloved and
+necessary as it moves forward. Its API has improved so drastically as to discard
+the need for third-party libraries.</p>
+
+<p>However, as far as AutoLayout has progressed, it may still be simpler to handle
+frames in some cases. But how to join both worlds without colliding them and
+throwing a bunch of warnings in your console? Or worst: in your IB…</p>
+
+<!-- more -->
+
+<h2 id="customize-layoutsubviews">Customize <code>layoutSubviews</code></h2>
+
+<p>Depending on the simplicity of what you want to achieve, implementing your own
+version of <code>layoutSubviews</code> without relying on the SDK can be simple and effective:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="kr">override</span> <span class="k">func</span> <span class="nf">layoutSubviews</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">_</span> <span class="o">=</span> <span class="n">subviews</span><span class="p">.</span><span class="n">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CGFloat</span> <span class="k">in</span>
+</span><span class="line">        <span class="k">let</span> <span class="n">size</span> <span class="o">=</span> <span class="n">view</span><span class="p">.</span><span class="n">intrinsicContentSize</span>
+</span><span class="line">        <span class="n">view</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="bp">CGRect</span><span class="p">(</span>
+</span><span class="line">            <span class="nl">origin</span><span class="p">:</span> <span class="bp">CGPoint</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span>
+</span><span class="line">            <span class="nl">size</span><span class="p">:</span> <span class="n">size</span><span class="p">)</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">maxX</span> <span class="o">+</span> <span class="n">Constants</span><span class="p">.</span><span class="n">spacing</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="adopting-intrinsiccontentsize">Adopting <code>intrinsicContentSize</code></h2>
+
+<p>As you may have noticed in the example above, by overriding <code>intrinsicContentSize</code>
+you can have a view that defines its own size without depending on constraints
+or content.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="kr">override</span> <span class="k">var</span> <span class="nl">intrinsicContentSize</span><span class="p">:</span> <span class="bp">CGSize</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">isExpanded</span> <span class="o">?</span> <span class="n">Constants</span><span class="p">.</span><span class="nl">expandedSize</span> <span class="p">:</span> <span class="n">Constants</span><span class="p">.</span><span class="n">regularSize</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Btw, it’s animatable 💖</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Simplest Throttle/Debounce You'll Ever See]]></title>
@@ -1443,114 +1503,6 @@ had to do was to set the <code>mimetype</code> so Django could provide the file
 
 <p>All you have to do is replace the <code>$PODNAME</code> with the name of the pod you want.
 Simple and easy, isn’t it? Use it at will! And suport the Github repo!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Documentation and Objective-C (Part 1)]]></title>
-    <link href="http://blog.flaviocaetano.com/post/documentation-and-objective-c/"/>
-    <updated>2013-05-24T16:18:54-03:00</updated>
-    <id>http://blog.flaviocaetano.com/post/documentation-and-objective-c</id>
-    <content type="html"><![CDATA[<p>This is an article I originally wrote for the brazilian online magazine
-<a href="http://www.devmedia.com.br/aprenda-a-documentar-seus-projetos-em-objective-c-revista-mobile-magazine-48/27964">DevMedia’s Mobile Magazine</a>.
-This first part is the article’s introduction, so seat back and relax. Soon I’ll
-post the second - and final - part with a tutorial to the Apple like
-documentation generator <a href="http://gentlebytes.com/appledoc/">appledoc</a>.</p>
-
-<p>“In the agile programming environment, using methodologies such as SCRUM, Agile
-and Lean, we can’t always document our sources. After all, pragmatics as we
-developers are, why would we lose time if the documentation won’t be compiled,
-won’t do any difference in the code’s performance and demands a considerable
-slice of our time? But despite all that, the lack of documentation hurts. A lot.</p>
-
-<p>Who’s familiarised, knows that in the ultra accelerated rhythm of <em>startups</em>,
-where everything is at the top of the list, there’s not always time to apply
-some of the good programming technics that aren’t crucial to the sanity and
-speed of the code. Oftenly, there’s no time to formally test classes and methods
-because of the virtually null due time that is given. It’s easy to find
-developers awake all night in <em>hackatons</em> to successfully deliver <em>that key</em>
-feature that will make “the whole difference”. Test? Document? Review? There’s
-so much to do and so little time!</p>
-
-<p>That’s the reality of many young developers who enter this ultra competitive
-environment searching for the dream of running their own companies. The
-responsibilty of satisfying potential investors, the pressure for deploys and
-the client’s needs frequently obfuscate technics that improve development and
-maintenance experiences, but that are not considered primordial to the
-construction of an application. How often didn’t I went back to an undocumented
-code done less than two months before and thought “<em>what the flock does this
-loop do?</em>” or “<em>why, on earth, is this class here and not there?</em>” Of course,
-when those lines of code were written, everything made perfect sense, but the
-moment those <em>ifs</em> and <em>fors</em> went out of the conscious mind, their meaning were
-long gone. After all, quoting the chinese saying: “<em>the ink is better than memory</em>”.</p>
-
-<p>So let us document. It doesn’t hurt, doesn’t make you fat and isn’t illegal.
-Actually, documenting is like eating vegetables: no one really likes it, but we
-do it hopping that, in the end, it’s worth the result. But unlike the vegetables,
-it’s proved that documenting helps. Contrary to the common thought, the time
-spent documenting a day’s work is reasonably irrelevant and the benefit in return
-is definitely worthy. With practice and experience, no more than 30 minutes can
-be lost documenting everything that was made in a whole day. That way, the
-developer stays focused in his activity and doesn’t deviates doing other stuff
-that draws his attention or stand in his way of writing the best possible
-algorithm. Therefore, don’t wait until the end of the week, when the work pile
-up, part of the features were already forgotten and we’re all dying to that
-ice-cold friday-night-beer. Personally, I recommend documenting in the end of
-the day. In my case, it’s always the last thing I do before leaving, because
-everything is still fresh in memory and the amount of code produced in one day
-doesn’t compare to what’s done in one week. If that’s not enough, I realised
-that I do a final unconscious revision before the final <em>commit</em> when I’m
-passing by the code documenting it.</p>
-
-<p>A well documented code is good for everybody. What would be of us without the
-independent frameworks, packages and repositories used daily if they weren’t
-documented, or even had a bad documentation? Even senior programmers, frequently,
-return to Apple’s documentation to a better understanding of Cocoa’s classes.
-Whether consulting a less used protocol, or lower level functions to manage
-<em>sockets</em>, <em>threads</em> or <em>semaphores</em>. Nobody can remember everything, so don’t
-try it, you’re not an elephant. It’s not rare to find developers who use the
-documentation as a last resource to understanding some tool. This line of thought
-makes sense if we think that we want everything to be as explained as possible
-so we don’t lose any time trying to interpretate any possible use, when trying
-to comprehend some feature. But we must never forget that even when visiting
-forums, asking more experienced developers or reading articles in blogs,
-EVERYTHING had a documentation as basis. Well, even this article wouldn’t exist
-if wasn’t for <a href="http://gentlebytes.com/appledoc/">appledoc</a>’s documentation.</p>
-
-<p>Documenting - or at least commenting - source codes is fundamental to the
-intelligibility of the code. Implementing these technics with developers that
-never done it, oftenly is seen with prejudice and suspicion that are common to
-the staunch and stubborn nature of young programmers. I must confess that I
-didn’t wanted to document when people first told me to. Moreover, because of
-it’s so unusual syntax, it’s interesting to verbalize what’s developed in ObjC
-to ease it’s lecture, specially by more unexperienced programmers.</p>
-
-<p>As time goes by, with the expansion of the <em>startup</em>, the pressure and need of
-code documentation is felt. Contrary to many programming languages - such as
-Java with it’s hideous GUI Javadoc - Objective-C doesn’t have an “official”
-documentation generator. In our <em>quest</em> to find a differentiated framework, which
-could make us feel as if we were really making difference, we found the excellent
-<a href="http://gentlebytes.com/appledoc/">appledoc</a> that, using code comments <em>à la</em>
-Javadoc, generates Apple like documentation, with a docset <em>automagically</em>
-installed in XCode, static HTML sources which can be uploaded to a cloud (<em>vide</em> 
-<a href="http://fjcaetano.github.io/NSStringMask/1.1.2/">NSStringMask</a> which uses
-<a href="http://gentlebytes.com/appledoc/">appledoc</a>) and an interface identical to Cocoa’s.</p>
-
-<p>Among <a href="http://gentlebytes.com/appledoc/">appledoc</a>)’s already described advantages,
-are also the documentation parsing through code comments, wich allow the developer
-to consult the documentation without the need of opening a new window, since
-everything is in the code. The integration with XCode allows the visualisation of
-tooltips with quick access to the documentation by simply holding the <em>Option</em>
-key and clicking a method or class. Moreover, by “compiling” <a href="http://gentlebytes.com/appledoc/">appledoc</a>)
-in your documented project, the library’s docset is already imported to your
-<em>Organizer</em>. Simple or not? But, undoubtedly, <a href="http://gentlebytes.com/appledoc/">appledoc</a>)’s
-main advantage is it’s interface that’s identical to Apple’s documentation. I
-think it’s very unlikely that there’s any ObjC developer that has never read
-Cocoa’s documentation, be the one embedded on XCode or the on in Apples developers
-portal. By reusing the known model, it terminates the problem of having to
-familiarise to a new layout.”</p>
-
-<p>Soon I’ll be posting the second part with a tutorial.</p>
 ]]></content>
   </entry>
   
