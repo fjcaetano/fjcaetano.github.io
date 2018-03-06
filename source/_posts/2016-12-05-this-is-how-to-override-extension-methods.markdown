@@ -25,7 +25,7 @@ It sucks, but it makes sense that you can't override stuff from extensions. Or c
 
 <!-- more -->
 
-### Why you shouldn't?
+### Why you shouldn't
 
 Extensions, as the name already says, are supposed to extend/add/include methods to an existing implementation, making them one of the most beautiful things about Objective-C, and now Swift, since you can add code to a class or framework you do not own. Therefore, it makes sense that you're not supposed to "replace" code in extensions, conceptually speaking. That's why the compiler complains when you try to do it.
 
@@ -35,7 +35,7 @@ But there is an exception. Objective-C is a very dynamic language. While Swift a
 class Spaceship: NSObject { }
 
 extension Spaceship {
-    func travel(to destination: SpaceTimeLocation) {
+    @objc func travel(to destination: SpaceTimeLocation) {
         // TODO: move across universe till we eventualy get there, if we ever do...
     }
 }
@@ -54,3 +54,11 @@ There you go. We have successfully drilled a wormhole through Swift's fabric, al
 Unfortunately, if you try and make `travel(to:)` generic, you'll be using a Swift-only feature, which means you're not exploiting the ObjC bridge.
 
 So go ahead and do all the things you shouldn't, though you can, even if it's a bit *hacky*.
+
+### Update
+
+On Swift 3 you need to define your method as ObjC compliant using `@objc`.
+(Thanks [@bgondim][])
+
+[@bgondim]: https://twitter.com/bgondim
+{:target="\_blank"}
