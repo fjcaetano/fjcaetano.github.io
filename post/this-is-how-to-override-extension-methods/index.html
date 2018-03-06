@@ -148,7 +148,7 @@
 
 <!-- more -->
 
-<h3 id="why-you-shouldnt">Why you shouldn’t?</h3>
+<h3 id="why-you-shouldnt">Why you shouldn’t</h3>
 
 <p>Extensions, as the name already says, are supposed to extend/add/include methods to an existing implementation, making them one of the most beautiful things about Objective-C, and now Swift, since you can add code to a class or framework you do not own. Therefore, it makes sense that you’re not supposed to “replace” code in extensions, conceptually speaking. That’s why the compiler complains when you try to do it.</p>
 
@@ -173,7 +173,7 @@
 </pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="k">class</span> <span class="nl">Spaceship</span><span class="p">:</span> <span class="bp">NSObject</span> <span class="p">{</span> <span class="p">}</span>
 </span><span class="line">
 </span><span class="line"><span class="k">extension</span> <span class="n">Spaceship</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">func</span> <span class="n">travel</span><span class="p">(</span><span class="n">to</span> <span class="nl">destination</span><span class="p">:</span> <span class="n">SpaceTimeLocation</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="p">@</span><span class="n">objc</span> <span class="k">func</span> <span class="n">travel</span><span class="p">(</span><span class="n">to</span> <span class="nl">destination</span><span class="p">:</span> <span class="n">SpaceTimeLocation</span><span class="p">)</span> <span class="p">{</span>
 </span><span class="line">        <span class="c1">// TODO: move across universe till we eventualy get there, if we ever do...</span>
 </span><span class="line">    <span class="p">}</span>
 </span><span class="line"><span class="p">}</span>
@@ -192,6 +192,12 @@
 <p>Unfortunately, if you try and make <code>travel(to:)</code> generic, you’ll be using a Swift-only feature, which means you’re not exploiting the ObjC bridge.</p>
 
 <p>So go ahead and do all the things you shouldn’t, though you can, even if it’s a bit <em>hacky</em>.</p>
+
+<h3 id="update">Update</h3>
+
+<p>On Swift 3 you need to define your method as ObjC compliant using <code>@objc</code>.
+(Thanks <a target="\_blank" href="https://twitter.com/bgondim">@bgondim</a>)</p>
+
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#swift" title="Pages tagged swift" class="tag">swift</a></span>
