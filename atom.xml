@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-03-06T17:20:00-03:00</updated>
+  <updated>2018-03-12T18:03:28-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -253,10 +253,10 @@ loaded. You truly need to create your snapshots after the <code>containerView</c
     <link href="http://blog.flaviocaetano.com/post/recaptcha-reaches-1-dot-0/"/>
     <updated>2017-11-13T15:04:44-02:00</updated>
     <id>http://blog.flaviocaetano.com/post/recaptcha-reaches-1-dot-0</id>
-    <content type="html"><![CDATA[<p>With the new Swift 4 support, <a target="\_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> has finally reached a stable release!
-Now you can safely use Google’s <a target="\_blank" href="https://developers.google.com/recaptcha/docs/invisible">Invisible ReCaptcha</a> in your app!</p>
+    <content type="html"><![CDATA[<p>With the new Swift 4 support, <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> has finally reached a stable release!
+Now you can safely use Google’s <a target="_blank" href="https://developers.google.com/recaptcha/docs/invisible">Invisible ReCaptcha</a> in your app!</p>
 
-<p>Using the JS API, <a target="\_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> tries to validate the challenge automatically and
+<p>Using the JS API, <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> tries to validate the challenge automatically and
 retrieve a token, however, if the API can’t ensure the user is human, a challenge
 may be presented.</p>
 
@@ -267,7 +267,7 @@ may be presented.</p>
 
 <h2 id="setup">Setup</h2>
 
-<p>Register a new site to use <strong>Invisible reCaptcha</strong> at the <a target="\_blank" href="https://www.google.com/recaptcha/admin">admin page</a>. Make sure
+<p>Register a new site to use <strong>Invisible reCaptcha</strong> at the <a target="_blank" href="https://www.google.com/recaptcha/admin">admin page</a>. Make sure
 to add correct domain owned by you or your company!</p>
 
 <p>This will return you two keys: a <em>Site key</em> and a <em>Secret key</em>. The former is the
@@ -283,8 +283,8 @@ check the Invisible reCAPTCHA option when creating your <a href="https://www.goo
 
 <h4 id="installation">Installation</h4>
 
-<p>You can install <a target="\_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> using <a target="\_blank" href="https://cocoapods.org/">CocoaPods</a>, <a target="\_blank" href="https://github.com/Carthage/Carthage">Carthage</a> or as a submodule.
-The library comes with a <a target="\_blank" href="https://github.com/ReactiveX/RxSwift">RxSwift</a> extension.</p>
+<p>You can install <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> using <a target="_blank" href="https://cocoapods.org/">CocoaPods</a>, <a target="_blank" href="https://github.com/Carthage/Carthage">Carthage</a> or as a submodule.
+The library comes with a <a target="_blank" href="https://github.com/ReactiveX/RxSwift">RxSwift</a> extension.</p>
 
 <h5 id="cocoapods">CocoaPods</h5>
 
@@ -324,7 +324,7 @@ the parameters will override the values in the <code>Info.plist</code>.</p>
 
 <p>Before starting the validation, you must call the <code>configureWebView(_:)</code> method.
 This is for when the webview needs to be presented for the user to complete the
-<a target="\_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> challenge. If this method is not called, the validation may fail.</p>
+<a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> challenge. If this method is not called, the validation may fail.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -349,7 +349,7 @@ validation is not possible.</p>
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">recaptcha</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="nl">on</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="nb">self</span><span class="p">]</span> <span class="p">(</span><span class="nl">result</span><span class="p">:</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">ReCaptchaError</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">in</span>
+</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">recaptcha</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="nl">on</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="nb">self</span><span class="p">]</span> <span class="p">(</span><span class="nl">result</span><span class="p">:</span> <span class="n">ReCaptchaResult</span><span class="p">)</span> <span class="k">in</span>
 </span><span class="line">    <span class="n">print</span><span class="p">(</span><span class="n">try</span><span class="o">?</span> <span class="n">result</span><span class="p">.</span><span class="n">dematerialize</span><span class="p">())</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
@@ -358,13 +358,14 @@ validation is not possible.</p>
 hierarchy, its bounds must be valid and it can’t be marked as <code>hidden</code>. This view
 will contain the ReCaptcha webview as a subview.</p>
 
-<p>By default, <a target="\_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> won’t remove the webview from its superview, so it may
+<p>By default, <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> won’t remove the webview from its superview, so it may
 be interesting to have some clean up after the closure is called.</p>
 
 <h3 id="error-handling">Error Handling</h3>
 
-<p><a target="\_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> may throw you some errors if incorrectly configured or when execution
-fails.</p>
+<p><a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> may throw you some errors if incorrectly configured or when execution
+fails. In any case, you can always try calling <code>recaptcha.reset()</code> on errors or
+providing <code>resetOnError: true</code> to the <code>validate</code> method.</p>
 
 <ul>
   <li><code>ReCaptchaError.htmlLoadError</code>: If by some reason, the library’s bundle is
@@ -377,15 +378,15 @@ Either set a <code>ReCaptchaDomain</code> entry in the app’s <code>Info.plist<
 argument to <code>ReCaptcha</code>’s init.</li>
   <li><code>ReCaptchaError.wrongMessageFormat</code>: This means the JS context provided an
 unexpected message to the API. Shouldn’t happen, so, if it does, be sure to
-<a target="\_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
+<a target="_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
   <li><code>ReCaptchaError.unexpected(Error)</code>: 💩 happens ¯\_(ツ)_/¯. The only moment this
 error could be thrown is if JavaScript sends an error. Shouldn’t happen, but if
-it does, don’t be shy and <a target="\_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
+it does, don’t be shy and <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
 </ul>
 
 <h2 id="firewall-bypass">Firewall bypass</h2>
 
-<p>If your firewall is blocking Google’s ReCaptcha, or if you’re behind the <a target="\_blank" href="https://en.wikipedia.org/wiki/Great_Firewall">Great
+<p>If your firewall is blocking Google’s ReCaptcha, or if you’re behind the <a target="_blank" href="https://en.wikipedia.org/wiki/Great_Firewall">Great
 Firewall of China</a>, you may use an alternate endpoint for the JS API that points
 to <code>https://www.recaptcha.net/recaptcha/api.js</code>:</p>
 
@@ -393,11 +394,9 @@ to <code>https://www.recaptcha.net/recaptcha/api.js</code>:</p>
 </pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">try</span> <span class="n">ReCaptcha</span><span class="p">(</span><span class="nl">endpoint</span><span class="p">:</span> <span class="p">.</span><span class="n">alternate</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>The default value for the <code>endpoint</code> parameter points the API to <code>https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit</code></p>
+<p>The default value for the <code>endpoint</code> parameter points the API to <code>https://www.google.com/recaptcha/api.js</code></p>
 
-<h2 id="documentation">Documentation</h2>
-
-<p>The full documentation is available <a href="http://fjcaetano.github.io/ReCaptcha" target="\_blank">here</a>.</p>
+<h2 id="full-documentation"><strong><a target="_blank" style="text-decoration:underline" href="http://fjcaetano.github.io/ReCaptcha">Full Documentation</a></strong></h2>
 
 ]]></content>
   </entry>
