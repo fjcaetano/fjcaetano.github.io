@@ -99,7 +99,7 @@ validation is not possible.
 To start the validation, _per se_, you must call the `validate(on:)` method.
 
 ``` swift
-recaptcha.validate(on: view) { [weak self] (result: Result<String, ReCaptchaError>) in
+recaptcha.validate(on: view) { [weak self] (result: ReCaptchaResult) in
     print(try? result.dematerialize())
 }
 ```
@@ -114,7 +114,8 @@ be interesting to have some clean up after the closure is called.
 ### Error Handling
 
 [ReCaptcha][] may throw you some errors if incorrectly configured or when execution
-fails.
+fails. In any case, you can always try calling `recaptcha.reset()` on errors or
+providing `resetOnError: true` to the `validate` method.
 
 - `ReCaptchaError.htmlLoadError`: If by some reason, the library's bundle is
 unreachable, the template HTML won't be loaded.
@@ -141,25 +142,25 @@ to `https://www.recaptcha.net/recaptcha/api.js`:
 try ReCaptcha(endpoint: .alternate)
 ```
 
-The default value for the `endpoint` parameter points the API to `https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit`
+The default value for the `endpoint` parameter points the API to `https://www.google.com/recaptcha/api.js`
 
-## Documentation
-
-The full documentation is available [here](http://fjcaetano.github.io/ReCaptcha){:target="\_blank"}.
+## __[Full Documentation][]__
 
 [ReCaptcha]: https://github.com/fjcaetano/ReCaptcha
-{:target="\_blank"}
+{:target="_blank"}
 [Invisible ReCaptcha]: https://developers.google.com/recaptcha/docs/invisible
-{:target="\_blank"}
+{:target="_blank"}
 [admin page]: https://www.google.com/recaptcha/admin
-{:target="\_blank"}
+{:target="_blank"}
 [CocoaPods]: https://cocoapods.org/
-{:target="\_blank"}
+{:target="_blank"}
 [Carthage]: https://github.com/Carthage/Carthage
-{:target="\_blank"}
+{:target="_blank"}
 [RxSwift]: https://github.com/ReactiveX/RxSwift
-{:target="\_blank"}
+{:target="_blank"}
 [open an issue]: https://github.com/fjcaetano/ReCaptcha/issues
-{:target="\_blank"}
+{:target="_blank"}
 [Great Firewall of China]: https://en.wikipedia.org/wiki/Great_Firewall
-{:target="\_blank"}
+{:target="_blank"}
+[Full Documentation]: http://fjcaetano.github.io/ReCaptcha
+{:target="_blank" style="text-decoration:underline"}
