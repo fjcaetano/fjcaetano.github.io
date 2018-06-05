@@ -41,10 +41,11 @@ class NameButton extends React.PureComponent {
 
 class NameScreen extends React.Component {
     render() {
-        return <NameButton
-            name={this.props.name}
-            onPress={this.handleNamePress}
-        />;
+        return
+            <NameButton
+                name={this.props.name}
+                onPress={this.handleNamePress}
+            />;
     }
 }
 
@@ -66,11 +67,35 @@ const Role = ({ name, age, address, permissions: { isAdmin } }) => (
     ...
     <Profile profile={{ name, age, address, isAdmin }} />
 );
+
+const User = ({ name, age, permissions }) => (
+    <Role name={name} age={age} permissions={permissions} />
+    ...
+);
+
+export default connect(selector)(User);
 ```
 {% endraw %}
 
 In the example above, `Profile` will be rendered everytime, even if the props don't change. Instead,
-it'd be ideal if `Role` received the `profile` object ready to be passed down to `Profile` instead.
+it'd be ideal if `Role` received the `profile` object all the way down from the selector, ready to
+be passed down to `Profile` instead.
+
+```js
+const Role = ({ profile }) => (
+    ...
+    <Profile profile={profile} />
+);
+
+const User = ({ profile }) => (
+    <Role profile={profile} />
+    ...
+);
+
+export default connect(selector)(User);
+```
+
+Bare in mind that the value returned by `selector` changed to better accomodate our props.
 
 ## Arrow Functions Are Objects
 
