@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bash | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/bash/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-06-05T18:25:17-03:00</updated>
+  <updated>2018-06-05T18:54:38-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -56,39 +56,7 @@ xcodebuild -target ImageFilters -configuration ${CONFIGURATION} -sdk iphonesimul
 
 <p>So after fixing <code>xcodebuild</code>’s parameters to work with workspaces (and running the correct scheme), now all I had to do was combine (<code>lipo</code>) the product of the Archive with the product of the build I just did and, finally, export it to the correct location. This is the final script:</p>
 
-<p><div><script src='https://gist.github.com/16bc1f84981262f911d7.js'></script>
-<noscript><pre><code>#!/bin/sh
-
-exec &gt; /tmp/${PROJECT_NAME}_archive.log 2&gt;&amp;1
-
-UNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal
-
-if [ &quot;true&quot; == ${ALREADYINVOKED:-false} ]
-then
-echo &quot;RECURSION: Detected, stopping&quot;
-else
-export ALREADYINVOKED=&quot;true&quot;
-
-# make sure the output directory exists
-mkdir -p &quot;${UNIVERSAL_OUTPUTFOLDER}&quot;
-
-echo &quot;Building for iPhoneSimulator&quot;
-xcodebuild -workspace &quot;${WORKSPACE_PATH}&quot; -scheme &quot;${SCHEME_NAME}&quot; -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=&quot;${BUILD_DIR}&quot; BUILD_ROOT=&quot;${BUILD_ROOT}&quot; clean build &gt; /dev/null
-
-# Step 1. Copy the framework structure (from iphoneos build) to the universal folder
-echo &quot;Copying to output folder&quot;
-cp -R &quot;${ARCHIVE_PRODUCTS_PATH}${INSTALL_PATH}/${FULL_PRODUCT_NAME}&quot; &quot;${UNIVERSAL_OUTPUTFOLDER}/&quot;
-
-# Step 2. Create universal binary file using lipo and place the combined executable in the copied framework directory
-echo &quot;Combining executables&quot;
-lipo -create -output &quot;${UNIVERSAL_OUTPUTFOLDER}/${EXECUTABLE_PATH}&quot; &quot;${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${EXECUTABLE_PATH}&quot; &quot;${ARCHIVE_PRODUCTS_PATH}${INSTALL_PATH}/${EXECUTABLE_PATH}&quot;
-
-# Step 3. Convenience step to copy the framework to the project&#39;s directory
-echo &quot;Copying to project dir&quot;
-yes | cp -Rf &quot;${UNIVERSAL_OUTPUTFOLDER}/${FULL_PRODUCT_NAME}&quot; &quot;${ARCHIVE_PRODUCTS_PATH}${INSTALL_PATH}&quot;
-
-fi</code></pre></noscript></div>
-</p>
+<p>{% gist 16bc1f84981262f911d7 %}</p>
 
 <p>As you can see, on step 3 I move the universal build to the archive product path. So when I export the archive after Xcode’s Organizer shows up, the final product already has the universal build:</p>
 

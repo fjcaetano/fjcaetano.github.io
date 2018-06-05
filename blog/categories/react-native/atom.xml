@@ -4,7 +4,7 @@
   <title><![CDATA[Category: React-native | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/react-native/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-06-05T18:25:17-03:00</updated>
+  <updated>2018-06-05T18:54:38-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Tips to Avoid Rerendering React-Native Components]]></title>
-    <link href="http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe/"/>
+    <link href="http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components/"/>
     <updated>2018-06-05T17:30:00-03:00</updated>
-    <id>http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe</id>
+    <id>http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components</id>
     <content type="html"><![CDATA[<p>Building a production-ready fully architectured React-Native app means sending and updating lots of
 props to your components. This means the <code>shouldUpdate -&gt; render -&gt; didUpdate</code> flow gets called a
 lot. Here are a few steps on how to optimize your components to avoid rerendering unnecessarily.</p>
@@ -67,24 +67,48 @@ isn’t because it gets its props from a selector.</p>
 <code>render()</code> method, when the interpreter compares it against the previous object, it will detect an
 inequallity which will cause your component to rerender.</p>
 
-<p>
-<code>js
+<p>{% raw %}
+```js
 const Role = ({ name, age, address, permissions: { isAdmin } }) =&gt; (
-    ...
+    …
     &lt;Profile profile={{ name, age, address, isAdmin }} /&gt;
-);
-</code>
-</p>
+);</p>
+
+<p>const User = ({ name, age, permissions }) =&gt; (
+    &lt;Role name={name} age={age} permissions={permissions} /&gt;
+    …
+);</p>
+
+<p>export default connect(selector)(User);
+```
+{% endraw %}</p>
 
 <p>In the example above, <code>Profile</code> will be rendered everytime, even if the props don’t change. Instead,
-it’d be ideal if <code>Role</code> received the <code>profile</code> object ready to be passed down to <code>Profile</code> instead.</p>
+it’d be ideal if <code>Role</code> received the <code>profile</code> object all the way down from the selector, ready to
+be passed down to <code>Profile</code> instead.</p>
+
+<p>```js
+const Role = ({ profile }) =&gt; (
+    …
+    &lt;Profile profile={profile} /&gt;
+);</p>
+
+<p>const User = ({ profile }) =&gt; (
+    &lt;Role profile={profile} /&gt;
+    …
+);</p>
+
+<p>export default connect(selector)(User);
+```</p>
+
+<p>Bare in mind that the value returned by <code>selector</code> changed to better accomodate our props.</p>
 
 <h2 id="arrow-functions-are-objects">Arrow Functions Are Objects</h2>
 
 <p>It’s easy to forget that arrow (anonymous) functions are objects too, so when you create a new one
 in your <code>render()</code> method, you’re doing the same as above.</p>
 
-<p>
+<p>{% raw %}
 <code>js
 const PictureButton = ({ pictureURL }) =&gt; (
     &lt;TouchableHighlight
@@ -96,7 +120,7 @@ const PictureButton = ({ pictureURL }) =&gt; (
     &lt;/TouchableHighlight&gt;
 );
 </code>
-</p>
+{% endraw %}</p>
 
 <p>In this example, <code>TouchableHighlight</code> is always receiving a new function object, regardless of it
 being hardcoded. In this case, we should have a method to handle pressing and pass it down like
