@@ -2,6 +2,10 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe/</loc>
+<lastmod>2018-06-05T17:30:00-03:00</lastmod>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe/</loc>
 <lastmod>2018-02-27T15:20:08-03:00</lastmod>
 </url>
 <url>
@@ -152,5 +156,23 @@
 </url>
 <url>
 <loc>http://blog.flaviocaetano.com/blog/categories/fastlane/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/blog/categories/react-native/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/post/2/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/post/3/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/post/4/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/post/5/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/post/6/</loc>
 </url>
 </urlset>

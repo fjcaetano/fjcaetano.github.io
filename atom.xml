@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-03-12T18:03:28-03:00</updated>
+  <updated>2018-06-05T18:25:17-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,193 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tips to Avoid Rerendering React-Native Components]]></title>
+    <link href="http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe/"/>
+    <updated>2018-06-05T17:30:00-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe</id>
+    <content type="html"><![CDATA[<p>Building a production-ready fully architectured React-Native app means sending and updating lots of
+props to your components. This means the <code>shouldUpdate -&gt; render -&gt; didUpdate</code> flow gets called a
+lot. Here are a few steps on how to optimize your components to avoid rerendering unnecessarily.</p>
+
+<!-- more -->
+
+<h2 id="use-pure-components">Use Pure Components</h2>
+
+<p>Pure components are, much like pure functions, components that always produce the same output, given
+an input. This usually means no input side-effects, i.e., no selectors, no fetching props that were
+not passed by its parent, <em>etcetera</em>.</p>
+
+<p>You can tag your components for this performance optimization either by using stateless components
+(with arrow functions), or by extending <code>React.PureComponent</code>. <code>FlatList</code> and <code>SectionList</code> are some
+examples of vanilla React-Native pure components.</p>
+
+<p>Being pure means the component is optimized to only be rendered when its input changes. In other
+words, if the props don’t change, the component won’t be rerendered.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">NameComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/Text&gt;;</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">class</span> <span class="nx">NameButton</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">PureComponent</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">NameComponent</span> <span class="nx">name</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">class</span> <span class="nx">NameScreen</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">NameButton</span>
+</span><span class="line">            <span class="nx">name</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span>
+</span><span class="line">            <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleNamePress</span><span class="p">}</span>
+</span><span class="line">        <span class="o">/&gt;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">selector</span><span class="p">)(</span><span class="nx">NameScreen</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In the example above, both <code>NameComponent</code> and <code>NameButton</code> are pure components, while <code>NameScreen</code>
+isn’t because it gets its props from a selector.</p>
+
+<h2 id="dont-create-objects-within-render">Don’t Create Objects Within <code>render</code></h2>
+
+<p>Pure components check for shallow equality of their props, therefore, if you create an object in your
+<code>render()</code> method, when the interpreter compares it against the previous object, it will detect an
+inequallity which will cause your component to rerender.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">Role</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">address</span><span class="p">,</span> <span class="nx">permissions</span><span class="o">:</span> <span class="p">{</span> <span class="nx">isAdmin</span> <span class="p">}</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+</span><span class="line">    <span class="p">...</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="nx">Profile</span> <span class="nx">profile</span><span class="o">=</span><span class="p">{{</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">address</span><span class="p">,</span> <span class="nx">isAdmin</span> <span class="p">}}</span> <span class="o">/&gt;</span>
+</span><span class="line"><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In the example above, <code>Profile</code> will be rendered everytime, even if the props don’t change. Instead,
+it’d be ideal if <code>Role</code> received the <code>profile</code> object ready to be passed down to <code>Profile</code> instead.</p>
+
+<h2 id="arrow-functions-are-objects">Arrow Functions Are Objects</h2>
+
+<p>It’s easy to forget that arrow (anonymous) functions are objects too, so when you create a new one
+in your <code>render()</code> method, you’re doing the same as above.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">PictureButton</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">pictureURL</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="nx">TouchableHighlight</span>
+</span><span class="line">        <span class="nx">onPress</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class="line">            <span class="c1">// Did press picture</span>
+</span><span class="line">        <span class="p">}}</span>
+</span><span class="line">    <span class="o">&gt;</span>
+</span><span class="line">        <span class="o">&lt;</span><span class="nx">Image</span> <span class="nx">source</span><span class="o">=</span><span class="p">{{</span> <span class="nx">uri</span><span class="o">:</span> <span class="nx">pictureURL</span> <span class="p">}}</span> <span class="o">/&gt;</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="err">/TouchableHighlight&gt;</span>
+</span><span class="line"><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In this example, <code>TouchableHighlight</code> is always receiving a new function object, regardless of it
+being hardcoded. In this case, we should have a method to handle pressing and pass it down like
+<code>onPress={this.handlePicturePress}</code>.</p>
+
+<p>You may have also noticed that we’re sending a source object to <code>Image</code>. As described in the
+previous bullet, this is also troublesome. Maybe we need to revisit how <code>Image</code> receive its props.</p>
+
+<h2 id="avoid-render-handlers">Avoid Render Handlers</h2>
+
+<p>By render handlers, I mean methods that render components. When you have your <code>render()</code> calling
+other methods, it’s easy to get lost on the good practices mentioned above and end up with something
+you’d normally avoid if you were writing directly in it.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">class</span> <span class="nx">Profile</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">renderPicture</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class="line">        <span class="kr">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">uri</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">pictureURL</span> <span class="p">};</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">PictureButton</span> <span class="nx">image</span><span class="o">=</span><span class="p">{</span><span class="nx">source</span><span class="p">}</span><span class="o">/&gt;</span><span class="nx">l</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="p">(</span>
+</span><span class="line">            <span class="o">&lt;</span><span class="nx">View</span><span class="o">&gt;</span>
+</span><span class="line">                <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderPicture</span><span class="p">}</span>
+</span><span class="line">                <span class="o">&lt;</span><span class="nx">Button</span><span class="o">&gt;</span>
+</span><span class="line">            <span class="o">&lt;</span><span class="err">/View&gt;</span>
+</span><span class="line">        <span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It may look like we have fixed the <code>Image.source</code> issue, but we haven’t. That’s because we are
+creating a new <code>source</code> object everytime <code>renderPicture</code> gets called, which happens when <code>render()</code> gets
+called.</p>
+
+<p>However, avoiding this practice doesn’t mean you should never do it. One good exception to this rule
+is how to define a list’s item renderer. Since we should absolutely never use arrow functions, this
+renderer should be defined as a handler:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">class</span> <span class="nx">ObjectList</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">renderItem</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">item</span> <span class="p">})</span> <span class="o">=&gt;</span>
+</span><span class="line">        <span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">title</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/Text&gt;;</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">FlatList</span> <span class="nx">renderItem</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderItem</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<hr />
+
+<p><em>These are just a few examples of good practices for writing components. The list is endless, if
+there’s anything you’d like to see here, comment below.</em></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Handling Frames in an AutoLayout Universe]]></title>
@@ -1427,87 +1614,6 @@ invention, but, as usual, Apple’s “this is what we want, so deal with it” 
 doesn’t give us any alternatives. Instead of easing developers’ work, they’re
 making our daily lives every more difficult while <del>Android scores another
 point</del> Apple is walking backwards.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Cocoapod Badges]]></title>
-    <link href="http://blog.flaviocaetano.com/post/cocoapod-badges/"/>
-    <updated>2013-06-03T16:15:45-03:00</updated>
-    <id>http://blog.flaviocaetano.com/post/cocoapod-badges</id>
-    <content type="html"><![CDATA[<p>In any kind of environment, visual marks ease and enhance the comprehension of
-information. Countless researches studied the best way to display data, which
-colors induce what emotions, the association of geometric shapes with pre-formed
-concepts. The fact is that a sign or plaque draws much more attention than plain
-text. After all, an image is worth a thousand words, therefore, an image sends a
-much more significant message than some written words.</p>
-
-<p>That’s one of the reasons many development tools have featured <em>badges</em> (or 
-<em>shields)</em> to inform the status of an application/framework/library/<em>etcetera</em>.
-It’s the case of <a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI</a>, 
-<a href="https://codeclimate.com/changelog/510d4fde56b102523a0004bf">Code Climate</a>, 
-<a href="http://blog.tech-angels.com/post/43141047457/gemnasium-v3-aka-gemnasium">Gemnasium</a>,
-among others, all following <a href="https://github.com/olivierlacan/shields">olivierlacan/shields`</a>
-trend, available Github.</p>
-
-<p>I’m an iOS developer and previously have worked with Python/Django (though I
-still fool around) and I’ve always found very interesting this creative way of
-sharing the state of a service dynamically, but sadly, there were no solution to
-Python nor iOS featuring <em>badges</em> (except for Travis CI for tests). But,
-recently, appeared - out of nowhere - <a href="https://pypip.in/">pypip’s</a> <em>shields</em> for
-Python packages that allows the visualisation of the latest available version of
-a package on <a href="http://pypi.python.org">pypi</a> or how many downloads some <em>release
-*had</em>.* When I came aware if it I resented for taking so long for solution so
-simple and effective to come up (or at least for <strong>I</strong> to discover it)… but it
-got over the top when I found out… or better, <strong>did not found out</strong> a similar
-solution for <a href="http://cocoapods.org">Cocoapods</a>.</p>
-
-<p>I’m one of those who doesn’t miss a chance to solve a problem and endeavour an
-opportunity. That’s how the <a href="http://fjcaetano.github.io/cocoapod-badges/">Cocoapod Badges</a> 
-project started. Since Cocoapods doesn’t provide an API, any info on the number
-of <em>users/downloads</em>, nor any kind of useful data, it proved to be a challenge,
-and all I could use had to be what was at hand: the latest version of a <em>pod</em>.
-But even though, mistaken are those who thought it easy. As mentioned, there’s
-no API!</p>
-
-<h1 id="cocoapod-badgesnsstringmask-112httpscocoapod-badgesherokuappcomvnsstringmaskbadgepng">Cocoapod Badges <img src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" alt="NSStringMask 1.1.2" /></h1>
-
-<p>Digging through Cocoapod’s and <a href="http://cocoadocs.org">Cocoadocs’</a> websites, I
-tried, first, to use the <a href="http://cocoadocs.org/documents.jsonp">documents.jsonp</a> 
-file that I found in the <em>source</em> of the <em>pod</em>’s documentation website, however,
-I soon gave up for realising that its update frequency is too high (above one
-hour). At last, I had to content with the unfortunate <code>/search?q=</code> requested
-when searching for a <em>pod</em> in Cocoapod’s main page. At first, it looked like an
-excellent solution since it returned a <code>json</code> object with some info, until I
-realised that inside the object was a string with some <code>html</code> code and only
-inside that code was the <em>pod</em>’s latest version. “<em>God dammit!</em>” Now I have to
-run a request on a “pseudo-<em>webservice</em>” and parse it with <code>XPATH</code> to get the
-latest version!</p>
-
-<p>Super easy! But, as my mother would on a brazilian saying: “<em>few shit is
-silliness</em>”. The damned “API” doesn’t return the requested <em>pod</em>, but anything
-with the searched string. To get something more useful, I figured that 
-<code>/search?q=name:POD_NAME</code> searches only in the <em>pod</em>’s name and not in its
-description, what significantly reduces the results, specially when dealing with
-popular <em>pods</em> such as <a href="http://afnetworking.github.io/AFNetworking/index.html">AFNetworking</a>.</p>
-
-<p>After all that suffering, I finally got the information I wanted, but then, how
-do I show it in an image? Olivier Lacan’s repo, that enabled all the existing 
-<em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code>.SVG</code> vectorial
-files that render <code>xml</code> data to images. So, accidentally, I double-clicked the 
-<code>.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news!
-As the information about the version is in plain text inside the <code>xml</code>, all I
-had to do was to set the <code>mimetype</code> so Django could provide the file as an image.</p>
-
-<p>1 <a href="http://heroku.com">Heroku</a> <em>dyno</em> later and the service is available fulltime
-(depending on Cocoapods website) through the images’ url:</p>
-
-<blockquote>
-  <p><code>http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></p>
-</blockquote>
-
-<p>All you have to do is replace the <code>$PODNAME</code> with the name of the pod you want.
-Simple and easy, isn’t it? Use it at will! And suport the Github repo!</p>
 ]]></content>
   </entry>
   
