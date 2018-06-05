@@ -1,0 +1,446 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+
+<head>
+
+
+<meta charset="utf-8">
+<meta http-equiv="cleartype" content="on">
+
+<title>Tips to Avoid Rerendering React-Native Components - License to Kill -9</title>
+<meta name="author" content="Flávio Caetano">
+
+
+
+
+<meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+
+<meta name="keywords" content="react-native ">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Twitter Cards -->
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/images/abstract-11.jpg"
+  
+  <meta name="twitter:title" content="Tips To Avoid Rerendering React-Native Components">
+  <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+  <meta name="twitter:creator" content="@flavio_caetano">
+
+
+<!-- Open Graph -->
+<meta property="og:local" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components">
+<meta property="og:title" content="Tips To Avoid Rerendering React-Native Components">
+<meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+
+  <meta property="og:image" content="/images/abstract-11.jpg">
+
+<meta property="og:site_name" content="License to Kill -9">
+
+<link rel="canonical" href="http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components">
+<link href="/favicon.png" rel="icon">
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+
+
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body id="post" class="feature">
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="https://secure.gravatar.com/avatar/3b339db885930633b86d73b97a2ca1c0?s=175" alt="Flávio Caetano photo" class="author-photo">
+					<h4>Flávio Caetano</h4>
+					<p>Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.</p>
+				</li>
+				
+				<li>
+					<a href="mailto:flavio@vieiracaetano.com"><i class="fa fa-envelope"></i> Email</a>
+				</li>
+				<li>
+					<a href="https://twitter.com/flavio_caetano"><i class="fa fa-twitter"></i> Twitter</a>
+				</li>
+				
+				<li>
+					<a href="https://github.com/fjcaetano"><i class="fa fa-github"></i> GitHub</a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/in/flavio-vieira-caetano-8267851a/"><i class="fa fa-linkedin"></i> LinkedIn</a>
+				</li>
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="/archives/">Archives</a></li>
+				<li><a href="/categories/">All Categories</a></li>
+			</ul>
+		</li>
+		
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+<div class="entry-header">
+  
+  <div class="entry-image">
+    <img src="/images/abstract-11.jpg" alt="Tips To Avoid Rerendering React-Native Components">
+  </div><!-- /.entry-image -->
+</div><!-- /.entry-header -->
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="/post/tips-to-avoid-rerendering-react-native-components/" rel="bookmark" title="Tips To Avoid Rerendering React-Native Components">Tips to Avoid Rerendering React-Native Components</a></h1>
+        
+        <h2>June 05, 2018</h2>
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+
+      
+
+      <p>Building a production-ready fully architectured React-Native app means sending and updating lots of
+props to your components. This means the <code>shouldUpdate -&gt; render -&gt; didUpdate</code> flow gets called a
+lot. Here are a few steps on how to optimize your components to avoid rerendering unnecessarily.</p>
+
+<!-- more -->
+
+<h2 id="use-pure-components">Use Pure Components</h2>
+
+<p>Pure components are, much like pure functions, components that always produce the same output, given
+an input. This usually means no input side-effects, i.e., no selectors, no fetching props that were
+not passed by its parent, <em>etcetera</em>.</p>
+
+<p>You can tag your components for this performance optimization either by using stateless components
+(with arrow functions), or by extending <code>React.PureComponent</code>. <code>FlatList</code> and <code>SectionList</code> are some
+examples of vanilla React-Native pure components.</p>
+
+<p>Being pure means the component is optimized to only be rendered when its input changes. In other
+words, if the props don’t change, the component won’t be rerendered.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">NameComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/Text&gt;;</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">class</span> <span class="nx">NameButton</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">PureComponent</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">NameComponent</span> <span class="nx">name</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">class</span> <span class="nx">NameScreen</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span>
+</span><span class="line">            <span class="o">&lt;</span><span class="nx">NameButton</span>
+</span><span class="line">                <span class="nx">name</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span>
+</span><span class="line">                <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleNamePress</span><span class="p">}</span>
+</span><span class="line">            <span class="o">/&gt;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">selector</span><span class="p">)(</span><span class="nx">NameScreen</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In the example above, both <code>NameComponent</code> and <code>NameButton</code> are pure components, while <code>NameScreen</code>
+isn’t because it gets its props from a selector.</p>
+
+<h2 id="dont-create-objects-within-render">Don’t Create Objects Within <code>render</code></h2>
+
+<p>Pure components check for shallow equality of their props, therefore, if you create an object in your
+<code>render()</code> method, when the interpreter compares it against the previous object, it will detect an
+inequallity which will cause your component to rerender.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">Role</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">address</span><span class="p">,</span> <span class="nx">permissions</span><span class="o">:</span> <span class="p">{</span> <span class="nx">isAdmin</span> <span class="p">}</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="nx">Profile</span> <span class="nx">profile</span><span class="o">=</span><span class="p">{{</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">address</span><span class="p">,</span> <span class="nx">isAdmin</span> <span class="p">}}</span> <span class="o">/&gt;</span>
+</span><span class="line"><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">const</span> <span class="nx">User</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">permissions</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="nx">Role</span> <span class="nx">name</span><span class="o">=</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span> <span class="nx">age</span><span class="o">=</span><span class="p">{</span><span class="nx">age</span><span class="p">}</span> <span class="nx">permissions</span><span class="o">=</span><span class="p">{</span><span class="nx">permissions</span><span class="p">}</span> <span class="o">/&gt;</span>
+</span><span class="line"><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">selector</span><span class="p">)(</span><span class="nx">User</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In the example above, <code>Profile</code> will be rendered everytime, even if the props don’t change. Instead,
+it’d be ideal if <code>Role</code> received the <code>profile</code> object all the way down from the selector, ready to
+be passed down to <code>Profile</code> instead.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">Role</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">profile</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="nx">Profile</span> <span class="nx">profile</span><span class="o">=</span><span class="p">{</span><span class="nx">profile</span><span class="p">}</span> <span class="o">/&gt;</span>
+</span><span class="line"><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">const</span> <span class="nx">User</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">profile</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="nx">Role</span> <span class="nx">profile</span><span class="o">=</span><span class="p">{</span><span class="nx">profile</span><span class="p">}</span> <span class="o">/&gt;</span>
+</span><span class="line"><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kr">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">selector</span><span class="p">)(</span><span class="nx">User</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Bare in mind that the value returned by <code>selector</code> changed to better accomodate our props.</p>
+
+<h2 id="arrow-functions-are-objects">Arrow Functions Are Objects</h2>
+
+<p>It’s easy to forget that arrow (anonymous) functions are objects too, so when you create a new one
+in your <code>render()</code> method, you’re doing the same as above.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">PictureButton</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">pictureURL</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="nx">TouchableHighlight</span>
+</span><span class="line">        <span class="nx">onPress</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class="line">            <span class="c1">// Did press picture</span>
+</span><span class="line">        <span class="p">}}</span>
+</span><span class="line">    <span class="o">&gt;</span>
+</span><span class="line">        <span class="o">&lt;</span><span class="nx">Image</span> <span class="nx">source</span><span class="o">=</span><span class="p">{{</span> <span class="nx">uri</span><span class="o">:</span> <span class="nx">pictureURL</span> <span class="p">}}</span> <span class="o">/&gt;</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="err">/TouchableHighlight&gt;</span>
+</span><span class="line"><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In this example, <code>TouchableHighlight</code> is always receiving a new function object, regardless of it
+being hardcoded. In this case, we should have a method to handle pressing and pass it down like
+<code>onPress={this.handlePicturePress}</code>.</p>
+
+<p>You may have also noticed that we’re sending a source object to <code>Image</code>. As described in the
+previous bullet, this is also troublesome. Maybe we need to revisit how <code>Image</code> receive its props.</p>
+
+<h2 id="avoid-render-handlers">Avoid Render Handlers</h2>
+
+<p>By render handlers, I mean methods that render components. When you have your <code>render()</code> calling
+other methods, it’s easy to get lost on the good practices mentioned above and end up with something
+you’d normally avoid if you were writing directly in it.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">class</span> <span class="nx">Profile</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">renderPicture</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class="line">        <span class="kr">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">uri</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">pictureURL</span> <span class="p">};</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">PictureButton</span> <span class="nx">image</span><span class="o">=</span><span class="p">{</span><span class="nx">source</span><span class="p">}</span><span class="o">/&gt;</span><span class="nx">l</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="p">(</span>
+</span><span class="line">            <span class="o">&lt;</span><span class="nx">View</span><span class="o">&gt;</span>
+</span><span class="line">                <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderPicture</span><span class="p">}</span>
+</span><span class="line">                <span class="o">&lt;</span><span class="nx">Button</span><span class="o">&gt;</span>
+</span><span class="line">            <span class="o">&lt;</span><span class="err">/View&gt;</span>
+</span><span class="line">        <span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It may look like we have fixed the <code>Image.source</code> issue, but we haven’t. That’s because we are
+creating a new <code>source</code> object everytime <code>renderPicture</code> gets called, which happens when <code>render()</code> gets
+called.</p>
+
+<p>However, avoiding this practice doesn’t mean you should never do it. One good exception to this rule
+is how to define a list’s item renderer. Since we should absolutely never use arrow functions, this
+renderer should be defined as a handler:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">class</span> <span class="nx">ObjectList</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">renderItem</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">item</span> <span class="p">})</span> <span class="o">=&gt;</span>
+</span><span class="line">        <span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">title</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/Text&gt;;</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">FlatList</span> <span class="nx">renderItem</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderItem</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<hr />
+
+<p><em>These are just a few examples of good practices for writing components. The list is endless, if
+there’s anything you’d like to see here, comment below.</em></p>
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="/categories/#react-native" title="Pages tagged react-native" class="tag">react-native</a></span>
+        <span><a href="/post/tips-to-avoid-rerendering-react-native-components/" rel="bookmark" title="Tips To Avoid Rerendering React-Native Components">Tips To Avoid Rerendering React-Native Components</a> was published on <span class="entry-date date published updated"><time datetime="2018-06-05T17:30:00-03:00">June 05, 2018</time></span></span>
+        
+        <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
+        <div class="social-share">
+          <ul class="socialcount socialcount-small inline-list">
+            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+            <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+          </ul>
+        </div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    
+      <div class="read-more">
+        
+          <div class="read-more-header">
+            <a href="/post/handling-frames-in-an-autolayout-universe/" class="btn">Read More</a>
+          </div><!-- /.read-more-header -->
+          <div class="read-more-content">
+            <h3><a href="/post/handling-frames-in-an-autolayout-universe/" title="Handling Frames In An AutoLayout Universe">Handling Frames In An AutoLayout Universe</a></h3>
+            <p>As frameworks improves, as our knowledge of it, we should leave our prejudicesin the past. It is without question that AutoLayout has &hellip;&hellip; <a href="/post/handling-frames-in-an-autolayout-universe/"> Continue reading</a></p>
+          </div><!-- /.read-more-content -->
+        
+        <div class="read-more-list">
+          
+            <div class="list-item">
+              <h4><a href="/post/the-simplest-throttle-slash-debounce-youll-ever-see/" title="The Simplest Throttle/Debounce You'll Ever See">The Simplest Throttle/Debounce You'll Ever See</a></h4>
+              <span>Published on January 11, 2018</span>
+            </div><!-- /.list-item -->
+          
+            <div class="list-item">
+              <h4><a href="/post/protip-uiviewcontrolleranimatedtransitioning-plus-snapshots/" title="Protip: UIViewControllerAnimatedTransitioning + snapshots">Protip: UIViewControllerAnimatedTransitioning + snapshots</a></h4>
+              <span>Published on December 05, 2017</span>
+            </div><!-- /.list-item -->
+          
+        </div><!-- /.read-more-list -->
+      </div><!-- /.read-more -->
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2018 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/javascripts/octopress.js" type="text/javascript"></script>
+<script src="/javascripts/scripts.min.js"></script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36605430-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'flaviocaetanoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components/';
+        var disqus_url = 'http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+</body>
+</html>

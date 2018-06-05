@@ -4,7 +4,7 @@
   <title><![CDATA[Category: React-native | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/react-native/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-06-05T18:54:38-03:00</updated>
+  <updated>2018-06-05T19:20:33-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -37,7 +37,7 @@ examples of vanilla React-Native pure components.</p>
 <p>Being pure means the component is optimized to only be rendered when its input changes. In other
 words, if the props don’t change, the component won’t be rerendered.</p>
 
-<p>``` js
+<p>```js
 const NameComponent = ({ name }) =&gt; <Text>{name}</Text>;</p>
 
 <p>class NameButton extends React.PureComponent {
@@ -48,15 +48,17 @@ const NameComponent = ({ name }) =&gt; <Text>{name}</Text>;</p>
 
 <p>class NameScreen extends React.Component {
     render() {
-        return &lt;NameButton
-            name={this.props.name}
-            onPress={this.handleNamePress}
-        /&gt;;
+        return
+            &lt;NameButton
+                name={this.props.name}
+                onPress={this.handleNamePress}
+            /&gt;;
     }
 }</p>
 
-<p>export default connect(selector)(NameScreen);
-```</p>
+<p>export default connect(selector)(NameScreen);</p>
+
+<p>```</p>
 
 <p>In the example above, both <code>NameComponent</code> and <code>NameButton</code> are pure components, while <code>NameScreen</code>
 isn’t because it gets its props from a selector.</p>
@@ -67,39 +69,50 @@ isn’t because it gets its props from a selector.</p>
 <code>render()</code> method, when the interpreter compares it against the previous object, it will detect an
 inequallity which will cause your component to rerender.</p>
 
-<p>{% raw %}
-```js
+<p></p>
+
+<p>```js
 const Role = ({ name, age, address, permissions: { isAdmin } }) =&gt; (
-    …
     &lt;Profile profile={{ name, age, address, isAdmin }} /&gt;
 );</p>
 
 <p>const User = ({ name, age, permissions }) =&gt; (
     &lt;Role name={name} age={age} permissions={permissions} /&gt;
-    …
 );</p>
 
 <p>export default connect(selector)(User);
-```
-{% endraw %}</p>
-
-<p>In the example above, <code>Profile</code> will be rendered everytime, even if the props don’t change. Instead,
-it’d be ideal if <code>Role</code> received the <code>profile</code> object all the way down from the selector, ready to
-be passed down to <code>Profile</code> instead.</p>
-
-<p>```js
-const Role = ({ profile }) =&gt; (
-    …
-    &lt;Profile profile={profile} /&gt;
-);</p>
-
-<p>const User = ({ profile }) =&gt; (
-    &lt;Role profile={profile} /&gt;
-    …
-);</p>
-
-<p>export default connect(selector)(User);
-```</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;In the example above, &lt;code&gt;Profile&lt;/code&gt; will be rendered everytime, even if the props don’t change. Instead,
+</span><span class='line'>it’d be ideal if &lt;code&gt;Role&lt;/code&gt; received the &lt;code&gt;profile&lt;/code&gt; object all the way down from the selector, ready to
+</span><span class='line'>be passed down to &lt;code&gt;Profile&lt;/code&gt; instead.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```js
+</span><span class='line'>const Role = ({ profile }) =&gt; (
+</span><span class='line'>    &lt;Profile profile={profile} /&gt;
+</span><span class='line'>);&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;const User = ({ profile }) =&gt; (
+</span><span class='line'>    &lt;Role profile={profile} /&gt;
+</span><span class='line'>);&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;export default connect(selector)(User);</span></code></pre></td></tr></table></div></figure></p>
 
 <p>Bare in mind that the value returned by <code>selector</code> changed to better accomodate our props.</p>
 
@@ -108,7 +121,7 @@ const Role = ({ profile }) =&gt; (
 <p>It’s easy to forget that arrow (anonymous) functions are objects too, so when you create a new one
 in your <code>render()</code> method, you’re doing the same as above.</p>
 
-<p>{% raw %}
+<p>
 <code>js
 const PictureButton = ({ pictureURL }) =&gt; (
     &lt;TouchableHighlight
@@ -120,7 +133,7 @@ const PictureButton = ({ pictureURL }) =&gt; (
     &lt;/TouchableHighlight&gt;
 );
 </code>
-{% endraw %}</p>
+</p>
 
 <p>In this example, <code>TouchableHighlight</code> is always receiving a new function object, regardless of it
 being hardcoded. In this case, we should have a method to handle pressing and pass it down like

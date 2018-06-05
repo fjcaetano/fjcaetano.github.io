@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Objective-c | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/objective-c/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-06-05T18:54:38-03:00</updated>
+  <updated>2018-06-05T19:20:33-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -77,22 +77,18 @@ for (UIView *subview in view.subviews)
 with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple’s docs</a>.
 (Remember to use the same <code>reuseIdentifier</code>).</p>
 
-<p>{% highlight objc %}
-[self.collectionView registerClass:nil
-        forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-               withReuseIdentifier:kHEADER_IDENTIFIER];
-{% endhighlight %}</p>
+<p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nl">registerClass</span><span class="p">:</span><span class="nb">nil</span>
+        <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span>
+               <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div></p>
 
 <!-- more -->
 
 <p>But don’t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
 
-<p>{% highlight objc %}
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    return CGSizeZero;
-}
-{% endhighlight %}</p>
+<p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">CGSizeZero</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div></p>
 
 <p>Header or footer, depending on your need.</p>
 ]]></content>
@@ -124,15 +120,13 @@ reason: ‘Could not load NIB in bundle:&lt;{PATH_TO_APP}&gt; (loaded)’ with n
 <p>The obvious solution that wasn’t listed anywhere is using the Cocoapods
 generated bundle (which the folder actually doesn’t exist) as a <code>NSBundle</code>:</p>
 
-<p>{% highlight objc %}
-NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@”MyBundle” ofType:@”bundle”];</p>
+<p><div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="bp">NSString</span> <span class="o">*</span><span class="n">bundlePath</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="nl">pathForResource</span><span class="p">:@</span><span class="err">”</span><span class="n">MyBundle</span><span class="err">”</span> <span class="nl">ofType</span><span class="p">:@</span><span class="err">”</span><span class="n">bundle</span><span class="err">”</span><span class="p">];</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
-<p>NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];</p>
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="bp">NSBundle</span> <span class="o">*</span><span class="n">bundle</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSBundle</span> <span class="nl">bundleWithPath</span><span class="p">:</span><span class="n">bundlePath</span><span class="p">];</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
-<p>MyViewController *viewController = [[MyViewController alloc] initWithNibName:@”MyViewController” bundle:bundle];</p>
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">MyViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyViewController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithNibName</span><span class="p">:@</span><span class="err">”</span><span class="n">MyViewController</span><span class="err">”</span> <span class="nl">bundle</span><span class="p">:</span><span class="n">bundle</span><span class="p">];</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
-<p>[self.navigationController pushViewController:viewController animated:YES];
-{% endhighlight %}</p>
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController</span><span class="p">:</span><span class="n">viewController</span> <span class="nl">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span></code></pre></div></p>
 
 <p>Yes, it’s that simple, that obvious, though it’s not listed anywhere. I believe
 to be prudent and convenient to write about it in order to help anyone who
