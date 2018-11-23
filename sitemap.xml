@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://blog.flaviocaetano.com/post/redux-sucks-with-react-native/</loc>
+<lastmod>2018-11-23T18:21:27-02:00</lastmod>
+</url>
+<url>
 <loc>http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components/</loc>
 <lastmod>2018-06-05T17:30:00-03:00</lastmod>
 </url>

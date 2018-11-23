@@ -4,7 +4,7 @@
   <title><![CDATA[Category: React-native | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/react-native/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2018-06-05T19:20:33-03:00</updated>
+  <updated>2018-11-23T19:04:33-02:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,83 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Redux Sucks With React-Native]]></title>
+    <link href="http://blog.flaviocaetano.com/post/redux-sucks-with-react-native/"/>
+    <updated>2018-11-23T18:21:27-02:00</updated>
+    <id>http://blog.flaviocaetano.com/post/redux-sucks-with-react-native</id>
+    <content type="html"><![CDATA[<p>Redux is hugely widespread as <strong>the</strong> architecture for React and React-Native projects. Its
+decoupled nature combined with immutability ensures a truly functional application, when used
+correctly. Yes, that’s all true.</p>
+
+<p>Redux starts to sound weird when we try to figure out where actions may be used. Specially when your
+project has wrappers and HOCs, which might mean actions definitions may not be where they’re
+actually used.</p>
+
+<!-- more -->
+
+<h3 id="an-ios-analogy">An iOS Analogy</h3>
+
+<p>An application that uses Redux is like an iOS app whose architecture is heavily based on
+communicating with <code>NSNotifications</code>: someone you don’t know who might be posting notifications that
+may be listened by other unknown parties. At any moment a new entity might start listening to posted
+notifications and might also start posting them. To be honest, it’s too decoupled for my taste, if
+that’s even possible at all.</p>
+
+<p>It is beautiful in theory. However, for real world applications I haven’t seen a project where I
+didn’t struggle to find dispatchers or listeners at some point.</p>
+
+<h3 id="its-worse-for-react-native">It’s worse for React-Native</h3>
+
+<p>The “JavaScript realm” in React-Native runs in a JS VM in the native context, which are
+single-threaded. Yes, this means all of the JS code in a React-Native application runs in a single
+thread. There are separate threads for shadowing and UI updates, which still have to run in the main
+queue, but not JS code.</p>
+
+<p>This means that each Redux action that is dispatched is listened by every single reducer in a single
+thread of your application. Competing with other JS code like your components or data processing.
+Yes, you might not think so, but your app does data processing: think about your selectors or
+chewing data from your API.</p>
+
+<p>That’s not pretty. Or performant. You have to be very mindful of which actions you’re dispatching
+and where you listen to them. Remember that multiple reducers might read a single action.</p>
+
+<h3 id="it-gets-worse-if-youre-using-redux-sagas">It gets worse if you’re using Redux-sagas</h3>
+
+<p>Redux-saga is a middleware for Redux that, poorly speaking, allow an action to trigger a function
+instead of mutating your global state. A saga might also have a side-effect that dispatches new
+actions.</p>
+
+<p>Think about that.</p>
+
+<blockquote>
+  <p>An action that <em>dispatches</em> new actions.</p>
+</blockquote>
+
+<p>If that’s not the definition of a nightmare, I don’t know what is.</p>
+
+<p>Don’t get me wrong, Redux and Redux-sagas are beautiful and may be good solutions for web
+development, they just don’t work for mobile applications. You may be thinking that they do work
+because there are multiple cases in the market, but then you’re missing the concept of “work”: it’s
+not just a matter of being possible and execution. It’s also scaling. <strong>Redux does not scale.</strong></p>
+
+<p>I’ve seen applications with over 120 reducers and over 150 routes. Can you imagine how the dispatch
+log looks for an app that size? Do you think it’s performant? Does the application lag?</p>
+
+<p>I’ll leave it to you to induce those answers.</p>
+
+<h3 id="what-then">What then?</h3>
+
+<p>I’m yet to find a performant architecture to write function applications in React-Native. If we find
+a way to instantiate multiple JS VMs and have them communicating; or if Apple releases a
+multi-threaded VM. Both solutions would vastly improve the performance of React-Native apps overall,
+whether or not they’re using Redux.</p>
+
+<p>In the current state of the art, the best alternative is to keep writing imperative applications for
+React-Native projects. Research an architecture that best suits your application and go with it.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tips to Avoid Rerendering React-Native Components]]></title>
