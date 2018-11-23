@@ -30,7 +30,7 @@ examples of vanilla React-Native pure components.
 Being pure means the component is optimized to only be rendered when its input changes. In other
 words, if the props don't change, the component won't be rerendered.
 
-``` js
+```js
 const NameComponent = ({ name }) => <Text>{name}</Text>;
 
 class NameButton extends React.PureComponent {
@@ -50,6 +50,7 @@ class NameScreen extends React.Component {
 }
 
 export default connect(selector)(NameScreen);
+
 ```
 
 In the example above, both `NameComponent` and `NameButton` are pure components, while `NameScreen`
@@ -62,15 +63,14 @@ Pure components check for shallow equality of their props, therefore, if you cre
 inequallity which will cause your component to rerender.
 
 {% raw %}
+
 ```js
 const Role = ({ name, age, address, permissions: { isAdmin } }) => (
-    ...
     <Profile profile={{ name, age, address, isAdmin }} />
 );
 
 const User = ({ name, age, permissions }) => (
     <Role name={name} age={age} permissions={permissions} />
-    ...
 );
 
 export default connect(selector)(User);
@@ -83,13 +83,11 @@ be passed down to `Profile` instead.
 
 ```js
 const Role = ({ profile }) => (
-    ...
     <Profile profile={profile} />
 );
 
 const User = ({ profile }) => (
     <Role profile={profile} />
-    ...
 );
 
 export default connect(selector)(User);
