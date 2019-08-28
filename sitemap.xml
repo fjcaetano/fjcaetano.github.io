@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://blog.flaviocaetano.com/post/react-hook-hooker/</loc>
+<lastmod>2019-08-28T18:36:39-03:00</lastmod>
+</url>
+<url>
 <loc>http://blog.flaviocaetano.com/post/an-easier-way-to-record-ios-gifs/</loc>
 <lastmod>2019-07-30T10:56:44-03:00</lastmod>
 </url>
@@ -170,5 +174,14 @@
 </url>
 <url>
 <loc>http://blog.flaviocaetano.com/blog/categories/ios/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/blog/categories/hoc/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/blog/categories/hooks/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/blog/categories/compose/</loc>
 </url>
 </urlset>

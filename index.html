@@ -133,6 +133,144 @@
 
 <header>
   
+    <a href="https://github.com/fjcaetano/react-hook-hooker" target="_blank"><img class="github-ribbon" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+  
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
+      <time datetime="2019-08-28T18:36:39-03:00">
+        <a href="/post/react-hook-hooker/">August 28, 2019</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/react-hook-hooker/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/post/react-hook-hooker/" rel="bookmark" title="A Better Hooker to Your Hooks" itemprop="url">A Better Hooker to Your Hooks</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>Hey, I just wanted to share with you that I built a nifty little HOC to connect a hook to a
+component and receive its returned value as props. This helps cleanup your Function Components since
+you can split your states and effects into multiple hooks and simplify your code.</p>
+
+<p>Imagine you have the following component:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="nx">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">try</span> <span class="p">{</span>
+</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">      <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">},</span> <span class="p">[]);</span>
+</span><span class="line">
+</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class="line">  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">return</span> <span class="p">(</span>
+</span><span class="line">    <span class="o">&lt;&gt;</span>
+</span><span class="line">      <span class="p">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderError</span> <span class="nx">error</span><span class="o">=</span><span class="p">{</span><span class="nx">error</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">}</span>
+</span><span class="line">      <span class="p">{</span><span class="nx">isLoading</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="o">/&gt;</span><span class="p">}</span>
+</span><span class="line">      <span class="p">{</span><span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderResult</span> <span class="nx">result</span><span class="o">=</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span><span class="o">&gt;</span><span class="p">}</span>
+</span><span class="line">      <span class="o">&lt;</span><span class="nx">Counter</span>
+</span><span class="line">        <span class="nx">count</span><span class="o">=</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span>
+</span><span class="line">        <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressCount</span><span class="p">}</span>
+</span><span class="line">      <span class="o">/&gt;</span>
+</span><span class="line">      <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressButton</span><span class="p">}</span> <span class="o">/&gt;</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="err">/&gt;</span>
+</span><span class="line">  <span class="p">)</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The code may look as clean as possible, but it could be better organized, and this is how you can do
+that.</p>
+
+
+  
+  
+    <footer>
+      <a class="btn" rel="full-article" href="/post/react-hook-hooker/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
+    </footer>
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  
     <a href="https://github.com/fjcaetano/ios-simulator-gif" target="_blank"><img class="github-ribbon" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
   
   <div class="entry-meta">
@@ -339,63 +477,6 @@ throwing a bunch of warnings in your console? Or worst: in your IB…</p>
   
     <footer>
       <a class="btn" rel="full-article" href="/post/handling-frames-in-an-autolayout-universe/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
-    </footer>
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  
-    <a href="https://gist.github.com/fjcaetano/ff3e994c4edb4991ab8280f34994beb4" target="_blank"><img class="github-ribbon" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
-  
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2018-01-11T11:12:28-02:00">
-        <a href="/post/the-simplest-throttle-slash-debounce-youll-ever-see/">January 11, 2018</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/post/the-simplest-throttle-slash-debounce-youll-ever-see/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/post/the-simplest-throttle-slash-debounce-youll-ever-see/" rel="bookmark" title="The Simplest Throttle/Debounce You'll Ever See" itemprop="url">The Simplest Throttle/Debounce You'll Ever See</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>One of these days I needed a <em>debounce</em> on Swift to ensure some block of code
-would only be executed once in a period of time. <em>Debounces</em> are quite simple so
-I implemented a first draft of it.</p>
-
-<p>Not long after that, I also needed a <em>throttle</em> to skip repetitive calls to a
-different block of code. Not too different from a <em>debouce</em>, but not quite the
-same.</p>
-
-
-  
-  
-    <footer>
-      <a class="btn" rel="full-article" href="/post/the-simplest-throttle-slash-debounce-youll-ever-see/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
     </footer>
   
 </div><!-- /.entry-content -->
