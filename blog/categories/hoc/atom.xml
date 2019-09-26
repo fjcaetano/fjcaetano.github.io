@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Hoc | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/hoc/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-08-28T18:38:34-03:00</updated>
+  <updated>2019-09-26T11:42:49-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[A Better Hooker to Your Hooks]]></title>
+    <title type="html"><![CDATA[Hooking Your Hooks]]></title>
     <link href="http://blog.flaviocaetano.com/post/react-hook-hooker/"/>
     <updated>2019-08-28T18:36:39-03:00</updated>
     <id>http://blog.flaviocaetano.com/post/react-hook-hooker</id>
@@ -72,9 +72,9 @@ that.</p>
 
 <!-- more -->
 
-<h2 id="introducing-hooker">Introducing Hooker</h2>
+<h2 id="introducing-hooked">Introducing Hooked</h2>
 
-<p>Hooker is a HOC that sends props to a hook as argument and return its value as props to the
+<p>Hooked is a HOC that sends props to a hook as argument and return its value as props to the
 component. This way we can separate the previous component into two custom hooks:</p>
 
 <p>```js
@@ -140,8 +140,8 @@ const MyComponent = ({
 );</p>
 
 <p>const enhance = compose(
-  hooker(useButtonHandler),
-  hooker(useCounter),
+  hooked(useButtonHandler),
+  hooked(useCounter),
 );</p>
 
 <p>export default enhance(MyComponent);</p>
@@ -200,8 +200,8 @@ const useButtonHandler = ({ userId }) =&gt; {
 </code>js
 // MyComponent.js
 const enhance = compose(
-  hooker(useButtonHandler),
-  hooker(useCounter),
+  hooked(useButtonHandler),
+  hooked(useCounter),
 );</p>
 
 <p>```</p>
@@ -213,7 +213,7 @@ it doesn’t exist yet.</p>
 
 <h4 id="custom-argument-mapping">Custom argument mapping</h4>
 
-<p>By default, <code>hooker</code> passes through to the hook any props it receives, however, if you need custom
+<p>By default, <code>hooked</code> passes through to the hook any props it receives, however, if you need custom
 mapping of the props to arguments, you can send an optional function to do so:</p>
 
 <p>```js
@@ -234,19 +234,19 @@ const useCounter = isLoading =&gt; {
 </code>js
 // MyComponent.js
 const enhance = compose(
-  hooker(useButtonHandler),
-  hooker(useCounter, ({ isLoading }) =&gt; isLoading),
+  hooked(useButtonHandler),
+  hooked(useCounter, ({ isLoading }) =&gt; isLoading),
 );</p>
 
 <p>```</p>
 
 <p><code>useCounter</code> now receives <code>isLoading</code> directly as the only argument instead of receiving an object,
-so we had to map the props to that argument in our call to <code>hooker</code>.</p>
+so we had to map the props to that argument in our call to <code>hooked</code>.</p>
 
 <h2 id="typescript-">Typescript ❤️</h2>
 
-<p>If you’re awesome and use Typescript, you’ll be glad to know that <code>hooker</code> is fully compatible with
-Typescript. Actually, <code>hooker</code> was implemented considering Typescript as first-class citizen.</p>
+<p>If you’re awesome and use Typescript, you’ll be glad to know that <code>hooked</code> is fully compatible with
+Typescript. Actually, <code>hooked</code> was implemented considering Typescript as first-class citizen.</p>
 
 <p>Pro-tip: if you need to merge your props with the values returned by your hook, a good idea is to use
 Typescript’s build-in <code>ReturnType&lt;&gt;</code>:</p>
@@ -275,7 +275,7 @@ interface Props {
   …
 );</p>
 
-<p>export default hooker(useCounter)(MyComponent);</p>
+<p>export default hooked(useCounter)(MyComponent);</p>
 
 <p>```</p>
 ]]></content>

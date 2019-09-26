@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-08-28T18:38:34-03:00</updated>
+  <updated>2019-09-26T11:42:49-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[A Better Hooker to Your Hooks]]></title>
+    <title type="html"><![CDATA[Hooking Your Hooks]]></title>
     <link href="http://blog.flaviocaetano.com/post/react-hook-hooker/"/>
     <updated>2019-08-28T18:36:39-03:00</updated>
     <id>http://blog.flaviocaetano.com/post/react-hook-hooker</id>
@@ -109,9 +109,9 @@ that.</p>
 
 <!-- more -->
 
-<h2 id="introducing-hooker">Introducing Hooker</h2>
+<h2 id="introducing-hooked">Introducing Hooked</h2>
 
-<p>Hooker is a HOC that sends props to a hook as argument and return its value as props to the
+<p>Hooked is a HOC that sends props to a hook as argument and return its value as props to the
 component. This way we can separate the previous component into two custom hooks:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
@@ -234,8 +234,8 @@ to the component:</p>
 </span><span class="line"><span class="p">);</span>
 </span><span class="line">
 </span><span class="line"><span class="kr">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
-</span><span class="line">  <span class="nx">hooker</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
-</span><span class="line">  <span class="nx">hooker</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
+</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
+</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
 </span><span class="line"><span class="p">);</span>
 </span><span class="line">
 </span><span class="line"><span class="kr">export</span> <span class="k">default</span> <span class="nx">enhance</span><span class="p">(</span><span class="nx">MyComponent</span><span class="p">);</span>
@@ -330,8 +330,8 @@ it’s not loading:</p>
 <span class="line-number">5</span>
 </pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// MyComponent.js</span>
 </span><span class="line"><span class="kr">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
-</span><span class="line">  <span class="nx">hooker</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
-</span><span class="line">  <span class="nx">hooker</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
+</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
+</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
 </span><span class="line"><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
@@ -342,7 +342,7 @@ it doesn’t exist yet.</p>
 
 <h4 id="custom-argument-mapping">Custom argument mapping</h4>
 
-<p>By default, <code>hooker</code> passes through to the hook any props it receives, however, if you need custom
+<p>By default, <code>hooked</code> passes through to the hook any props it receives, however, if you need custom
 mapping of the props to arguments, you can send an optional function to do so:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
@@ -377,18 +377,18 @@ mapping of the props to arguments, you can send an optional function to do so:</
 <span class="line-number">5</span>
 </pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// MyComponent.js</span>
 </span><span class="line"><span class="kr">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
-</span><span class="line">  <span class="nx">hooker</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
-</span><span class="line">  <span class="nx">hooker</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">,</span> <span class="p">({</span> <span class="nx">isLoading</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">isLoading</span><span class="p">),</span>
+</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
+</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">,</span> <span class="p">({</span> <span class="nx">isLoading</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">isLoading</span><span class="p">),</span>
 </span><span class="line"><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p><code>useCounter</code> now receives <code>isLoading</code> directly as the only argument instead of receiving an object,
-so we had to map the props to that argument in our call to <code>hooker</code>.</p>
+so we had to map the props to that argument in our call to <code>hooked</code>.</p>
 
 <h2 id="typescript-">Typescript ❤️</h2>
 
-<p>If you’re awesome and use Typescript, you’ll be glad to know that <code>hooker</code> is fully compatible with
-Typescript. Actually, <code>hooker</code> was implemented considering Typescript as first-class citizen.</p>
+<p>If you’re awesome and use Typescript, you’ll be glad to know that <code>hooked</code> is fully compatible with
+Typescript. Actually, <code>hooked</code> was implemented considering Typescript as first-class citizen.</p>
 
 <p>Pro-tip: if you need to merge your props with the values returned by your hook, a good idea is to use
 Typescript’s build-in <code>ReturnType&lt;&gt;</code>:</p>
@@ -435,7 +435,7 @@ Typescript’s build-in <code>ReturnType&lt;&gt;</code>:</p>
 </span><span class="line">  <span class="p">...</span>
 </span><span class="line"><span class="p">);</span>
 </span><span class="line">
-</span><span class="line"><span class="kr">export</span> <span class="k">default</span> <span class="nx">hooker</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">)(</span><span class="nx">MyComponent</span><span class="p">);</span>
+</span><span class="line"><span class="kr">export</span> <span class="k">default</span> <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">)(</span><span class="nx">MyComponent</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
