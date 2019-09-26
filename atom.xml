@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-09-26T11:42:49-03:00</updated>
+  <updated>2019-09-26T16:16:26-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The Art of Coding]]></title>
+    <link href="http://blog.flaviocaetano.com/post/the-art-of-coding/"/>
+    <updated>2019-09-26T09:47:19-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/the-art-of-coding</id>
+    <content type="html"><![CDATA[<p>To excel in any kind of art you may use an infinity of materials, technics and tools to woven a
+final product. Some may study their craft their whole life in order to not only improve themselves,
+but also to create new materials, technics and tools to be used by forthcoming generations.</p>
+
+<p>To bake something as simple as a bread you need to choose the right wheat or even mix several kinds
+to make an unique blend. To ferment a dough, some breadmakers may use their own <em>levain</em> grown to
+perfection for years, others will use yeast, and some may even use baking powder. Then the breadmaker
+needs to work their dough spending hours shaping and reshaping and infusing it with herbs or other
+additives. Some bakers choose to not work their dough at all, and their final product will be an
+entirely different type of bread. For some, the final step is to bake their dough into a bread, but even
+for that there are many choices to make. There are those who will bake in wood ovens, others in iron
+pans. You may think it’s obvious that temperature plays a crucial role, but did you also know that
+air humidity inside the oven has a say in the bread’s crust?</p>
+
+<p>Coding is no different. The programming language you’ll use may change for each problem you’re
+tackling. It might make sense to build a web application, or maybe an embedded system, or even a
+custom hardware for a specific appliance. For each of these nodes in your decision tree you may
+expand into different types of frameworks and tools to aid the construction of your final product.</p>
+
+<p>Those who master the art of coding are artisans. Craftspersons with thousands of hours of learning,
+creating, tweaking, teaching, learning again… Writing code that works isn’t easy. Writing
+beautiful code that works is even harder. If you care about legilibilty, documentation, succinctness,
+then you’re probably writing beautiful code. Those who simply don’t care about any of that will
+hardly show interest in learning their tools and technics to the core. They won’t care about
+improving their own skill, let alone the machinery they use.</p>
+
+<p>The ones who care, the artists, they’ll learn their craft to the bone and turn it upside down.
+They’ll create stuff you’ve never seen before, maybe even thought impossible. Not only they’ll make
+what others won’t dare, as they’ll make it beautiful to those who can understand it. Be an artisan.
+Know your tools. Play with them. Use them. Improve them. Practice. Break it. Fix it. Practice again.
+Share your knowledge. Mentor an apprentice. Share your greatness.</p>
+
+<p>Turn your everyday practice into an artform.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hooking Your Hooks]]></title>
@@ -2109,32 +2150,6 @@ Formatting strings is also awsome:</p>
 <p>This is enough to get started and get familiar with Swift. Go ahead, poke it
 around, but don’t try to get fancy just yet. I’ll be covering more in the next
 few days.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Protip: Unregistering a UICollectionView Header/footer]]></title>
-    <link href="http://blog.flaviocaetano.com/post/protip-unregistering-a-uicollectionview-headerfooter/"/>
-    <updated>2014-05-16T16:33:52-03:00</updated>
-    <id>http://blog.flaviocaetano.com/post/protip-unregistering-a-uicollectionview-headerfooter</id>
-    <content type="html"><![CDATA[<p>You can unregister a UICollectionView supplementary view by re-registering it
-with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple’s docs</a>.
-(Remember to use the same <code>reuseIdentifier</code>).</p>
-
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nl">registerClass</span><span class="p">:</span><span class="nb">nil</span>
-        <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span>
-               <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div>
-
-<!-- more -->
-
-<p>But don’t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
-
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">CGSizeZero</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
-
-<p>Header or footer, depending on your need.</p>
 ]]></content>
   </entry>
   
