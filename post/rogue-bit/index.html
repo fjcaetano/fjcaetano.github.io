@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta http-equiv="cleartype" content="on">
 
-<title>You Shouldn't Use Git Blame to Blame on People - License to Kill -9</title>
+<title>Rogue Bit 🕹 - License to Kill -9</title>
 <meta name="author" content="Flávio Caetano">
 
 
@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="git ">
+<meta name="keywords" content="games ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -32,9 +32,9 @@
 
   
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="/images/computer-keyboard-stones-on-grass-background-header.jpg"
+    <meta name="twitter:image" content="/images/abstract-4.jpg"
   
-  <meta name="twitter:title" content="You Shouldn't Use Git Blame to Blame on People">
+  <meta name="twitter:title" content="Rogue Bit 🕹">
   <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
   <meta name="twitter:creator" content="@flavio_caetano">
 
@@ -42,15 +42,15 @@
 <!-- Open Graph -->
 <meta property="og:local" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:url" content="http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame">
-<meta property="og:title" content="You Shouldn't Use Git Blame to Blame on People">
+<meta property="og:url" content="http://blog.flaviocaetano.com/post/rogue-bit">
+<meta property="og:title" content="Rogue Bit 🕹">
 <meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-  <meta property="og:image" content="/images/computer-keyboard-stones-on-grass-background-header.jpg">
+  <meta property="og:image" content="/images/abstract-4.jpg">
 
 <meta property="og:site_name" content="License to Kill -9">
 
-<link rel="canonical" href="http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame">
+<link rel="canonical" href="http://blog.flaviocaetano.com/post/rogue-bit">
 <link href="/favicon.png" rel="icon">
 <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -115,7 +115,7 @@
 <div class="entry-header">
   
   <div class="entry-image">
-    <img src="/images/computer-keyboard-stones-on-grass-background-header.jpg" alt="You Shouldn't Use Git Blame to Blame on People">
+    <img src="/images/abstract-4.jpg" alt="Rogue Bit 🕹">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -125,39 +125,59 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="/post/you-shouldnt-use-git-blame/" rel="bookmark" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a></h1>
+          <h1 class="entry-title"><a href="/post/rogue-bit/" rel="bookmark" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h1>
         
-        <h2>July 23, 2014</h2>
+        <h2>October 31, 2019</h2>
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
 
       
 
-      <p>Have you ever used <code>git-blame</code> to blame on people? I have and I was wrong more often than I was right. When I wasn’t the one blaming others, the fingers almost always pointed at me when something went wrong. The problem with “default” <code>git-blame</code> and Xcode’s blame view is that it only shows the last person that committed the lines in question and, not necessarily, wrote them.</p>
+      <p>I have a peculiar taste in video games. I’ve never been an avid gamer despite owning consoles and
+building a gaming PC when I was younger. Nontheless, a few games stuck with me even after years
+without playing them. Portal stood out with whole new concept of “FPS” games to me, introducing
+“teleport portals” you can shoot with a gun. Kerbal Space Program taught me, not only orbital
+mechanics, but also to appreciate astrophysics, our solar system, and endurance when facing problems
+that are really hard to solve.</p>
+
+<p>This weekend I came accross <a href="https://roguebit.bigosaur.com/">Rogue Bit</a>, a fun little game about computers that introduces
+concepts of low level programming in a really innovative way. I really admired it because it teaches
+while also being really fun.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9I8Vlv9L9VM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<p><br /></p>
 
 <!-- more -->
 
-<p>Here where I work we have some code guidelines that not always are followed. Annoying as I am, usually I’m the one who fixes what is not according. Therefore, my name comes up in Xcode’s blame view more  often than others.</p>
+<p>In the game you are a single bit that suddenly becomes sentient. You’re the 7th bit in a byte and
+you an move around memory slots by XORing with adjecent bytes. You can’t move (XOR) to a byte whose
+7th bit is 1 because you’d cease to exist.</p>
 
-<p>If you really need to find out whoever wrote that dreadful condition that crashes your app, use the <code>git-blame</code> command line with the “-n” option. It’ll show the name of the person that first introduced that line and, quite probably, wrote it.</p>
+<p>While you’re moving around, you’ll encounter mazes and instructions you can interact with by
+changing its bits. When you XOR yourself with other bytes you’ll inevitably hack programs, either by
+modifing its instructions or their arguments. You’ll be able to tell programs to compare data
+registers with unexpected memory slots, and even jump the execution to a whole new instruction set.</p>
 
-<p>Or maybe, even better, get the changelog and the names of who touched a specific line of code with <code>git-log</code> “-L” option:</p>
+<p>Although short, the game is really fun and educational. Since you’re literally playing, the game forces you to learn
+how to think with a programming and hacking mindset, going through troubleshooting and reverse
+engineering. If you want to learn about bitwise operations, assembly code and overall low level
+programming you should definitely play <a href="https://roguebit.bigosaur.com/">Rogue Bit</a>. The game is available on Steam, Nintendo
+Switch and for PC and macOS.</p>
 
-<p><a href="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
+<p>I have the feeling this will enter my short list of games that stand out through the years.</p>
 
-<p>Thanks to: <a href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file" target="_blank">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#git" title="Pages tagged git" class="tag">git</a></span>
-        <span><a href="/post/you-shouldnt-use-git-blame/" rel="bookmark" title="You Shouldn't Use Git Blame to Blame on People">You Shouldn't Use Git Blame to Blame on People</a> was published on <span class="entry-date date published updated"><time datetime="2014-07-23T17:22:57-03:00">July 23, 2014</time></span></span>
+        <span class="entry-tags"><a href="/categories/#games" title="Pages tagged games" class="tag">games</a></span>
+        <span><a href="/post/rogue-bit/" rel="bookmark" title="Rogue Bit 🕹">Rogue Bit 🕹</a> was published on <span class="entry-date date published updated"><time datetime="2019-10-31T13:37:05-03:00">October 31, 2019</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
           <ul class="socialcount socialcount-small inline-list">
-            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-            <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.flaviocaetano.com/post/rogue-bit" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.flaviocaetano.com/post/rogue-bit" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+            <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.flaviocaetano.com/post/rogue-bit" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
           </ul>
         </div><!-- /.social-share -->
       </footer>
@@ -166,23 +186,23 @@
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/rogue-bit/" class="btn">Read More</a>
+            <a href="/post/the-art-of-coding/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h3>
-            <p>I have a peculiar taste in video games. I've never been an avid gamer despite owning consoles andbuilding a gaming PC when I was younger. &hellip;&hellip; <a href="/post/rogue-bit/"> Continue reading</a></p>
+            <h3><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h3>
+            <p>To excel in any kind of art you may use an infinity of materials, technics and tools to woven afinal product. Some may study their craft &hellip;&hellip; <a href="/post/the-art-of-coding/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/react-hook-hooker/" title="Hooking Your Hooks">Hooking Your Hooks</a></h4>
+              <span>Published on August 28, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/react-hook-hooker/" title="Hooking Your Hooks">Hooking Your Hooks</a></h4>
-              <span>Published on August 28, 2019</span>
+              <h4><a href="/post/an-easier-way-to-record-ios-gifs/" title="An easier way to record iOS gifs">An easier way to record iOS gifs</a></h4>
+              <span>Published on July 30, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -226,8 +246,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame/';
-        var disqus_url = 'http://blog.flaviocaetano.com/post/you-shouldnt-use-git-blame/';
+        var disqus_identifier = 'http://blog.flaviocaetano.com/post/rogue-bit/';
+        var disqus_url = 'http://blog.flaviocaetano.com/post/rogue-bit/';
         var disqus_script = 'embed.js';
       
     (function () {

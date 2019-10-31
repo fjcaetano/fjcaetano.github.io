@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Games | License to Kill -9]]></title>
+  <link href="http://blog.flaviocaetano.com/blog/categories/games/atom.xml" rel="self"/>
+  <link href="http://blog.flaviocaetano.com/"/>
+  <updated>2019-10-31T14:07:52-03:00</updated>
+  <id>http://blog.flaviocaetano.com/</id>
+  <author>
+    <name><![CDATA[Flávio Caetano]]></name>
+    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Rogue Bit 🕹]]></title>
+    <link href="http://blog.flaviocaetano.com/post/rogue-bit/"/>
+    <updated>2019-10-31T13:37:05-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/rogue-bit</id>
+    <content type="html"><![CDATA[<p>I have a peculiar taste in video games. I’ve never been an avid gamer despite owning consoles and
+building a gaming PC when I was younger. Nontheless, a few games stuck with me even after years
+without playing them. Portal stood out with whole new concept of “FPS” games to me, introducing
+“teleport portals” you can shoot with a gun. Kerbal Space Program taught me, not only orbital
+mechanics, but also to appreciate astrophysics, our solar system, and endurance when facing problems
+that are really hard to solve.</p>
+
+<p>This weekend I came accross <a href="https://roguebit.bigosaur.com/">Rogue Bit</a>, a fun little game about computers that introduces
+concepts of low level programming in a really innovative way. I really admired it because it teaches
+while also being really fun.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9I8Vlv9L9VM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<p><br /></p>
+
+<!-- more -->
+
+<p>In the game you are a single bit that suddenly becomes sentient. You’re the 7th bit in a byte and
+you an move around memory slots by XORing with adjecent bytes. You can’t move (XOR) to a byte whose
+7th bit is 1 because you’d cease to exist.</p>
+
+<p>While you’re moving around, you’ll encounter mazes and instructions you can interact with by
+changing its bits. When you XOR yourself with other bytes you’ll inevitably hack programs, either by
+modifing its instructions or their arguments. You’ll be able to tell programs to compare data
+registers with unexpected memory slots, and even jump the execution to a whole new instruction set.</p>
+
+<p>Although short, the game is really fun and educational. Since you’re literally playing, the game forces you to learn
+how to think with a programming and hacking mindset, going through troubleshooting and reverse
+engineering. If you want to learn about bitwise operations, assembly code and overall low level
+programming you should definitely play <a href="https://roguebit.bigosaur.com/">Rogue Bit</a>. The game is available on Steam, Nintendo
+Switch and for PC and macOS.</p>
+
+<p>I have the feeling this will enter my short list of games that stand out through the years.</p>
+
+]]></content>
+  </entry>
+  
+</feed>

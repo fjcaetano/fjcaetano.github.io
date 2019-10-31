@@ -4,7 +4,7 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-09-26T16:16:26-03:00</updated>
+  <updated>2019-10-31T14:07:28-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rogue Bit 🕹]]></title>
+    <link href="http://blog.flaviocaetano.com/post/rogue-bit/"/>
+    <updated>2019-10-31T13:37:05-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/rogue-bit</id>
+    <content type="html"><![CDATA[<p>I have a peculiar taste in video games. I’ve never been an avid gamer despite owning consoles and
+building a gaming PC when I was younger. Nontheless, a few games stuck with me even after years
+without playing them. Portal stood out with whole new concept of “FPS” games to me, introducing
+“teleport portals” you can shoot with a gun. Kerbal Space Program taught me, not only orbital
+mechanics, but also to appreciate astrophysics, our solar system, and endurance when facing problems
+that are really hard to solve.</p>
+
+<p>This weekend I came accross <a href="https://roguebit.bigosaur.com/">Rogue Bit</a>, a fun little game about computers that introduces
+concepts of low level programming in a really innovative way. I really admired it because it teaches
+while also being really fun.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9I8Vlv9L9VM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<p><br /></p>
+
+<!-- more -->
+
+<p>In the game you are a single bit that suddenly becomes sentient. You’re the 7th bit in a byte and
+you an move around memory slots by XORing with adjecent bytes. You can’t move (XOR) to a byte whose
+7th bit is 1 because you’d cease to exist.</p>
+
+<p>While you’re moving around, you’ll encounter mazes and instructions you can interact with by
+changing its bits. When you XOR yourself with other bytes you’ll inevitably hack programs, either by
+modifing its instructions or their arguments. You’ll be able to tell programs to compare data
+registers with unexpected memory slots, and even jump the execution to a whole new instruction set.</p>
+
+<p>Although short, the game is really fun and educational. Since you’re literally playing, the game forces you to learn
+how to think with a programming and hacking mindset, going through troubleshooting and reverse
+engineering. If you want to learn about bitwise operations, assembly code and overall low level
+programming you should definitely play <a href="https://roguebit.bigosaur.com/">Rogue Bit</a>. The game is available on Steam, Nintendo
+Switch and for PC and macOS.</p>
+
+<p>I have the feeling this will enter my short list of games that stand out through the years.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Art of Coding]]></title>
@@ -2069,87 +2110,6 @@ are my own. I’ll try and remember to link them to a bigger picture.</p>
 <p>Go to parties and get togethers. Get to know people. Lot’s of companies promote after parties at their HQs. Twitter, Github, Foursquare, Pinterest, Yelp, Dropbox, Pebble, Square… these are just some of the <a href="https://github.com/orta/wwdc_parties_2014">after parties</a>. Worst case scenario, you get to eat and drink for free and get to know their office.</p>
 
 <p>Basically, my advice is the same my mom gave to me over and over: go outside and talk to people.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Swift for Dummies]]></title>
-    <link href="http://blog.flaviocaetano.com/post/swift-for-dummies/"/>
-    <updated>2014-06-04T13:57:21-03:00</updated>
-    <id>http://blog.flaviocaetano.com/post/swift-for-dummies</id>
-    <content type="html"><![CDATA[<p>At WWDC 14, Apple introduced its new programming language: Swift. Nobody knows
-for sure what will happen to Objective-C, but one can only guess it won’t be
-around for long. My guess is that Apple will be accepting ObjC apps up till iOS
-10, but that is just my guest.</p>
-
-<!-- more -->
-
-<p>By attending to the WWDC I had the opportunity of directly contacting Apple’s
-engineers and insights most of people couldn’t, so in the next posts I’ll cover
-the basics of Swift.</p>
-
-<p>It doesn’t matter if you’re new to iOS or an experienced programmer. Now, we’re
-all in the same boat. We all have to learn Swift from scratch, so forget
-everything you know about Objective-C and get ready to learn this brand new
-language. By the way, its potential is overwhelming.</p>
-
-<h2 id="the-basics">The basics</h2>
-
-<p>As far as I could tell, Swift borrows concepts from Python, Javascript and even
-Java. It’s syntax also resembles these languages very much.</p>
-
-<p>You can forget about pointers for now, most of what we’ll be using in Swift is
-passed through references. No more asterisk (woohoo \o/).</p>
-
-<p>Swift plays with the concepts of variables and constants. There’s no type
-definition to neither of those just the declares var, for variables, and <code>let</code>
-for constants. As you may have figured out, constants can’t be altered. We’ll
-cover when to use it in a few steps.</p>
-
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="s">&quot;this is getting good&quot;</span>
-
-<span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></div>
-
-<p>Yep, there are no semi-colons at the end of statements.</p>
-
-<p>Switches are extremely powerful. <code>Cases</code> can be variables, strings, even a range
- of numbers. Also, cases don’t automatically fall through the next condition, so
-  there’s no need to <code>break</code>.</p>
-
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
-        <span class="c1">// do something</span>
-
-    <span class="k">case</span> <span class="nl">someOtherVar</span><span class="p">:</span>
-        <span class="c1">// this is getting wild</span>
-
-    <span class="k">case</span> <span class="s">&quot;string&quot;</span><span class="o">:</span>
-        <span class="c1">// holy cow!</span>
-
-    <span class="k">case</span> <span class="mf">1..4</span><span class="o">:</span>
-        <span class="c1">// ok, this is awesome</span>
-    <span class="k">default</span><span class="o">:</span>
-        <span class="c1">// something unimplemented</span>
-<span class="p">}</span></code></pre></div>
-
-<p>There’s also no need for surrounding parenthesis when working with conditions,
-unless it’s a complex condition, as usual. Switches in Swift (yep, try saying
-that three times) are exhaustive. That means that you must either supply <code>cases</code>
-for every possible condition or a <code>default</code> to handle everything else.
-XCode will error at compile time if you don’t.</p>
-
-<p>The final topic of this post is how you’ll print output to the console. It’s as
-simple as calling <code>println()</code> (it’s a function) and you’re done.
-Formatting strings is also awsome:</p>
-
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Flavio&quot;</span>
-
-<span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello \(name)!&quot;</span><span class="p">)</span>
-<span class="c1">// Hello Flavio!</span></code></pre></div>
-
-<p>This is enough to get started and get familiar with Swift. Go ahead, poke it
-around, but don’t try to get fancy just yet. I’ll be covering more in the next
-few days.</p>
 ]]></content>
   </entry>
   

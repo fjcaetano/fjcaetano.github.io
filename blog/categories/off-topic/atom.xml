@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Off-topic | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/off-topic/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-09-26T16:16:26-03:00</updated>
+  <updated>2019-10-31T14:07:52-03:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -123,7 +123,7 @@ me at <a href="mailto:flavio@vieiracaetano.com">flavio@vieiracaetano.com</a>.</
 <ul>
   <li><a href="https://github.com/fjcaetano">Github Profile</a></li>
   <li><a href="http://flaviocaetano.com">Personal Page</a></li>
-  <li><a href="https://www.linkedin.com/in/flavio-vieira-caetano-8267851a/">LinkedIn Profile</a></li>
+  <li><a href="{{ site.linkedin_profile }}">LinkedIn Profile</a></li>
 </ul>
 
 <p>That’s it for now. Soon will finish the next article I’m currently working on
