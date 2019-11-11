@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Animations | License to Kill -9]]></title>
+  <link href="http://blog.flaviocaetano.com/blog/categories/animations/atom.xml" rel="self"/>
+  <link href="http://blog.flaviocaetano.com/"/>
+  <updated>2019-11-11T18:45:30-03:00</updated>
+  <id>http://blog.flaviocaetano.com/</id>
+  <author>
+    <name><![CDATA[Flávio Caetano]]></name>
+    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using Native and Non-native Animations Together]]></title>
+    <link href="http://blog.flaviocaetano.com/post/using-native-and-non-native-animations-together/"/>
+    <updated>2019-11-11T17:36:36-03:00</updated>
+    <id>http://blog.flaviocaetano.com/post/using-native-and-non-native-animations-together</id>
+    <content type="html"><![CDATA[<p>React-Native animations has some limitations on what can be done using the native driver and what
+can only be executed in the Javascript realm. Animating colors is an example of property you can
+only animate using the JS interpreter, which is super slow and will probably affect your
+performance. If you try and hang a few <code>interpolates</code> in that <code>Animated.Value</code>, you’ll have a bad
+time trying to have fluid and seemless animations.</p>
+
+<p>If only there was a way of using one <code>Animated.Value</code> to drive another <code>Animated.Value</code>…</p>
+
+<p><img src="https://media.giphy.com/media/2H67VmB5UEBmU/giphy.gif" alt="thinking gif" /></p>
+
+<blockquote>
+  <p>💡 What if you use a native animation’s listener to drive a non-native animation?</p>
+</blockquote>
+
+<!-- more -->
+
+<p>Yes, that’s possible. No, using a listener doesn’t automatically make your animation non-native.
+This means you’ll need multiple <code>Animated.Values</code> (if that wasn’t clear yet):</p>
+
+<p>```js
+const nativeAnim = new Animated.Value(0); // 1
+const jsAnim = new Animated.Value(0);</p>
+
+<p>// component did mount
+useEffect(() =&gt; {
+  // this is the trick: drive the non-native animation by adding a listener to the native animation
+  const nativeListener = nativeAnim.addListener(Animated.event([{ value: jsAnim }])); // 3
+  return () =&gt; {
+    nativeAnim.removeListener(nativeListener);
+  };
+}, []);</p>
+
+<p>// backgroundColor can only be animated using a non-native animation
+const bgColorStyle = jsAnim.interpolate({ // 4
+  inputRange: [0, 100],
+  outputRange: [‘red’, ‘black’],
+});</p>
+
+<p>// using the native driver still works
+const positionStyle = {
+  transform: [{
+    translateX: this.nativeAnim.interpolate({
+      inputRange: [0, 2],
+      outputRange: [0, 1],
+    }),
+  }],
+};</p>
+
+<p>…</p>
+
+<p>&lt;ScrollView
+  onScroll={
+    Animated.event([{
+      nativeEvent: {
+        contentOffset: { x: nativeAnim }, // 2
+      },
+    }, { useNativeDriver: true }])
+  } // 🎉
+/&gt;
+```</p>
+
+<p>Let’s recap what’s up there:</p>
+
+<ol>
+  <li>We defined <code>nativeAnim</code> and <code>jsAnim</code>, which are <code>Animated.Value</code>.</li>
+  <li>This value is driven by a <strong>native</strong> <code>Animated.event</code> triggered by a ScrollView’s offset.</li>
+  <li>We added a listener to <code>nativeAnim</code> to drive a second <code>Animated.Value</code>, by using a non-native
+<code>Animated.event</code>.</li>
+  <li>The non-native animation (<code>jsAnim</code>) is then used to animate a <code>backgroundColor</code>, which is a style
+property that can only be animated by non-native animations.</li>
+</ol>
+
+<p>That truly works, check it out:</p>
+
+<div data-snack-id="Sk-4eLvir" data-snack-platform="ios" data-snack-preview="true" data-snack-theme="light" style="overflow:hidden;background:#fafafa;border:1px solid rgba(0,0,0,.08);border-radius:4px;height:505px;width:100%"></div>
+<script async="" src="https://snack.expo.io/embed.js"></script>
+
+]]></content>
+  </entry>
+  
+</feed>

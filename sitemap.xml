@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://blog.flaviocaetano.com/post/using-native-and-non-native-animations-together/</loc>
+<lastmod>2019-11-11T17:36:36-03:00</lastmod>
+</url>
+<url>
 <loc>http://blog.flaviocaetano.com/post/rogue-bit/</loc>
 <lastmod>2019-10-31T13:37:05-03:00</lastmod>
 </url>
@@ -197,5 +201,8 @@
 </url>
 <url>
 <loc>http://blog.flaviocaetano.com/blog/categories/games/</loc>
+</url>
+<url>
+<loc>http://blog.flaviocaetano.com/blog/categories/animations/</loc>
 </url>
 </urlset>

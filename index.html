@@ -135,6 +135,67 @@
   
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2019-11-11T17:36:36-03:00">
+        <a href="/post/using-native-and-non-native-animations-together/">November 11, 2019</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/using-native-and-non-native-animations-together/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/post/using-native-and-non-native-animations-together/" rel="bookmark" title="Using Native and Non-native Animations Together" itemprop="url">Using Native and Non-native Animations Together</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>React-Native animations has some limitations on what can be done using the native driver and what
+can only be executed in the Javascript realm. Animating colors is an example of property you can
+only animate using the JS interpreter, which is super slow and will probably affect your
+performance. If you try and hang a few <code>interpolates</code> in that <code>Animated.Value</code>, you’ll have a bad
+time trying to have fluid and seemless animations.</p>
+
+<p>If only there was a way of using one <code>Animated.Value</code> to drive another <code>Animated.Value</code>…</p>
+
+<p><img src="https://media.giphy.com/media/2H67VmB5UEBmU/giphy.gif" alt="thinking gif" /></p>
+
+<blockquote>
+  <p>💡 What if you use a native animation’s listener to drive a non-native animation?</p>
+</blockquote>
+
+
+  
+  
+    <footer>
+      <a class="btn" rel="full-article" href="/post/using-native-and-non-native-animations-together/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
+    </footer>
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2019-10-31T13:37:05-03:00">
         <a href="/post/rogue-bit/">October 31, 2019</a>
       </time>
@@ -452,61 +513,6 @@ gif. That’s a lot of work. It’s tiresome and time consuming. We we could do 
   
     <footer>
       <a class="btn" rel="full-article" href="/post/an-easier-way-to-record-ios-gifs/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
-    </footer>
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2018-11-23T18:21:27-02:00">
-        <a href="/post/redux-sucks-with-react-native/">November 23, 2018</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/post/redux-sucks-with-react-native/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/post/redux-sucks-with-react-native/" rel="bookmark" title="Redux Sucks With React-Native" itemprop="url">Redux Sucks With React-Native</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>Redux is hugely widespread as <strong>the</strong> architecture for React and React-Native projects. Its
-decoupled nature combined with immutability ensures a truly functional application, when used
-correctly. Yes, that’s all true.</p>
-
-<p>Redux starts to sound weird when we try to figure out where actions may be used. Specially when your
-project has wrappers and HOCs, which might mean actions definitions may not be where they’re
-actually used.</p>
-
-
-  
-  
-    <footer>
-      <a class="btn" rel="full-article" href="/post/redux-sucks-with-react-native/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
     </footer>
   
 </div><!-- /.entry-content -->
