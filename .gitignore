@@ -1,8 +1,6 @@
 .bundle
 .DS_Store
-.sass-cache
-.gist-cache
-.pygments-cache
+*-cache
 _deploy
 .deploy
 .public
@@ -15,3 +13,4 @@ vendor
 node_modules
 Gemfile.lock
 _deploy.yml
+bin/
