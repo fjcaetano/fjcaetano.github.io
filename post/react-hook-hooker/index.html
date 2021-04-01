@@ -142,85 +142,47 @@ you can split your states and effects into multiple hooks and simplify your code
 
 <p>Imagine you have the following component:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="nx">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">try</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">      <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">},</span> <span class="p">[]);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line">  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="p">(</span>
-</span><span class="line">    <span class="o">&lt;&gt;</span>
-</span><span class="line">      <span class="p">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderError</span> <span class="nx">error</span><span class="o">=</span><span class="p">{</span><span class="nx">error</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">}</span>
-</span><span class="line">      <span class="p">{</span><span class="nx">isLoading</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="o">/&gt;</span><span class="p">}</span>
-</span><span class="line">      <span class="p">{</span><span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderResult</span> <span class="nx">result</span><span class="o">=</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span><span class="o">&gt;</span><span class="p">}</span>
-</span><span class="line">      <span class="o">&lt;</span><span class="nx">Counter</span>
-</span><span class="line">        <span class="nx">count</span><span class="o">=</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span>
-</span><span class="line">        <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressCount</span><span class="p">}</span>
-</span><span class="line">      <span class="o">/&gt;</span>
-</span><span class="line">      <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressButton</span><span class="p">}</span> <span class="o">/&gt;</span>
-</span><span class="line">    <span class="o">&lt;</span><span class="err">/&gt;</span>
-</span><span class="line">  <span class="p">)</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+      
+      <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+
+      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[]);</span>
+
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  
+  <span class="kd">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;&gt;</span>
+      <span class="p">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderError</span> <span class="nx">error</span><span class="o">=</span><span class="p">{</span><span class="nx">error</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">}
+</span>      <span class="p">{</span><span class="nx">isLoading</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="o">/&gt;</span><span class="p">}</span>
+      <span class="p">{</span><span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderResult</span> <span class="nx">result</span><span class="o">=</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span><span class="o">&gt;</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">Counter</span>
+        <span class="nx">count</span><span class="o">=</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span>
+        <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressCount</span><span class="p">}</span>
+      <span class="sr">/</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressButton</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/</span><span class="err">&gt;
+</span>  <span class="p">)</span>
+<span class="p">};</span>
+
+</code></pre></div></div>
 
 <p>The code may look as clean as possible, but it could be better organized, and this is how you can do
 that.</p>
@@ -232,333 +194,203 @@ that.</p>
 <p>Hooked is a HOC that sends props to a hook as argument and return its value as props to the
 component. This way we can separate the previous component into two custom hooks:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// hooks.js</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">useButtonHandler</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="nx">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">try</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">      <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">},</span> <span class="p">[]);</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="p">{</span> <span class="nx">isLoading</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">handlePressButton</span> <span class="p">};</span>
-</span><span class="line"><span class="p">};</span>
-</span><span class="line">
-</span><span class="line"><span class="kr">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line">  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// hooks.js</span>
+<span class="kd">const</span> <span class="nx">useButtonHandler</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+      
+      <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+
+      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[]);</span>
+
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">isLoading</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">handlePressButton</span> <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  
+  <span class="kd">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
+
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
+<span class="p">};</span>
+
+</code></pre></div></div>
 
 <p>The return types will be merged with the previous props and the whole thing will be sent as props
 to the component:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// MyComponent.js</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span>
-</span><span class="line">  <span class="nx">isLoading</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">error</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">result</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">handlePressButton</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">count</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">handlePressCount</span>
-</span><span class="line"><span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
-</span><span class="line">  <span class="o">&lt;&gt;</span>
-</span><span class="line">    <span class="p">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderError</span> <span class="nx">error</span><span class="o">=</span><span class="p">{</span><span class="nx">error</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">}</span>
-</span><span class="line">    <span class="p">{</span><span class="nx">isLoading</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="o">/&gt;</span><span class="p">}</span>
-</span><span class="line">    <span class="p">{</span><span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderResult</span> <span class="nx">result</span><span class="o">=</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span><span class="o">&gt;</span><span class="p">}</span>
-</span><span class="line">    <span class="o">&lt;</span><span class="nx">Counter</span>
-</span><span class="line">      <span class="nx">count</span><span class="o">=</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span>
-</span><span class="line">      <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressCount</span><span class="p">}</span>
-</span><span class="line">    <span class="o">/&gt;</span>
-</span><span class="line">    <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressButton</span><span class="p">}</span> <span class="o">/&gt;</span>
-</span><span class="line">  <span class="o">&lt;</span><span class="err">/&gt;</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="kr">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
-</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
-</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="kr">export</span> <span class="k">default</span> <span class="nx">enhance</span><span class="p">(</span><span class="nx">MyComponent</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyComponent.js</span>
+<span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span>
+  <span class="nx">isLoading</span><span class="p">,</span>
+  <span class="nx">error</span><span class="p">,</span>
+  <span class="nx">result</span><span class="p">,</span>
+  <span class="nx">handlePressButton</span><span class="p">,</span>
+  <span class="nx">count</span><span class="p">,</span>
+  <span class="nx">handlePressCount</span>
+<span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="o">&lt;&gt;</span>
+    <span class="p">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderError</span> <span class="nx">error</span><span class="o">=</span><span class="p">{</span><span class="nx">error</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">}
+</span>    <span class="p">{</span><span class="nx">isLoading</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="o">/&gt;</span><span class="p">}</span>
+    <span class="p">{</span><span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderResult</span> <span class="nx">result</span><span class="o">=</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span><span class="o">&gt;</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="nx">Counter</span>
+      <span class="nx">count</span><span class="o">=</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span>
+      <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressCount</span><span class="p">}</span>
+    <span class="sr">/</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressButton</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/</span><span class="err">&gt;
+</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
+<span class="p">);</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">enhance</span><span class="p">(</span><span class="nx">MyComponent</span><span class="p">);</span>
+
+</code></pre></div></div>
 
 <p>If you’re used with HOCs or recompose, you should be familiar with HOC composition. If you’ve never
-seen that before, know that <code>compose</code> is a curry function and that the order of the arguments
+seen that before, know that <code class="highlighter-rouge">compose</code> is a curry function and that the order of the arguments
 affects the final result.</p>
 
 <h3 id="hooks-that-receive-arguments">Hooks that receive arguments</h3>
 
 <p>Your hooks will receive previous props as its arguments, that’s why it’s important to be mindful of
 the order of your HOCs. If one hook need a prop returned by another hook, the former needs to be
-passed after the latter. Let’s change <code>useCountr</code>, so that we can only increment our counter when
+passed after the latter. Let’s change <code class="highlighter-rouge">useCountr</code>, so that we can only increment our counter when
 it’s not loading:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// hooks.js</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">useButtonHandler</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="nx">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">try</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">      <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">},</span> <span class="p">[]);</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="p">{</span> <span class="nx">isLoading</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">handlePressButton</span> <span class="p">};</span>
-</span><span class="line"><span class="p">};</span>
-</span><span class="line">
-</span><span class="line"><span class="kr">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">isLoading</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLoading</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// MyComponent.js</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
-</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
-</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
-</span><span class="line"><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// hooks.js</span>
+<span class="kd">const</span> <span class="nx">useButtonHandler</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
-<p>Note that <code>useCounter</code> now receives an object with the attribute <code>isLoading</code>. Since we’re hooking
-it after <code>useButtonHandler</code>, it will receive whatever the latter is returning, which includes
-<code>isLoading</code>. If our <code>compose</code> was reversed, <code>isLoading</code> would be <code>undefined</code> in <code>useCounter</code> since
+  <span class="kd">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+
+      <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+
+      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[]);</span>
+
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">isLoading</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">handlePressButton</span> <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">isLoading</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  
+  <span class="kd">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLoading</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
+
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
+<span class="p">};</span>
+
+</code></pre></div></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyComponent.js</span>
+<span class="kd">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
+<span class="p">);</span>
+
+</code></pre></div></div>
+
+<p>Note that <code class="highlighter-rouge">useCounter</code> now receives an object with the attribute <code class="highlighter-rouge">isLoading</code>. Since we’re hooking
+it after <code class="highlighter-rouge">useButtonHandler</code>, it will receive whatever the latter is returning, which includes
+<code class="highlighter-rouge">isLoading</code>. If our <code class="highlighter-rouge">compose</code> was reversed, <code class="highlighter-rouge">isLoading</code> would be <code class="highlighter-rouge">undefined</code> in <code class="highlighter-rouge">useCounter</code> since
 it doesn’t exist yet.</p>
 
 <h4 id="custom-argument-mapping">Custom argument mapping</h4>
 
-<p>By default, <code>hooked</code> passes through to the hook any props it receives, however, if you need custom
+<p>By default, <code class="highlighter-rouge">hooked</code> passes through to the hook any props it receives, however, if you need custom
 mapping of the props to arguments, you can send an optional function to do so:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// hooks.js</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="nx">isLoading</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLoading</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// MyComponent.js</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
-</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
-</span><span class="line">  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">,</span> <span class="p">({</span> <span class="nx">isLoading</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">isLoading</span><span class="p">),</span>
-</span><span class="line"><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// hooks.js</span>
+<span class="kd">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="nx">isLoading</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  
+  <span class="kd">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLoading</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
 
-<p><code>useCounter</code> now receives <code>isLoading</code> directly as the only argument instead of receiving an object,
-so we had to map the props to that argument in our call to <code>hooked</code>.</p>
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
+<span class="p">};</span>
 
-<h2 id="typescript-">Typescript ❤️</h2>
+</code></pre></div></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyComponent.js</span>
+<span class="kd">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">,</span> <span class="p">({</span> <span class="nx">isLoading</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">isLoading</span><span class="p">),</span>
+<span class="p">);</span>
 
-<p>If you’re awesome and use Typescript, you’ll be glad to know that <code>hooked</code> is fully compatible with
-Typescript. Actually, <code>hooked</code> was implemented considering Typescript as first-class citizen.</p>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">useCounter</code> now receives <code class="highlighter-rouge">isLoading</code> directly as the only argument instead of receiving an object,
+so we had to map the props to that argument in our call to <code class="highlighter-rouge">hooked</code>.</p>
+
+<h2 id="typescript-️">Typescript ❤️</h2>
+
+<p>If you’re awesome and use Typescript, you’ll be glad to know that <code class="highlighter-rouge">hooked</code> is fully compatible with
+Typescript. Actually, <code class="highlighter-rouge">hooked</code> was implemented considering Typescript as first-class citizen.</p>
 
 <p>Pro-tip: if you need to merge your props with the values returned by your hook, a good idea is to use
-Typescript’s build-in <code>ReturnType&lt;&gt;</code>:</p>
+Typescript’s build-in <code class="highlighter-rouge">ReturnType&lt;&gt;</code>:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="ts"><span class="line"><span class="c1">// hooks.js</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">  <span class="p">...</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
-</span><span class="line"><span class="p">};</span>
-</span><span class="line">
-</span><span class="line"><span class="kr">export</span> <span class="nx">type</span> <span class="nx">CounterHookProps</span> <span class="o">=</span> <span class="nx">ReturnType</span><span class="o">&lt;</span><span class="k">typeof</span> <span class="nx">useCounter</span><span class="o">&gt;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="ts"><span class="line"><span class="c1">// MyComponent.js</span>
-</span><span class="line"><span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">name</span>: <span class="kt">string</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">userId</span>: <span class="kt">number</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">type</span> <span class="nx">HookedProps</span> <span class="o">=</span> <span class="nx">Props</span> <span class="o">&amp;</span> <span class="nx">CounterHookProps</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kr">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">count</span> <span class="p">}</span><span class="o">:</span> <span class="nx">HookedProps</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
-</span><span class="line">  <span class="p">...</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="kr">export</span> <span class="k">default</span> <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">)(</span><span class="nx">MyComponent</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// hooks.js</span>
+<span class="kd">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">...</span>
+
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">CounterHookProps</span> <span class="o">=</span> <span class="nx">ReturnType</span><span class="o">&lt;</span><span class="k">typeof</span> <span class="nx">useCounter</span><span class="o">&gt;</span><span class="p">;</span>
+
+</code></pre></div></div>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyComponent.js</span>
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">userId</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">HookedProps</span> <span class="o">=</span> <span class="nx">Props</span> <span class="o">&amp;</span> <span class="nx">CounterHookProps</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">count</span> <span class="p">}:</span> <span class="nx">HookedProps</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="p">...</span>
+<span class="p">);</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">)(</span><span class="nx">MyComponent</span><span class="p">);</span>
+
+</code></pre></div></div>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#react-native" title="Pages tagged react-native" class="tag">react-native</a><a href="/categories/#hoc" title="Pages tagged hoc" class="tag">hoc</a><a href="/categories/#hooks" title="Pages tagged hooks" class="tag">hooks</a><a href="/categories/#compose" title="Pages tagged compose" class="tag">compose</a></span>
-        <span><a href="/post/react-hook-hooker/" rel="bookmark" title="Hooking Your Hooks">Hooking Your Hooks</a> was published on <span class="entry-date date published updated"><time datetime="2019-08-28T18:36:39-03:00">August 28, 2019</time></span></span>
+        <span><a href="/post/react-hook-hooker/" rel="bookmark" title="Hooking Your Hooks">Hooking Your Hooks</a> was published on <span class="entry-date date published updated"><time datetime="2019-08-28T17:36:39-04:00">August 28, 2019</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -574,23 +406,23 @@ Typescript’s build-in <code>ReturnType&lt;&gt;</code>:</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -602,7 +434,7 @@ Typescript’s build-in <code>ReturnType&lt;&gt;</code>:</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

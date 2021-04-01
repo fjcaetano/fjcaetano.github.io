@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="fastlane ">
+<meta name="keywords" content="Fastlane ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -145,9 +145,8 @@ kept complaining about syntax error, I came up with the following command:</p>
 
 <!-- more -->
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">curl -s https://codecov.io/bash <span class="p">|</span> bash -s -- -J <span class="s1">&#39;ReCaptcha&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-s</span> https://codecov.io/bash | bash <span class="nt">-s</span> <span class="nt">--</span> <span class="nt">-J</span> <span class="s1">'ReCaptcha'</span>
+</code></pre></div></div>
 
 <p>Hey, since we’re running a shell command, why not transform it into a proper
 action so everybody can use it, right?  Unfortunately, <a href="https://docs.fastlane.tools/plugins/create-plugin/#submitting-the-action-to-the-fastlane-main-repo" target="_blank">Fastlane is not accepting
@@ -156,21 +155,27 @@ also, this action would fall into the “third party service” category and it 
 be accepted anyway.</p>
 
 <p>So let’s share it on Github! Since, it’s just a single file, I’ve created a gist
-that can be added as a submodule to your <a href="https://github.com/fastlane/fastlane" target="_blank">Fastlane</a> <code>actions</code> folder:</p>
+that can be added as a submodule to your <a href="https://github.com/fastlane/fastlane" target="_blank">Fastlane</a> <code class="highlighter-rouge">actions</code> folder:</p>
 
 <div><script src="https://gist.github.com/04126b3051f6cd6aebe041bb1dfe14e9.js"></script>
 <noscript><pre><code>module Fastlane
   module Actions
     class CodecovAction &lt; Action
       def self.run(params)
+        ci_only = params[:ci_only]
         cmd = [&#39;curl -s https://codecov.io/bash | bash&#39;]
 
         cmd &lt;&lt; &quot;-s --&quot; if params.all_keys.inject(false) { |p, k| p or params[k] }
         cmd &lt;&lt; &quot;-X xcodeplist&quot; if params[:use_xcodeplist]
         cmd &lt;&lt; &quot;-J &#39;#{params[:project_name]}&#39;&quot; if params[:project_name]
         cmd &lt;&lt; &quot;-t &#39;#{params[:token]}&#39;&quot; if params[:token]
+        cmd &lt;&lt; &quot;-v&quot; if params[:verbose]
 
-        sh cmd.join(&quot; &quot;)
+        if Helper.is_ci? || !ci_only
+          sh cmd.join(&quot; &quot;)
+        else
+          puts &quot;Not CI: Skipping coverage files upload&quot;
+        end
       end
 
       #####################################################
@@ -182,15 +187,10 @@ that can be added as a submodule to your <a href="https://github.com/fastlane/fa
       end
 
       def self.details
-        # Optional:
-        # this is your chance to provide a more detailed description of this action
         &quot;https://codecov.io&quot;
       end
 
       def self.available_options
-        # Define all options your action supports.
-
-        # Below a few examples
         [
           FastlaneCore::ConfigItem.new(key: :use_xcodeplist,
                                        env_name: &quot;FL_CODECOV_USE_XCODEPLIST&quot;,
@@ -205,6 +205,18 @@ that can be added as a submodule to your <a href="https://github.com/fastlane/fa
                                        env_name: &quot;FL_CODECOV_TOKEN&quot;,
                                        description: &quot;API token for private repos&quot;,
                                        optional: true),
+          FastlaneCore::ConfigItem.new(key: :verbose,
+                                       env_name: &quot;FL_CODECOV_VERBOSE&quot;,
+                                       description: &quot;Verbose logs&quot;,
+                                       is_string: false,
+                                       optional: true,
+                                       default_value: false),
+          FastlaneCore::ConfigItem.new(key: :ci_only,
+                                       env_name: &quot;FL_CODECOV_CI_ONLY&quot;,
+                                       description: &quot;Upload coverage only if running on CI&quot;,
+                                       is_string: false,
+                                       optional: true,
+                                       default_value: true),
         ]
       end
 
@@ -220,22 +232,22 @@ that can be added as a submodule to your <a href="https://github.com/fastlane/fa
 end
 </code></pre></noscript></div>
 
-<p>After cloning the submodule you can try running <code>fastlane action codecov</code> for details.</p>
+<p>After cloning the submodule you can try running <code class="highlighter-rouge">fastlane action codecov</code> for details.</p>
 
 <h3 id="arguments">Arguments:</h3>
 
 <ul>
-  <li><code>use_xcodeplist</code>: <a href="https://docs.codecov.io/blog/beta-xcode-plist-reports" target="_blank">Codecov’s beta feature</a> (default <code>false</code>)</li>
-  <li><code>project_name</code>: The project name to be used by the <code>-J</code> argument</li>
-  <li><code>token</code>: The API token for private repos</li>
+  <li><code class="highlighter-rouge">use_xcodeplist</code>: <a href="https://docs.codecov.io/blog/beta-xcode-plist-reports" target="_blank">Codecov’s beta feature</a> (default <code class="highlighter-rouge">false</code>)</li>
+  <li><code class="highlighter-rouge">project_name</code>: The project name to be used by the <code class="highlighter-rouge">-J</code> argument</li>
+  <li><code class="highlighter-rouge">token</code>: The API token for private repos</li>
 </ul>
 
 <p>Enjoy!</p>
 
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#fastlane" title="Pages tagged fastlane" class="tag">fastlane</a></span>
-        <span><a href="/post/codecov-fastlane-action/" rel="bookmark" title="Codecov Fastlane action">Codecov Fastlane action</a> was published on <span class="entry-date date published updated"><time datetime="2017-11-01T18:12:06-02:00">November 01, 2017</time></span></span>
+        <span class="entry-tags"><a href="/categories/#Fastlane" title="Pages tagged Fastlane" class="tag">Fastlane</a></span>
+        <span><a href="/post/codecov-fastlane-action/" rel="bookmark" title="Codecov Fastlane action">Codecov Fastlane action</a> was published on <span class="entry-date date published updated"><time datetime="2017-11-01T16:12:06-04:00">November 01, 2017</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -251,23 +263,23 @@ end
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -279,7 +291,7 @@ end
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

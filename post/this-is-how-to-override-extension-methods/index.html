@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="swift ">
+<meta name="keywords" content="Swift ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -154,54 +154,38 @@
 
 <p>But there is an exception. Objective-C is a very dynamic language. While Swift attempts to statically dispatch most of its messages, Objective-C dynamically select which implementation to call at run time. So if we exploit our bridge between Objective-C and Swift, we can make the latter a bit more dynamic. Like this:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="k">class</span> <span class="nl">Spaceship</span><span class="p">:</span> <span class="bp">NSObject</span> <span class="p">{</span> <span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">extension</span> <span class="n">Spaceship</span> <span class="p">{</span>
-</span><span class="line">    <span class="p">@</span><span class="n">objc</span> <span class="k">func</span> <span class="n">travel</span><span class="p">(</span><span class="n">to</span> <span class="nl">destination</span><span class="p">:</span> <span class="n">SpaceTimeLocation</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="c1">// TODO: move across universe till we eventualy get there, if we ever do...</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nl">TeleportMachine</span><span class="p">:</span> <span class="n">Spaceship</span> <span class="p">{</span>
-</span><span class="line">    <span class="kr">override</span> <span class="k">func</span> <span class="n">travel</span><span class="p">(</span><span class="n">to</span> <span class="nl">destination</span><span class="p">:</span> <span class="n">SpaceTimeLocation</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="n">location</span> <span class="o">=</span> <span class="n">destination</span> <span class="c1">// yup, that easy</span>
-</span><span class="line">        <span class="p">...</span>
-</span><span class="line">        <span class="n">renderUniverse</span><span class="p">()</span> <span class="c1">// lolwut?</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>There you go. We have successfully drilled a wormhole through Swift’s fabric, all the way to Objective-C’s dynamic dispatch. There are limitations to this, of course. This is possible because our <code>Spaceship</code> class is a subclass of NSObject. Make it a root class, and our universe falls apart.</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">Spaceship</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span> <span class="p">}</span>
 
-<p>Unfortunately, if you try and make <code>travel(to:)</code> generic, you’ll be using a Swift-only feature, which means you’re not exploiting the ObjC bridge.</p>
+<span class="kd">extension</span> <span class="kt">Spaceship</span> <span class="p">{</span>
+    <span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">travel</span><span class="p">(</span><span class="n">to</span> <span class="nv">destination</span><span class="p">:</span> <span class="kt">SpaceTimeLocation</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// TODO: move across universe till we eventualy get there, if we ever do...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kd">class</span> <span class="kt">TeleportMachine</span><span class="p">:</span> <span class="kt">Spaceship</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">travel</span><span class="p">(</span><span class="n">to</span> <span class="nv">destination</span><span class="p">:</span> <span class="kt">SpaceTimeLocation</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">destination</span> <span class="c1">// yup, that easy</span>
+        <span class="o">...</span>
+        <span class="nf">renderUniverse</span><span class="p">()</span> <span class="c1">// lolwut?</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>There you go. We have successfully drilled a wormhole through Swift’s fabric, all the way to Objective-C’s dynamic dispatch. There are limitations to this, of course. This is possible because our <code class="highlighter-rouge">Spaceship</code> class is a subclass of NSObject. Make it a root class, and our universe falls apart.</p>
+
+<p>Unfortunately, if you try and make <code class="highlighter-rouge">travel(to:)</code> generic, you’ll be using a Swift-only feature, which means you’re not exploiting the ObjC bridge.</p>
 
 <p>So go ahead and do all the things you shouldn’t, though you can, even if it’s a bit <em>hacky</em>.</p>
 
 <h3 id="update">Update</h3>
 
-<p>On Swift 3 you need to define your method as ObjC compliant using <code>@objc</code>.
+<p>On Swift 3 you need to define your method as ObjC compliant using <code class="highlighter-rouge">@objc</code>.
 (Thanks <a target="\_blank" href="https://twitter.com/bgondim">@bgondim</a>)</p>
 
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#swift" title="Pages tagged swift" class="tag">swift</a></span>
-        <span><a href="/post/this-is-how-to-override-extension-methods/" rel="bookmark" title="Declarations From Extensions Cannot Be Overridden. Are You Sure?">Declarations From Extensions Cannot Be Overridden. Are You Sure?</a> was published on <span class="entry-date date published updated"><time datetime="2016-12-05T13:46:08-02:00">December 05, 2016</time></span></span>
+        <span class="entry-tags"><a href="/categories/#Swift" title="Pages tagged Swift" class="tag">Swift</a></span>
+        <span><a href="/post/this-is-how-to-override-extension-methods/" rel="bookmark" title="Declarations From Extensions Cannot Be Overridden. Are You Sure?">Declarations From Extensions Cannot Be Overridden. Are You Sure?</a> was published on <span class="entry-date date published updated"><time datetime="2016-12-05T10:46:08-05:00">December 05, 2016</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -217,23 +201,23 @@
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -245,7 +229,7 @@
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

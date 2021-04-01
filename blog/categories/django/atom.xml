@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Django | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/django/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-11-11T18:45:30-03:00</updated>
+  <updated>2021-04-01T19:16:40-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Once Upon a Time, There Was Nothing (Part. 2)]]></title>
     <link href="http://blog.flaviocaetano.com/post/once-upon-2/"/>
-    <updated>2012-12-13T18:35:00-02:00</updated>
+    <updated>2012-12-13T15:35:00-05:00</updated>
     <id>http://blog.flaviocaetano.com/post/once-upon-2</id>
     <content type="html"><![CDATA[<p>One of the main reasons I like Django is it’s awesome auto-generated admin
 interface. It’s  just awesome. When you start to play with it and discover apps
@@ -95,8 +95,8 @@ displays to you in a user friendly way.</p>
 
 <p>The image is in portuguese. Imagem = Image, Abrir Imagem = Open Image.
 <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> is
-localizable but, currently, only <code>pt-BR</code> and <code>en-US</code> are the officially supported
-languages. If you want it to be in your language, just send me your <code>.po</code> file
+localizable but, currently, only <code class="highlighter-rouge">pt-BR</code> and <code class="highlighter-rouge">en-US</code> are the officially supported
+languages. If you want it to be in your language, just send me your <code class="highlighter-rouge">.po</code> file
 and I’ll validate it and share. It’s ridiculous, there are only two tags. Give it a try!</p>
 
 <p>When I finished, I realised how simple and effective it was. I had to share it

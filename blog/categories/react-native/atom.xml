@@ -4,7 +4,7 @@
   <title><![CDATA[Category: React-native | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/react-native/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-11-11T18:45:30-03:00</updated>
+  <updated>2021-04-01T19:16:40-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -16,15 +16,15 @@
   <entry>
     <title type="html"><![CDATA[Using Native and Non-native Animations Together]]></title>
     <link href="http://blog.flaviocaetano.com/post/using-native-and-non-native-animations-together/"/>
-    <updated>2019-11-11T17:36:36-03:00</updated>
+    <updated>2019-11-11T15:36:36-05:00</updated>
     <id>http://blog.flaviocaetano.com/post/using-native-and-non-native-animations-together</id>
     <content type="html"><![CDATA[<p>React-Native animations has some limitations on what can be done using the native driver and what
 can only be executed in the Javascript realm. Animating colors is an example of property you can
 only animate using the JS interpreter, which is super slow and will probably affect your
-performance. If you try and hang a few <code>interpolates</code> in that <code>Animated.Value</code>, you’ll have a bad
+performance. If you try and hang a few <code class="highlighter-rouge">interpolates</code> in that <code class="highlighter-rouge">Animated.Value</code>, you’ll have a bad
 time trying to have fluid and seemless animations.</p>
 
-<p>If only there was a way of using one <code>Animated.Value</code> to drive another <code>Animated.Value</code>…</p>
+<p>If only there was a way of using one <code class="highlighter-rouge">Animated.Value</code> to drive another <code class="highlighter-rouge">Animated.Value</code>…</p>
 
 <p><img src="https://media.giphy.com/media/2H67VmB5UEBmU/giphy.gif" alt="thinking gif" /></p>
 
@@ -35,58 +35,57 @@ time trying to have fluid and seemless animations.</p>
 <!-- more -->
 
 <p>Yes, that’s possible. No, using a listener doesn’t automatically make your animation non-native.
-This means you’ll need multiple <code>Animated.Values</code> (if that wasn’t clear yet):</p>
+This means you’ll need multiple <code class="highlighter-rouge">Animated.Values</code> (if that wasn’t clear yet):</p>
 
-<p>```js
-const nativeAnim = new Animated.Value(0); // 1
-const jsAnim = new Animated.Value(0);</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">nativeAnim</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animated</span><span class="p">.</span><span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// 1</span>
+<span class="kd">const</span> <span class="nx">jsAnim</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animated</span><span class="p">.</span><span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 
-<p>// component did mount
-useEffect(() =&gt; {
-  // this is the trick: drive the non-native animation by adding a listener to the native animation
-  const nativeListener = nativeAnim.addListener(Animated.event([{ value: jsAnim }])); // 3
-  return () =&gt; {
-    nativeAnim.removeListener(nativeListener);
-  };
-}, []);</p>
+<span class="c1">// component did mount</span>
+<span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// this is the trick: drive the non-native animation by adding a listener to the native animation</span>
+  <span class="kd">const</span> <span class="nx">nativeListener</span> <span class="o">=</span> <span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="nx">Animated</span><span class="p">.</span><span class="nx">event</span><span class="p">([{</span> <span class="na">value</span><span class="p">:</span> <span class="nx">jsAnim</span> <span class="p">}]));</span> <span class="c1">// 3</span>
+  <span class="k">return</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">removeListener</span><span class="p">(</span><span class="nx">nativeListener</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">},</span> <span class="p">[]);</span>
 
-<p>// backgroundColor can only be animated using a non-native animation
-const bgColorStyle = jsAnim.interpolate({ // 4
-  inputRange: [0, 100],
-  outputRange: [‘red’, ‘black’],
-});</p>
+<span class="c1">// backgroundColor can only be animated using a non-native animation</span>
+<span class="kd">const</span> <span class="nx">bgColorStyle</span> <span class="o">=</span> <span class="nx">jsAnim</span><span class="p">.</span><span class="nx">interpolate</span><span class="p">({</span> <span class="c1">// 4</span>
+  <span class="na">inputRange</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+  <span class="na">outputRange</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">red</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">black</span><span class="dl">'</span><span class="p">],</span>
+<span class="p">});</span>
 
-<p>// using the native driver still works
-const positionStyle = {
-  transform: [{
-    translateX: this.nativeAnim.interpolate({
-      inputRange: [0, 2],
-      outputRange: [0, 1],
-    }),
-  }],
-};</p>
+<span class="c1">// using the native driver still works</span>
+<span class="kd">const</span> <span class="nx">positionStyle</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">transform</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="na">translateX</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">interpolate</span><span class="p">({</span>
+      <span class="na">inputRange</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="na">outputRange</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">}),</span>
+  <span class="p">}],</span>
+<span class="p">};</span>
 
-<p>…</p>
+<span class="p">...</span>
 
-<p>&lt;ScrollView
-  onScroll={
-    Animated.event([{
-      nativeEvent: {
-        contentOffset: { x: nativeAnim }, // 2
-      },
-    }, { useNativeDriver: true }])
-  } // 🎉
-/&gt;
-```</p>
+<span class="o">&lt;</span><span class="nx">ScrollView</span>
+  <span class="nx">onScroll</span><span class="o">=</span><span class="p">{</span>
+    <span class="nx">Animated</span><span class="p">.</span><span class="nx">event</span><span class="p">([{</span>
+      <span class="na">nativeEvent</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">contentOffset</span><span class="p">:</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="nx">nativeAnim</span> <span class="p">},</span> <span class="c1">// 2</span>
+      <span class="p">},</span>
+    <span class="p">},</span> <span class="p">{</span> <span class="na">useNativeDriver</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}])</span>
+  <span class="p">}</span> <span class="c1">// 🎉</span>
+<span class="sr">/</span><span class="err">&gt;
+</span></code></pre></div></div>
 
 <p>Let’s recap what’s up there:</p>
 
 <ol>
-  <li>We defined <code>nativeAnim</code> and <code>jsAnim</code>, which are <code>Animated.Value</code>.</li>
-  <li>This value is driven by a <strong>native</strong> <code>Animated.event</code> triggered by a ScrollView’s offset.</li>
-  <li>We added a listener to <code>nativeAnim</code> to drive a second <code>Animated.Value</code>, by using a non-native
-<code>Animated.event</code>.</li>
-  <li>The non-native animation (<code>jsAnim</code>) is then used to animate a <code>backgroundColor</code>, which is a style
+  <li>We defined <code class="highlighter-rouge">nativeAnim</code> and <code class="highlighter-rouge">jsAnim</code>, which are <code class="highlighter-rouge">Animated.Value</code>.</li>
+  <li>This value is driven by a <strong>native</strong> <code class="highlighter-rouge">Animated.event</code> triggered by a ScrollView’s offset.</li>
+  <li>We added a listener to <code class="highlighter-rouge">nativeAnim</code> to drive a second <code class="highlighter-rouge">Animated.Value</code>, by using a non-native
+<code class="highlighter-rouge">Animated.event</code>.</li>
+  <li>The non-native animation (<code class="highlighter-rouge">jsAnim</code>) is then used to animate a <code class="highlighter-rouge">backgroundColor</code>, which is a style
 property that can only be animated by non-native animations.</li>
 </ol>
 
@@ -101,7 +100,7 @@ property that can only be animated by non-native animations.</li>
   <entry>
     <title type="html"><![CDATA[Hooking Your Hooks]]></title>
     <link href="http://blog.flaviocaetano.com/post/react-hook-hooker/"/>
-    <updated>2019-08-28T18:36:39-03:00</updated>
+    <updated>2019-08-28T17:36:39-04:00</updated>
     <id>http://blog.flaviocaetano.com/post/react-hook-hooker</id>
     <content type="html"><![CDATA[<p>Hey, I just wanted to share with you that I built a nifty little HOC to connect a hook to a
 component and receive its returned value as props. This helps cleanup your Function Components since
@@ -109,48 +108,47 @@ you can split your states and effects into multiple hooks and simplify your code
 
 <p>Imagine you have the following component:</p>
 
-<p>```js
-const MyComponent = ({ userId }) =&gt; {
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [result, setResult] = useState(null);</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
-<p>const handlePressButton = useCallback(async () =&gt; {
-    try {
-      setLoading(true);
-      setError(null);</p>
+  <span class="kd">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+      
+      <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
 
-<pre><code>  const result = await fetchDataFromTheAPI(userId);
+      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[]);</span>
 
-  setResult(result);
-} catch(error) {
-  setError(error);
-} finally {
-  setLoading(false);
-}   }, []);
-</code></pre>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  
+  <span class="kd">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
 
-<p>const [count, setCount] = useState(0);</p>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;&gt;</span>
+      <span class="p">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderError</span> <span class="nx">error</span><span class="o">=</span><span class="p">{</span><span class="nx">error</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">}
+</span>      <span class="p">{</span><span class="nx">isLoading</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="o">/&gt;</span><span class="p">}</span>
+      <span class="p">{</span><span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderResult</span> <span class="nx">result</span><span class="o">=</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span><span class="o">&gt;</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">Counter</span>
+        <span class="nx">count</span><span class="o">=</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span>
+        <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressCount</span><span class="p">}</span>
+      <span class="sr">/</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressButton</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/</span><span class="err">&gt;
+</span>  <span class="p">)</span>
+<span class="p">};</span>
 
-<p>const handlePressCount = useCallback(() =&gt; {
-    setCount(count + 1);
-  }, [count]);</p>
-
-<p>return (
-    &lt;&gt;
-      {error &amp;&amp; &lt;RenderError error={error} /&gt;}
-      {isLoading &amp;&amp; <Spinner></Spinner>}
-      {result &amp;&amp; &lt;RenderResult result={result}&gt;}
-      &lt;Counter
-        count={count}
-        onPress={handlePressCount}
-      /&gt;
-      &lt;Button onPress={handlePressButton} /&gt;
-    &lt;/&gt;
-  )
-};</p>
-
-<p>```</p>
+</code></pre></div></div>
 
 <p>The code may look as clean as possible, but it could be better organized, and this is how you can do
 that.</p>
@@ -162,214 +160,206 @@ that.</p>
 <p>Hooked is a HOC that sends props to a hook as argument and return its value as props to the
 component. This way we can separate the previous component into two custom hooks:</p>
 
-<p>```js
-// hooks.js
-const useButtonHandler = ({ userId }) =&gt; {
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [result, setResult] = useState(null);</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// hooks.js</span>
+<span class="kd">const</span> <span class="nx">useButtonHandler</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
-<p>const handlePressButton = useCallback(async () =&gt; {
-    try {
-      setLoading(true);
-      setError(null);</p>
+  <span class="kd">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+      
+      <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
 
-<pre><code>  const result = await fetchDataFromTheAPI(userId);
+      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[]);</span>
 
-  setResult(result);
-} catch(error) {
-  setError(error);
-} finally {
-  setLoading(false);
-}   }, []);
-</code></pre>
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">isLoading</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">handlePressButton</span> <span class="p">};</span>
+<span class="p">};</span>
 
-<p>return { isLoading, error, result, handlePressButton };
-};</p>
+<span class="kd">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  
+  <span class="kd">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
 
-<p>const useCounter = () =&gt; {
-  const [count, setCount] = useState(0);</p>
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
+<span class="p">};</span>
 
-<p>const handlePressCount = useCallback(() =&gt; {
-    setCount(count + 1);
-  }, [count]);</p>
-
-<p>return { count, handlePressCount };
-};</p>
-
-<p>```</p>
+</code></pre></div></div>
 
 <p>The return types will be merged with the previous props and the whole thing will be sent as props
 to the component:</p>
 
-<p>```js
-// MyComponent.js
-const MyComponent = ({
-  isLoading,
-  error,
-  result,
-  handlePressButton,
-  count,
-  handlePressCount
-}) =&gt; (
-  &lt;&gt;
-    {error &amp;&amp; &lt;RenderError error={error} /&gt;}
-    {isLoading &amp;&amp; <Spinner></Spinner>}
-    {result &amp;&amp; &lt;RenderResult result={result}&gt;}
-    &lt;Counter
-      count={count}
-      onPress={handlePressCount}
-    /&gt;
-    &lt;Button onPress={handlePressButton} /&gt;
-  &lt;/&gt;
-);</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyComponent.js</span>
+<span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span>
+  <span class="nx">isLoading</span><span class="p">,</span>
+  <span class="nx">error</span><span class="p">,</span>
+  <span class="nx">result</span><span class="p">,</span>
+  <span class="nx">handlePressButton</span><span class="p">,</span>
+  <span class="nx">count</span><span class="p">,</span>
+  <span class="nx">handlePressCount</span>
+<span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="o">&lt;&gt;</span>
+    <span class="p">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderError</span> <span class="nx">error</span><span class="o">=</span><span class="p">{</span><span class="nx">error</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">}
+</span>    <span class="p">{</span><span class="nx">isLoading</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="o">/&gt;</span><span class="p">}</span>
+    <span class="p">{</span><span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderResult</span> <span class="nx">result</span><span class="o">=</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span><span class="o">&gt;</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="nx">Counter</span>
+      <span class="nx">count</span><span class="o">=</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span>
+      <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressCount</span><span class="p">}</span>
+    <span class="sr">/</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressButton</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/</span><span class="err">&gt;
+</span><span class="p">);</span>
 
-<p>const enhance = compose(
-  hooked(useButtonHandler),
-  hooked(useCounter),
-);</p>
+<span class="kd">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
+<span class="p">);</span>
 
-<p>export default enhance(MyComponent);</p>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">enhance</span><span class="p">(</span><span class="nx">MyComponent</span><span class="p">);</span>
 
-<p>```</p>
+</code></pre></div></div>
 
 <p>If you’re used with HOCs or recompose, you should be familiar with HOC composition. If you’ve never
-seen that before, know that <code>compose</code> is a curry function and that the order of the arguments
+seen that before, know that <code class="highlighter-rouge">compose</code> is a curry function and that the order of the arguments
 affects the final result.</p>
 
 <h3 id="hooks-that-receive-arguments">Hooks that receive arguments</h3>
 
 <p>Your hooks will receive previous props as its arguments, that’s why it’s important to be mindful of
 the order of your HOCs. If one hook need a prop returned by another hook, the former needs to be
-passed after the latter. Let’s change <code>useCountr</code>, so that we can only increment our counter when
+passed after the latter. Let’s change <code class="highlighter-rouge">useCountr</code>, so that we can only increment our counter when
 it’s not loading:</p>
 
-<p>```js
-// hooks.js
-const useButtonHandler = ({ userId }) =&gt; {
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [result, setResult] = useState(null);</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// hooks.js</span>
+<span class="kd">const</span> <span class="nx">useButtonHandler</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
-<p>const handlePressButton = useCallback(async () =&gt; {
-    try {
-      setLoading(true);
-      setError(null);</p>
+  <span class="kd">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
-<pre><code>  const result = await fetchDataFromTheAPI(userId);
+      <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
 
-  setResult(result);
-} catch(error) {
-  setError(error);
-} finally {
-  setLoading(false);
-}   }, []);
-</code></pre>
+      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[]);</span>
 
-<p>return { isLoading, error, result, handlePressButton };
-};</p>
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">isLoading</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">handlePressButton</span> <span class="p">};</span>
+<span class="p">};</span>
 
-<p>const useCounter = ({ isLoading }) =&gt; {
-  const [count, setCount] = useState(0);</p>
+<span class="kd">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">isLoading</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  
+  <span class="kd">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLoading</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
 
-<p>const handlePressCount = useCallback(() =&gt; {
-    if (!isLoading) {
-      setCount(count + 1);
-    }
-  }, [count]);</p>
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
+<span class="p">};</span>
 
-<p>return { count, handlePressCount };
-};</p>
+</code></pre></div></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyComponent.js</span>
+<span class="kd">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">),</span>
+<span class="p">);</span>
 
-<p><code>
-</code>js
-// MyComponent.js
-const enhance = compose(
-  hooked(useButtonHandler),
-  hooked(useCounter),
-);</p>
+</code></pre></div></div>
 
-<p>```</p>
-
-<p>Note that <code>useCounter</code> now receives an object with the attribute <code>isLoading</code>. Since we’re hooking
-it after <code>useButtonHandler</code>, it will receive whatever the latter is returning, which includes
-<code>isLoading</code>. If our <code>compose</code> was reversed, <code>isLoading</code> would be <code>undefined</code> in <code>useCounter</code> since
+<p>Note that <code class="highlighter-rouge">useCounter</code> now receives an object with the attribute <code class="highlighter-rouge">isLoading</code>. Since we’re hooking
+it after <code class="highlighter-rouge">useButtonHandler</code>, it will receive whatever the latter is returning, which includes
+<code class="highlighter-rouge">isLoading</code>. If our <code class="highlighter-rouge">compose</code> was reversed, <code class="highlighter-rouge">isLoading</code> would be <code class="highlighter-rouge">undefined</code> in <code class="highlighter-rouge">useCounter</code> since
 it doesn’t exist yet.</p>
 
 <h4 id="custom-argument-mapping">Custom argument mapping</h4>
 
-<p>By default, <code>hooked</code> passes through to the hook any props it receives, however, if you need custom
+<p>By default, <code class="highlighter-rouge">hooked</code> passes through to the hook any props it receives, however, if you need custom
 mapping of the props to arguments, you can send an optional function to do so:</p>
 
-<p>```js
-// hooks.js
-const useCounter = isLoading =&gt; {
-  const [count, setCount] = useState(0);</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// hooks.js</span>
+<span class="kd">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="nx">isLoading</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  
+  <span class="kd">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isLoading</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
 
-<p>const handlePressCount = useCallback(() =&gt; {
-    if (!isLoading) {
-      setCount(count + 1);
-    }
-  }, [count]);</p>
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
+<span class="p">};</span>
 
-<p>return { count, handlePressCount };
-};</p>
+</code></pre></div></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyComponent.js</span>
+<span class="kd">const</span> <span class="nx">enhance</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useButtonHandler</span><span class="p">),</span>
+  <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">,</span> <span class="p">({</span> <span class="nx">isLoading</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">isLoading</span><span class="p">),</span>
+<span class="p">);</span>
 
-<p><code>
-</code>js
-// MyComponent.js
-const enhance = compose(
-  hooked(useButtonHandler),
-  hooked(useCounter, ({ isLoading }) =&gt; isLoading),
-);</p>
+</code></pre></div></div>
 
-<p>```</p>
+<p><code class="highlighter-rouge">useCounter</code> now receives <code class="highlighter-rouge">isLoading</code> directly as the only argument instead of receiving an object,
+so we had to map the props to that argument in our call to <code class="highlighter-rouge">hooked</code>.</p>
 
-<p><code>useCounter</code> now receives <code>isLoading</code> directly as the only argument instead of receiving an object,
-so we had to map the props to that argument in our call to <code>hooked</code>.</p>
+<h2 id="typescript-️">Typescript ❤️</h2>
 
-<h2 id="typescript-">Typescript ❤️</h2>
-
-<p>If you’re awesome and use Typescript, you’ll be glad to know that <code>hooked</code> is fully compatible with
-Typescript. Actually, <code>hooked</code> was implemented considering Typescript as first-class citizen.</p>
+<p>If you’re awesome and use Typescript, you’ll be glad to know that <code class="highlighter-rouge">hooked</code> is fully compatible with
+Typescript. Actually, <code class="highlighter-rouge">hooked</code> was implemented considering Typescript as first-class citizen.</p>
 
 <p>Pro-tip: if you need to merge your props with the values returned by your hook, a good idea is to use
-Typescript’s build-in <code>ReturnType&lt;&gt;</code>:</p>
+Typescript’s build-in <code class="highlighter-rouge">ReturnType&lt;&gt;</code>:</p>
 
-<p>``` ts
-// hooks.js
-const useCounter = () =&gt; {
-  …</p>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// hooks.js</span>
+<span class="kd">const</span> <span class="nx">useCounter</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">...</span>
 
-<p>return { count, handlePressCount };
-};</p>
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">handlePressCount</span> <span class="p">};</span>
+<span class="p">};</span>
 
-<p>export type CounterHookProps = ReturnType<typeof useCounter="">;</typeof></p>
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">CounterHookProps</span> <span class="o">=</span> <span class="nx">ReturnType</span><span class="o">&lt;</span><span class="k">typeof</span> <span class="nx">useCounter</span><span class="o">&gt;</span><span class="p">;</span>
 
-<p><code>
-</code> ts
-// MyComponent.js
-interface Props {
-  name: string;
-  userId: number;
-}</p>
+</code></pre></div></div>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyComponent.js</span>
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">userId</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+<span class="p">}</span>
 
-<p>type HookedProps = Props &amp; CounterHookProps;</p>
+<span class="kd">type</span> <span class="nx">HookedProps</span> <span class="o">=</span> <span class="nx">Props</span> <span class="o">&amp;</span> <span class="nx">CounterHookProps</span><span class="p">;</span>
 
-<p>const MyComponent = ({ name, count }: HookedProps) =&gt; (
-  …
-);</p>
+<span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">count</span> <span class="p">}:</span> <span class="nx">HookedProps</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="p">...</span>
+<span class="p">);</span>
 
-<p>export default hooked(useCounter)(MyComponent);</p>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">hooked</span><span class="p">(</span><span class="nx">useCounter</span><span class="p">)(</span><span class="nx">MyComponent</span><span class="p">);</span>
 
-<p>```</p>
+</code></pre></div></div>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Redux Sucks With React-Native]]></title>
     <link href="http://blog.flaviocaetano.com/post/redux-sucks-with-react-native/"/>
-    <updated>2018-11-23T18:21:27-02:00</updated>
+    <updated>2018-11-23T15:21:27-05:00</updated>
     <id>http://blog.flaviocaetano.com/post/redux-sucks-with-react-native</id>
     <content type="html"><![CDATA[<p>Redux is hugely widespread as <strong>the</strong> architecture for React and React-Native projects. Its
 decoupled nature combined with immutability ensures a truly functional application, when used
@@ -384,7 +374,7 @@ actually used.</p>
 <h3 id="an-ios-analogy">An iOS Analogy</h3>
 
 <p>An application that uses Redux is like an iOS app whose architecture is heavily based on
-communicating with <code>NSNotifications</code>: someone you don’t know who might be posting notifications that
+communicating with <code class="highlighter-rouge">NSNotifications</code>: someone you don’t know who might be posting notifications that
 may be listened by other unknown parties. At any moment a new entity might start listening to posted
 notifications and might also start posting them. To be honest, it’s too decoupled for my taste, if
 that’s even possible at all.</p>
@@ -446,10 +436,10 @@ React-Native projects. Research an architecture that best suits your application
   <entry>
     <title type="html"><![CDATA[Tips to Avoid Rerendering React-Native Components]]></title>
     <link href="http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components/"/>
-    <updated>2018-06-05T17:30:00-03:00</updated>
+    <updated>2018-06-05T16:30:00-04:00</updated>
     <id>http://blog.flaviocaetano.com/post/tips-to-avoid-rerendering-react-native-components</id>
     <content type="html"><![CDATA[<p>Building a production-ready fully architectured React-Native app means sending and updating lots of
-props to your components. This means the <code>shouldUpdate -&gt; render -&gt; didUpdate</code> flow gets called a
+props to your components. This means the <code class="highlighter-rouge">shouldUpdate -&gt; render -&gt; didUpdate</code> flow gets called a
 lot. Here are a few steps on how to optimize your components to avoid rerendering unnecessarily.</p>
 
 <!-- more -->
@@ -461,143 +451,134 @@ an input. This usually means no input side-effects, i.e., no selectors, no fetch
 not passed by its parent, <em>etcetera</em>.</p>
 
 <p>You can tag your components for this performance optimization either by using stateless components
-(with arrow functions), or by extending <code>React.PureComponent</code>. <code>FlatList</code> and <code>SectionList</code> are some
+(with arrow functions), or by extending <code class="highlighter-rouge">React.PureComponent</code>. <code class="highlighter-rouge">FlatList</code> and <code class="highlighter-rouge">SectionList</code> are some
 examples of vanilla React-Native pure components.</p>
 
 <p>Being pure means the component is optimized to only be rendered when its input changes. In other
 words, if the props don’t change, the component won’t be rerendered.</p>
 
-<p>```js
-const NameComponent = ({ name }) =&gt; <Text>{name}</Text>;</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">NameComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/Text&gt;</span><span class="err">;
+</span>
+<span class="kd">class</span> <span class="nx">NameButton</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">PureComponent</span> <span class="p">{</span>
+    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">NameComponent</span> <span class="nx">name</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">;
+</span>    <span class="p">}</span>
+<span class="p">}</span>
 
-<p>class NameButton extends React.PureComponent {
-    render() {
-        return &lt;NameComponent name={this.props.name} /&gt;;
-    }
-}</p>
+<span class="kd">class</span> <span class="nx">NameScreen</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span>
+            <span class="o">&lt;</span><span class="nx">NameButton</span>
+                <span class="nx">name</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span>
+                <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleNamePress</span><span class="p">}</span>
+            <span class="sr">/&gt;</span><span class="err">;
+</span>    <span class="p">}</span>
+<span class="p">}</span>
 
-<p>class NameScreen extends React.Component {
-    render() {
-        return
-            &lt;NameButton
-                name={this.props.name}
-                onPress={this.handleNamePress}
-            /&gt;;
-    }
-}</p>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">selector</span><span class="p">)(</span><span class="nx">NameScreen</span><span class="p">);</span>
 
-<p>export default connect(selector)(NameScreen);</p>
+</code></pre></div></div>
 
-<p>```</p>
-
-<p>In the example above, both <code>NameComponent</code> and <code>NameButton</code> are pure components, while <code>NameScreen</code>
+<p>In the example above, both <code class="highlighter-rouge">NameComponent</code> and <code class="highlighter-rouge">NameButton</code> are pure components, while <code class="highlighter-rouge">NameScreen</code>
 isn’t because it gets its props from a selector.</p>
 
-<h2 id="dont-create-objects-within-render">Don’t Create Objects Within <code>render</code></h2>
+<h2 id="dont-create-objects-within-render">Don’t Create Objects Within <code class="highlighter-rouge">render</code></h2>
 
 <p>Pure components check for shallow equality of their props, therefore, if you create an object in your
-<code>render()</code> method, when the interpreter compares it against the previous object, it will detect an
+<code class="highlighter-rouge">render()</code> method, when the interpreter compares it against the previous object, it will detect an
 inequallity which will cause your component to rerender.</p>
 
-<p>{% raw %}</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Role</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">address</span><span class="p">,</span> <span class="na">permissions</span><span class="p">:</span> <span class="p">{</span> <span class="nx">isAdmin</span> <span class="p">}</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">Profile</span> <span class="nx">profile</span><span class="o">=</span><span class="p">{{</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">address</span><span class="p">,</span> <span class="nx">isAdmin</span> <span class="p">}}</span> <span class="sr">/</span><span class="err">&gt;
+</span><span class="p">);</span>
 
-<p>```js
-const Role = ({ name, age, address, permissions: { isAdmin } }) =&gt; (
-    &lt;Profile profile={{ name, age, address, isAdmin }} /&gt;
-);</p>
+<span class="kd">const</span> <span class="nx">User</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">permissions</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">Role</span> <span class="nx">name</span><span class="o">=</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span> <span class="nx">age</span><span class="o">=</span><span class="p">{</span><span class="nx">age</span><span class="p">}</span> <span class="nx">permissions</span><span class="o">=</span><span class="p">{</span><span class="nx">permissions</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span><span class="p">);</span>
 
-<p>const User = ({ name, age, permissions }) =&gt; (
-    &lt;Role name={name} age={age} permissions={permissions} /&gt;
-);</p>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">selector</span><span class="p">)(</span><span class="nx">User</span><span class="p">);</span>
+</code></pre></div></div>
 
-<p>export default connect(selector)(User);
-```
-{% endraw %}</p>
+<p>In the example above, <code class="highlighter-rouge">Profile</code> will be rendered everytime, even if the props don’t change. Instead,
+it’d be ideal if <code class="highlighter-rouge">Role</code> received the <code class="highlighter-rouge">profile</code> object all the way down from the selector, ready to
+be passed down to <code class="highlighter-rouge">Profile</code> instead.</p>
 
-<p>In the example above, <code>Profile</code> will be rendered everytime, even if the props don’t change. Instead,
-it’d be ideal if <code>Role</code> received the <code>profile</code> object all the way down from the selector, ready to
-be passed down to <code>Profile</code> instead.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Role</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">profile</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">Profile</span> <span class="nx">profile</span><span class="o">=</span><span class="p">{</span><span class="nx">profile</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span><span class="p">);</span>
 
-<p>```js
-const Role = ({ profile }) =&gt; (
-    &lt;Profile profile={profile} /&gt;
-);</p>
+<span class="kd">const</span> <span class="nx">User</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">profile</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">Role</span> <span class="nx">profile</span><span class="o">=</span><span class="p">{</span><span class="nx">profile</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span><span class="p">);</span>
 
-<p>const User = ({ profile }) =&gt; (
-    &lt;Role profile={profile} /&gt;
-);</p>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">selector</span><span class="p">)(</span><span class="nx">User</span><span class="p">);</span>
+</code></pre></div></div>
 
-<p>export default connect(selector)(User);
-```</p>
-
-<p>Bare in mind that the value returned by <code>selector</code> changed to better accomodate our props.</p>
+<p>Bare in mind that the value returned by <code class="highlighter-rouge">selector</code> changed to better accomodate our props.</p>
 
 <h2 id="arrow-functions-are-objects">Arrow Functions Are Objects</h2>
 
 <p>It’s easy to forget that arrow (anonymous) functions are objects too, so when you create a new one
-in your <code>render()</code> method, you’re doing the same as above.</p>
+in your <code class="highlighter-rouge">render()</code> method, you’re doing the same as above.</p>
 
-<p>{% raw %}
-<code>js
-const PictureButton = ({ pictureURL }) =&gt; (
-    &lt;TouchableHighlight
-        onPress={() =&gt; {
-            // Did press picture
-        }}
-    &gt;
-        &lt;Image source={{ uri: pictureURL }} /&gt;
-    &lt;/TouchableHighlight&gt;
-);
-</code>
-{% endraw %}</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">PictureButton</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">pictureURL</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">TouchableHighlight</span>
+        <span class="nx">onPress</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="c1">// Did press picture</span>
+        <span class="p">}}</span>
+    <span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">Image</span> <span class="nx">source</span><span class="o">=</span><span class="p">{{</span> <span class="na">uri</span><span class="p">:</span> <span class="nx">pictureURL</span> <span class="p">}}</span> <span class="sr">/</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/TouchableHighlight</span><span class="err">&gt;
+</span><span class="p">);</span>
+</code></pre></div></div>
 
-<p>In this example, <code>TouchableHighlight</code> is always receiving a new function object, regardless of it
+<p>In this example, <code class="highlighter-rouge">TouchableHighlight</code> is always receiving a new function object, regardless of it
 being hardcoded. In this case, we should have a method to handle pressing and pass it down like
-<code>onPress={this.handlePicturePress}</code>.</p>
+<code class="highlighter-rouge">onPress={this.handlePicturePress}</code>.</p>
 
-<p>You may have also noticed that we’re sending a source object to <code>Image</code>. As described in the
-previous bullet, this is also troublesome. Maybe we need to revisit how <code>Image</code> receive its props.</p>
+<p>You may have also noticed that we’re sending a source object to <code class="highlighter-rouge">Image</code>. As described in the
+previous bullet, this is also troublesome. Maybe we need to revisit how <code class="highlighter-rouge">Image</code> receive its props.</p>
 
 <h2 id="avoid-render-handlers">Avoid Render Handlers</h2>
 
-<p>By render handlers, I mean methods that render components. When you have your <code>render()</code> calling
+<p>By render handlers, I mean methods that render components. When you have your <code class="highlighter-rouge">render()</code> calling
 other methods, it’s easy to get lost on the good practices mentioned above and end up with something
 you’d normally avoid if you were writing directly in it.</p>
 
-<p>```js
-class Profile extends React.Component {
-    renderPicture = () =&gt; {
-        const source = { uri: this.props.pictureURL };
-        return &lt;PictureButton image={source}/&gt;l
-    }</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Profile</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">renderPicture</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="p">{</span> <span class="na">uri</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">pictureURL</span> <span class="p">};</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">PictureButton</span> <span class="nx">image</span><span class="o">=</span><span class="p">{</span><span class="nx">source</span><span class="p">}</span><span class="sr">/&gt;</span><span class="err">l
+</span>    <span class="p">}</span>
 
-<pre><code>render() {
-    return (
-        &lt;View&gt;
-            {this.renderPicture}
-            &lt;Button&gt;
-        &lt;/View&gt;
-    );
-} } ```
-</code></pre>
+    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">View</span><span class="o">&gt;</span>
+                <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderPicture</span><span class="p">}</span>
+                <span class="o">&lt;</span><span class="nx">Button</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="sr">/View</span><span class="err">&gt;
+</span>        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-<p>It may look like we have fixed the <code>Image.source</code> issue, but we haven’t. That’s because we are
-creating a new <code>source</code> object everytime <code>renderPicture</code> gets called, which happens when <code>render()</code> gets
+<p>It may look like we have fixed the <code class="highlighter-rouge">Image.source</code> issue, but we haven’t. That’s because we are
+creating a new <code class="highlighter-rouge">source</code> object everytime <code class="highlighter-rouge">renderPicture</code> gets called, which happens when <code class="highlighter-rouge">render()</code> gets
 called.</p>
 
 <p>However, avoiding this practice doesn’t mean you should never do it. One good exception to this rule
 is how to define a list’s item renderer. Since we should absolutely never use arrow functions, this
 renderer should be defined as a handler:</p>
 
-<p>```js
-class ObjectList extends React.Component {
-    renderItem = ({ item }) =&gt;
-        <Text>{item.title}</Text>;</p>
-
-<pre><code>render() {
-    return &lt;FlatList renderItem={this.renderItem} /&gt;;
-} } ```
-</code></pre>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">ObjectList</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">renderItem</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">item</span> <span class="p">})</span> <span class="o">=&gt;</span>
+        <span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">title</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/Text&gt;</span><span class="err">;
+</span>
+    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">FlatList</span> <span class="nx">renderItem</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderItem</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">;
+</span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <hr />
 

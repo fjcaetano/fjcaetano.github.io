@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-11-11T18:45:30-03:00</updated>
+  <updated>2021-04-01T19:16:40-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -14,11 +14,126 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Rendering Enums in SwiftUI]]></title>
+    <link href="http://blog.flaviocaetano.com/post/rendering-enums-in-swiftui/"/>
+    <updated>2021-04-01T15:33:00-04:00</updated>
+    <id>http://blog.flaviocaetano.com/post/rendering-enums-in-swiftui</id>
+    <content type="html"><![CDATA[<p>Enums are an excellent way to leverage Swift’s value-types and immutability principles for handling states. Imagine you have a view that fetches a list of items from an API. You can represent that view’s state as the following enum:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">ViewState</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="n">idle</span><span class="p">,</span>          <span class="c1">// next state: .loading</span>
+       <span class="n">loading</span><span class="p">,</span>       <span class="c1">// next states: .items or .error</span>
+       <span class="nf">items</span><span class="p">([</span><span class="kt">Item</span><span class="p">]),</span> <span class="c1">// next state: .loading</span>
+       <span class="nf">error</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span>   <span class="c1">// next state: .loading</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Your view is idle before fetching your list. When it does so, you update your view’s state to <code class="highlighter-rouge">.loading</code> and add an appropriate indicator. From there you’ll either have a successful state with the list you just loaded, or an error, much like a Result.</p>
+
+<p>Now if your View, or ViewModel has a ViewState attribute, how would you render that in SwiftUI?</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+
+  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="c1">// TODO: render `state`</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<!-- more -->
+
+<p>You could add a switch-case to your view’s <code class="highlighter-rouge">body</code>, but that’d be mixing imperative programming with the SwiftUI’s declarative syntax. It works, but it’s less than ideal and just ugly, in my honest opinion.</p>
+
+<p>You could also add a method that returns a View for the given state. Something like:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+
+  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="nf">stateView</span><span class="p">()</span>
+  <span class="p">}</span>
+
+  <span class="kd">private</span> <span class="kd">func</span> <span class="nf">stateView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="n">state</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nv">idle</span><span class="p">:</span> <span class="k">return</span> <span class="kt">EmptyView</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nv">loading</span><span class="p">:</span> <span class="k">return</span> <span class="kt">Spinner</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nf">items</span><span class="p">(</span><span class="k">let</span> <span class="nv">list</span><span class="p">):</span> <span class="k">return</span> <span class="kt">ItemsList</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span> <span class="k">return</span> <span class="kt">ErrorView</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Do yourself a favor and add the much needed modifier that wraps a View into AnyView and erases its type, making it semantically consistent to Combine’s <code class="highlighter-rouge">eraseToAnyPublisher()</code></p>
+</blockquote>
+
+<p>This is better, but still not great since you need to refer to code outside your View’s <code class="highlighter-rouge">body</code> to know what is being rendered. Don’t get me wrong: componentizing is great when you’re grouping views into containers like “header”, “footer”, “hero”, “left panel”, but you should only group components that make sense to be grouped. States are not containers. They represent different possibilities and, therefore, shouldn’t be grouped. So how do we fix that in order to have our state being rendered within our View’s <code class="highlighter-rouge">body</code>? The answer is to make ViewState provide the correct view:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">extension</span> <span class="kt">ViewState</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="n">render</span><span class="o">&lt;</span><span class="kt">Idle</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">Loading</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">Items</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">ErrorView</span><span class="p">:</span> <span class="kt">View</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">idle</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Idle</span><span class="p">,</span>
+    <span class="nv">loading</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Loading</span><span class="p">,</span>
+    <span class="nv">items</span><span class="p">:</span> <span class="p">([</span><span class="kt">Item</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Items</span><span class="p">,</span>
+    <span class="nv">error</span><span class="p">:</span> <span class="p">(</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ErrorView</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="k">self</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nv">idle</span><span class="p">:</span> <span class="k">return</span> <span class="nf">idle</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nv">loading</span><span class="p">:</span> <span class="k">return</span> <span class="nf">loading</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nf">items</span><span class="p">(</span><span class="k">let</span> <span class="nv">list</span><span class="p">):</span> <span class="k">return</span> <span class="nf">items</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
+      <span class="k">case</span> <span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="k">let</span> <span class="nv">err</span><span class="p">):</span> <span class="k">return</span> <span class="nf">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Make sure to add this <strong>private</strong> extension in your View’s file, <strong>not</strong> where you declared the ViewState enum. You can also wrap any of <code class="highlighter-rouge">render</code>’s arguments in <code class="highlighter-rouge">@ViewBuilder</code> if it makes sense for your use-case.</p>
+</blockquote>
+
+<p>Now all we have to do is call <code class="highlighter-rouge">render</code> in our View’s <code class="highlighter-rouge">body</code>:</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+
+  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="n">state</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span>
+      <span class="nv">idle</span><span class="p">:</span> <span class="p">{</span> <span class="kt">EmptyView</span><span class="p">()</span> <span class="p">},</span>
+      <span class="nv">loading</span><span class="p">:</span> <span class="p">{</span> <span class="kt">Spinner</span><span class="p">()</span> <span class="p">},</span>
+      <span class="nv">items</span><span class="p">:</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
+        <span class="kt">ItemsList</span><span class="p">(</span><span class="n">list</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="nv">error</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+        <span class="kt">ErrorView</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// ViewState's private extension can go here</span>
+</code></pre></div></div>
+
+<p>Isn’t that much better? Our View’s organization is on-point by keeping things where they should be, while still leveraging what Swift offers best (immutability, switch-cases exhaustiveness, and generics). That’s the pattern I’ve being going for with great success in both SwiftUI apps I’ve implemented so far.</p>
+
+<h3 id="bonus">Bonus</h3>
+
+<p>If you want to add that AnyView modifier I mentioned above, here’s the code:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">View</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">eraseToAnyView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyView</span> <span class="p">{</span>
+    <span class="kt">AnyView</span><span class="p">(</span><span class="k">self</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Handling Frames in an AutoLayout Universe]]></title>
     <link href="http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe/"/>
-    <updated>2018-02-27T15:20:08-03:00</updated>
+    <updated>2018-02-27T13:20:08-05:00</updated>
     <id>http://blog.flaviocaetano.com/post/handling-frames-in-an-autolayout-universe</id>
-    <content type="html"><![CDATA[<p>As frameworks improves, as our knowledge of it, we should leave <a target="\_blank" href="/post/autolayout-is-hell-on-earth/">our prejudices</a>
+    <content type="html"><![CDATA[<p>As frameworks improves, as our knowledge of it, we should leave <a target="\_blank" href="http://blog.flaviocaetano.com/post/autolayout-is-hell-on-earth/">our prejudices</a>
 in the past. It is without question that AutoLayout has become much beloved and
 necessary as it moves forward. Its API has improved so drastically as to discard
 the need for third-party libraries.</p>
@@ -29,34 +144,32 @@ throwing a bunch of warnings in your console? Or worst: in your IB…</p>
 
 <!-- more -->
 
-<h2 id="customize-layoutsubviews">Customize <code>layoutSubviews</code></h2>
+<h2 id="customize-layoutsubviews">Customize <code class="highlighter-rouge">layoutSubviews</code></h2>
 
 <p>Depending on the simplicity of what you want to achieve, implementing your own
-version of <code>layoutSubviews</code> without relying on the SDK can be simple and effective:</p>
+version of <code class="highlighter-rouge">layoutSubviews</code> without relying on the SDK can be simple and effective:</p>
 
-<p><code>swift
-override func layoutSubviews() {
-    _ = subviews.reduce(0) { (x, view) -&gt; CGFloat in
-        let size = view.intrinsicContentSize
-        view.frame = CGRect(
-            origin: CGPoint(x: x, y: 0),
-            size: size)
-        return view.frame.maxX + Constants.spacing
-    }
-}
-</code></p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="kd">func</span> <span class="nf">layoutSubviews</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">subviews</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="nv">size</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">intrinsicContentSize</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="kt">CGRect</span><span class="p">(</span>
+            <span class="nv">origin</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="nv">size</span><span class="p">:</span> <span class="n">size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">view</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">maxX</span> <span class="o">+</span> <span class="kt">Constants</span><span class="o">.</span><span class="n">spacing</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-<h2 id="adopting-intrinsiccontentsize">Adopting <code>intrinsicContentSize</code></h2>
+<h2 id="adopting-intrinsiccontentsize">Adopting <code class="highlighter-rouge">intrinsicContentSize</code></h2>
 
-<p>As you may have noticed in the example above, by overriding <code>intrinsicContentSize</code>
+<p>As you may have noticed in the example above, by overriding <code class="highlighter-rouge">intrinsicContentSize</code>
 you can have a view that defines its own size without depending on constraints
 or content.</p>
 
-<p><code>swift
-override var intrinsicContentSize: CGSize {
-    return isExpanded ? Constants.expandedSize : Constants.regularSize
-}
-</code></p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="k">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">isExpanded</span> <span class="p">?</span> <span class="kt">Constants</span><span class="o">.</span><span class="nv">expandedSize</span> <span class="p">:</span> <span class="kt">Constants</span><span class="o">.</span><span class="n">regularSize</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <p>Btw, it’s animatable 💖</p>
 
@@ -66,7 +179,7 @@ override var intrinsicContentSize: CGSize {
   <entry>
     <title type="html"><![CDATA[The Simplest Throttle/Debounce You'll Ever See]]></title>
     <link href="http://blog.flaviocaetano.com/post/the-simplest-throttle-slash-debounce-youll-ever-see/"/>
-    <updated>2018-01-11T11:12:28-02:00</updated>
+    <updated>2018-01-11T08:12:28-05:00</updated>
     <id>http://blog.flaviocaetano.com/post/the-simplest-throttle-slash-debounce-youll-ever-see</id>
     <content type="html"><![CDATA[<p>One of these days I needed a <em>debounce</em> on Swift to ensure some block of code
 would only be executed once in a period of time. <em>Debounces</em> are quite simple so
@@ -83,9 +196,9 @@ implementation for <em>throttle</em>, <a target="\_blank" href="https://gist.git
 <a target="\_blank" href="https://danielemargutti.com/2017/10/19/throttle-in-swift/">nonsense</a>… and
 overcomplicated.</p>
 
-<p>So I created an extension on <code>DispatchQueue</code> (where it should be):</p>
+<p>So I created an extension on <code class="highlighter-rouge">DispatchQueue</code> (where it should be):</p>
 
-<p><div><script src='https://gist.github.com/ff3e994c4edb4991ab8280f34994beb4.js'></script>
+<div><script src="https://gist.github.com/ff3e994c4edb4991ab8280f34994beb4.js"></script>
 <noscript><pre><code>import Dispatch
 
 private var throttleWorkItems = [AnyHashable: DispatchWorkItem]()
@@ -136,7 +249,6 @@ public extension DispatchQueue {
     }
 }
 </code></pre></noscript></div>
-</p>
 
 <p><em>TA DAA</em> 🎉</p>
 
@@ -148,7 +260,7 @@ public extension DispatchQueue {
   <entry>
     <title type="html"><![CDATA[Protip: UIViewControllerAnimatedTransitioning + Snapshots]]></title>
     <link href="http://blog.flaviocaetano.com/post/protip-uiviewcontrolleranimatedtransitioning-plus-snapshots/"/>
-    <updated>2017-12-05T18:06:12-02:00</updated>
+    <updated>2017-12-05T15:06:12-05:00</updated>
     <id>http://blog.flaviocaetano.com/post/protip-uiviewcontrolleranimatedtransitioning-plus-snapshots</id>
     <content type="html"><![CDATA[<p>When creating custom animations for view controller transitions, it is recommended
 to use snapshots of the views being animated. However, UIKit doesn’t always make
@@ -156,53 +268,53 @@ things crystal clear.</p>
 
 <p>If you find yourself with broken autolayout or views incorrectly configured after
 enabling your transition, try <strong>creating the snapshots after adding your view to
-<code>containerView</code></strong>.</p>
+<code class="highlighter-rouge">containerView</code></strong>.</p>
 
 <!-- more -->
 
-<p>```swift
-func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-    guard let fromVC = transitionContext.viewController(forKey: .from),
-        let toVC = transitionContext.viewController(forKey: .to),
-        let fromAnimatedView = fromVC.animatedView.snapshotView(afterScreenUpdates: true),
-        let toAnimatedView = toVC.animatedView.snapshotView(afterScreenUpdates: true) else {
-        return transitionContext.completeTransition(false)
-    }</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nv">transitionContext</span><span class="p">:</span> <span class="kt">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">from</span><span class="p">),</span>
+        <span class="k">let</span> <span class="nv">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">to</span><span class="p">),</span>
+        <span class="k">let</span> <span class="nv">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">),</span>
+        <span class="k">let</span> <span class="nv">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">completeTransition</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<pre><code>let containerView = transitionContext.containerView
+    <span class="k">let</span> <span class="nv">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="n">containerView</span>
 
-[fromAnimatedView, toAnimatedView].forEach(containerView.addSubview(_:))
+    <span class="p">[</span><span class="n">fromAnimatedView</span><span class="p">,</span> <span class="n">toAnimatedView</span><span class="p">]</span><span class="o">.</span><span class="nf">forEach</span><span class="p">(</span><span class="n">containerView</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="nv">_</span><span class="p">:))</span>
 
-// Now you got yourself broken views. Hooray!
-... } ```
-</code></pre>
+    <span class="c1">// Now you got yourself broken views. Hooray!</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-<p>The code above might not work. Your <code>toVC</code>’s view might end up completely broken
+<p>The code above might not work. Your <code class="highlighter-rouge">toVC</code>’s view might end up completely broken
 and your snapshots may have the wrong frame and contents. To fix it, simply move
 the snapshots creation to after adding your destination view controller’s view to
-<code>transitionContext.containerView</code>.</p>
+<code class="highlighter-rouge">transitionContext.containerView</code>.</p>
 
-<p>If you just try it after your <code>toVC</code> has ended initializing its views (i.e. after
-<code>viewDidLoad</code> has been called) it won’t work, even if you force the view to be
-loaded. You truly need to create your snapshots after the <code>containerView</code>.</p>
+<p>If you just try it after your <code class="highlighter-rouge">toVC</code> has ended initializing its views (i.e. after
+<code class="highlighter-rouge">viewDidLoad</code> has been called) it won’t work, even if you force the view to be
+loaded. You truly need to create your snapshots after the <code class="highlighter-rouge">containerView</code>.</p>
 
-<p>```swift
-  func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-      guard let fromVC = transitionContext.viewController(forKey: .from),
-          let toVC = transitionContext.viewController(forKey: .to) else {
-              return transitionContext.completeTransition(false)
-      }</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nv">transitionContext</span><span class="p">:</span> <span class="kt">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">guard</span> <span class="k">let</span> <span class="nv">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">from</span><span class="p">),</span>
+          <span class="k">let</span> <span class="nv">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">to</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">completeTransition</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+      <span class="p">}</span>
 
-<pre><code>  let containerView = transitionContext.containerView
-  containerView.addSubview(toVC.view)
+      <span class="k">let</span> <span class="nv">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="n">containerView</span>
+      <span class="n">containerView</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">toVC</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
 
-  guard let fromAnimatedView = fromVC.animatedView.snapshotView(afterScreenUpdates: true),
-      let toAnimatedView = toVC.animatedView.snapshotView(afterScreenUpdates: true) else {
-          return transitionContext.completeTransition(true) // toVC.view was already added to the container
-  }
+      <span class="k">guard</span> <span class="k">let</span> <span class="nv">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">),</span>
+          <span class="k">let</span> <span class="nv">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">completeTransition</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="c1">// toVC.view was already added to the container</span>
+      <span class="p">}</span>
 
-  ...   } ```
-</code></pre>
+      <span class="o">...</span>
+  <span class="p">}</span>
+</code></pre></div></div>
 
 <p>Boom! Done. Now it works 🎉</p>
 ]]></content>
@@ -211,7 +323,7 @@ loaded. You truly need to create your snapshots after the <code>containerView</c
   <entry>
     <title type="html"><![CDATA[ReCaptcha Reaches 1.0]]></title>
     <link href="http://blog.flaviocaetano.com/post/recaptcha-reaches-1-dot-0/"/>
-    <updated>2017-11-13T15:04:44-02:00</updated>
+    <updated>2017-11-13T12:04:44-05:00</updated>
     <id>http://blog.flaviocaetano.com/post/recaptcha-reaches-1-dot-0</id>
     <content type="html"><![CDATA[<p>With the new Swift 4 support, <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> has finally reached a stable release!
 Now you can safely use Google’s <a target="_blank" href="https://developers.google.com/recaptcha/docs/invisible">Invisible ReCaptcha</a> in your app!</p>
@@ -236,7 +348,7 @@ the key must be used in the app. <strong>DO NOT USE THE SECRET KEY</strong>!</p>
 
 <p>The <em>Secret key</em> is for the validation in the server side of the application!</p>
 
-<h4 id="warning-"><em>Warning</em> ⚠️</h4>
+<h4 id="warning-️"><em>Warning</em> ⚠️</h4>
 
 <p>Beware that this library only works for Invisible ReCaptcha keys! Make sure to
 check the Invisible reCAPTCHA option when creating your <a href="https://www.google.com/recaptcha/admin">API Key</a>.</p>
@@ -250,65 +362,61 @@ The library comes with a <a target="_blank" href="https://github.com/ReactiveX/R
 
 <p>Add the following to your Podfile:</p>
 
-<p><code>ruby
-pod "ReCaptcha", '~&gt; 1.0'
-# or
-pod "ReCaptcha/RxSwift", '~&gt; 1.0'
-</code></p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pod</span> <span class="s2">"ReCaptcha"</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
+<span class="c1"># or</span>
+<span class="n">pod</span> <span class="s2">"ReCaptcha/RxSwift"</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
+</code></pre></div></div>
 
 <h5 id="carthage">Carthage</h5>
 
-<p><code>ruby
-github "fjcaetano/ReCaptcha" ~&gt; 1.0
-</code></p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">github</span> <span class="s2">"fjcaetano/ReCaptcha"</span> <span class="o">~&gt;</span> <span class="mf">1.0</span>
+</code></pre></div></div>
 
 <p>If you decide to use the reactive extension, be sure to link both frameworks
-<code>ReCaptcha</code> and <code>ReCaptcha_RxSwift</code> to your project. The latter, simply contains
-the reactive extension for the <code>ReCaptcha</code> class.</p>
+<code class="highlighter-rouge">ReCaptcha</code> and <code class="highlighter-rouge">ReCaptcha_RxSwift</code> to your project. The latter, simply contains
+the reactive extension for the <code class="highlighter-rouge">ReCaptcha</code> class.</p>
 
 <h3 id="ios-setup">iOS Setup</h3>
 
-<p>Open your project’s <code>Info.plist</code> file and add two entries:</p>
+<p>Open your project’s <code class="highlighter-rouge">Info.plist</code> file and add two entries:</p>
 
 <ul>
   <li><strong>ReCaptchaKey</strong>: The <em>Site key</em> created in the previous step.</li>
   <li><strong>ReCaptchaDomain</strong>: A valid domain registered with the key in the previous step.</li>
 </ul>
 
-<p>These values may also be sent as parameters to <code>ReCaptcha()</code> init. In this case,
-the parameters will override the values in the <code>Info.plist</code>.</p>
+<p>These values may also be sent as parameters to <code class="highlighter-rouge">ReCaptcha()</code> init. In this case,
+the parameters will override the values in the <code class="highlighter-rouge">Info.plist</code>.</p>
 
 <h2 id="code">Code</h2>
 
-<p>Before starting the validation, you must call the <code>configureWebView(_:)</code> method.
+<p>Before starting the validation, you must call the <code class="highlighter-rouge">configureWebView(_:)</code> method.
 This is for when the webview needs to be presented for the user to complete the
 <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> challenge. If this method is not called, the validation may fail.</p>
 
-<p><code>swift
-recaptcha.configureWebView { [weak self] (webview: WKWebView) in
-    // Configure webview for presentation
-    // Make sure its frame is not CGRect.zero
-}
-</code></p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="n">configureWebView</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">webview</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">)</span> <span class="k">in</span>
+    <span class="c1">// Configure webview for presentation</span>
+    <span class="c1">// Make sure its frame is not CGRect.zero</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <p>This is the moment to add AutoLayout constraints and store a reference to the webview,
 which will already have a superview that is provided when starting the validation.</p>
 
-<p>The <code>configureWebView(_:)</code> won’t necessarily be called. Only if the invisible
+<p>The <code class="highlighter-rouge">configureWebView(_:)</code> won’t necessarily be called. Only if the invisible
 validation is not possible.</p>
 
 <h3 id="validation">Validation</h3>
 
-<p>To start the validation, <em>per se</em>, you must call the <code>validate(on:)</code> method.</p>
+<p>To start the validation, <em>per se</em>, you must call the <code class="highlighter-rouge">validate(on:)</code> method.</p>
 
-<p><code>swift
-recaptcha.validate(on: view) { [weak self] (result: ReCaptchaResult) in
-    print(try? result.dematerialize())
-}
-</code></p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="nf">validate</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">ReCaptchaResult</span><span class="p">)</span> <span class="k">in</span>
+    <span class="nf">print</span><span class="p">(</span><span class="k">try</span><span class="p">?</span> <span class="n">result</span><span class="o">.</span><span class="nf">dematerialize</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-<p>The <code>view</code> given as parameter, must be visible, i.e. be in the active window
-hierarchy, its bounds must be valid and it can’t be marked as <code>hidden</code>. This view
+<p>The <code class="highlighter-rouge">view</code> given as parameter, must be visible, i.e. be in the active window
+hierarchy, its bounds must be valid and it can’t be marked as <code class="highlighter-rouge">hidden</code>. This view
 will contain the ReCaptcha webview as a subview.</p>
 
 <p>By default, <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> won’t remove the webview from its superview, so it may
@@ -317,22 +425,22 @@ be interesting to have some clean up after the closure is called.</p>
 <h3 id="error-handling">Error Handling</h3>
 
 <p><a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> may throw you some errors if incorrectly configured or when execution
-fails. In any case, you can always try calling <code>recaptcha.reset()</code> on errors or
-providing <code>resetOnError: true</code> to the <code>validate</code> method.</p>
+fails. In any case, you can always try calling <code class="highlighter-rouge">recaptcha.reset()</code> on errors or
+providing <code class="highlighter-rouge">resetOnError: true</code> to the <code class="highlighter-rouge">validate</code> method.</p>
 
 <ul>
-  <li><code>ReCaptchaError.htmlLoadError</code>: If by some reason, the library’s bundle is
+  <li><code class="highlighter-rouge">ReCaptchaError.htmlLoadError</code>: If by some reason, the library’s bundle is
 unreachable, the template HTML won’t be loaded.</li>
-  <li><code>ReCaptchaError.apiKeyNotFound</code>: No API key has been provided to the library.
-Either set a <code>ReCaptchaKey</code> entry in the app’s <code>Info.plist</code> or pass it as argument
-to <code>ReCaptcha</code>’s init.</li>
-  <li><code>ReCaptchaError.baseURLNotFound</code>: No domain has been provided to the library.
-Either set a <code>ReCaptchaDomain</code> entry in the app’s <code>Info.plist</code> or pass it as
-argument to <code>ReCaptcha</code>’s init.</li>
-  <li><code>ReCaptchaError.wrongMessageFormat</code>: This means the JS context provided an
+  <li><code class="highlighter-rouge">ReCaptchaError.apiKeyNotFound</code>: No API key has been provided to the library.
+Either set a <code class="highlighter-rouge">ReCaptchaKey</code> entry in the app’s <code class="highlighter-rouge">Info.plist</code> or pass it as argument
+to <code class="highlighter-rouge">ReCaptcha</code>’s init.</li>
+  <li><code class="highlighter-rouge">ReCaptchaError.baseURLNotFound</code>: No domain has been provided to the library.
+Either set a <code class="highlighter-rouge">ReCaptchaDomain</code> entry in the app’s <code class="highlighter-rouge">Info.plist</code> or pass it as
+argument to <code class="highlighter-rouge">ReCaptcha</code>’s init.</li>
+  <li><code class="highlighter-rouge">ReCaptchaError.wrongMessageFormat</code>: This means the JS context provided an
 unexpected message to the API. Shouldn’t happen, so, if it does, be sure to
 <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
-  <li><code>ReCaptchaError.unexpected(Error)</code>: 💩 happens ¯\_(ツ)_/¯. The only moment this
+  <li><code class="highlighter-rouge">ReCaptchaError.unexpected(Error)</code>: 💩 happens ¯\_(ツ)_/¯. The only moment this
 error could be thrown is if JavaScript sends an error. Shouldn’t happen, but if
 it does, don’t be shy and <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
 </ul>
@@ -341,71 +449,14 @@ it does, don’t be shy and <a target="_blank" href="https://github.com/fjcaetan
 
 <p>If your firewall is blocking Google’s ReCaptcha, or if you’re behind the <a target="_blank" href="https://en.wikipedia.org/wiki/Great_Firewall">Great
 Firewall of China</a>, you may use an alternate endpoint for the JS API that points
-to <code>https://www.recaptcha.net/recaptcha/api.js</code>:</p>
+to <code class="highlighter-rouge">https://www.recaptcha.net/recaptcha/api.js</code>:</p>
 
-<p><code>swift
-try ReCaptcha(endpoint: .alternate)
-</code></p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="kt">ReCaptcha</span><span class="p">(</span><span class="nv">endpoint</span><span class="p">:</span> <span class="o">.</span><span class="n">alternate</span><span class="p">)</span>
+</code></pre></div></div>
 
-<p>The default value for the <code>endpoint</code> parameter points the API to <code>https://www.google.com/recaptcha/api.js</code></p>
+<p>The default value for the <code class="highlighter-rouge">endpoint</code> parameter points the API to <code class="highlighter-rouge">https://www.google.com/recaptcha/api.js</code></p>
 
 <h2 id="full-documentation"><strong><a target="_blank" style="text-decoration:underline" href="http://fjcaetano.github.io/ReCaptcha">Full Documentation</a></strong></h2>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Declarations From Extensions Cannot Be Overridden. Are You Sure?]]></title>
-    <link href="http://blog.flaviocaetano.com/post/this-is-how-to-override-extension-methods/"/>
-    <updated>2016-12-05T13:46:08-02:00</updated>
-    <id>http://blog.flaviocaetano.com/post/this-is-how-to-override-extension-methods</id>
-    <content type="html"><![CDATA[<p>If you found this post, it’s likely that you have already encountered the following compile error:</p>
-
-<blockquote>
-  <p>error: declarations from extensions cannot be overridden yet</p>
-
-  <p>P.S. (I love the “yet” part)</p>
-</blockquote>
-
-<p>It sucks, but it makes sense that you can’t override stuff from extensions. Or can you? It turns out, you can. <em>It’s a bit hacky though</em>. You have been warned.</p>
-
-<p><img src="/images/extension-overriding/proceed_with_caution.jpg" alt="Proceed with Caution" /></p>
-
-<!-- more -->
-
-<h3 id="why-you-shouldnt">Why you shouldn’t</h3>
-
-<p>Extensions, as the name already says, are supposed to extend/add/include methods to an existing implementation, making them one of the most beautiful things about Objective-C, and now Swift, since you can add code to a class or framework you do not own. Therefore, it makes sense that you’re not supposed to “replace” code in extensions, conceptually speaking. That’s why the compiler complains when you try to do it.</p>
-
-<p>But there is an exception. Objective-C is a very dynamic language. While Swift attempts to statically dispatch most of its messages, Objective-C dynamically select which implementation to call at run time. So if we exploit our bridge between Objective-C and Swift, we can make the latter a bit more dynamic. Like this:</p>
-
-<p>``` swift
-class Spaceship: NSObject { }</p>
-
-<p>extension Spaceship {
-    @objc func travel(to destination: SpaceTimeLocation) {
-        // TODO: move across universe till we eventualy get there, if we ever do…
-    }
-}</p>
-
-<p>class TeleportMachine: Spaceship {
-    override func travel(to destination: SpaceTimeLocation) {
-        location = destination // yup, that easy
-        …
-        renderUniverse() // lolwut?
-    }
-}
-```
-There you go. We have successfully drilled a wormhole through Swift’s fabric, all the way to Objective-C’s dynamic dispatch. There are limitations to this, of course. This is possible because our <code>Spaceship</code> class is a subclass of NSObject. Make it a root class, and our universe falls apart.</p>
-
-<p>Unfortunately, if you try and make <code>travel(to:)</code> generic, you’ll be using a Swift-only feature, which means you’re not exploiting the ObjC bridge.</p>
-
-<p>So go ahead and do all the things you shouldn’t, though you can, even if it’s a bit <em>hacky</em>.</p>
-
-<h3 id="update">Update</h3>
-
-<p>On Swift 3 you need to define your method as ObjC compliant using <code>@objc</code>.
-(Thanks <a target="\_blank" href="https://twitter.com/bgondim">@bgondim</a>)</p>
 
 ]]></content>
   </entry>

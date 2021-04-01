@@ -145,51 +145,39 @@ throwing a bunch of warnings in your console? Or worst: in your IB…</p>
 
 <!-- more -->
 
-<h2 id="customize-layoutsubviews">Customize <code>layoutSubviews</code></h2>
+<h2 id="customize-layoutsubviews">Customize <code class="highlighter-rouge">layoutSubviews</code></h2>
 
 <p>Depending on the simplicity of what you want to achieve, implementing your own
-version of <code>layoutSubviews</code> without relying on the SDK can be simple and effective:</p>
+version of <code class="highlighter-rouge">layoutSubviews</code> without relying on the SDK can be simple and effective:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="kr">override</span> <span class="k">func</span> <span class="nf">layoutSubviews</span><span class="p">()</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">_</span> <span class="o">=</span> <span class="n">subviews</span><span class="p">.</span><span class="n">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CGFloat</span> <span class="k">in</span>
-</span><span class="line">        <span class="k">let</span> <span class="n">size</span> <span class="o">=</span> <span class="n">view</span><span class="p">.</span><span class="n">intrinsicContentSize</span>
-</span><span class="line">        <span class="n">view</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="bp">CGRect</span><span class="p">(</span>
-</span><span class="line">            <span class="nl">origin</span><span class="p">:</span> <span class="bp">CGPoint</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span>
-</span><span class="line">            <span class="nl">size</span><span class="p">:</span> <span class="n">size</span><span class="p">)</span>
-</span><span class="line">        <span class="k">return</span> <span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">maxX</span> <span class="o">+</span> <span class="n">Constants</span><span class="p">.</span><span class="n">spacing</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="kd">func</span> <span class="nf">layoutSubviews</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">subviews</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="nv">size</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">intrinsicContentSize</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="kt">CGRect</span><span class="p">(</span>
+            <span class="nv">origin</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="nv">size</span><span class="p">:</span> <span class="n">size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">view</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">maxX</span> <span class="o">+</span> <span class="kt">Constants</span><span class="o">.</span><span class="n">spacing</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-<h2 id="adopting-intrinsiccontentsize">Adopting <code>intrinsicContentSize</code></h2>
+<h2 id="adopting-intrinsiccontentsize">Adopting <code class="highlighter-rouge">intrinsicContentSize</code></h2>
 
-<p>As you may have noticed in the example above, by overriding <code>intrinsicContentSize</code>
+<p>As you may have noticed in the example above, by overriding <code class="highlighter-rouge">intrinsicContentSize</code>
 you can have a view that defines its own size without depending on constraints
 or content.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="kr">override</span> <span class="k">var</span> <span class="nl">intrinsicContentSize</span><span class="p">:</span> <span class="bp">CGSize</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">isExpanded</span> <span class="o">?</span> <span class="n">Constants</span><span class="p">.</span><span class="nl">expandedSize</span> <span class="p">:</span> <span class="n">Constants</span><span class="p">.</span><span class="n">regularSize</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="k">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">isExpanded</span> <span class="p">?</span> <span class="kt">Constants</span><span class="o">.</span><span class="nv">expandedSize</span> <span class="p">:</span> <span class="kt">Constants</span><span class="o">.</span><span class="n">regularSize</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <p>Btw, it’s animatable 💖</p>
 
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#swift" title="Pages tagged swift" class="tag">swift</a></span>
-        <span><a href="/post/handling-frames-in-an-autolayout-universe/" rel="bookmark" title="Handling Frames In An AutoLayout Universe">Handling Frames In An AutoLayout Universe</a> was published on <span class="entry-date date published updated"><time datetime="2018-02-27T15:20:08-03:00">February 27, 2018</time></span></span>
+        <span><a href="/post/handling-frames-in-an-autolayout-universe/" rel="bookmark" title="Handling Frames In An AutoLayout Universe">Handling Frames In An AutoLayout Universe</a> was published on <span class="entry-date date published updated"><time datetime="2018-02-27T13:20:08-05:00">February 27, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -205,23 +193,23 @@ or content.</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -233,7 +221,7 @@ or content.</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

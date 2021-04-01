@@ -135,7 +135,77 @@
   
   <div class="entry-meta">
     <span class="entry-date date published updated">
-      <time datetime="2019-11-11T17:36:36-03:00">
+      <time datetime="2021-04-01T15:33:00-04:00">
+        <a href="/post/rendering-enums-in-swiftui/">April 01, 2021</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/post/rendering-enums-in-swiftui/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/post/rendering-enums-in-swiftui/" rel="bookmark" title="Rendering Enums in SwiftUI" itemprop="url">Rendering Enums in SwiftUI</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>Enums are an excellent way to leverage Swift’s value-types and immutability principles for handling states. Imagine you have a view that fetches a list of items from an API. You can represent that view’s state as the following enum:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">ViewState</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="n">idle</span><span class="p">,</span>          <span class="c1">// next state: .loading</span>
+       <span class="n">loading</span><span class="p">,</span>       <span class="c1">// next states: .items or .error</span>
+       <span class="nf">items</span><span class="p">([</span><span class="kt">Item</span><span class="p">]),</span> <span class="c1">// next state: .loading</span>
+       <span class="nf">error</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span>   <span class="c1">// next state: .loading</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Your view is idle before fetching your list. When it does so, you update your view’s state to <code class="highlighter-rouge">.loading</code> and add an appropriate indicator. From there you’ll either have a successful state with the list you just loaded, or an error, much like a Result.</p>
+
+<p>Now if your View, or ViewModel has a ViewState attribute, how would you render that in SwiftUI?</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+
+  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="c1">// TODO: render `state`</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+
+  
+  
+    <footer>
+      <a class="btn" rel="full-article" href="/post/rendering-enums-in-swiftui/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
+    </footer>
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
+      <time datetime="2019-11-11T15:36:36-05:00">
         <a href="/post/using-native-and-non-native-animations-together/">November 11, 2019</a>
       </time>
     </span>
@@ -161,10 +231,10 @@
   <p>React-Native animations has some limitations on what can be done using the native driver and what
 can only be executed in the Javascript realm. Animating colors is an example of property you can
 only animate using the JS interpreter, which is super slow and will probably affect your
-performance. If you try and hang a few <code>interpolates</code> in that <code>Animated.Value</code>, you’ll have a bad
+performance. If you try and hang a few <code class="highlighter-rouge">interpolates</code> in that <code class="highlighter-rouge">Animated.Value</code>, you’ll have a bad
 time trying to have fluid and seemless animations.</p>
 
-<p>If only there was a way of using one <code>Animated.Value</code> to drive another <code>Animated.Value</code>…</p>
+<p>If only there was a way of using one <code class="highlighter-rouge">Animated.Value</code> to drive another <code class="highlighter-rouge">Animated.Value</code>…</p>
 
 <p><img src="https://media.giphy.com/media/2H67VmB5UEBmU/giphy.gif" alt="thinking gif" /></p>
 
@@ -196,7 +266,7 @@ time trying to have fluid and seemless animations.</p>
   
   <div class="entry-meta">
     <span class="entry-date date published updated">
-      <time datetime="2019-10-31T13:37:05-03:00">
+      <time datetime="2019-10-31T12:37:05-04:00">
         <a href="/post/rogue-bit/">October 31, 2019</a>
       </time>
     </span>
@@ -257,7 +327,7 @@ while also being really fun.</p>
   
   <div class="entry-meta">
     <span class="entry-date date published updated">
-      <time datetime="2019-09-26T09:47:19-03:00">
+      <time datetime="2019-09-26T08:47:19-04:00">
         <a href="/post/the-art-of-coding/">September 26, 2019</a>
       </time>
     </span>
@@ -335,7 +405,7 @@ Share your knowledge. Mentor an apprentice. Share your greatness.</p>
   
   <div class="entry-meta">
     <span class="entry-date date published updated">
-      <time datetime="2019-08-28T18:36:39-03:00">
+      <time datetime="2019-08-28T17:36:39-04:00">
         <a href="/post/react-hook-hooker/">August 28, 2019</a>
       </time>
     </span>
@@ -364,85 +434,47 @@ you can split your states and effects into multiple hooks and simplify your code
 
 <p>Imagine you have the following component:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="nx">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">try</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">      <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">},</span> <span class="p">[]);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="kr">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line">  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="p">(</span>
-</span><span class="line">    <span class="o">&lt;&gt;</span>
-</span><span class="line">      <span class="p">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderError</span> <span class="nx">error</span><span class="o">=</span><span class="p">{</span><span class="nx">error</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">}</span>
-</span><span class="line">      <span class="p">{</span><span class="nx">isLoading</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="o">/&gt;</span><span class="p">}</span>
-</span><span class="line">      <span class="p">{</span><span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderResult</span> <span class="nx">result</span><span class="o">=</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span><span class="o">&gt;</span><span class="p">}</span>
-</span><span class="line">      <span class="o">&lt;</span><span class="nx">Counter</span>
-</span><span class="line">        <span class="nx">count</span><span class="o">=</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span>
-</span><span class="line">        <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressCount</span><span class="p">}</span>
-</span><span class="line">      <span class="o">/&gt;</span>
-</span><span class="line">      <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressButton</span><span class="p">}</span> <span class="o">/&gt;</span>
-</span><span class="line">    <span class="o">&lt;</span><span class="err">/&gt;</span>
-</span><span class="line">  <span class="p">)</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">userId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isLoading</span><span class="p">,</span> <span class="nx">setLoading</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">result</span><span class="p">,</span> <span class="nx">setResult</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">handlePressButton</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+      
+      <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetchDataFromTheAPI</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+
+      <span class="nx">setResult</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">setError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+      <span class="nx">setLoading</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[]);</span>
+
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  
+  <span class="kd">const</span> <span class="nx">handlePressCount</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;&gt;</span>
+      <span class="p">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderError</span> <span class="nx">error</span><span class="o">=</span><span class="p">{</span><span class="nx">error</span><span class="p">}</span> <span class="sr">/&gt;</span><span class="err">}
+</span>      <span class="p">{</span><span class="nx">isLoading</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="o">/&gt;</span><span class="p">}</span>
+      <span class="p">{</span><span class="nx">result</span> <span class="o">&amp;&amp;</span> <span class="o">&lt;</span><span class="nx">RenderResult</span> <span class="nx">result</span><span class="o">=</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span><span class="o">&gt;</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">Counter</span>
+        <span class="nx">count</span><span class="o">=</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span>
+        <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressCount</span><span class="p">}</span>
+      <span class="sr">/</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePressButton</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/</span><span class="err">&gt;
+</span>  <span class="p">)</span>
+<span class="p">};</span>
+
+</code></pre></div></div>
 
 <p>The code may look as clean as possible, but it could be better organized, and this is how you can do
 that.</p>
@@ -452,67 +484,6 @@ that.</p>
   
     <footer>
       <a class="btn" rel="full-article" href="/post/react-hook-hooker/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
-    </footer>
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  
-    <a href="https://github.com/fjcaetano/ios-simulator-gif" target="_blank"><img class="github-ribbon" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
-  
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2019-07-30T10:56:44-03:00">
-        <a href="/post/an-easier-way-to-record-ios-gifs/">July 30, 2019</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/post/an-easier-way-to-record-ios-gifs/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/post/an-easier-way-to-record-ios-gifs/" rel="bookmark" title="An Easier Way to Record iOS Gifs" itemprop="url">An Easier Way to Record iOS Gifs</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>One of these days, I needed a tool to record gifs from iOS devices to provide a better description
-to our PRs here at Work&amp;Co. It wasn’t uncommon for us to open PRs with no description at all or with minimum overview of what was being accomplished.</p>
-
-<p>Let me tell you something: design matters at this company! It’s hard to create amazing digital
-products and even harder to assess its code. We decided we could do better with our PRs.</p>
-
-<p>Recording gifs from iOS devices has never been easy. You can find a bunch of tools online that are
-paid or simply don’t work. The alternative was to launch QuickTime, record a video and convert it to
-gif. That’s a lot of work. It’s tiresome and time consuming. We we could do better!</p>
-
-<p><img src="https://github.com/fjcaetano/ios-simulator-gif/raw/master/example.gif?raw=true" alt="Example GIF" /></p>
-
-
-  
-  
-    <footer>
-      <a class="btn" rel="full-article" href="/post/an-easier-way-to-record-ios-gifs/">Continue reading &nbsp; <i class="fa fa-angle-double-right"></i></a>
     </footer>
   
 </div><!-- /.entry-content -->
@@ -536,7 +507,7 @@ gif. That’s a lot of work. It’s tiresome and time consuming. We we could do 
 
   <div class="footer-wrapper">
     <footer role="contentinfo">
-      <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+      <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
     </footer>
   </div><!-- /.footer-wrapper -->

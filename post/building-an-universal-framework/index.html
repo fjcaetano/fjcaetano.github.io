@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="bash ">
+<meta name="keywords" content="Bash ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -140,43 +140,28 @@
 
 <!-- more -->
 
-<p>Then, in the last “funcional tests” to check that all gears were lubed, I tried running the new project against the iOS Simulator. Not surprisingly, Xcode complained that <code>symbol(s) not found for architecture x86_64</code>. Building the framework against the simulator solved it, but, on the other side of the scale, I couldn’t run it against the devices anymore. Of course, I would have to build a fat library that supported both architectures.</p>
+<p>Then, in the last “funcional tests” to check that all gears were lubed, I tried running the new project against the iOS Simulator. Not surprisingly, Xcode complained that <code class="highlighter-rouge">symbol(s) not found for architecture x86_64</code>. Building the framework against the simulator solved it, but, on the other side of the scale, I couldn’t run it against the devices anymore. Of course, I would have to build a fat library that supported both architectures.</p>
 
 <p><a href="http://spin.atomicobject.com/2011/12/13/building-a-universal-framework-for-ios/" target="_blank">After</a> <a href="http://stackoverflow.com/questions/31575580/ios-universal-framework-with-iphoneos-and-iphonesimulator-architectures" target="_blank">extensively</a> <a href="http://stackoverflow.com/questions/27284192/xcode6-creating-fat-static-library-ios-universal-framework" target="_blank">searching</a>, I finally found something worthy on <a href="http://www.raywenderlich.com/41377/creating-a-static-library-in-ios-tutorial" target="_blank">this Ray Wenderlich article</a> (where else?), but it still wasn’t quite what I expected. Aside the fact that it’s an article from 2013, it’s focused on creating an Static Library, and the solution is to create an Aggregate target with a build script. But I could work on that. It was feasible. This is the original script:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c"># define output folder environment variable</span>
-</span><span class="line"><span class="nv">UNIVERSAL_OUTPUTFOLDER</span><span class="o">=</span><span class="k">${</span><span class="nv">BUILD_DIR</span><span class="k">}</span>/<span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span>-universal
-</span><span class="line">
-</span><span class="line"><span class="c"># Step 1. Build Device and Simulator versions</span>
-</span><span class="line">xcodebuild -target ImageFilters <span class="nv">ONLY_ACTIVE_ARCH</span><span class="o">=</span>NO -configuration <span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span> -sdk iphoneos  <span class="nv">BUILD_DIR</span><span class="o">=</span><span class="s2">&quot;${BUILD_DIR}&quot;</span> <span class="nv">BUILD_ROOT</span><span class="o">=</span><span class="s2">&quot;${BUILD_ROOT}&quot;</span>
-</span><span class="line">xcodebuild -target ImageFilters -configuration <span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span> -sdk iphonesimulator -arch i386 <span class="nv">BUILD_DIR</span><span class="o">=</span><span class="s2">&quot;${BUILD_DIR}&quot;</span> <span class="nv">BUILD_ROOT</span><span class="o">=</span><span class="s2">&quot;${BUILD_ROOT}&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># make sure the output directory exists</span>
-</span><span class="line">mkdir -p <span class="s2">&quot;${UNIVERSAL_OUTPUTFOLDER}&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># Step 2. Create universal binary file using lipo</span>
-</span><span class="line">lipo -create -output <span class="s2">&quot;${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a&quot;</span> <span class="s2">&quot;${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a&quot;</span> <span class="s2">&quot;${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># Last touch. copy the header files. Just for convenience</span>
-</span><span class="line">cp -R <span class="s2">&quot;${BUILD_DIR}/${CONFIGURATION}-iphoneos/include&quot;</span> <span class="s2">&quot;${UNIVERSAL_OUTPUTFOLDER}/&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># define output folder environment variable</span>
+<span class="nv">UNIVERSAL_OUTPUTFOLDER</span><span class="o">=</span><span class="k">${</span><span class="nv">BUILD_DIR</span><span class="k">}</span>/<span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span><span class="nt">-universal</span>
 
-<p>First of all, it wouldn’t work because I’m using workspaces instead of a <code>xcodeproj</code>, partly because of Cocoapods. So using <code>xcodebuild -target</code> wouldn’t cut. Secondly, I wanted this script to be run when I archive the framework project, so it’d be run with the correct configuration, the correct environment variables, etc, etc. Lastly, the script is actually redundant if you think of running it as I intended. You wouldn’t have to build the project again for the SDK <code>iphoneos</code>. Archiving the target would already do that, so I would only have to build against the <code>iphonesimulator</code> SDK and then combine the executables.</p>
+<span class="c"># Step 1. Build Device and Simulator versions</span>
+xcodebuild <span class="nt">-target</span> ImageFilters <span class="nv">ONLY_ACTIVE_ARCH</span><span class="o">=</span>NO <span class="nt">-configuration</span> <span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span> <span class="nt">-sdk</span> iphoneos  <span class="nv">BUILD_DIR</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">BUILD_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="nv">BUILD_ROOT</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">BUILD_ROOT</span><span class="k">}</span><span class="s2">"</span>
+xcodebuild <span class="nt">-target</span> ImageFilters <span class="nt">-configuration</span> <span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span> <span class="nt">-sdk</span> iphonesimulator <span class="nt">-arch</span> i386 <span class="nv">BUILD_DIR</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">BUILD_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="nv">BUILD_ROOT</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">BUILD_ROOT</span><span class="k">}</span><span class="s2">"</span>
+
+<span class="c"># make sure the output directory exists</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="k">${</span><span class="nv">UNIVERSAL_OUTPUTFOLDER</span><span class="k">}</span><span class="s2">"</span>
+
+<span class="c"># Step 2. Create universal binary file using lipo</span>
+lipo <span class="nt">-create</span> <span class="nt">-output</span> <span class="s2">"</span><span class="k">${</span><span class="nv">UNIVERSAL_OUTPUTFOLDER</span><span class="k">}</span><span class="s2">/lib</span><span class="k">${</span><span class="nv">PROJECT_NAME</span><span class="k">}</span><span class="s2">.a"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">BUILD_DIR</span><span class="k">}</span><span class="s2">/</span><span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span><span class="s2">-iphoneos/lib</span><span class="k">${</span><span class="nv">PROJECT_NAME</span><span class="k">}</span><span class="s2">.a"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">BUILD_DIR</span><span class="k">}</span><span class="s2">/</span><span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span><span class="s2">-iphonesimulator/lib</span><span class="k">${</span><span class="nv">PROJECT_NAME</span><span class="k">}</span><span class="s2">.a"</span>
+
+<span class="c"># Last touch. copy the header files. Just for convenience</span>
+<span class="nb">cp</span> <span class="nt">-R</span> <span class="s2">"</span><span class="k">${</span><span class="nv">BUILD_DIR</span><span class="k">}</span><span class="s2">/</span><span class="k">${</span><span class="nv">CONFIGURATION</span><span class="k">}</span><span class="s2">-iphoneos/include"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">UNIVERSAL_OUTPUTFOLDER</span><span class="k">}</span><span class="s2">/"</span>
+</code></pre></div></div>
+
+<p>First of all, it wouldn’t work because I’m using workspaces instead of a <code class="highlighter-rouge">xcodeproj</code>, partly because of Cocoapods. So using <code class="highlighter-rouge">xcodebuild -target</code> wouldn’t cut. Secondly, I wanted this script to be run when I archive the framework project, so it’d be run with the correct configuration, the correct environment variables, etc, etc. Lastly, the script is actually redundant if you think of running it as I intended. You wouldn’t have to build the project again for the SDK <code class="highlighter-rouge">iphoneos</code>. Archiving the target would already do that, so I would only have to build against the <code class="highlighter-rouge">iphonesimulator</code> SDK and then combine the executables.</p>
 
 <p>Having in mind that I wanted the universal build to be created when I archived the framework target, I edited my scheme and added the script as a “Run Script” phase in “Post-actions”:</p>
 
@@ -186,7 +171,7 @@
   <p>Don’t forget to “Provide build settings from” the blurred framework!</p>
 </blockquote>
 
-<p>So after fixing <code>xcodebuild</code>’s parameters to work with workspaces (and running the correct scheme), now all I had to do was combine (<code>lipo</code>) the product of the Archive with the product of the build I just did and, finally, export it to the correct location. This is the final script:</p>
+<p>So after fixing <code class="highlighter-rouge">xcodebuild</code>’s parameters to work with workspaces (and running the correct scheme), now all I had to do was combine (<code class="highlighter-rouge">lipo</code>) the product of the Archive with the product of the build I just did and, finally, export it to the correct location. This is the final script:</p>
 
 <div><script src="https://gist.github.com/16bc1f84981262f911d7.js"></script>
 <noscript><pre><code>#!/bin/sh
@@ -226,8 +211,8 @@ fi</code></pre></noscript></div>
 <p><a href="/images/universal_framework.png"><img src="/images/universal_framework.png" alt="Universal Framework" /></a></p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#bash" title="Pages tagged bash" class="tag">bash</a></span>
-        <span><a href="/post/building-an-universal-framework/" rel="bookmark" title="Building an Universal Framework">Building an Universal Framework</a> was published on <span class="entry-date date published updated"><time datetime="2015-09-03T17:41:16-03:00">September 03, 2015</time></span></span>
+        <span class="entry-tags"><a href="/categories/#Bash" title="Pages tagged Bash" class="tag">Bash</a></span>
+        <span><a href="/post/building-an-universal-framework/" rel="bookmark" title="Building an Universal Framework">Building an Universal Framework</a> was published on <span class="entry-date date published updated"><time datetime="2015-09-03T16:41:16-04:00">September 03, 2015</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -243,23 +228,23 @@ fi</code></pre></noscript></div>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -271,7 +256,7 @@ fi</code></pre></noscript></div>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

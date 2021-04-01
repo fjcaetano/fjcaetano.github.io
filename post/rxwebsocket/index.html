@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="swift ">
+<meta name="keywords" content="Swift ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -150,84 +150,61 @@ in the app, more specifically <a href="https://github.com/ReactiveX/RxSwift" tar
 Rx use to cross-object events and network communications. Not surprisingly, we
 wanted to use websockets reactively.</p>
 
-<h2 id="rxwebsockettargetblank"><a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a></h2>
+<h2 id="rxwebsocket"><a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a></h2>
 
 <p>We designed RxWebSocket to be as lightweight as possible, truly, just making an
 abstraction layer over <a href="https://github.com/daltoniam/Starscream" target="_blank">Starscream</a> to make it reactive.</p>
 
-<p>All you need is to listen to the <code>stream</code> property which is an <code>Observable&lt;StreamEvent&gt;</code>.</p>
+<p>All you need is to listen to the <code class="highlighter-rouge">stream</code> property which is an <code class="highlighter-rouge">Observable&lt;StreamEvent&gt;</code>.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">public</span> <span class="k">enum</span> <span class="n">StreamEvent</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">case</span> <span class="n">Connect</span>
-</span><span class="line">    <span class="k">case</span> <span class="n">Disconnect</span><span class="p">(</span><span class="bp">NSError</span><span class="o">?</span><span class="p">)</span>
-</span><span class="line">    <span class="k">case</span> <span class="n">Pong</span>
-</span><span class="line">    <span class="k">case</span> <span class="n">Text</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-</span><span class="line">    <span class="k">case</span> <span class="n">Data</span><span class="p">(</span><span class="bp">NSData</span><span class="p">)</span>
-</span><span class="line">  <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">StreamEvent</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="kt">Connect</span>
+    <span class="k">case</span> <span class="kt">Disconnect</span><span class="p">(</span><span class="kt">NSError</span><span class="p">?)</span>
+    <span class="k">case</span> <span class="kt">Pong</span>
+    <span class="k">case</span> <span class="kt">Text</span><span class="p">(</span><span class="kt">String</span><span class="p">)</span>
+    <span class="k">case</span> <span class="kt">Data</span><span class="p">(</span><span class="kt">NSData</span><span class="p">)</span>
+  <span class="p">}</span>
+</code></pre></div></div>
 
 <p>Using an enum as the element type allows us to have every interaction with the
 websocket server in one property that is also easily filtered by message type. If
 we need to know when the websocket connects, we can simply filter the stream:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">socket</span><span class="p">.</span><span class="n">stream</span>
-</span><span class="line">  <span class="p">.</span><span class="n">filter</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">switch</span> <span class="err">$</span><span class="mi">0</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">case</span> <span class="p">.</span><span class="nl">Connect</span><span class="p">:</span> <span class="k">return</span> <span class="nb">true</span>
-</span><span class="line">    <span class="k">default</span><span class="o">:</span> <span class="k">return</span> <span class="nb">false</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">socket</span><span class="o">.</span><span class="n">stream</span>
+  <span class="o">.</span><span class="n">filter</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="nv">$0</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="kt">Connect</span><span class="p">:</span> <span class="k">return</span> <span class="kc">true</span>
+    <span class="k">default</span><span class="p">:</span> <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
 
 <p>If your websocket messages the client with a JSON object that you need to parse:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">socket</span><span class="p">.</span><span class="n">stream</span>
-</span><span class="line">  <span class="p">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="n">event</span> <span class="o">-&gt;</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">AnyObject</span><span class="o">&gt;</span> <span class="k">in</span>
-</span><span class="line">    <span class="k">switch</span> <span class="n">event</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">case</span> <span class="p">.</span><span class="n">Text</span><span class="p">(</span><span class="k">let</span> <span class="n">text</span><span class="p">)</span><span class="o">:</span>
-</span><span class="line">      <span class="k">return</span> <span class="n">Observable</span><span class="p">.</span><span class="n">just</span><span class="p">(</span><span class="n">try</span> <span class="bp">NSJSONSerialization</span><span class="p">.</span><span class="n">JSONObjectWithData</span><span class="p">(</span><span class="n">text</span><span class="p">.</span><span class="n">dataUsingEncoding</span><span class="p">(</span><span class="n">NSUTF8StringEncoding</span><span class="p">)</span><span class="o">!</span><span class="p">,</span> <span class="nl">options</span><span class="p">:</span> <span class="p">.</span><span class="n">AllowFragments</span><span class="p">))</span>
-</span><span class="line">    <span class="k">default</span><span class="o">:</span> <span class="k">return</span> <span class="n">Observable</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">socket</span><span class="o">.</span><span class="n">stream</span>
+  <span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="n">event</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">AnyObject</span><span class="o">&gt;</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">event</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="kt">Text</span><span class="p">(</span><span class="k">let</span> <span class="nv">text</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">just</span><span class="p">(</span><span class="k">try</span> <span class="kt">NSJSONSerialization</span><span class="o">.</span><span class="kt">JSONObjectWithData</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="nf">dataUsingEncoding</span><span class="p">(</span><span class="kt">NSUTF8StringEncoding</span><span class="p">)</span><span class="o">!</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="o">.</span><span class="kt">AllowFragments</span><span class="p">))</span>
+    <span class="k">default</span><span class="p">:</span> <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">empty</span><span class="p">()</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
 
 <p>We know it’s still crude and quite simple, which is our intention, but we’ll improve
 <a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a> with time. Every suggestion, comment, critic, PR,
 etcetera is welcome.</p>
 
 <p>You can check an actual implementation in the example project or by running</p>
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">pod try RxWebSocket
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pod try RxWebSocket
+</code></pre></div></div>
 
 <p>Enjoy!</p>
 
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#swift" title="Pages tagged swift" class="tag">swift</a></span>
-        <span><a href="/post/rxwebsocket/" rel="bookmark" title="RxWebSocket">RxWebSocket</a> was published on <span class="entry-date date published updated"><time datetime="2016-02-25T15:55:42-03:00">February 25, 2016</time></span></span>
+        <span class="entry-tags"><a href="/categories/#Swift" title="Pages tagged Swift" class="tag">Swift</a></span>
+        <span><a href="/post/rxwebsocket/" rel="bookmark" title="RxWebSocket">RxWebSocket</a> was published on <span class="entry-date date published updated"><time datetime="2016-02-25T13:55:42-05:00">February 25, 2016</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -243,23 +220,23 @@ etcetera is welcome.</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -271,7 +248,7 @@ etcetera is welcome.</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

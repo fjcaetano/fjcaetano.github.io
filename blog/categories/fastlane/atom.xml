@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Fastlane | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/fastlane/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-11-11T18:45:30-03:00</updated>
+  <updated>2021-04-01T19:16:40-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Codecov Fastlane Action]]></title>
     <link href="http://blog.flaviocaetano.com/post/codecov-fastlane-action/"/>
-    <updated>2017-11-01T18:12:06-02:00</updated>
+    <updated>2017-11-01T16:12:06-04:00</updated>
     <id>http://blog.flaviocaetano.com/post/codecov-fastlane-action</id>
     <content type="html"><![CDATA[<p>I recently had to configure <a href="https://github.com/fastlane/fastlane" target="_blank">Fastlane</a> to run in the <a href="https://github.com/fjcaetano/ReCaptcha" target="_blank">ReCaptcha</a>
 project. Since we were already uploading coverage reports to <a href="https://codecov.io" target="_blank">Codecov</a>,
@@ -27,9 +27,8 @@ kept complaining about syntax error, I came up with the following command:</p>
 
 <!-- more -->
 
-<p><code>sh
-curl -s https://codecov.io/bash | bash -s -- -J 'ReCaptcha'
-</code></p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-s</span> https://codecov.io/bash | bash <span class="nt">-s</span> <span class="nt">--</span> <span class="nt">-J</span> <span class="s1">'ReCaptcha'</span>
+</code></pre></div></div>
 
 <p>Hey, since we’re running a shell command, why not transform it into a proper
 action so everybody can use it, right?  Unfortunately, <a href="https://docs.fastlane.tools/plugins/create-plugin/#submitting-the-action-to-the-fastlane-main-repo" target="_blank">Fastlane is not accepting
@@ -38,21 +37,27 @@ also, this action would fall into the “third party service” category and it 
 be accepted anyway.</p>
 
 <p>So let’s share it on Github! Since, it’s just a single file, I’ve created a gist
-that can be added as a submodule to your <a href="https://github.com/fastlane/fastlane" target="_blank">Fastlane</a> <code>actions</code> folder:</p>
+that can be added as a submodule to your <a href="https://github.com/fastlane/fastlane" target="_blank">Fastlane</a> <code class="highlighter-rouge">actions</code> folder:</p>
 
-<p><div><script src='https://gist.github.com/04126b3051f6cd6aebe041bb1dfe14e9.js'></script>
+<div><script src="https://gist.github.com/04126b3051f6cd6aebe041bb1dfe14e9.js"></script>
 <noscript><pre><code>module Fastlane
   module Actions
     class CodecovAction &lt; Action
       def self.run(params)
+        ci_only = params[:ci_only]
         cmd = [&#39;curl -s https://codecov.io/bash | bash&#39;]
 
         cmd &lt;&lt; &quot;-s --&quot; if params.all_keys.inject(false) { |p, k| p or params[k] }
         cmd &lt;&lt; &quot;-X xcodeplist&quot; if params[:use_xcodeplist]
         cmd &lt;&lt; &quot;-J &#39;#{params[:project_name]}&#39;&quot; if params[:project_name]
         cmd &lt;&lt; &quot;-t &#39;#{params[:token]}&#39;&quot; if params[:token]
+        cmd &lt;&lt; &quot;-v&quot; if params[:verbose]
 
-        sh cmd.join(&quot; &quot;)
+        if Helper.is_ci? || !ci_only
+          sh cmd.join(&quot; &quot;)
+        else
+          puts &quot;Not CI: Skipping coverage files upload&quot;
+        end
       end
 
       #####################################################
@@ -64,15 +69,10 @@ that can be added as a submodule to your <a href="https://github.com/fastlane/fa
       end
 
       def self.details
-        # Optional:
-        # this is your chance to provide a more detailed description of this action
         &quot;https://codecov.io&quot;
       end
 
       def self.available_options
-        # Define all options your action supports.
-
-        # Below a few examples
         [
           FastlaneCore::ConfigItem.new(key: :use_xcodeplist,
                                        env_name: &quot;FL_CODECOV_USE_XCODEPLIST&quot;,
@@ -87,6 +87,18 @@ that can be added as a submodule to your <a href="https://github.com/fastlane/fa
                                        env_name: &quot;FL_CODECOV_TOKEN&quot;,
                                        description: &quot;API token for private repos&quot;,
                                        optional: true),
+          FastlaneCore::ConfigItem.new(key: :verbose,
+                                       env_name: &quot;FL_CODECOV_VERBOSE&quot;,
+                                       description: &quot;Verbose logs&quot;,
+                                       is_string: false,
+                                       optional: true,
+                                       default_value: false),
+          FastlaneCore::ConfigItem.new(key: :ci_only,
+                                       env_name: &quot;FL_CODECOV_CI_ONLY&quot;,
+                                       description: &quot;Upload coverage only if running on CI&quot;,
+                                       is_string: false,
+                                       optional: true,
+                                       default_value: true),
         ]
       end
 
@@ -101,16 +113,15 @@ that can be added as a submodule to your <a href="https://github.com/fastlane/fa
   end
 end
 </code></pre></noscript></div>
-</p>
 
-<p>After cloning the submodule you can try running <code>fastlane action codecov</code> for details.</p>
+<p>After cloning the submodule you can try running <code class="highlighter-rouge">fastlane action codecov</code> for details.</p>
 
 <h3 id="arguments">Arguments:</h3>
 
 <ul>
-  <li><code>use_xcodeplist</code>: <a href="https://docs.codecov.io/blog/beta-xcode-plist-reports" target="_blank">Codecov’s beta feature</a> (default <code>false</code>)</li>
-  <li><code>project_name</code>: The project name to be used by the <code>-J</code> argument</li>
-  <li><code>token</code>: The API token for private repos</li>
+  <li><code class="highlighter-rouge">use_xcodeplist</code>: <a href="https://docs.codecov.io/blog/beta-xcode-plist-reports" target="_blank">Codecov’s beta feature</a> (default <code class="highlighter-rouge">false</code>)</li>
+  <li><code class="highlighter-rouge">project_name</code>: The project name to be used by the <code class="highlighter-rouge">-J</code> argument</li>
+  <li><code class="highlighter-rouge">token</code>: The API token for private repos</li>
 </ul>
 
 <p>Enjoy!</p>

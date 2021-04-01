@@ -137,10 +137,10 @@
       <p>React-Native animations has some limitations on what can be done using the native driver and what
 can only be executed in the Javascript realm. Animating colors is an example of property you can
 only animate using the JS interpreter, which is super slow and will probably affect your
-performance. If you try and hang a few <code>interpolates</code> in that <code>Animated.Value</code>, you’ll have a bad
+performance. If you try and hang a few <code class="highlighter-rouge">interpolates</code> in that <code class="highlighter-rouge">Animated.Value</code>, you’ll have a bad
 time trying to have fluid and seemless animations.</p>
 
-<p>If only there was a way of using one <code>Animated.Value</code> to drive another <code>Animated.Value</code>…</p>
+<p>If only there was a way of using one <code class="highlighter-rouge">Animated.Value</code> to drive another <code class="highlighter-rouge">Animated.Value</code>…</p>
 
 <p><img src="https://media.giphy.com/media/2H67VmB5UEBmU/giphy.gif" alt="thinking gif" /></p>
 
@@ -151,96 +151,57 @@ time trying to have fluid and seemless animations.</p>
 <!-- more -->
 
 <p>Yes, that’s possible. No, using a listener doesn’t automatically make your animation non-native.
-This means you’ll need multiple <code>Animated.Values</code> (if that wasn’t clear yet):</p>
+This means you’ll need multiple <code class="highlighter-rouge">Animated.Values</code> (if that wasn’t clear yet):</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kr">const</span> <span class="nx">nativeAnim</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animated</span><span class="p">.</span><span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// 1</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">jsAnim</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animated</span><span class="p">.</span><span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// component did mount</span>
-</span><span class="line"><span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">  <span class="c1">// this is the trick: drive the non-native animation by adding a listener to the native animation</span>
-</span><span class="line">  <span class="kr">const</span> <span class="nx">nativeListener</span> <span class="o">=</span> <span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="nx">Animated</span><span class="p">.</span><span class="nx">event</span><span class="p">([{</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">jsAnim</span> <span class="p">}]));</span> <span class="c1">// 3</span>
-</span><span class="line">  <span class="k">return</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">removeListener</span><span class="p">(</span><span class="nx">nativeListener</span><span class="p">);</span>
-</span><span class="line">  <span class="p">};</span>
-</span><span class="line"><span class="p">},</span> <span class="p">[]);</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// backgroundColor can only be animated using a non-native animation</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">bgColorStyle</span> <span class="o">=</span> <span class="nx">jsAnim</span><span class="p">.</span><span class="nx">interpolate</span><span class="p">({</span> <span class="c1">// 4</span>
-</span><span class="line">  <span class="nx">inputRange</span><span class="o">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
-</span><span class="line">  <span class="nx">outputRange</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">],</span>
-</span><span class="line"><span class="p">});</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// using the native driver still works</span>
-</span><span class="line"><span class="kr">const</span> <span class="nx">positionStyle</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">transform</span><span class="o">:</span> <span class="p">[{</span>
-</span><span class="line">    <span class="nx">translateX</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">interpolate</span><span class="p">({</span>
-</span><span class="line">      <span class="nx">inputRange</span><span class="o">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-</span><span class="line">      <span class="nx">outputRange</span><span class="o">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-</span><span class="line">    <span class="p">}),</span>
-</span><span class="line">  <span class="p">}],</span>
-</span><span class="line"><span class="p">};</span>
-</span><span class="line">
-</span><span class="line"><span class="p">...</span>
-</span><span class="line">
-</span><span class="line"><span class="o">&lt;</span><span class="nx">ScrollView</span>
-</span><span class="line">  <span class="nx">onScroll</span><span class="o">=</span><span class="p">{</span>
-</span><span class="line">    <span class="nx">Animated</span><span class="p">.</span><span class="nx">event</span><span class="p">([{</span>
-</span><span class="line">      <span class="nx">nativeEvent</span><span class="o">:</span> <span class="p">{</span>
-</span><span class="line">        <span class="nx">contentOffset</span><span class="o">:</span> <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="nx">nativeAnim</span> <span class="p">},</span> <span class="c1">// 2</span>
-</span><span class="line">      <span class="p">},</span>
-</span><span class="line">    <span class="p">},</span> <span class="p">{</span> <span class="nx">useNativeDriver</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}])</span>
-</span><span class="line">  <span class="p">}</span> <span class="c1">// 🎉</span>
-</span><span class="line"><span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">nativeAnim</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animated</span><span class="p">.</span><span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// 1</span>
+<span class="kd">const</span> <span class="nx">jsAnim</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animated</span><span class="p">.</span><span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// component did mount</span>
+<span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// this is the trick: drive the non-native animation by adding a listener to the native animation</span>
+  <span class="kd">const</span> <span class="nx">nativeListener</span> <span class="o">=</span> <span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="nx">Animated</span><span class="p">.</span><span class="nx">event</span><span class="p">([{</span> <span class="na">value</span><span class="p">:</span> <span class="nx">jsAnim</span> <span class="p">}]));</span> <span class="c1">// 3</span>
+  <span class="k">return</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">removeListener</span><span class="p">(</span><span class="nx">nativeListener</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">},</span> <span class="p">[]);</span>
+
+<span class="c1">// backgroundColor can only be animated using a non-native animation</span>
+<span class="kd">const</span> <span class="nx">bgColorStyle</span> <span class="o">=</span> <span class="nx">jsAnim</span><span class="p">.</span><span class="nx">interpolate</span><span class="p">({</span> <span class="c1">// 4</span>
+  <span class="na">inputRange</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+  <span class="na">outputRange</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">red</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">black</span><span class="dl">'</span><span class="p">],</span>
+<span class="p">});</span>
+
+<span class="c1">// using the native driver still works</span>
+<span class="kd">const</span> <span class="nx">positionStyle</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">transform</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="na">translateX</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">interpolate</span><span class="p">({</span>
+      <span class="na">inputRange</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="na">outputRange</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">}),</span>
+  <span class="p">}],</span>
+<span class="p">};</span>
+
+<span class="p">...</span>
+
+<span class="o">&lt;</span><span class="nx">ScrollView</span>
+  <span class="nx">onScroll</span><span class="o">=</span><span class="p">{</span>
+    <span class="nx">Animated</span><span class="p">.</span><span class="nx">event</span><span class="p">([{</span>
+      <span class="na">nativeEvent</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">contentOffset</span><span class="p">:</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="nx">nativeAnim</span> <span class="p">},</span> <span class="c1">// 2</span>
+      <span class="p">},</span>
+    <span class="p">},</span> <span class="p">{</span> <span class="na">useNativeDriver</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}])</span>
+  <span class="p">}</span> <span class="c1">// 🎉</span>
+<span class="sr">/</span><span class="err">&gt;
+</span></code></pre></div></div>
 
 <p>Let’s recap what’s up there:</p>
 
 <ol>
-  <li>We defined <code>nativeAnim</code> and <code>jsAnim</code>, which are <code>Animated.Value</code>.</li>
-  <li>This value is driven by a <strong>native</strong> <code>Animated.event</code> triggered by a ScrollView’s offset.</li>
-  <li>We added a listener to <code>nativeAnim</code> to drive a second <code>Animated.Value</code>, by using a non-native
-<code>Animated.event</code>.</li>
-  <li>The non-native animation (<code>jsAnim</code>) is then used to animate a <code>backgroundColor</code>, which is a style
+  <li>We defined <code class="highlighter-rouge">nativeAnim</code> and <code class="highlighter-rouge">jsAnim</code>, which are <code class="highlighter-rouge">Animated.Value</code>.</li>
+  <li>This value is driven by a <strong>native</strong> <code class="highlighter-rouge">Animated.event</code> triggered by a ScrollView’s offset.</li>
+  <li>We added a listener to <code class="highlighter-rouge">nativeAnim</code> to drive a second <code class="highlighter-rouge">Animated.Value</code>, by using a non-native
+<code class="highlighter-rouge">Animated.event</code>.</li>
+  <li>The non-native animation (<code class="highlighter-rouge">jsAnim</code>) is then used to animate a <code class="highlighter-rouge">backgroundColor</code>, which is a style
 property that can only be animated by non-native animations.</li>
 </ol>
 
@@ -252,7 +213,7 @@ property that can only be animated by non-native animations.</li>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#react-native" title="Pages tagged react-native" class="tag">react-native</a><a href="/categories/#animations" title="Pages tagged animations" class="tag">animations</a></span>
-        <span><a href="/post/using-native-and-non-native-animations-together/" rel="bookmark" title="Using native and non-native animations together">Using native and non-native animations together</a> was published on <span class="entry-date date published updated"><time datetime="2019-11-11T17:36:36-03:00">November 11, 2019</time></span></span>
+        <span><a href="/post/using-native-and-non-native-animations-together/" rel="bookmark" title="Using native and non-native animations together">Using native and non-native animations together</a> was published on <span class="entry-date date published updated"><time datetime="2019-11-11T15:36:36-05:00">November 11, 2019</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -268,23 +229,23 @@ property that can only be animated by non-native animations.</li>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/rogue-bit/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h3>
-            <p>I have a peculiar taste in video games. I’ve never been an avid gamer despite owning consoles andbuilding a gaming PC when I was younger. &hellip;&hellip; <a href="/post/rogue-bit/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/react-hook-hooker/" title="Hooking Your Hooks">Hooking Your Hooks</a></h4>
-              <span>Published on August 28, 2019</span>
+              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
+              <span>Published on September 26, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -296,7 +257,7 @@ property that can only be animated by non-native animations.</li>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

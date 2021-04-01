@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="database ">
+<meta name="keywords" content="Database ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -140,7 +140,7 @@ build an SQLite database populated with the most recent data and, when the user
 requests, the iPad will download the whole database, overwriting any existing ones.</p>
 
 <p>I’m no DBA, but I don’t think anyone writes database creation scripts anymore.
-At least not for the usual <code>CREATE TABLE</code>, etc. I’m mostly a MySQL guy and, for
+At least not for the usual <code class="highlighter-rouge">CREATE TABLE</code>, etc. I’m mostly a MySQL guy and, for
 a long time, I’ve been using <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>
 to create my DB models and syncing with my existing database. It automatically
 creates everything that needs to be created and alter all tables that must be
@@ -154,11 +154,11 @@ knows SQLite <em>is not awesome</em>, no one really waste time developing a <em>
 administration tool for it. What may happen, is a company own a DB management
 program (such as <a href="http://www.navicat.com/">Navicat</a>) and something like this goes by:</p>
 
-<pre><code>- Hey, we're supporting MySQL, SQL Server, MongoDB, Cassandra, NoSQL and Postgree,
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Hey, we're supporting MySQL, SQL Server, MongoDB, Cassandra, NoSQL and Postgree,
 don't you think people will notice we're ignoring SQLite?
 
 - God dammit *gasps*, add support to it too... but don't lose too much time with it!
-</code></pre>
+</code></pre></div></div>
 
 <p>Unfortunately, there are no really good tools to work with SQLite available.
 “Hey, what about <a href="http://www.navicat.com/">Navicat</a>?” It’s okay, but I found tons
@@ -192,17 +192,17 @@ to install and use. Just follow this steps:</p>
 under “Utilities” there must be an option named “Export SQLite CREATE Script”
 which may be the first one. Just click it and choose where to save the .sql script
 and execute it. <em>Voilà</em>! If you have any problems executing the generated script,
-you may need to comment the <code>BEGIN;</code> at the top and the <code>COMMIT;</code> at the bottom
+you may need to comment the <code class="highlighter-rouge">BEGIN;</code> at the top and the <code class="highlighter-rouge">COMMIT;</code> at the bottom
 of the .sql script.</p>
 
 <p>Super easy, isn’t it? Give it a try. Even if, like me, you hate SQLite. The plugin
-solves the modelling problem, but creates a new one, because you can’t <code>ALTER</code> an
-existing table since it only generates the <code>CREATE</code> script. But if that’s not a
+solves the modelling problem, but creates a new one, because you can’t <code class="highlighter-rouge">ALTER</code> an
+existing table since it only generates the <code class="highlighter-rouge">CREATE</code> script. But if that’s not a
 problem go for it and be happy. When I found it, life suddenly became joyful again.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#database" title="Pages tagged database" class="tag">database</a></span>
-        <span><a href="/post/sqlite-modelling/" rel="bookmark" title="SQLite Modelling">SQLite Modelling</a> was published on <span class="entry-date date published updated"><time datetime="2013-01-16T20:42:01-02:00">January 16, 2013</time></span></span>
+        <span class="entry-tags"><a href="/categories/#Database" title="Pages tagged Database" class="tag">Database</a></span>
+        <span><a href="/post/sqlite-modelling/" rel="bookmark" title="SQLite Modelling">SQLite Modelling</a> was published on <span class="entry-date date published updated"><time datetime="2013-01-16T17:42:01-05:00">January 16, 2013</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -218,23 +218,23 @@ problem go for it and be happy. When I found it, life suddenly became joyful aga
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -246,7 +246,7 @@ problem go for it and be happy. When I found it, life suddenly became joyful aga
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

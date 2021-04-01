@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Database | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/database/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-11-11T18:45:30-03:00</updated>
+  <updated>2021-04-01T19:16:40-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[SQLite Modelling]]></title>
     <link href="http://blog.flaviocaetano.com/post/sqlite-modelling/"/>
-    <updated>2013-01-16T20:42:01-02:00</updated>
+    <updated>2013-01-16T17:42:01-05:00</updated>
     <id>http://blog.flaviocaetano.com/post/sqlite-modelling</id>
     <content type="html"><![CDATA[<p>SQLite sucks. I think everybody knows, but I had to say it. But, sometimes, we
 have no choice other than using it. Even though it’s horrible and we know we`ll
@@ -31,7 +31,7 @@ build an SQLite database populated with the most recent data and, when the user
 requests, the iPad will download the whole database, overwriting any existing ones.</p>
 
 <p>I’m no DBA, but I don’t think anyone writes database creation scripts anymore.
-At least not for the usual <code>CREATE TABLE</code>, etc. I’m mostly a MySQL guy and, for
+At least not for the usual <code class="highlighter-rouge">CREATE TABLE</code>, etc. I’m mostly a MySQL guy and, for
 a long time, I’ve been using <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>
 to create my DB models and syncing with my existing database. It automatically
 creates everything that needs to be created and alter all tables that must be
@@ -45,11 +45,11 @@ knows SQLite <em>is not awesome</em>, no one really waste time developing a <em>
 administration tool for it. What may happen, is a company own a DB management
 program (such as <a href="http://www.navicat.com/">Navicat</a>) and something like this goes by:</p>
 
-<pre><code>- Hey, we're supporting MySQL, SQL Server, MongoDB, Cassandra, NoSQL and Postgree,
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Hey, we're supporting MySQL, SQL Server, MongoDB, Cassandra, NoSQL and Postgree,
 don't you think people will notice we're ignoring SQLite?
 
 - God dammit *gasps*, add support to it too... but don't lose too much time with it!
-</code></pre>
+</code></pre></div></div>
 
 <p>Unfortunately, there are no really good tools to work with SQLite available.
 “Hey, what about <a href="http://www.navicat.com/">Navicat</a>?” It’s okay, but I found tons
@@ -83,12 +83,12 @@ to install and use. Just follow this steps:</p>
 under “Utilities” there must be an option named “Export SQLite CREATE Script”
 which may be the first one. Just click it and choose where to save the .sql script
 and execute it. <em>Voilà</em>! If you have any problems executing the generated script,
-you may need to comment the <code>BEGIN;</code> at the top and the <code>COMMIT;</code> at the bottom
+you may need to comment the <code class="highlighter-rouge">BEGIN;</code> at the top and the <code class="highlighter-rouge">COMMIT;</code> at the bottom
 of the .sql script.</p>
 
 <p>Super easy, isn’t it? Give it a try. Even if, like me, you hate SQLite. The plugin
-solves the modelling problem, but creates a new one, because you can’t <code>ALTER</code> an
-existing table since it only generates the <code>CREATE</code> script. But if that’s not a
+solves the modelling problem, but creates a new one, because you can’t <code class="highlighter-rouge">ALTER</code> an
+existing table since it only generates the <code class="highlighter-rouge">CREATE</code> script. But if that’s not a
 problem go for it and be happy. When I found it, life suddenly became joyful again.</p>
 ]]></content>
   </entry>

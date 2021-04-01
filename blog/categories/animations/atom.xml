@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Animations | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/animations/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2019-11-11T18:45:30-03:00</updated>
+  <updated>2021-04-01T19:16:40-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -16,15 +16,15 @@
   <entry>
     <title type="html"><![CDATA[Using Native and Non-native Animations Together]]></title>
     <link href="http://blog.flaviocaetano.com/post/using-native-and-non-native-animations-together/"/>
-    <updated>2019-11-11T17:36:36-03:00</updated>
+    <updated>2019-11-11T15:36:36-05:00</updated>
     <id>http://blog.flaviocaetano.com/post/using-native-and-non-native-animations-together</id>
     <content type="html"><![CDATA[<p>React-Native animations has some limitations on what can be done using the native driver and what
 can only be executed in the Javascript realm. Animating colors is an example of property you can
 only animate using the JS interpreter, which is super slow and will probably affect your
-performance. If you try and hang a few <code>interpolates</code> in that <code>Animated.Value</code>, you’ll have a bad
+performance. If you try and hang a few <code class="highlighter-rouge">interpolates</code> in that <code class="highlighter-rouge">Animated.Value</code>, you’ll have a bad
 time trying to have fluid and seemless animations.</p>
 
-<p>If only there was a way of using one <code>Animated.Value</code> to drive another <code>Animated.Value</code>…</p>
+<p>If only there was a way of using one <code class="highlighter-rouge">Animated.Value</code> to drive another <code class="highlighter-rouge">Animated.Value</code>…</p>
 
 <p><img src="https://media.giphy.com/media/2H67VmB5UEBmU/giphy.gif" alt="thinking gif" /></p>
 
@@ -35,58 +35,57 @@ time trying to have fluid and seemless animations.</p>
 <!-- more -->
 
 <p>Yes, that’s possible. No, using a listener doesn’t automatically make your animation non-native.
-This means you’ll need multiple <code>Animated.Values</code> (if that wasn’t clear yet):</p>
+This means you’ll need multiple <code class="highlighter-rouge">Animated.Values</code> (if that wasn’t clear yet):</p>
 
-<p>```js
-const nativeAnim = new Animated.Value(0); // 1
-const jsAnim = new Animated.Value(0);</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">nativeAnim</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animated</span><span class="p">.</span><span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// 1</span>
+<span class="kd">const</span> <span class="nx">jsAnim</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animated</span><span class="p">.</span><span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 
-<p>// component did mount
-useEffect(() =&gt; {
-  // this is the trick: drive the non-native animation by adding a listener to the native animation
-  const nativeListener = nativeAnim.addListener(Animated.event([{ value: jsAnim }])); // 3
-  return () =&gt; {
-    nativeAnim.removeListener(nativeListener);
-  };
-}, []);</p>
+<span class="c1">// component did mount</span>
+<span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// this is the trick: drive the non-native animation by adding a listener to the native animation</span>
+  <span class="kd">const</span> <span class="nx">nativeListener</span> <span class="o">=</span> <span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="nx">Animated</span><span class="p">.</span><span class="nx">event</span><span class="p">([{</span> <span class="na">value</span><span class="p">:</span> <span class="nx">jsAnim</span> <span class="p">}]));</span> <span class="c1">// 3</span>
+  <span class="k">return</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">removeListener</span><span class="p">(</span><span class="nx">nativeListener</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">},</span> <span class="p">[]);</span>
 
-<p>// backgroundColor can only be animated using a non-native animation
-const bgColorStyle = jsAnim.interpolate({ // 4
-  inputRange: [0, 100],
-  outputRange: [‘red’, ‘black’],
-});</p>
+<span class="c1">// backgroundColor can only be animated using a non-native animation</span>
+<span class="kd">const</span> <span class="nx">bgColorStyle</span> <span class="o">=</span> <span class="nx">jsAnim</span><span class="p">.</span><span class="nx">interpolate</span><span class="p">({</span> <span class="c1">// 4</span>
+  <span class="na">inputRange</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+  <span class="na">outputRange</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">red</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">black</span><span class="dl">'</span><span class="p">],</span>
+<span class="p">});</span>
 
-<p>// using the native driver still works
-const positionStyle = {
-  transform: [{
-    translateX: this.nativeAnim.interpolate({
-      inputRange: [0, 2],
-      outputRange: [0, 1],
-    }),
-  }],
-};</p>
+<span class="c1">// using the native driver still works</span>
+<span class="kd">const</span> <span class="nx">positionStyle</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">transform</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="na">translateX</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">nativeAnim</span><span class="p">.</span><span class="nx">interpolate</span><span class="p">({</span>
+      <span class="na">inputRange</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="na">outputRange</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">}),</span>
+  <span class="p">}],</span>
+<span class="p">};</span>
 
-<p>…</p>
+<span class="p">...</span>
 
-<p>&lt;ScrollView
-  onScroll={
-    Animated.event([{
-      nativeEvent: {
-        contentOffset: { x: nativeAnim }, // 2
-      },
-    }, { useNativeDriver: true }])
-  } // 🎉
-/&gt;
-```</p>
+<span class="o">&lt;</span><span class="nx">ScrollView</span>
+  <span class="nx">onScroll</span><span class="o">=</span><span class="p">{</span>
+    <span class="nx">Animated</span><span class="p">.</span><span class="nx">event</span><span class="p">([{</span>
+      <span class="na">nativeEvent</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">contentOffset</span><span class="p">:</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="nx">nativeAnim</span> <span class="p">},</span> <span class="c1">// 2</span>
+      <span class="p">},</span>
+    <span class="p">},</span> <span class="p">{</span> <span class="na">useNativeDriver</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}])</span>
+  <span class="p">}</span> <span class="c1">// 🎉</span>
+<span class="sr">/</span><span class="err">&gt;
+</span></code></pre></div></div>
 
 <p>Let’s recap what’s up there:</p>
 
 <ol>
-  <li>We defined <code>nativeAnim</code> and <code>jsAnim</code>, which are <code>Animated.Value</code>.</li>
-  <li>This value is driven by a <strong>native</strong> <code>Animated.event</code> triggered by a ScrollView’s offset.</li>
-  <li>We added a listener to <code>nativeAnim</code> to drive a second <code>Animated.Value</code>, by using a non-native
-<code>Animated.event</code>.</li>
-  <li>The non-native animation (<code>jsAnim</code>) is then used to animate a <code>backgroundColor</code>, which is a style
+  <li>We defined <code class="highlighter-rouge">nativeAnim</code> and <code class="highlighter-rouge">jsAnim</code>, which are <code class="highlighter-rouge">Animated.Value</code>.</li>
+  <li>This value is driven by a <strong>native</strong> <code class="highlighter-rouge">Animated.event</code> triggered by a ScrollView’s offset.</li>
+  <li>We added a listener to <code class="highlighter-rouge">nativeAnim</code> to drive a second <code class="highlighter-rouge">Animated.Value</code>, by using a non-native
+<code class="highlighter-rouge">Animated.event</code>.</li>
+  <li>The non-native animation (<code class="highlighter-rouge">jsAnim</code>) is then used to animate a <code class="highlighter-rouge">backgroundColor</code>, which is a style
 property that can only be animated by non-native animations.</li>
 </ol>
 

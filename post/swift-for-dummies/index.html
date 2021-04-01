@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="swift ">
+<meta name="keywords" content="Swift ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -159,58 +159,58 @@ Java. It’s syntax also resembles these languages very much.</p>
 passed through references. No more asterisk (woohoo \o/).</p>
 
 <p>Swift plays with the concepts of variables and constants. There’s no type
-definition to neither of those just the declares var, for variables, and <code>let</code>
+definition to neither of those just the declares var, for variables, and <code class="highlighter-rouge">let</code>
 for constants. As you may have figured out, constants can’t be altered. We’ll
 cover when to use it in a few steps.</p>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="s">&quot;this is getting good&quot;</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="nv">foo</span> <span class="o">=</span> <span class="s">"this is getting good"</span>
 
-<span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></div>
+<span class="k">let</span> <span class="nv">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></figure>
 
 <p>Yep, there are no semi-colons at the end of statements.</p>
 
-<p>Switches are extremely powerful. <code>Cases</code> can be variables, strings, even a range
+<p>Switches are extremely powerful. <code class="highlighter-rouge">Cases</code> can be variables, strings, even a range
  of numbers. Also, cases don’t automatically fall through the next condition, so
-  there’s no need to <code>break</code>.</p>
+  there’s no need to <code class="highlighter-rouge">break</code>.</p>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">4</span><span class="p">:</span>
         <span class="c1">// do something</span>
 
-    <span class="k">case</span> <span class="nl">someOtherVar</span><span class="p">:</span>
+    <span class="k">case</span> <span class="nv">someOtherVar</span><span class="p">:</span>
         <span class="c1">// this is getting wild</span>
 
-    <span class="k">case</span> <span class="s">&quot;string&quot;</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s">"string"</span><span class="p">:</span>
         <span class="c1">// holy cow!</span>
 
-    <span class="k">case</span> <span class="mf">1..4</span><span class="o">:</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="o">..</span><span class="mi">4</span><span class="p">:</span>
         <span class="c1">// ok, this is awesome</span>
-    <span class="k">default</span><span class="o">:</span>
+    <span class="k">default</span><span class="p">:</span>
         <span class="c1">// something unimplemented</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>There’s also no need for surrounding parenthesis when working with conditions,
 unless it’s a complex condition, as usual. Switches in Swift (yep, try saying
-that three times) are exhaustive. That means that you must either supply <code>cases</code>
-for every possible condition or a <code>default</code> to handle everything else.
+that three times) are exhaustive. That means that you must either supply <code class="highlighter-rouge">cases</code>
+for every possible condition or a <code class="highlighter-rouge">default</code> to handle everything else.
 XCode will error at compile time if you don’t.</p>
 
 <p>The final topic of this post is how you’ll print output to the console. It’s as
-simple as calling <code>println()</code> (it’s a function) and you’re done.
+simple as calling <code class="highlighter-rouge">println()</code> (it’s a function) and you’re done.
 Formatting strings is also awsome:</p>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Flavio&quot;</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="nv">name</span> <span class="o">=</span> <span class="s">"Flavio"</span>
 
-<span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello \(name)!&quot;</span><span class="p">)</span>
-<span class="c1">// Hello Flavio!</span></code></pre></div>
+<span class="nf">println</span><span class="p">(</span><span class="s">"Hello </span><span class="se">\(</span><span class="n">name</span><span class="se">)</span><span class="s">!"</span><span class="p">)</span>
+<span class="c1">// Hello Flavio!</span></code></pre></figure>
 
 <p>This is enough to get started and get familiar with Swift. Go ahead, poke it
 around, but don’t try to get fancy just yet. I’ll be covering more in the next
 few days.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#swift" title="Pages tagged swift" class="tag">swift</a></span>
-        <span><a href="/post/swift-for-dummies/" rel="bookmark" title="Swift for Dummies">Swift for Dummies</a> was published on <span class="entry-date date published updated"><time datetime="2014-06-04T13:57:21-03:00">June 04, 2014</time></span></span>
+        <span class="entry-tags"><a href="/categories/#Swift" title="Pages tagged Swift" class="tag">Swift</a></span>
+        <span><a href="/post/swift-for-dummies/" rel="bookmark" title="Swift for Dummies">Swift for Dummies</a> was published on <span class="entry-date date published updated"><time datetime="2014-06-04T12:57:21-04:00">June 04, 2014</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -226,23 +226,23 @@ few days.</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -254,7 +254,7 @@ few days.</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

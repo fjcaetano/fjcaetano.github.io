@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="objective-c ">
+<meta name="keywords" content="Objective-C ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -164,48 +164,48 @@ and all I could use had to be what was at hand: the latest version of a <em>pod
 But even though, mistaken are those who thought it easy. As mentioned, there’s
 no API!</p>
 
-<h1 id="cocoapod-badgesnsstringmask-112httpscocoapod-badgesherokuappcomvnsstringmaskbadgepng">Cocoapod Badges <img src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" alt="NSStringMask 1.1.2" /></h1>
+<h1 id="cocoapod-badges">Cocoapod Badges <img src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" alt="NSStringMask 1.1.2" /></h1>
 
 <p>Digging through Cocoapod’s and <a href="http://cocoadocs.org">Cocoadocs’</a> websites, I
 tried, first, to use the <a href="http://cocoadocs.org/documents.jsonp">documents.jsonp</a> 
 file that I found in the <em>source</em> of the <em>pod</em>’s documentation website, however,
 I soon gave up for realising that its update frequency is too high (above one
-hour). At last, I had to content with the unfortunate <code>/search?q=</code> requested
+hour). At last, I had to content with the unfortunate <code class="highlighter-rouge">/search?q=</code> requested
 when searching for a <em>pod</em> in Cocoapod’s main page. At first, it looked like an
-excellent solution since it returned a <code>json</code> object with some info, until I
-realised that inside the object was a string with some <code>html</code> code and only
+excellent solution since it returned a <code class="highlighter-rouge">json</code> object with some info, until I
+realised that inside the object was a string with some <code class="highlighter-rouge">html</code> code and only
 inside that code was the <em>pod</em>’s latest version. “<em>God dammit!</em>” Now I have to
-run a request on a “pseudo-<em>webservice</em>” and parse it with <code>XPATH</code> to get the
+run a request on a “pseudo-<em>webservice</em>” and parse it with <code class="highlighter-rouge">XPATH</code> to get the
 latest version!</p>
 
 <p>Super easy! But, as my mother would on a brazilian saying: “<em>few shit is
 silliness</em>”. The damned “API” doesn’t return the requested <em>pod</em>, but anything
 with the searched string. To get something more useful, I figured that 
-<code>/search?q=name:POD_NAME</code> searches only in the <em>pod</em>’s name and not in its
+<code class="highlighter-rouge">/search?q=name:POD_NAME</code> searches only in the <em>pod</em>’s name and not in its
 description, what significantly reduces the results, specially when dealing with
 popular <em>pods</em> such as <a href="http://afnetworking.github.io/AFNetworking/index.html">AFNetworking</a>.</p>
 
 <p>After all that suffering, I finally got the information I wanted, but then, how
 do I show it in an image? Olivier Lacan’s repo, that enabled all the existing 
-<em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code>.SVG</code> vectorial
-files that render <code>xml</code> data to images. So, accidentally, I double-clicked the 
-<code>.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news!
-As the information about the version is in plain text inside the <code>xml</code>, all I
-had to do was to set the <code>mimetype</code> so Django could provide the file as an image.</p>
+<em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code class="highlighter-rouge">.SVG</code> vectorial
+files that render <code class="highlighter-rouge">xml</code> data to images. So, accidentally, I double-clicked the 
+<code class="highlighter-rouge">.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news!
+As the information about the version is in plain text inside the <code class="highlighter-rouge">xml</code>, all I
+had to do was to set the <code class="highlighter-rouge">mimetype</code> so Django could provide the file as an image.</p>
 
 <p>1 <a href="http://heroku.com">Heroku</a> <em>dyno</em> later and the service is available fulltime
 (depending on Cocoapods website) through the images’ url:</p>
 
 <blockquote>
-  <p><code>http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></p>
+  <p><code class="highlighter-rouge">http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></p>
 </blockquote>
 
-<p>All you have to do is replace the <code>$PODNAME</code> with the name of the pod you want.
+<p>All you have to do is replace the <code class="highlighter-rouge">$PODNAME</code> with the name of the pod you want.
 Simple and easy, isn’t it? Use it at will! And suport the Github repo!</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#objective-c" title="Pages tagged objective-c" class="tag">objective-c</a></span>
-        <span><a href="/post/cocoapod-badges/" rel="bookmark" title="Cocoapod Badges">Cocoapod Badges</a> was published on <span class="entry-date date published updated"><time datetime="2013-06-03T16:15:45-03:00">June 03, 2013</time></span></span>
+        <span class="entry-tags"><a href="/categories/#Objective-C" title="Pages tagged Objective-C" class="tag">Objective-C</a></span>
+        <span><a href="/post/cocoapod-badges/" rel="bookmark" title="Cocoapod Badges">Cocoapod Badges</a> was published on <span class="entry-date date published updated"><time datetime="2013-06-03T15:15:45-04:00">June 03, 2013</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -221,23 +221,23 @@ Simple and easy, isn’t it? Use it at will! And suport the Github repo!</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -249,7 +249,7 @@ Simple and easy, isn’t it? Use it at will! And suport the Github repo!</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Ios | License to Kill -9]]></title>
-  <link href="http://blog.flaviocaetano.com/blog/categories/ios/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Macos | License to Kill -9]]></title>
+  <link href="http://blog.flaviocaetano.com/blog/categories/macos/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
   <updated>2021-04-01T19:16:40-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
@@ -125,99 +125,6 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[An Easier Way to Record iOS Gifs]]></title>
-    <link href="http://blog.flaviocaetano.com/post/an-easier-way-to-record-ios-gifs/"/>
-    <updated>2019-07-30T09:56:44-04:00</updated>
-    <id>http://blog.flaviocaetano.com/post/an-easier-way-to-record-ios-gifs</id>
-    <content type="html"><![CDATA[<p>One of these days, I needed a tool to record gifs from iOS devices to provide a better description
-to our PRs here at Work&amp;Co. It wasn’t uncommon for us to open PRs with no description at all or with minimum overview of what was being accomplished.</p>
-
-<p>Let me tell you something: design matters at this company! It’s hard to create amazing digital
-products and even harder to assess its code. We decided we could do better with our PRs.</p>
-
-<p>Recording gifs from iOS devices has never been easy. You can find a bunch of tools online that are
-paid or simply don’t work. The alternative was to launch QuickTime, record a video and convert it to
-gif. That’s a lot of work. It’s tiresome and time consuming. We we could do better!</p>
-
-<p><img src="https://github.com/fjcaetano/ios-simulator-gif/raw/master/example.gif?raw=true" alt="Example GIF" /></p>
-
-<!-- more -->
-
-<h2 id="we-did-better">We did better</h2>
-
-<p>It turns out that, right now, it’s awfully simple to record a gif from your iOS simulator. All you 
-need to do is run one simple command:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ios-simulator-gif yolo.gif
-</code></pre></div></div>
-
-<p>This will immediately start recording the gif and stop when you press any key. The gif will be saved
-to the <code class="highlighter-rouge">yolo.gif</code>. Need to customize the gif? No problem at all! These are the arguments accepted
-by <code class="highlighter-rouge">ios-simulator-gif</code>:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Options</th>
-      <th>Description</th>
-      <th style="text-align: center">Default value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>-r, –rate</td>
-      <td>Framerate of the output</td>
-      <td style="text-align: center"><code class="highlighter-rouge">6</code></td>
-    </tr>
-    <tr>
-      <td>-f, –format</td>
-      <td>Output format</td>
-      <td style="text-align: center"><code class="highlighter-rouge">gif</code></td>
-    </tr>
-    <tr>
-      <td>-vf, –video-filter</td>
-      <td>Video filter for <code class="highlighter-rouge">ffmpeg</code></td>
-      <td style="text-align: center"><code class="highlighter-rouge">scale=320:-1</code></td>
-    </tr>
-    <tr>
-      <td>-h, –help</td>
-      <td>Outputs helper message</td>
-      <td style="text-align: center">N/A</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Need more?? We got you covered fam! Anything you pass after <code class="highlighter-rouge">--</code> will be sent directly as args to <code class="highlighter-rouge">ffmpeg</code>!</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ios-simulator-gif <span class="nt">-r</span> 30 example.gif <span class="nt">--</span> <span class="nt">-b</span> 128k
-</code></pre></div></div>
-
-<p>You’re welcome!</p>
-
-<h2 id="installation">Installation</h2>
-
-<p>Assuming that you have <a href="https://brew.sh/">Homebrew</a> installed, execute the following steps:</p>
-
-<ol>
-  <li>Use the repository as a “tap” (alternative package repository):</li>
-</ol>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew tap fjcaetano/ios-simulator-gif https://github.com/fjcaetano/ios-simulator-gif.git
-</code></pre></div></div>
-
-<ol>
-  <li>Install ios-simulator-gif (and dependencies):</li>
-</ol>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew <span class="nb">install </span>fjcaetano/ios-simulator-gif/ios-simulator-gif
-</code></pre></div></div>
-
-<p>If you want to install it directly, that’s on you. If you can’t figure that out, and don’t know what you’re doing, just install <a href="https://brew.sh/">Homebrew</a> and be happy.</p>
-
 ]]></content>
   </entry>
   

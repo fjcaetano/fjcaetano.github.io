@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="community ">
+<meta name="keywords" content="Community ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -168,25 +168,25 @@
 
 <iframe src="//giphy.com/embed/QVgU7wEY0RlV6" width="480" height="271" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe>
 
-<h2 id="steps-for-a-good-report">4 steps for a good report</h2>
+<h2 id="4-steps-for-a-good-report">4 steps for a good report</h2>
 
 <p>Several platforms offer report templates. Github itself provides the <a href="https://github.com/blog/1184-contributing-guidelines" target="_blank">CONTRIBUTING guidelines</a> file so that each repository documents how to report and contribute to code development. However, with so many possibilities and without a standard, it’s not always easy to be concise when redacting a report.</p>
 
 <p><img src="/images/bugreport/pc_lab.png" alt="I have no idea what I'm doing" /></p>
 
-<h4 id="be-clear-about-the-inconsistency">1. Be clear about the inconsistency</h4>
+<h4 id="1-be-clear-about-the-inconsistency">1. Be clear about the inconsistency</h4>
 
 <p>In the introduction, be clear about the obtained behavior. What was expected? What is actually happening?</p>
 
-<h4 id="define-the-steps-to-reproduce-the-bug">2. Define the steps to reproduce the bug</h4>
+<h4 id="2-define-the-steps-to-reproduce-the-bug">2. Define the steps to reproduce the bug</h4>
 
 <p>Include the steps for reproduction and inform if the behavior is intermittent. It’s okay if you can’t reproduce the bug every single time, but say so and be sure that the provided steps lead to some inconsistency.</p>
 
-<h4 id="include-snippets-of-code">3. Include snippets of code</h4>
+<h4 id="3-include-snippets-of-code">3. Include snippets of code</h4>
 
 <p>If it’s a report to Apple, always attach a project or playground containing the bug reproduction in your radar. If it’s an issue on Github, you may include snippets of code or even links to repositories containing an example project or playground.</p>
 
-<h4 id="suggest-a-fix-or-workaround">4. Suggest a fix or workaround</h4>
+<h4 id="4-suggest-a-fix-or-workaround">4. Suggest a fix or workaround</h4>
 
 <p>If you know what’s causing the bug or where it’s triggered, suggestions of fixes are more than welcome. Or, even better, fix the inconsistency and open a <em>pull request</em> with the solution.</p>
 
@@ -214,7 +214,7 @@
 
 <p>Bugs reported to Apple are private for security reasons. Although the bulk of bugs may be behavioral, there are vulnerabilities and security breaches that might be exploited to leverage users and that can’t become public to avoid exposure. Because of this, appeared <a href="https://openradar.appspot.com" target="_blank">OpenRadar</a>, that tries to mirror Apple’s portal, where developers replicate their reports to make them public. One of the advantages of QuickRadar is sending your issues automatically to OpenRadar as well, relieving the need of filling everything twice.</p>
 
-<p>OpenRadar also provides the possibility of commenting on issue pages, which adds a much richer dynamic on the interaction with the community. In 2016 I reported a bug on <code>UICollectionView</code> that Apple engineers discarded as being the designed behavior. I disagreed of the decision because it isn’t how it worked before but <del>since a documented bug is a feature</del> I asked that it would be added to the documentation - request that was ignored - and, on <a href="https://openradar.appspot.com/radar?id=5022915414196224#ag9zfm9wZW5yYWRhci1ocmRyFAsSB0NvbW1lbnQYgICAiNan7QoM" target="_blank">rdar://28323532</a>, we can see that user <strong>nicolas.millasseau</strong> also disagrees with the engineers decision.</p>
+<p>OpenRadar also provides the possibility of commenting on issue pages, which adds a much richer dynamic on the interaction with the community. In 2016 I reported a bug on <code class="highlighter-rouge">UICollectionView</code> that Apple engineers discarded as being the designed behavior. I disagreed of the decision because it isn’t how it worked before but <del>since a documented bug is a feature</del> I asked that it would be added to the documentation - request that was ignored - and, on <a href="https://openradar.appspot.com/radar?id=5022915414196224#ag9zfm9wZW5yYWRhci1ocmRyFAsSB0NvbW1lbnQYgICAiNan7QoM" target="_blank">rdar://28323532</a>, we can see that user <strong>nicolas.millasseau</strong> also disagrees with the engineers decision.</p>
 
 <h2 id="report-duplicates">Report duplicates</h2>
 
@@ -222,9 +222,9 @@
 
 <p>Consequently, when reporting a duplicate, you are providing more information which might help in the resolution of an incident. It may be that you are being able to reproduce the bug in a different manner, or that you might know a solution or workaround to what happened, or even that your <em>crashlog</em> has complementary data to previous reports.</p>
 
-<p>On Github, there’s somewhat of a controversy regarding 👍. I believe it to be important to add <code>+1</code> to issues as a way of flagging a duplicate, because it describes that there are more people being affected by that inconsistency, however there are those who believe that it doesn’t add nothing to the issue. In that regard, on <a href="https://developer.apple.com/videos/play/wwdc2016/213/" target="_blank">session 213 of the WWDC</a>, Apple’s engineers request that, when reporting a radar, one shouldn’t simply copy and paste an existing one because it does not add information nor increase the issue’s priority.</p>
+<p>On Github, there’s somewhat of a controversy regarding 👍. I believe it to be important to add <code class="highlighter-rouge">+1</code> to issues as a way of flagging a duplicate, because it describes that there are more people being affected by that inconsistency, however there are those who believe that it doesn’t add nothing to the issue. In that regard, on <a href="https://developer.apple.com/videos/play/wwdc2016/213/" target="_blank">session 213 of the WWDC</a>, Apple’s engineers request that, when reporting a radar, one shouldn’t simply copy and paste an existing one because it does not add information nor increase the issue’s priority.</p>
 
-<p>If any of your radars is flagged as a duplicate, you will be informed the <code>id</code> of the original issue, which may be searched on OpenRadar, where you can read comments to know if there’s a workaround, what is its current status (if it’s updated), and what the community is talking about it in general.</p>
+<p>If any of your radars is flagged as a duplicate, you will be informed the <code class="highlighter-rouge">id</code> of the original issue, which may be searched on OpenRadar, where you can read comments to know if there’s a workaround, what is its current status (if it’s updated), and what the community is talking about it in general.</p>
 
 <h2 id="deal-with-it-">Deal with it 🕶</h2>
 
@@ -239,8 +239,8 @@
 <p>There’s no point on crying without acting. Shed a light on the problem. Be part of the solution. Improve the tools you use on your daily basis. Diminish your pain. Optimize your time. Help the community grow. Meanwhile, you’ll grow with it.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#community" title="Pages tagged community" class="tag">community</a></span>
-        <span><a href="/post/bugreport-101/" rel="bookmark" title="Bugreport 101">Bugreport 101</a> was published on <span class="entry-date date published updated"><time datetime="2017-03-16T09:00:00-03:00">March 16, 2017</time></span></span>
+        <span class="entry-tags"><a href="/categories/#Community" title="Pages tagged Community" class="tag">Community</a></span>
+        <span><a href="/post/bugreport-101/" rel="bookmark" title="Bugreport 101">Bugreport 101</a> was published on <span class="entry-date date published updated"><time datetime="2017-03-16T08:00:00-04:00">March 16, 2017</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -256,23 +256,23 @@
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -284,7 +284,7 @@
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

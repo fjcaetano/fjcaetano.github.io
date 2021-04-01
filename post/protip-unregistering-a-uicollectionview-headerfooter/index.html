@@ -20,7 +20,7 @@
 
 <meta name="description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-<meta name="keywords" content="objective-c ">
+<meta name="keywords" content="Objective-C ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -135,27 +135,27 @@
       
 
       <p>You can unregister a UICollectionView supplementary view by re-registering it
-with <code>nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple’s docs</a>.
-(Remember to use the same <code>reuseIdentifier</code>).</p>
+with <code class="highlighter-rouge">nil</code> class as stated in <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UICollectionView_class/Reference/Reference.html#//apple_ref/doc/uid/TP40012177-CH1-SW10">Apple’s docs</a>.
+(Remember to use the same <code class="highlighter-rouge">reuseIdentifier</code>).</p>
 
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nl">registerClass</span><span class="p">:</span><span class="nb">nil</span>
-        <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span>
-               <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nf">registerClass</span><span class="p">:</span><span class="nb">nil</span>
+        <span class="nl">forSupplementaryViewOfKind:</span><span class="n">UICollectionElementKindSectionHeader</span>
+               <span class="nl">withReuseIdentifier:</span><span class="n">kHEADER_IDENTIFIER</span><span class="p">];</span></code></pre></figure>
 
 <!-- more -->
 
-<p>But don’t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code>[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
+<p>But don’t forget to overwrite the <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewDelegateFlowLayout_protocol/Reference/Reference.html#//apple_ref/occ/intfm/UICollectionViewDelegateFlowLayout/collectionView:layout:referenceSizeForHeaderInSection:"><code class="highlighter-rouge">[UICollectionViewDelegateFlowLayout collectionView:layout:referenceSizeForHeaderInSection:]</code></a></p>
 
-<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="n">CGSize</span><span class="p">)</span><span class="nf">collectionView</span><span class="p">:(</span><span class="n">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout</span><span class="p">:(</span><span class="n">UICollectionViewLayout</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">CGSizeZero</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>Header or footer, depending on your need.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#objective-c" title="Pages tagged objective-c" class="tag">objective-c</a></span>
-        <span><a href="/post/protip-unregistering-a-uicollectionview-headerfooter/" rel="bookmark" title="Protip: Unregistering a UICollectionView header/footer">Protip: Unregistering a UICollectionView header/footer</a> was published on <span class="entry-date date published updated"><time datetime="2014-05-16T16:33:52-03:00">May 16, 2014</time></span></span>
+        <span class="entry-tags"><a href="/categories/#Objective-C" title="Pages tagged Objective-C" class="tag">Objective-C</a></span>
+        <span><a href="/post/protip-unregistering-a-uicollectionview-headerfooter/" rel="bookmark" title="Protip: Unregistering a UICollectionView header/footer">Protip: Unregistering a UICollectionView header/footer</a> was published on <span class="entry-date date published updated"><time datetime="2014-05-16T15:33:52-04:00">May 16, 2014</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -171,23 +171,23 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -199,7 +199,7 @@ with <code>nil</code> class as stated in <a href="https://developer.apple.com
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

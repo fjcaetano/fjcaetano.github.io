@@ -159,7 +159,7 @@ the key must be used in the app. <strong>DO NOT USE THE SECRET KEY</strong>!</p>
 
 <p>The <em>Secret key</em> is for the validation in the server side of the application!</p>
 
-<h4 id="warning-"><em>Warning</em> ⚠️</h4>
+<h4 id="warning-️"><em>Warning</em> ⚠️</h4>
 
 <p>Beware that this library only works for Invisible ReCaptcha keys! Make sure to
 check the Invisible reCAPTCHA option when creating your <a href="https://www.google.com/recaptcha/admin">API Key</a>.</p>
@@ -173,72 +173,61 @@ The library comes with a <a target="_blank" href="https://github.com/ReactiveX/R
 
 <p>Add the following to your Podfile:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">pod</span> <span class="s2">&quot;ReCaptcha&quot;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 1.0&#39;</span>
-</span><span class="line"><span class="c1"># or</span>
-</span><span class="line"><span class="n">pod</span> <span class="s2">&quot;ReCaptcha/RxSwift&quot;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 1.0&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pod</span> <span class="s2">"ReCaptcha"</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
+<span class="c1"># or</span>
+<span class="n">pod</span> <span class="s2">"ReCaptcha/RxSwift"</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
+</code></pre></div></div>
 
 <h5 id="carthage">Carthage</h5>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">github</span> <span class="s2">&quot;fjcaetano/ReCaptcha&quot;</span> <span class="o">~&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">github</span> <span class="s2">"fjcaetano/ReCaptcha"</span> <span class="o">~&gt;</span> <span class="mf">1.0</span>
+</code></pre></div></div>
 
 <p>If you decide to use the reactive extension, be sure to link both frameworks
-<code>ReCaptcha</code> and <code>ReCaptcha_RxSwift</code> to your project. The latter, simply contains
-the reactive extension for the <code>ReCaptcha</code> class.</p>
+<code class="highlighter-rouge">ReCaptcha</code> and <code class="highlighter-rouge">ReCaptcha_RxSwift</code> to your project. The latter, simply contains
+the reactive extension for the <code class="highlighter-rouge">ReCaptcha</code> class.</p>
 
 <h3 id="ios-setup">iOS Setup</h3>
 
-<p>Open your project’s <code>Info.plist</code> file and add two entries:</p>
+<p>Open your project’s <code class="highlighter-rouge">Info.plist</code> file and add two entries:</p>
 
 <ul>
   <li><strong>ReCaptchaKey</strong>: The <em>Site key</em> created in the previous step.</li>
   <li><strong>ReCaptchaDomain</strong>: A valid domain registered with the key in the previous step.</li>
 </ul>
 
-<p>These values may also be sent as parameters to <code>ReCaptcha()</code> init. In this case,
-the parameters will override the values in the <code>Info.plist</code>.</p>
+<p>These values may also be sent as parameters to <code class="highlighter-rouge">ReCaptcha()</code> init. In this case,
+the parameters will override the values in the <code class="highlighter-rouge">Info.plist</code>.</p>
 
 <h2 id="code">Code</h2>
 
-<p>Before starting the validation, you must call the <code>configureWebView(_:)</code> method.
+<p>Before starting the validation, you must call the <code class="highlighter-rouge">configureWebView(_:)</code> method.
 This is for when the webview needs to be presented for the user to complete the
 <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> challenge. If this method is not called, the validation may fail.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">recaptcha</span><span class="p">.</span><span class="n">configureWebView</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="nb">self</span><span class="p">]</span> <span class="p">(</span><span class="nl">webview</span><span class="p">:</span> <span class="n">WKWebView</span><span class="p">)</span> <span class="k">in</span>
-</span><span class="line">    <span class="c1">// Configure webview for presentation</span>
-</span><span class="line">    <span class="c1">// Make sure its frame is not CGRect.zero</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="n">configureWebView</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">webview</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">)</span> <span class="k">in</span>
+    <span class="c1">// Configure webview for presentation</span>
+    <span class="c1">// Make sure its frame is not CGRect.zero</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <p>This is the moment to add AutoLayout constraints and store a reference to the webview,
 which will already have a superview that is provided when starting the validation.</p>
 
-<p>The <code>configureWebView(_:)</code> won’t necessarily be called. Only if the invisible
+<p>The <code class="highlighter-rouge">configureWebView(_:)</code> won’t necessarily be called. Only if the invisible
 validation is not possible.</p>
 
 <h3 id="validation">Validation</h3>
 
-<p>To start the validation, <em>per se</em>, you must call the <code>validate(on:)</code> method.</p>
+<p>To start the validation, <em>per se</em>, you must call the <code class="highlighter-rouge">validate(on:)</code> method.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">recaptcha</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="nl">on</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="nb">self</span><span class="p">]</span> <span class="p">(</span><span class="nl">result</span><span class="p">:</span> <span class="n">ReCaptchaResult</span><span class="p">)</span> <span class="k">in</span>
-</span><span class="line">    <span class="n">print</span><span class="p">(</span><span class="n">try</span><span class="o">?</span> <span class="n">result</span><span class="p">.</span><span class="n">dematerialize</span><span class="p">())</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="nf">validate</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">ReCaptchaResult</span><span class="p">)</span> <span class="k">in</span>
+    <span class="nf">print</span><span class="p">(</span><span class="k">try</span><span class="p">?</span> <span class="n">result</span><span class="o">.</span><span class="nf">dematerialize</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-<p>The <code>view</code> given as parameter, must be visible, i.e. be in the active window
-hierarchy, its bounds must be valid and it can’t be marked as <code>hidden</code>. This view
+<p>The <code class="highlighter-rouge">view</code> given as parameter, must be visible, i.e. be in the active window
+hierarchy, its bounds must be valid and it can’t be marked as <code class="highlighter-rouge">hidden</code>. This view
 will contain the ReCaptcha webview as a subview.</p>
 
 <p>By default, <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> won’t remove the webview from its superview, so it may
@@ -247,22 +236,22 @@ be interesting to have some clean up after the closure is called.</p>
 <h3 id="error-handling">Error Handling</h3>
 
 <p><a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> may throw you some errors if incorrectly configured or when execution
-fails. In any case, you can always try calling <code>recaptcha.reset()</code> on errors or
-providing <code>resetOnError: true</code> to the <code>validate</code> method.</p>
+fails. In any case, you can always try calling <code class="highlighter-rouge">recaptcha.reset()</code> on errors or
+providing <code class="highlighter-rouge">resetOnError: true</code> to the <code class="highlighter-rouge">validate</code> method.</p>
 
 <ul>
-  <li><code>ReCaptchaError.htmlLoadError</code>: If by some reason, the library’s bundle is
+  <li><code class="highlighter-rouge">ReCaptchaError.htmlLoadError</code>: If by some reason, the library’s bundle is
 unreachable, the template HTML won’t be loaded.</li>
-  <li><code>ReCaptchaError.apiKeyNotFound</code>: No API key has been provided to the library.
-Either set a <code>ReCaptchaKey</code> entry in the app’s <code>Info.plist</code> or pass it as argument
-to <code>ReCaptcha</code>’s init.</li>
-  <li><code>ReCaptchaError.baseURLNotFound</code>: No domain has been provided to the library.
-Either set a <code>ReCaptchaDomain</code> entry in the app’s <code>Info.plist</code> or pass it as
-argument to <code>ReCaptcha</code>’s init.</li>
-  <li><code>ReCaptchaError.wrongMessageFormat</code>: This means the JS context provided an
+  <li><code class="highlighter-rouge">ReCaptchaError.apiKeyNotFound</code>: No API key has been provided to the library.
+Either set a <code class="highlighter-rouge">ReCaptchaKey</code> entry in the app’s <code class="highlighter-rouge">Info.plist</code> or pass it as argument
+to <code class="highlighter-rouge">ReCaptcha</code>’s init.</li>
+  <li><code class="highlighter-rouge">ReCaptchaError.baseURLNotFound</code>: No domain has been provided to the library.
+Either set a <code class="highlighter-rouge">ReCaptchaDomain</code> entry in the app’s <code class="highlighter-rouge">Info.plist</code> or pass it as
+argument to <code class="highlighter-rouge">ReCaptcha</code>’s init.</li>
+  <li><code class="highlighter-rouge">ReCaptchaError.wrongMessageFormat</code>: This means the JS context provided an
 unexpected message to the API. Shouldn’t happen, so, if it does, be sure to
 <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
-  <li><code>ReCaptchaError.unexpected(Error)</code>: 💩 happens ¯\_(ツ)_/¯. The only moment this
+  <li><code class="highlighter-rouge">ReCaptchaError.unexpected(Error)</code>: 💩 happens ¯\_(ツ)_/¯. The only moment this
 error could be thrown is if JavaScript sends an error. Shouldn’t happen, but if
 it does, don’t be shy and <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
 </ul>
@@ -271,20 +260,19 @@ it does, don’t be shy and <a target="_blank" href="https://github.com/fjcaetan
 
 <p>If your firewall is blocking Google’s ReCaptcha, or if you’re behind the <a target="_blank" href="https://en.wikipedia.org/wiki/Great_Firewall">Great
 Firewall of China</a>, you may use an alternate endpoint for the JS API that points
-to <code>https://www.recaptcha.net/recaptcha/api.js</code>:</p>
+to <code class="highlighter-rouge">https://www.recaptcha.net/recaptcha/api.js</code>:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="swift"><span class="line"><span class="n">try</span> <span class="n">ReCaptcha</span><span class="p">(</span><span class="nl">endpoint</span><span class="p">:</span> <span class="p">.</span><span class="n">alternate</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="kt">ReCaptcha</span><span class="p">(</span><span class="nv">endpoint</span><span class="p">:</span> <span class="o">.</span><span class="n">alternate</span><span class="p">)</span>
+</code></pre></div></div>
 
-<p>The default value for the <code>endpoint</code> parameter points the API to <code>https://www.google.com/recaptcha/api.js</code></p>
+<p>The default value for the <code class="highlighter-rouge">endpoint</code> parameter points the API to <code class="highlighter-rouge">https://www.google.com/recaptcha/api.js</code></p>
 
 <h2 id="full-documentation"><strong><a target="_blank" style="text-decoration:underline" href="http://fjcaetano.github.io/ReCaptcha">Full Documentation</a></strong></h2>
 
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#swift" title="Pages tagged swift" class="tag">swift</a></span>
-        <span><a href="/post/recaptcha-reaches-1-dot-0/" rel="bookmark" title="ReCaptcha Reaches 1.0">ReCaptcha Reaches 1.0</a> was published on <span class="entry-date date published updated"><time datetime="2017-11-13T15:04:44-02:00">November 13, 2017</time></span></span>
+        <span><a href="/post/recaptcha-reaches-1-dot-0/" rel="bookmark" title="ReCaptcha Reaches 1.0">ReCaptcha Reaches 1.0</a> was published on <span class="entry-date date published updated"><time datetime="2017-11-13T12:04:44-05:00">November 13, 2017</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -300,23 +288,23 @@ to <code>https://www.recaptcha.net/recaptcha/api.js</code>:</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -328,7 +316,7 @@ to <code>https://www.recaptcha.net/recaptcha/api.js</code>:</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

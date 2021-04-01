@@ -155,13 +155,12 @@ gif. That’s a lot of work. It’s tiresome and time consuming. We we could do 
 <p>It turns out that, right now, it’s awfully simple to record a gif from your iOS simulator. All you 
 need to do is run one simple command:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">$ </span>ios-simulator-gif yolo.gif
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ios-simulator-gif yolo.gif
+</code></pre></div></div>
 
 <p>This will immediately start recording the gif and stop when you press any key. The gif will be saved
-to the <code>yolo.gif</code>. Need to customize the gif? No problem at all! These are the arguments accepted
-by <code>ios-simulator-gif</code>:</p>
+to the <code class="highlighter-rouge">yolo.gif</code>. Need to customize the gif? No problem at all! These are the arguments accepted
+by <code class="highlighter-rouge">ios-simulator-gif</code>:</p>
 
 <table>
   <thead>
@@ -175,17 +174,17 @@ by <code>ios-simulator-gif</code>:</p>
     <tr>
       <td>-r, –rate</td>
       <td>Framerate of the output</td>
-      <td style="text-align: center"><code>6</code></td>
+      <td style="text-align: center"><code class="highlighter-rouge">6</code></td>
     </tr>
     <tr>
       <td>-f, –format</td>
       <td>Output format</td>
-      <td style="text-align: center"><code>gif</code></td>
+      <td style="text-align: center"><code class="highlighter-rouge">gif</code></td>
     </tr>
     <tr>
       <td>-vf, –video-filter</td>
-      <td>Video filter for <code>ffmpeg</code></td>
-      <td style="text-align: center"><code>scale=320:-1</code></td>
+      <td>Video filter for <code class="highlighter-rouge">ffmpeg</code></td>
+      <td style="text-align: center"><code class="highlighter-rouge">scale=320:-1</code></td>
     </tr>
     <tr>
       <td>-h, –help</td>
@@ -195,11 +194,10 @@ by <code>ios-simulator-gif</code>:</p>
   </tbody>
 </table>
 
-<p>Need more?? We got you covered fam! Anything you pass after <code>--</code> will be sent directly as args to <code>ffmpeg</code>!</p>
+<p>Need more?? We got you covered fam! Anything you pass after <code class="highlighter-rouge">--</code> will be sent directly as args to <code class="highlighter-rouge">ffmpeg</code>!</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">$ </span>ios-simulator-gif -r <span class="m">30</span> example.gif -- -b 128k
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ios-simulator-gif <span class="nt">-r</span> 30 example.gif <span class="nt">--</span> <span class="nt">-b</span> 128k
+</code></pre></div></div>
 
 <p>You’re welcome!</p>
 
@@ -211,24 +209,22 @@ by <code>ios-simulator-gif</code>:</p>
   <li>Use the repository as a “tap” (alternative package repository):</li>
 </ol>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">$ </span>brew tap fjcaetano/ios-simulator-gif https://github.com/fjcaetano/ios-simulator-gif.git
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew tap fjcaetano/ios-simulator-gif https://github.com/fjcaetano/ios-simulator-gif.git
+</code></pre></div></div>
 
 <ol>
   <li>Install ios-simulator-gif (and dependencies):</li>
 </ol>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">$ </span>brew install fjcaetano/ios-simulator-gif/ios-simulator-gif
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew <span class="nb">install </span>fjcaetano/ios-simulator-gif/ios-simulator-gif
+</code></pre></div></div>
 
 <p>If you want to install it directly, that’s on you. If you can’t figure that out, and don’t know what you’re doing, just install <a href="https://brew.sh/">Homebrew</a> and be happy.</p>
 
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#bash" title="Pages tagged bash" class="tag">bash</a><a href="/categories/#ios" title="Pages tagged ios" class="tag">ios</a></span>
-        <span><a href="/post/an-easier-way-to-record-ios-gifs/" rel="bookmark" title="An easier way to record iOS gifs">An easier way to record iOS gifs</a> was published on <span class="entry-date date published updated"><time datetime="2019-07-30T10:56:44-03:00">July 30, 2019</time></span></span>
+        <span><a href="/post/an-easier-way-to-record-ios-gifs/" rel="bookmark" title="An easier way to record iOS gifs">An easier way to record iOS gifs</a> was published on <span class="entry-date date published updated"><time datetime="2019-07-30T09:56:44-04:00">July 30, 2019</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="https://flaviocaetano.com" title="About Flávio Caetano">Flávio Caetano</a></span></span>
         <div class="social-share">
@@ -244,23 +240,23 @@ by <code>ios-simulator-gif</code>:</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/post/using-native-and-non-native-animations-together/" class="btn">Read More</a>
+            <a href="/post/rendering-enums-in-swiftui/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h3>
-            <p>React-Native animations has some limitations on what can be done using the native driver and whatcan only be executed in the Javascript &hellip;&hellip; <a href="/post/using-native-and-non-native-animations-together/"> Continue reading</a></p>
+            <h3><a href="/post/rendering-enums-in-swiftui/" title="Rendering enums in SwiftUI">Rendering enums in SwiftUI</a></h3>
+            <p>Enums are an excellent way to leverage Swift's value-types and immutability principles for handling states. Imagine you have a view that &hellip;&hellip; <a href="/post/rendering-enums-in-swiftui/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
-              <span>Published on October 31, 2019</span>
+              <h4><a href="/post/using-native-and-non-native-animations-together/" title="Using native and non-native animations together">Using native and non-native animations together</a></h4>
+              <span>Published on November 11, 2019</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/post/the-art-of-coding/" title="The Art of Coding">The Art of Coding</a></h4>
-              <span>Published on September 26, 2019</span>
+              <h4><a href="/post/rogue-bit/" title="Rogue Bit 🕹">Rogue Bit 🕹</a></h4>
+              <span>Published on October 31, 2019</span>
             </div><!-- /.list-item -->
           
         </div><!-- /.read-more-list -->
@@ -272,7 +268,7 @@ by <code>ios-simulator-gif</code>:</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2019 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->
