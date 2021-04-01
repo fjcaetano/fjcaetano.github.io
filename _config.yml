@@ -12,7 +12,7 @@ avatar: https://secure.gravatar.com/avatar/3b339db885930633b86d73b97a2ca1c0?s=17
 author_bio: Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.
 about: https://flaviocaetano.com
 future: false
-timezone: America/Sao_Paulo
+timezone: America/New_York
 
 # RSS / Email (optional) subscription links (change if using something like Feedburner)
 subscribe_rss: /atom.xml
@@ -27,7 +27,8 @@ email: flavio@vieiracaetano.com
 root: /
 permalink: /post/:title/
 destination: public
-plugins: plugins
+plugins_dir: plugins
+plugins: [jekyll-paginate]
 code_dir: downloads/code
 source: source
 category_dir: blog/categories
@@ -37,7 +38,6 @@ markdown: kramdown
 #     - autolink
 #     - footnotes
 #     - smart
-highlighter: pygments # default python pygments have been replaced by pygments.rb
 
 paginate: 5          # Posts per page on the blog index
 paginate_path: /post/:num/  # Directory base for pagination URLs eg. /posts/2/

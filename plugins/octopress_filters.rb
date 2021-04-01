@@ -1,18 +1,14 @@
 #custom filters for Octopress
-require './plugins/backtick_code_block'
 require 'octopress-hooks'
 require 'jekyll-sitemap'
 require 'octopress-date-format'
-require './plugins/raw'
+require 'i18n'
+
+I18n.config.available_locales = :en
 
 module OctopressFilters
   def self.pre_filter(page)
-    if page.ext.match('html|textile|markdown|md|haml|slim|xml')
-      input = BacktickCodeBlock::render_code_block(page.content)
-      page.content = input.gsub /(<figure.+?>.+?<\/figure>)/m do
-        TemplateWrapper::safe_wrap($1)
-      end
-    end
+    TemplateWrapper::safe_wrap(page)
   end
   def self.post_filter(page)
     if page.ext.match('html|textile|markdown|md|haml|slim|xml')
