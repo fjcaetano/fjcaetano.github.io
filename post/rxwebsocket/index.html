@@ -157,39 +157,39 @@ abstraction layer over <a href="https://github.com/daltoniam/Starscream" target=
 
 <p>All you need is to listen to the <code class="highlighter-rouge">stream</code> property which is an <code class="highlighter-rouge">Observable&lt;StreamEvent&gt;</code>.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">StreamEvent</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="kt">Connect</span>
-    <span class="k">case</span> <span class="kt">Disconnect</span><span class="p">(</span><span class="kt">NSError</span><span class="p">?)</span>
-    <span class="k">case</span> <span class="kt">Pong</span>
-    <span class="k">case</span> <span class="kt">Text</span><span class="p">(</span><span class="kt">String</span><span class="p">)</span>
-    <span class="k">case</span> <span class="kt">Data</span><span class="p">(</span><span class="kt">NSData</span><span class="p">)</span>
-  <span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">public enum</span> StreamEvent {
+    <span class="keyword">case</span> <span class="type">Connect</span>
+    <span class="keyword">case</span> <span class="type">Disconnect</span>(<span class="type">NSError</span>?)
+    <span class="keyword">case</span> <span class="type">Pong</span>
+    <span class="keyword">case</span> <span class="type">Text</span>(<span class="type">String</span>)
+    <span class="keyword">case</span> <span class="type">Data</span>(<span class="type">NSData</span>)
+  }
+</code></pre>
 
 <p>Using an enum as the element type allows us to have every interaction with the
 websocket server in one property that is also easily filtered by message type. If
 we need to know when the websocket connects, we can simply filter the stream:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">socket</span><span class="o">.</span><span class="n">stream</span>
-  <span class="o">.</span><span class="n">filter</span> <span class="p">{</span>
-    <span class="k">switch</span> <span class="nv">$0</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="o">.</span><span class="kt">Connect</span><span class="p">:</span> <span class="k">return</span> <span class="kc">true</span>
-    <span class="k">default</span><span class="p">:</span> <span class="k">return</span> <span class="kc">false</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code>socket.<span class="property">stream</span>
+  .<span class="call">filter</span> {
+    <span class="keyword">switch</span> $0 {
+    <span class="keyword">case</span> .<span class="dotAccess">Connect</span>: <span class="keyword">return true
+    default</span>: <span class="keyword">return false</span>
+    }
+  }
+</code></pre>
 
 <p>If your websocket messages the client with a JSON object that you need to parse:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">socket</span><span class="o">.</span><span class="n">stream</span>
-  <span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="n">event</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">AnyObject</span><span class="o">&gt;</span> <span class="k">in</span>
-    <span class="k">switch</span> <span class="n">event</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="o">.</span><span class="kt">Text</span><span class="p">(</span><span class="k">let</span> <span class="nv">text</span><span class="p">):</span>
-      <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">just</span><span class="p">(</span><span class="k">try</span> <span class="kt">NSJSONSerialization</span><span class="o">.</span><span class="kt">JSONObjectWithData</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="nf">dataUsingEncoding</span><span class="p">(</span><span class="kt">NSUTF8StringEncoding</span><span class="p">)</span><span class="o">!</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="o">.</span><span class="kt">AllowFragments</span><span class="p">))</span>
-    <span class="k">default</span><span class="p">:</span> <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">empty</span><span class="p">()</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code>socket.<span class="property">stream</span>
+  .<span class="call">flatMap</span> { event -&gt; <span class="type">Observable</span>&lt;<span class="type">AnyObject</span>&gt; <span class="keyword">in
+    switch</span> event {
+    <span class="keyword">case</span> .<span class="dotAccess">Text</span>(<span class="keyword">let</span> text):
+      <span class="keyword">return</span> <span class="type">Observable</span>.<span class="call">just</span>(<span class="keyword">try</span> <span class="type">NSJSONSerialization</span>.<span class="type">JSONObjectWithData</span>(text.<span class="call">dataUsingEncoding</span>(<span class="type">NSUTF8StringEncoding</span>)!, options: .<span class="dotAccess">AllowFragments</span>))
+    <span class="keyword">default</span>: <span class="keyword">return</span> <span class="type">Observable</span>.<span class="call">empty</span>()
+    }
+  }
+</code></pre>
 
 <p>We know it’s still crude and quite simple, which is our intention, but we’ll improve
 <a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a> with time. Every suggestion, comment, critic, PR,

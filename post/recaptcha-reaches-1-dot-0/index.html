@@ -205,11 +205,11 @@ the parameters will override the values in the <code class="highlighter-rouge">I
 This is for when the webview needs to be presented for the user to complete the
 <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> challenge. If this method is not called, the validation may fail.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="n">configureWebView</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">webview</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">)</span> <span class="k">in</span>
-    <span class="c1">// Configure webview for presentation</span>
-    <span class="c1">// Make sure its frame is not CGRect.zero</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code>recaptcha.<span class="call">configureWebView</span> { [<span class="keyword">weak self</span>] (webview: <span class="type">WKWebView</span>) <span class="keyword">in</span>
+    <span class="comment">// Configure webview for presentation
+    // Make sure its frame is not CGRect.zero</span>
+}
+</code></pre>
 
 <p>This is the moment to add AutoLayout constraints and store a reference to the webview,
 which will already have a superview that is provided when starting the validation.</p>
@@ -221,10 +221,10 @@ validation is not possible.</p>
 
 <p>To start the validation, <em>per se</em>, you must call the <code class="highlighter-rouge">validate(on:)</code> method.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="nf">validate</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">ReCaptchaResult</span><span class="p">)</span> <span class="k">in</span>
-    <span class="nf">print</span><span class="p">(</span><span class="k">try</span><span class="p">?</span> <span class="n">result</span><span class="o">.</span><span class="nf">dematerialize</span><span class="p">())</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code>recaptcha.<span class="call">validate</span>(on: view) { [<span class="keyword">weak self</span>] (result: <span class="type">ReCaptchaResult</span>) <span class="keyword">in</span>
+    <span class="call">print</span>(<span class="keyword">try</span>? result.<span class="call">dematerialize</span>())
+}
+</code></pre>
 
 <p>The <code class="highlighter-rouge">view</code> given as parameter, must be visible, i.e. be in the active window
 hierarchy, its bounds must be valid and it can’t be marked as <code class="highlighter-rouge">hidden</code>. This view
@@ -262,8 +262,8 @@ it does, don’t be shy and <a target="_blank" href="https://github.com/fjcaetan
 Firewall of China</a>, you may use an alternate endpoint for the JS API that points
 to <code class="highlighter-rouge">https://www.recaptcha.net/recaptcha/api.js</code>:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="kt">ReCaptcha</span><span class="p">(</span><span class="nv">endpoint</span><span class="p">:</span> <span class="o">.</span><span class="n">alternate</span><span class="p">)</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">try</span> <span class="type">ReCaptcha</span>(endpoint: .<span class="dotAccess">alternate</span>)
+</code></pre>
 
 <p>The default value for the <code class="highlighter-rouge">endpoint</code> parameter points the API to <code class="highlighter-rouge">https://www.google.com/recaptcha/api.js</code></p>
 

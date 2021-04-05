@@ -163,26 +163,26 @@ comments to group your properties by their meaning.</p>
 parent, therefore, what should come first in your class file are your class’
 properties and overridden methods.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">UserTableViewCell</span><span class="p">:</span> <span class="kt">UITableViewCell</span> <span class="p">{</span>
-  <span class="k">var</span> <span class="nv">user</span><span class="p">:</span> <span class="kt">UserViewModel</span><span class="o">!</span> <span class="p">{</span>
-    <span class="k">didSet</span> <span class="p">{</span>
-      <span class="nf">setupUser</span><span class="p">()</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
+<pre class="splash"><code><span class="keyword">class</span> UserTableViewCell: <span class="type">UITableViewCell</span> {
+  <span class="keyword">var</span> user: <span class="type">UserViewModel</span>! {
+    <span class="keyword">didSet</span> {
+      <span class="call">setupUser</span>()
+    }
+  }
 
-  <span class="c1">// MARK: Outlets</span>
+  <span class="comment">// MARK: Outlets</span>
 
-  <span class="kd">@IBOutlet</span> <span class="kd">private</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">titleLabel</span><span class="p">:</span> <span class="kt">UILabel</span><span class="o">!</span>
+  <span class="keyword">@IBOutlet private weak var</span> titleLabel: <span class="type">UILabel</span>!
 
-  <span class="c1">// MARK: - Overridden Methods</span>
+  <span class="comment">// MARK: - Overridden Methods</span>
 
-  <span class="k">override</span> <span class="kd">func</span> <span class="nf">prepareForReuse</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">super</span><span class="o">.</span><span class="nf">prepareForReuse</span><span class="p">()</span>
+  <span class="keyword">override func</span> prepareForReuse() {
+    <span class="keyword">super</span>.<span class="call">prepareForReuse</span>()
 
-    <span class="nf">cleanUp</span><span class="p">()</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+    <span class="call">cleanUp</span>()
+  }
+}
+</code></pre>
 
 <p>Using this organization methodology, it’d be of great advantage if we could declare
 properties in class extensions, however, since it’s not possible for obvious reasons,
@@ -193,24 +193,24 @@ all your properties must be declared inside the class declaration.</p>
 <p>Right after your class declaration, add an extension to implement your public
 methods. That will make clear that they’re not protocol nor private methods.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MARK: - Public Methods</span>
-<span class="kd">extension</span> <span class="kt">UserTableViewCell</span> <span class="p">{</span>
-  <span class="c1">// View Manipulation</span>
-  <span class="kd">func</span> <span class="nf">disable</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span>
-  <span class="p">}</span>
+<pre class="splash"><code><span class="comment">// MARK: - Public Methods</span>
+<span class="keyword">extension</span> <span class="type">UserTableViewCell</span> {
+  <span class="comment">// View Manipulation</span>
+  <span class="keyword">func</span> disable() {
+    alpha = <span class="number">0.3</span>
+  }
 
-  <span class="kd">func</span> <span class="nf">select</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">backgroundColor</span> <span class="o">=</span> <span class="kt">UIColor</span><span class="o">.</span><span class="nf">greenColor</span><span class="p">()</span>
-  <span class="p">}</span>
+  <span class="keyword">func</span> select() {
+    backgroundColor = <span class="type">UIColor</span>.<span class="call">greenColor</span>()
+  }
 
-  <span class="c1">// MARK: Update User</span>
-  <span class="kd">func</span> <span class="nf">setUserStatus</span><span class="p">(</span><span class="nv">status</span><span class="p">:</span> <span class="kt">UserStatus</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">user</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
-    <span class="n">backgroundColor</span> <span class="o">=</span> <span class="kt">UIColor</span><span class="o">.</span><span class="nf">blueColor</span><span class="p">()</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+  <span class="comment">// MARK: Update User</span>
+  <span class="keyword">func</span> setUserStatus(status: <span class="type">UserStatus</span>) {
+    user.<span class="property">status</span> = status
+    backgroundColor = <span class="type">UIColor</span>.<span class="call">blueColor</span>()
+  }
+}
+</code></pre>
 
 <h2 id="use-extensions-for-implementing-protocols">Use Extensions For Implementing Protocols</h2>
 
@@ -226,26 +226,26 @@ you can scroll directly to the bottom to add a new method and you’ll know exac
 where to look at when searching for a helper method. Again: don’t forget to group
 the methods by what they do.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MARK: - Private Methods</span>
-<span class="kd">extension</span> <span class="kt">PromotedUsersTableViewCell</span> <span class="p">{</span>
-  <span class="c1">// Resource Methods</span>
-  <span class="kd">private</span> <span class="kd">func</span> <span class="nf">loadUser</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kt">UserResource</span><span class="o">.</span><span class="nf">load</span><span class="p">()</span> <span class="p">{</span> <span class="n">user</span> <span class="k">in</span>
-      <span class="k">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
+<pre class="splash"><code><span class="comment">// MARK: - Private Methods</span>
+<span class="keyword">extension</span> <span class="type">PromotedUsersTableViewCell</span> {
+  <span class="comment">// Resource Methods</span>
+  <span class="keyword">private func</span> loadUser() {
+    <span class="type">UserResource</span>.<span class="call">load</span>() { user <span class="keyword">in
+      self</span>.<span class="property">user</span> = user
+    }
+  }
 
-  <span class="kd">private</span> <span class="kd">func</span> <span class="nf">loadMoreStuff</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// Load it</span>
-  <span class="p">}</span>
+  <span class="keyword">private func</span> loadMoreStuff() {
+    <span class="comment">// Load it</span>
+  }
 
-    <span class="c1">// MARK: View Setup</span>
-  <span class="kd">private</span> <span class="kd">func</span> <span class="nf">setupUser</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">titleLabel</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>
-    <span class="n">backgroundColor</span> <span class="o">=</span> <span class="kt">UIColor</span><span class="o">.</span><span class="nf">whiteColor</span><span class="p">()</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+    <span class="comment">// MARK: View Setup</span>
+  <span class="keyword">private func</span> setupUser() {
+    titleLabel.<span class="property">text</span> = user.<span class="property">name</span>
+    backgroundColor = <span class="type">UIColor</span>.<span class="call">whiteColor</span>()
+  }
+}
+</code></pre>
 
 <h2 id="conclusion">Conclusion</h2>
 

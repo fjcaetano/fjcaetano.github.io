@@ -136,26 +136,26 @@
 
       <p>Enums are an excellent way to leverage Swift’s value-types and immutability principles for handling states. Imagine you have a view that fetches a list of items from an API. You can represent that view’s state as the following enum:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">ViewState</span> <span class="p">{</span>
-  <span class="k">case</span> <span class="n">idle</span><span class="p">,</span>          <span class="c1">// next state: .loading</span>
-       <span class="n">loading</span><span class="p">,</span>       <span class="c1">// next states: .items or .error</span>
-       <span class="nf">items</span><span class="p">([</span><span class="kt">Item</span><span class="p">]),</span> <span class="c1">// next state: .loading</span>
-       <span class="nf">error</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span>   <span class="c1">// next state: .loading</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">enum</span> ViewState {
+  <span class="keyword">case</span> idle,          <span class="comment">// next state: .loading</span>
+       loading,       <span class="comment">// next states: .items or .error</span>
+       <span class="call">items</span>([<span class="type">Item</span>]), <span class="comment">// next state: .loading</span>
+       <span class="call">error</span>(<span class="type">Error</span>)   <span class="comment">// next state: .loading</span>
+}
+</code></pre>
 
 <p>Your view is idle before fetching your list. When it does so, you update your view’s state to <code class="highlighter-rouge">.loading</code> and add an appropriate indicator. From there you’ll either have a successful state with the list you just loaded, or an error, much like a Result.</p>
 
 <p>Now if your View, or ViewModel has a ViewState attribute, how would you render that in SwiftUI?</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
-  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+<pre class="splash"><code><span class="keyword">struct</span> ItemsListView: <span class="type">View</span> {
+  <span class="keyword">@State var</span> state: <span class="type">ViewState</span> = .<span class="dotAccess">idle</span>
 
-  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="c1">// TODO: render `state`</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="comment">// TODO: render `state`</span>
+  }
+}
+</code></pre>
 
 <!-- more -->
 
@@ -163,23 +163,23 @@
 
 <p>You could also add a method that returns a View for the given state. Something like:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
-  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+<pre class="splash"><code><span class="keyword">struct</span> ItemsListView: <span class="type">View</span> {
+  <span class="keyword">@State var</span> state: <span class="type">ViewState</span> = .<span class="dotAccess">idle</span>
 
-  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="nf">stateView</span><span class="p">()</span>
-  <span class="p">}</span>
+  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="call">stateView</span>()
+  }
 
-  <span class="kd">private</span> <span class="kd">func</span> <span class="nf">stateView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="k">switch</span> <span class="n">state</span> <span class="p">{</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nv">idle</span><span class="p">:</span> <span class="k">return</span> <span class="kt">EmptyView</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nv">loading</span><span class="p">:</span> <span class="k">return</span> <span class="kt">Spinner</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nf">items</span><span class="p">(</span><span class="k">let</span> <span class="nv">list</span><span class="p">):</span> <span class="k">return</span> <span class="kt">ItemsList</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span> <span class="k">return</span> <span class="kt">ErrorView</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+  <span class="keyword">private func</span> stateView() -&gt; <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="keyword">switch</span> state {
+      <span class="keyword">case</span> .<span class="dotAccess">idle</span>: <span class="keyword">return</span> <span class="type">EmptyView</span>().<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">loading</span>: <span class="keyword">return</span> <span class="type">Spinner</span>().<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">items</span>(<span class="keyword">let</span> list): <span class="keyword">return</span> <span class="type">ItemsList</span>(list).<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">error</span>(<span class="keyword">let</span> error): <span class="keyword">return</span> <span class="type">ErrorView</span>(error).<span class="call">eraseToAnyView</span>()
+    }
+  }
+}
+</code></pre>
 
 <blockquote>
   <p>Do yourself a favor and add the much needed modifier that wraps a View into AnyView and erases its type, making it semantically consistent to Combine’s <code class="highlighter-rouge">eraseToAnyPublisher()</code></p>
@@ -187,47 +187,47 @@
 
 <p>This is better, but still not great since you need to refer to code outside your View’s <code class="highlighter-rouge">body</code> to know what is being rendered. Don’t get me wrong: componentizing is great when you’re grouping views into containers like “header”, “footer”, “hero”, “left panel”, but you should only group components that make sense to be grouped. States are not containers. They represent different possibilities and, therefore, shouldn’t be grouped. So how do we fix that in order to have our state being rendered within our View’s <code class="highlighter-rouge">body</code>? The answer is to make ViewState provide the correct view:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">extension</span> <span class="kt">ViewState</span> <span class="p">{</span>
-  <span class="kd">func</span> <span class="n">render</span><span class="o">&lt;</span><span class="kt">Idle</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">Loading</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">Items</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">ErrorView</span><span class="p">:</span> <span class="kt">View</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="nv">idle</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Idle</span><span class="p">,</span>
-    <span class="nv">loading</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Loading</span><span class="p">,</span>
-    <span class="nv">items</span><span class="p">:</span> <span class="p">([</span><span class="kt">Item</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Items</span><span class="p">,</span>
-    <span class="nv">error</span><span class="p">:</span> <span class="p">(</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ErrorView</span>
-  <span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="k">switch</span> <span class="k">self</span> <span class="p">{</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nv">idle</span><span class="p">:</span> <span class="k">return</span> <span class="nf">idle</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nv">loading</span><span class="p">:</span> <span class="k">return</span> <span class="nf">loading</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nf">items</span><span class="p">(</span><span class="k">let</span> <span class="nv">list</span><span class="p">):</span> <span class="k">return</span> <span class="nf">items</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="k">let</span> <span class="nv">err</span><span class="p">):</span> <span class="k">return</span> <span class="nf">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">private extension</span> <span class="type">ViewState</span> {
+  <span class="keyword">func</span> render&lt;Idle: <span class="type">View</span>, Loading: <span class="type">View</span>, Items: <span class="type">View</span>, ErrorView: <span class="type">View</span>&gt;(
+    idle: () -&gt; <span class="type">Idle</span>,
+    loading: () -&gt; <span class="type">Loading</span>,
+    items: ([<span class="type">Item</span>]) -&gt; <span class="type">Items</span>,
+    error: (<span class="type">Error</span>) -&gt; <span class="type">ErrorView</span>
+  ) -&gt; <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="keyword">switch self</span> {
+      <span class="keyword">case</span> .<span class="dotAccess">idle</span>: <span class="keyword">return</span> <span class="call">idle</span>().<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">loading</span>: <span class="keyword">return</span> <span class="call">loading</span>().<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">items</span>(<span class="keyword">let</span> list): <span class="keyword">return</span> <span class="call">items</span>(list).<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">error</span>(<span class="keyword">let</span> err): <span class="keyword">return</span> <span class="call">error</span>(err).<span class="call">eraseToAnyView</span>()
+    }
+  }
+}
+</code></pre>
 
 <blockquote>
   <p>Make sure to add this <strong>private</strong> extension in your View’s file, <strong>not</strong> where you declared the ViewState enum. You can also wrap any of <code class="highlighter-rouge">render</code>’s arguments in <code class="highlighter-rouge">@ViewBuilder</code> if it makes sense for your use-case.</p>
 </blockquote>
 
 <p>Now all we have to do is call <code class="highlighter-rouge">render</code> in our View’s <code class="highlighter-rouge">body</code>:</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
-  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+<pre class="splash"><code><span class="keyword">struct</span> ItemsListView: <span class="type">View</span> {
+  <span class="keyword">@State var</span> state: <span class="type">ViewState</span> = .<span class="dotAccess">idle</span>
 
-  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="n">state</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span>
-      <span class="nv">idle</span><span class="p">:</span> <span class="p">{</span> <span class="kt">EmptyView</span><span class="p">()</span> <span class="p">},</span>
-      <span class="nv">loading</span><span class="p">:</span> <span class="p">{</span> <span class="kt">Spinner</span><span class="p">()</span> <span class="p">},</span>
-      <span class="nv">items</span><span class="p">:</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
-        <span class="kt">ItemsList</span><span class="p">(</span><span class="n">list</span><span class="p">)</span>
-      <span class="p">},</span>
-      <span class="nv">error</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-        <span class="kt">ErrorView</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-      <span class="p">}</span>
-    <span class="p">)</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    state.<span class="call">render</span>(
+      idle: { <span class="type">EmptyView</span>() },
+      loading: { <span class="type">Spinner</span>() },
+      items: { list <span class="keyword">in</span>
+        <span class="type">ItemsList</span>(list)
+      },
+      error: { error <span class="keyword">in</span>
+        <span class="type">ErrorView</span>(error)
+      }
+    )
+  }
+}
 
-<span class="c1">// ViewState's private extension can go here</span>
-</code></pre></div></div>
+<span class="comment">// ViewState's private extension can go here</span>
+</code></pre>
 
 <p>Isn’t that much better? Our View’s organization is on-point by keeping things where they should be, while still leveraging what Swift offers best (immutability, switch-cases exhaustiveness, and generics). That’s the pattern I’ve being going for with great success in both SwiftUI apps I’ve implemented so far.</p>
 
@@ -235,12 +235,12 @@
 
 <p>If you want to add that AnyView modifier I mentioned above, here’s the code:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">View</span> <span class="p">{</span>
-  <span class="kd">func</span> <span class="nf">eraseToAnyView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyView</span> <span class="p">{</span>
-    <span class="kt">AnyView</span><span class="p">(</span><span class="k">self</span><span class="p">)</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">extension</span> <span class="type">View</span> {
+  <span class="keyword">func</span> eraseToAnyView() -&gt; <span class="type">AnyView</span> {
+    <span class="type">AnyView</span>(<span class="keyword">self</span>)
+  }
+}
+</code></pre>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#swiftui" title="Pages tagged swiftui" class="tag">swiftui</a><a href="/categories/#swift" title="Pages tagged swift" class="tag">swift</a><a href="/categories/#ios" title="Pages tagged ios" class="tag">ios</a><a href="/categories/#macos" title="Pages tagged macos" class="tag">macos</a></span>

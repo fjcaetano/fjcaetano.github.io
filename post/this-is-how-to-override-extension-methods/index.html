@@ -154,23 +154,23 @@
 
 <p>But there is an exception. Objective-C is a very dynamic language. While Swift attempts to statically dispatch most of its messages, Objective-C dynamically select which implementation to call at run time. So if we exploit our bridge between Objective-C and Swift, we can make the latter a bit more dynamic. Like this:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">Spaceship</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span> <span class="p">}</span>
+<pre class="splash"><code><span class="keyword">class</span> Spaceship: <span class="type">NSObject</span> { }
 
-<span class="kd">extension</span> <span class="kt">Spaceship</span> <span class="p">{</span>
-    <span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">travel</span><span class="p">(</span><span class="n">to</span> <span class="nv">destination</span><span class="p">:</span> <span class="kt">SpaceTimeLocation</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// TODO: move across universe till we eventualy get there, if we ever do...</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="keyword">extension</span> <span class="type">Spaceship</span> {
+    <span class="keyword">@objc func</span> travel(to destination: <span class="type">SpaceTimeLocation</span>) {
+        <span class="comment">// TODO: move across universe till we eventualy get there, if we ever do...</span>
+    }
+}
 
 
-<span class="kd">class</span> <span class="kt">TeleportMachine</span><span class="p">:</span> <span class="kt">Spaceship</span> <span class="p">{</span>
-    <span class="k">override</span> <span class="kd">func</span> <span class="nf">travel</span><span class="p">(</span><span class="n">to</span> <span class="nv">destination</span><span class="p">:</span> <span class="kt">SpaceTimeLocation</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">location</span> <span class="o">=</span> <span class="n">destination</span> <span class="c1">// yup, that easy</span>
-        <span class="o">...</span>
-        <span class="nf">renderUniverse</span><span class="p">()</span> <span class="c1">// lolwut?</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<span class="keyword">class</span> TeleportMachine: <span class="type">Spaceship</span> {
+    <span class="keyword">override func</span> travel(to destination: <span class="type">SpaceTimeLocation</span>) {
+        location = destination <span class="comment">// yup, that easy</span>
+        ...
+        <span class="call">renderUniverse</span>() <span class="comment">// lolwut?</span>
+    }
+}
+</code></pre>
 <p>There you go. We have successfully drilled a wormhole through Swift’s fabric, all the way to Objective-C’s dynamic dispatch. There are limitations to this, of course. This is possible because our <code class="highlighter-rouge">Spaceship</code> class is a subclass of NSObject. Make it a root class, and our universe falls apart.</p>
 
 <p>Unfortunately, if you try and make <code class="highlighter-rouge">travel(to:)</code> generic, you’ll be using a Swift-only feature, which means you’re not exploiting the ObjC bridge.</p>

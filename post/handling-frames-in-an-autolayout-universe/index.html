@@ -150,16 +150,16 @@ throwing a bunch of warnings in your console? Or worst: in your IB…</p>
 <p>Depending on the simplicity of what you want to achieve, implementing your own
 version of <code class="highlighter-rouge">layoutSubviews</code> without relying on the SDK can be simple and effective:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="kd">func</span> <span class="nf">layoutSubviews</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">subviews</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span> <span class="k">in</span>
-        <span class="k">let</span> <span class="nv">size</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">intrinsicContentSize</span>
-        <span class="n">view</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="kt">CGRect</span><span class="p">(</span>
-            <span class="nv">origin</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span>
-            <span class="nv">size</span><span class="p">:</span> <span class="n">size</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">view</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">maxX</span> <span class="o">+</span> <span class="kt">Constants</span><span class="o">.</span><span class="n">spacing</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">override func</span> layoutSubviews() {
+    <span class="keyword">_</span> = subviews.<span class="call">reduce</span>(<span class="number">0</span>) { (x, view) -&gt; <span class="type">CGFloat</span> <span class="keyword">in
+        let</span> size = view.<span class="property">intrinsicContentSize</span>
+        view.<span class="property">frame</span> = <span class="type">CGRect</span>(
+            origin: <span class="type">CGPoint</span>(x: x, y: <span class="number">0</span>),
+            size: size)
+        <span class="keyword">return</span> view.<span class="property">frame</span>.<span class="property">maxX</span> + <span class="type">Constants</span>.<span class="property">spacing</span>
+    }
+}
+</code></pre>
 
 <h2 id="adopting-intrinsiccontentsize">Adopting <code class="highlighter-rouge">intrinsicContentSize</code></h2>
 
@@ -167,10 +167,10 @@ version of <code class="highlighter-rouge">layoutSubviews</code> without relying
 you can have a view that defines its own size without depending on constraints
 or content.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="k">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">isExpanded</span> <span class="p">?</span> <span class="kt">Constants</span><span class="o">.</span><span class="nv">expandedSize</span> <span class="p">:</span> <span class="kt">Constants</span><span class="o">.</span><span class="n">regularSize</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">override var</span> intrinsicContentSize: <span class="type">CGSize</span> {
+    <span class="keyword">return</span> isExpanded ? <span class="type">Constants</span>.<span class="property">expandedSize</span> : <span class="type">Constants</span>.<span class="property">regularSize</span>
+}
+</code></pre>
 
 <p>Btw, it’s animatable 💖</p>
 

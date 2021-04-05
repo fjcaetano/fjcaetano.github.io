@@ -144,22 +144,22 @@ enabling your transition, try <strong>creating the snapshots after adding your v
 
 <!-- more -->
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nv">transitionContext</span><span class="p">:</span> <span class="kt">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">guard</span> <span class="k">let</span> <span class="nv">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">from</span><span class="p">),</span>
-        <span class="k">let</span> <span class="nv">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">to</span><span class="p">),</span>
-        <span class="k">let</span> <span class="nv">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">),</span>
-        <span class="k">let</span> <span class="nv">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">completeTransition</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-    <span class="p">}</span>
+<pre class="splash"><code><span class="keyword">func</span> animateTransition(using transitionContext: <span class="type">UIViewControllerContextTransitioning</span>) {
+    <span class="keyword">guard let</span> fromVC = transitionContext.<span class="call">viewController</span>(forKey: .<span class="dotAccess">from</span>),
+        <span class="keyword">let</span> toVC = transitionContext.<span class="call">viewController</span>(forKey: .<span class="dotAccess">to</span>),
+        <span class="keyword">let</span> fromAnimatedView = fromVC.<span class="property">animatedView</span>.<span class="call">snapshotView</span>(afterScreenUpdates: <span class="keyword">true</span>),
+        <span class="keyword">let</span> toAnimatedView = toVC.<span class="property">animatedView</span>.<span class="call">snapshotView</span>(afterScreenUpdates: <span class="keyword">true</span>) <span class="keyword">else</span> {
+        <span class="keyword">return</span> transitionContext.<span class="call">completeTransition</span>(<span class="keyword">false</span>)
+    }
 
-    <span class="k">let</span> <span class="nv">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="n">containerView</span>
+    <span class="keyword">let</span> containerView = transitionContext.<span class="property">containerView</span>
 
-    <span class="p">[</span><span class="n">fromAnimatedView</span><span class="p">,</span> <span class="n">toAnimatedView</span><span class="p">]</span><span class="o">.</span><span class="nf">forEach</span><span class="p">(</span><span class="n">containerView</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="nv">_</span><span class="p">:))</span>
+    [fromAnimatedView, toAnimatedView].<span class="call">forEach</span>(containerView.<span class="call">addSubview</span>(<span class="keyword">_</span>:))
 
-    <span class="c1">// Now you got yourself broken views. Hooray!</span>
-    <span class="o">...</span>
-<span class="p">}</span>
-</code></pre></div></div>
+    <span class="comment">// Now you got yourself broken views. Hooray!</span>
+    ...
+}
+</code></pre>
 
 <p>The code above might not work. Your <code class="highlighter-rouge">toVC</code>’s view might end up completely broken
 and your snapshots may have the wrong frame and contents. To fix it, simply move
@@ -170,23 +170,23 @@ the snapshots creation to after adding your destination view controller’s view
 <code class="highlighter-rouge">viewDidLoad</code> has been called) it won’t work, even if you force the view to be
 loaded. You truly need to create your snapshots after the <code class="highlighter-rouge">containerView</code>.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nv">transitionContext</span><span class="p">:</span> <span class="kt">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">guard</span> <span class="k">let</span> <span class="nv">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">from</span><span class="p">),</span>
-          <span class="k">let</span> <span class="nv">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">to</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
-              <span class="k">return</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">completeTransition</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-      <span class="p">}</span>
+<pre class="splash"><code>   <span class="keyword">func</span> animateTransition(using transitionContext: <span class="type">UIViewControllerContextTransitioning</span>) {
+      <span class="keyword">guard let</span> fromVC = transitionContext.<span class="call">viewController</span>(forKey: .<span class="dotAccess">from</span>),
+          <span class="keyword">let</span> toVC = transitionContext.<span class="call">viewController</span>(forKey: .<span class="dotAccess">to</span>) <span class="keyword">else</span> {
+              <span class="keyword">return</span> transitionContext.<span class="call">completeTransition</span>(<span class="keyword">false</span>)
+      }
 
-      <span class="k">let</span> <span class="nv">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="n">containerView</span>
-      <span class="n">containerView</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">toVC</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
+      <span class="keyword">let</span> containerView = transitionContext.<span class="property">containerView</span>
+      containerView.<span class="call">addSubview</span>(toVC.<span class="property">view</span>)
 
-      <span class="k">guard</span> <span class="k">let</span> <span class="nv">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">),</span>
-          <span class="k">let</span> <span class="nv">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
-              <span class="k">return</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">completeTransition</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="c1">// toVC.view was already added to the container</span>
-      <span class="p">}</span>
+      <span class="keyword">guard let</span> fromAnimatedView = fromVC.<span class="property">animatedView</span>.<span class="call">snapshotView</span>(afterScreenUpdates: <span class="keyword">true</span>),
+          <span class="keyword">let</span> toAnimatedView = toVC.<span class="property">animatedView</span>.<span class="call">snapshotView</span>(afterScreenUpdates: <span class="keyword">true</span>) <span class="keyword">else</span> {
+              <span class="keyword">return</span> transitionContext.<span class="call">completeTransition</span>(<span class="keyword">true</span>) <span class="comment">// toVC.view was already added to the container</span>
+      }
 
-      <span class="o">...</span>
-  <span class="p">}</span>
-</code></pre></div></div>
+      ...
+  }
+</code></pre>
 
 <p>Boom! Done. Now it works 🎉</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2021-04-01T19:16:40-04:00</updated>
+  <updated>2021-04-05T10:52:24-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
@@ -20,26 +20,26 @@
     <id>http://blog.flaviocaetano.com/post/rendering-enums-in-swiftui</id>
     <content type="html"><![CDATA[<p>Enums are an excellent way to leverage Swift’s value-types and immutability principles for handling states. Imagine you have a view that fetches a list of items from an API. You can represent that view’s state as the following enum:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">ViewState</span> <span class="p">{</span>
-  <span class="k">case</span> <span class="n">idle</span><span class="p">,</span>          <span class="c1">// next state: .loading</span>
-       <span class="n">loading</span><span class="p">,</span>       <span class="c1">// next states: .items or .error</span>
-       <span class="nf">items</span><span class="p">([</span><span class="kt">Item</span><span class="p">]),</span> <span class="c1">// next state: .loading</span>
-       <span class="nf">error</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span>   <span class="c1">// next state: .loading</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">enum</span> ViewState {
+  <span class="keyword">case</span> idle,          <span class="comment">// next state: .loading</span>
+       loading,       <span class="comment">// next states: .items or .error</span>
+       <span class="call">items</span>([<span class="type">Item</span>]), <span class="comment">// next state: .loading</span>
+       <span class="call">error</span>(<span class="type">Error</span>)   <span class="comment">// next state: .loading</span>
+}
+</code></pre>
 
 <p>Your view is idle before fetching your list. When it does so, you update your view’s state to <code class="highlighter-rouge">.loading</code> and add an appropriate indicator. From there you’ll either have a successful state with the list you just loaded, or an error, much like a Result.</p>
 
 <p>Now if your View, or ViewModel has a ViewState attribute, how would you render that in SwiftUI?</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
-  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+<pre class="splash"><code><span class="keyword">struct</span> ItemsListView: <span class="type">View</span> {
+  <span class="keyword">@State var</span> state: <span class="type">ViewState</span> = .<span class="dotAccess">idle</span>
 
-  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="c1">// TODO: render `state`</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="comment">// TODO: render `state`</span>
+  }
+}
+</code></pre>
 
 <!-- more -->
 
@@ -47,23 +47,23 @@
 
 <p>You could also add a method that returns a View for the given state. Something like:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
-  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+<pre class="splash"><code><span class="keyword">struct</span> ItemsListView: <span class="type">View</span> {
+  <span class="keyword">@State var</span> state: <span class="type">ViewState</span> = .<span class="dotAccess">idle</span>
 
-  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="nf">stateView</span><span class="p">()</span>
-  <span class="p">}</span>
+  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="call">stateView</span>()
+  }
 
-  <span class="kd">private</span> <span class="kd">func</span> <span class="nf">stateView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="k">switch</span> <span class="n">state</span> <span class="p">{</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nv">idle</span><span class="p">:</span> <span class="k">return</span> <span class="kt">EmptyView</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nv">loading</span><span class="p">:</span> <span class="k">return</span> <span class="kt">Spinner</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nf">items</span><span class="p">(</span><span class="k">let</span> <span class="nv">list</span><span class="p">):</span> <span class="k">return</span> <span class="kt">ItemsList</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span> <span class="k">return</span> <span class="kt">ErrorView</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+  <span class="keyword">private func</span> stateView() -&gt; <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="keyword">switch</span> state {
+      <span class="keyword">case</span> .<span class="dotAccess">idle</span>: <span class="keyword">return</span> <span class="type">EmptyView</span>().<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">loading</span>: <span class="keyword">return</span> <span class="type">Spinner</span>().<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">items</span>(<span class="keyword">let</span> list): <span class="keyword">return</span> <span class="type">ItemsList</span>(list).<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">error</span>(<span class="keyword">let</span> error): <span class="keyword">return</span> <span class="type">ErrorView</span>(error).<span class="call">eraseToAnyView</span>()
+    }
+  }
+}
+</code></pre>
 
 <blockquote>
   <p>Do yourself a favor and add the much needed modifier that wraps a View into AnyView and erases its type, making it semantically consistent to Combine’s <code class="highlighter-rouge">eraseToAnyPublisher()</code></p>
@@ -71,47 +71,47 @@
 
 <p>This is better, but still not great since you need to refer to code outside your View’s <code class="highlighter-rouge">body</code> to know what is being rendered. Don’t get me wrong: componentizing is great when you’re grouping views into containers like “header”, “footer”, “hero”, “left panel”, but you should only group components that make sense to be grouped. States are not containers. They represent different possibilities and, therefore, shouldn’t be grouped. So how do we fix that in order to have our state being rendered within our View’s <code class="highlighter-rouge">body</code>? The answer is to make ViewState provide the correct view:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">extension</span> <span class="kt">ViewState</span> <span class="p">{</span>
-  <span class="kd">func</span> <span class="n">render</span><span class="o">&lt;</span><span class="kt">Idle</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">Loading</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">Items</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">ErrorView</span><span class="p">:</span> <span class="kt">View</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="nv">idle</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Idle</span><span class="p">,</span>
-    <span class="nv">loading</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Loading</span><span class="p">,</span>
-    <span class="nv">items</span><span class="p">:</span> <span class="p">([</span><span class="kt">Item</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Items</span><span class="p">,</span>
-    <span class="nv">error</span><span class="p">:</span> <span class="p">(</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ErrorView</span>
-  <span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="k">switch</span> <span class="k">self</span> <span class="p">{</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nv">idle</span><span class="p">:</span> <span class="k">return</span> <span class="nf">idle</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nv">loading</span><span class="p">:</span> <span class="k">return</span> <span class="nf">loading</span><span class="p">()</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nf">items</span><span class="p">(</span><span class="k">let</span> <span class="nv">list</span><span class="p">):</span> <span class="k">return</span> <span class="nf">items</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-      <span class="k">case</span> <span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="k">let</span> <span class="nv">err</span><span class="p">):</span> <span class="k">return</span> <span class="nf">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="o">.</span><span class="nf">eraseToAnyView</span><span class="p">()</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">private extension</span> <span class="type">ViewState</span> {
+  <span class="keyword">func</span> render&lt;Idle: <span class="type">View</span>, Loading: <span class="type">View</span>, Items: <span class="type">View</span>, ErrorView: <span class="type">View</span>&gt;(
+    idle: () -&gt; <span class="type">Idle</span>,
+    loading: () -&gt; <span class="type">Loading</span>,
+    items: ([<span class="type">Item</span>]) -&gt; <span class="type">Items</span>,
+    error: (<span class="type">Error</span>) -&gt; <span class="type">ErrorView</span>
+  ) -&gt; <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="keyword">switch self</span> {
+      <span class="keyword">case</span> .<span class="dotAccess">idle</span>: <span class="keyword">return</span> <span class="call">idle</span>().<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">loading</span>: <span class="keyword">return</span> <span class="call">loading</span>().<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">items</span>(<span class="keyword">let</span> list): <span class="keyword">return</span> <span class="call">items</span>(list).<span class="call">eraseToAnyView</span>()
+      <span class="keyword">case</span> .<span class="dotAccess">error</span>(<span class="keyword">let</span> err): <span class="keyword">return</span> <span class="call">error</span>(err).<span class="call">eraseToAnyView</span>()
+    }
+  }
+}
+</code></pre>
 
 <blockquote>
   <p>Make sure to add this <strong>private</strong> extension in your View’s file, <strong>not</strong> where you declared the ViewState enum. You can also wrap any of <code class="highlighter-rouge">render</code>’s arguments in <code class="highlighter-rouge">@ViewBuilder</code> if it makes sense for your use-case.</p>
 </blockquote>
 
 <p>Now all we have to do is call <code class="highlighter-rouge">render</code> in our View’s <code class="highlighter-rouge">body</code>:</p>
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
-  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+<pre class="splash"><code><span class="keyword">struct</span> ItemsListView: <span class="type">View</span> {
+  <span class="keyword">@State var</span> state: <span class="type">ViewState</span> = .<span class="dotAccess">idle</span>
 
-  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="n">state</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span>
-      <span class="nv">idle</span><span class="p">:</span> <span class="p">{</span> <span class="kt">EmptyView</span><span class="p">()</span> <span class="p">},</span>
-      <span class="nv">loading</span><span class="p">:</span> <span class="p">{</span> <span class="kt">Spinner</span><span class="p">()</span> <span class="p">},</span>
-      <span class="nv">items</span><span class="p">:</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
-        <span class="kt">ItemsList</span><span class="p">(</span><span class="n">list</span><span class="p">)</span>
-      <span class="p">},</span>
-      <span class="nv">error</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-        <span class="kt">ErrorView</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-      <span class="p">}</span>
-    <span class="p">)</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    state.<span class="call">render</span>(
+      idle: { <span class="type">EmptyView</span>() },
+      loading: { <span class="type">Spinner</span>() },
+      items: { list <span class="keyword">in</span>
+        <span class="type">ItemsList</span>(list)
+      },
+      error: { error <span class="keyword">in</span>
+        <span class="type">ErrorView</span>(error)
+      }
+    )
+  }
+}
 
-<span class="c1">// ViewState's private extension can go here</span>
-</code></pre></div></div>
+<span class="comment">// ViewState's private extension can go here</span>
+</code></pre>
 
 <p>Isn’t that much better? Our View’s organization is on-point by keeping things where they should be, while still leveraging what Swift offers best (immutability, switch-cases exhaustiveness, and generics). That’s the pattern I’ve being going for with great success in both SwiftUI apps I’ve implemented so far.</p>
 
@@ -119,12 +119,12 @@
 
 <p>If you want to add that AnyView modifier I mentioned above, here’s the code:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">View</span> <span class="p">{</span>
-  <span class="kd">func</span> <span class="nf">eraseToAnyView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyView</span> <span class="p">{</span>
-    <span class="kt">AnyView</span><span class="p">(</span><span class="k">self</span><span class="p">)</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">extension</span> <span class="type">View</span> {
+  <span class="keyword">func</span> eraseToAnyView() -&gt; <span class="type">AnyView</span> {
+    <span class="type">AnyView</span>(<span class="keyword">self</span>)
+  }
+}
+</code></pre>
 ]]></content>
   </entry>
   
@@ -149,16 +149,16 @@ throwing a bunch of warnings in your console? Or worst: in your IB…</p>
 <p>Depending on the simplicity of what you want to achieve, implementing your own
 version of <code class="highlighter-rouge">layoutSubviews</code> without relying on the SDK can be simple and effective:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="kd">func</span> <span class="nf">layoutSubviews</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">subviews</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span> <span class="k">in</span>
-        <span class="k">let</span> <span class="nv">size</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">intrinsicContentSize</span>
-        <span class="n">view</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="kt">CGRect</span><span class="p">(</span>
-            <span class="nv">origin</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span>
-            <span class="nv">size</span><span class="p">:</span> <span class="n">size</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">view</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">maxX</span> <span class="o">+</span> <span class="kt">Constants</span><span class="o">.</span><span class="n">spacing</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">override func</span> layoutSubviews() {
+    <span class="keyword">_</span> = subviews.<span class="call">reduce</span>(<span class="number">0</span>) { (x, view) -&gt; <span class="type">CGFloat</span> <span class="keyword">in
+        let</span> size = view.<span class="property">intrinsicContentSize</span>
+        view.<span class="property">frame</span> = <span class="type">CGRect</span>(
+            origin: <span class="type">CGPoint</span>(x: x, y: <span class="number">0</span>),
+            size: size)
+        <span class="keyword">return</span> view.<span class="property">frame</span>.<span class="property">maxX</span> + <span class="type">Constants</span>.<span class="property">spacing</span>
+    }
+}
+</code></pre>
 
 <h2 id="adopting-intrinsiccontentsize">Adopting <code class="highlighter-rouge">intrinsicContentSize</code></h2>
 
@@ -166,10 +166,10 @@ version of <code class="highlighter-rouge">layoutSubviews</code> without relying
 you can have a view that defines its own size without depending on constraints
 or content.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">override</span> <span class="k">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">isExpanded</span> <span class="p">?</span> <span class="kt">Constants</span><span class="o">.</span><span class="nv">expandedSize</span> <span class="p">:</span> <span class="kt">Constants</span><span class="o">.</span><span class="n">regularSize</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">override var</span> intrinsicContentSize: <span class="type">CGSize</span> {
+    <span class="keyword">return</span> isExpanded ? <span class="type">Constants</span>.<span class="property">expandedSize</span> : <span class="type">Constants</span>.<span class="property">regularSize</span>
+}
+</code></pre>
 
 <p>Btw, it’s animatable 💖</p>
 
@@ -272,22 +272,22 @@ enabling your transition, try <strong>creating the snapshots after adding your v
 
 <!-- more -->
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nv">transitionContext</span><span class="p">:</span> <span class="kt">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">guard</span> <span class="k">let</span> <span class="nv">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">from</span><span class="p">),</span>
-        <span class="k">let</span> <span class="nv">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">to</span><span class="p">),</span>
-        <span class="k">let</span> <span class="nv">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">),</span>
-        <span class="k">let</span> <span class="nv">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">completeTransition</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-    <span class="p">}</span>
+<pre class="splash"><code><span class="keyword">func</span> animateTransition(using transitionContext: <span class="type">UIViewControllerContextTransitioning</span>) {
+    <span class="keyword">guard let</span> fromVC = transitionContext.<span class="call">viewController</span>(forKey: .<span class="dotAccess">from</span>),
+        <span class="keyword">let</span> toVC = transitionContext.<span class="call">viewController</span>(forKey: .<span class="dotAccess">to</span>),
+        <span class="keyword">let</span> fromAnimatedView = fromVC.<span class="property">animatedView</span>.<span class="call">snapshotView</span>(afterScreenUpdates: <span class="keyword">true</span>),
+        <span class="keyword">let</span> toAnimatedView = toVC.<span class="property">animatedView</span>.<span class="call">snapshotView</span>(afterScreenUpdates: <span class="keyword">true</span>) <span class="keyword">else</span> {
+        <span class="keyword">return</span> transitionContext.<span class="call">completeTransition</span>(<span class="keyword">false</span>)
+    }
 
-    <span class="k">let</span> <span class="nv">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="n">containerView</span>
+    <span class="keyword">let</span> containerView = transitionContext.<span class="property">containerView</span>
 
-    <span class="p">[</span><span class="n">fromAnimatedView</span><span class="p">,</span> <span class="n">toAnimatedView</span><span class="p">]</span><span class="o">.</span><span class="nf">forEach</span><span class="p">(</span><span class="n">containerView</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="nv">_</span><span class="p">:))</span>
+    [fromAnimatedView, toAnimatedView].<span class="call">forEach</span>(containerView.<span class="call">addSubview</span>(<span class="keyword">_</span>:))
 
-    <span class="c1">// Now you got yourself broken views. Hooray!</span>
-    <span class="o">...</span>
-<span class="p">}</span>
-</code></pre></div></div>
+    <span class="comment">// Now you got yourself broken views. Hooray!</span>
+    ...
+}
+</code></pre>
 
 <p>The code above might not work. Your <code class="highlighter-rouge">toVC</code>’s view might end up completely broken
 and your snapshots may have the wrong frame and contents. To fix it, simply move
@@ -298,23 +298,23 @@ the snapshots creation to after adding your destination view controller’s view
 <code class="highlighter-rouge">viewDidLoad</code> has been called) it won’t work, even if you force the view to be
 loaded. You truly need to create your snapshots after the <code class="highlighter-rouge">containerView</code>.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">func</span> <span class="nf">animateTransition</span><span class="p">(</span><span class="n">using</span> <span class="nv">transitionContext</span><span class="p">:</span> <span class="kt">UIViewControllerContextTransitioning</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">guard</span> <span class="k">let</span> <span class="nv">fromVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">from</span><span class="p">),</span>
-          <span class="k">let</span> <span class="nv">toVC</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">viewController</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="n">to</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
-              <span class="k">return</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">completeTransition</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-      <span class="p">}</span>
+<pre class="splash"><code>   <span class="keyword">func</span> animateTransition(using transitionContext: <span class="type">UIViewControllerContextTransitioning</span>) {
+      <span class="keyword">guard let</span> fromVC = transitionContext.<span class="call">viewController</span>(forKey: .<span class="dotAccess">from</span>),
+          <span class="keyword">let</span> toVC = transitionContext.<span class="call">viewController</span>(forKey: .<span class="dotAccess">to</span>) <span class="keyword">else</span> {
+              <span class="keyword">return</span> transitionContext.<span class="call">completeTransition</span>(<span class="keyword">false</span>)
+      }
 
-      <span class="k">let</span> <span class="nv">containerView</span> <span class="o">=</span> <span class="n">transitionContext</span><span class="o">.</span><span class="n">containerView</span>
-      <span class="n">containerView</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">toVC</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
+      <span class="keyword">let</span> containerView = transitionContext.<span class="property">containerView</span>
+      containerView.<span class="call">addSubview</span>(toVC.<span class="property">view</span>)
 
-      <span class="k">guard</span> <span class="k">let</span> <span class="nv">fromAnimatedView</span> <span class="o">=</span> <span class="n">fromVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">),</span>
-          <span class="k">let</span> <span class="nv">toAnimatedView</span> <span class="o">=</span> <span class="n">toVC</span><span class="o">.</span><span class="n">animatedView</span><span class="o">.</span><span class="nf">snapshotView</span><span class="p">(</span><span class="nv">afterScreenUpdates</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
-              <span class="k">return</span> <span class="n">transitionContext</span><span class="o">.</span><span class="nf">completeTransition</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="c1">// toVC.view was already added to the container</span>
-      <span class="p">}</span>
+      <span class="keyword">guard let</span> fromAnimatedView = fromVC.<span class="property">animatedView</span>.<span class="call">snapshotView</span>(afterScreenUpdates: <span class="keyword">true</span>),
+          <span class="keyword">let</span> toAnimatedView = toVC.<span class="property">animatedView</span>.<span class="call">snapshotView</span>(afterScreenUpdates: <span class="keyword">true</span>) <span class="keyword">else</span> {
+              <span class="keyword">return</span> transitionContext.<span class="call">completeTransition</span>(<span class="keyword">true</span>) <span class="comment">// toVC.view was already added to the container</span>
+      }
 
-      <span class="o">...</span>
-  <span class="p">}</span>
-</code></pre></div></div>
+      ...
+  }
+</code></pre>
 
 <p>Boom! Done. Now it works 🎉</p>
 ]]></content>
@@ -394,11 +394,11 @@ the parameters will override the values in the <code class="highlighter-rouge">I
 This is for when the webview needs to be presented for the user to complete the
 <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> challenge. If this method is not called, the validation may fail.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="n">configureWebView</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">webview</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">)</span> <span class="k">in</span>
-    <span class="c1">// Configure webview for presentation</span>
-    <span class="c1">// Make sure its frame is not CGRect.zero</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code>recaptcha.<span class="call">configureWebView</span> { [<span class="keyword">weak self</span>] (webview: <span class="type">WKWebView</span>) <span class="keyword">in</span>
+    <span class="comment">// Configure webview for presentation
+    // Make sure its frame is not CGRect.zero</span>
+}
+</code></pre>
 
 <p>This is the moment to add AutoLayout constraints and store a reference to the webview,
 which will already have a superview that is provided when starting the validation.</p>
@@ -410,10 +410,10 @@ validation is not possible.</p>
 
 <p>To start the validation, <em>per se</em>, you must call the <code class="highlighter-rouge">validate(on:)</code> method.</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="nf">validate</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">ReCaptchaResult</span><span class="p">)</span> <span class="k">in</span>
-    <span class="nf">print</span><span class="p">(</span><span class="k">try</span><span class="p">?</span> <span class="n">result</span><span class="o">.</span><span class="nf">dematerialize</span><span class="p">())</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code>recaptcha.<span class="call">validate</span>(on: view) { [<span class="keyword">weak self</span>] (result: <span class="type">ReCaptchaResult</span>) <span class="keyword">in</span>
+    <span class="call">print</span>(<span class="keyword">try</span>? result.<span class="call">dematerialize</span>())
+}
+</code></pre>
 
 <p>The <code class="highlighter-rouge">view</code> given as parameter, must be visible, i.e. be in the active window
 hierarchy, its bounds must be valid and it can’t be marked as <code class="highlighter-rouge">hidden</code>. This view
@@ -451,8 +451,8 @@ it does, don’t be shy and <a target="_blank" href="https://github.com/fjcaetan
 Firewall of China</a>, you may use an alternate endpoint for the JS API that points
 to <code class="highlighter-rouge">https://www.recaptcha.net/recaptcha/api.js</code>:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="kt">ReCaptcha</span><span class="p">(</span><span class="nv">endpoint</span><span class="p">:</span> <span class="o">.</span><span class="n">alternate</span><span class="p">)</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">try</span> <span class="type">ReCaptcha</span>(endpoint: .<span class="dotAccess">alternate</span>)
+</code></pre>
 
 <p>The default value for the <code class="highlighter-rouge">endpoint</code> parameter points the API to <code class="highlighter-rouge">https://www.google.com/recaptcha/api.js</code></p>
 

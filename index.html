@@ -160,26 +160,26 @@
 <div class="entry-content">
   <p>Enums are an excellent way to leverage Swift’s value-types and immutability principles for handling states. Imagine you have a view that fetches a list of items from an API. You can represent that view’s state as the following enum:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">ViewState</span> <span class="p">{</span>
-  <span class="k">case</span> <span class="n">idle</span><span class="p">,</span>          <span class="c1">// next state: .loading</span>
-       <span class="n">loading</span><span class="p">,</span>       <span class="c1">// next states: .items or .error</span>
-       <span class="nf">items</span><span class="p">([</span><span class="kt">Item</span><span class="p">]),</span> <span class="c1">// next state: .loading</span>
-       <span class="nf">error</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span>   <span class="c1">// next state: .loading</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<pre class="splash"><code><span class="keyword">enum</span> ViewState {
+  <span class="keyword">case</span> idle,          <span class="comment">// next state: .loading</span>
+       loading,       <span class="comment">// next states: .items or .error</span>
+       <span class="call">items</span>([<span class="type">Item</span>]), <span class="comment">// next state: .loading</span>
+       <span class="call">error</span>(<span class="type">Error</span>)   <span class="comment">// next state: .loading</span>
+}
+</code></pre>
 
 <p>Your view is idle before fetching your list. When it does so, you update your view’s state to <code class="highlighter-rouge">.loading</code> and add an appropriate indicator. From there you’ll either have a successful state with the list you just loaded, or an error, much like a Result.</p>
 
 <p>Now if your View, or ViewModel has a ViewState attribute, how would you render that in SwiftUI?</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ItemsListView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
-  <span class="kd">@State</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">ViewState</span> <span class="o">=</span> <span class="o">.</span><span class="n">idle</span>
+<pre class="splash"><code><span class="keyword">struct</span> ItemsListView: <span class="type">View</span> {
+  <span class="keyword">@State var</span> state: <span class="type">ViewState</span> = .<span class="dotAccess">idle</span>
 
-  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="c1">// TODO: render `state`</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="comment">// TODO: render `state`</span>
+  }
+}
+</code></pre>
 
 
   
