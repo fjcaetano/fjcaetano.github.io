@@ -33,6 +33,10 @@ plugins:
 code_dir: downloads/code
 category_dir: blog/categories
 markdown: kramdown
+exclude:
+  - Rakefile
+  - README
+  - bin/
 
 paginate: 5          # Posts per page on the blog index
 paginate_path: /post/:num/  # Directory base for pagination URLs eg. /posts/2/
