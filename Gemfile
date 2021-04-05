@@ -3,11 +3,7 @@ source "https://rubygems.org"
 group :development do
   gem 'rake', '~> 13.0'
   gem 'jekyll', '~> 4.0'
-  gem 'octopress-hooks', '~> 2.2'
-  gem 'octopress-date-format', '~> 3.0'
   gem 'jekyll-sitemap'
-  gem 'rdiscount', '~> 2.0'
-  gem 'RedCloth', '~> 4.3'
   gem 'haml', '~> 5.2'
   gem 'compass', '~> 1.0.1'
   gem 'sass-globbing', '~> 1.1'
@@ -18,6 +14,3 @@ group :development do
   gem 'jekyll-paginate', '~> 1.1'
   gem 'jekyll-gist', '~> 1.5'
 end
-
-gem 'sinatra', '~> 2.1'
-gem 'octopress', '~> 3.0'

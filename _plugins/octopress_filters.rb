@@ -1,7 +1,5 @@
 #custom filters for Octopress
-require 'octopress-hooks'
 require 'jekyll-sitemap'
-require 'octopress-date-format'
 require 'i18n'
 
 I18n.config.available_locales = :en
@@ -13,26 +11,6 @@ module OctopressFilters
   def self.post_filter(page)
     if page.ext.match('html|textile|markdown|md|haml|slim|xml')
       page.output = TemplateWrapper::unwrap(page.output)
-    end
-  end
-
-  class PageFilters < Octopress::Hooks::Page
-    def pre_render(page)
-      OctopressFilters::pre_filter(page)
-    end
-
-    def post_render(page)
-      OctopressFilters::post_filter(page)
-    end
-  end
-
-  class PostFilters < Octopress::Hooks::Post
-    def pre_render(post)
-      OctopressFilters::pre_filter(post)
-    end
-
-    def post_render(post)
-      OctopressFilters::post_filter(post)
     end
   end
 end
