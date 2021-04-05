@@ -4,11 +4,11 @@
   <title><![CDATA[Category: Objective-C | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/objective-c/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2021-04-05T10:52:24-04:00</updated>
+  <updated>2021-04-05T14:14:25-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
-    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+    <email><![CDATA[blog@flaviocaetano.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
@@ -47,7 +47,7 @@
 
 <p>Jumping to <code class="highlighter-rouge">CGFloat</code> definition, we can see that it may be an alias to float or double, depending on the system’s architecture (x32 or x64). As I neglected to search, <a href="https://developer.apple.com/library/prerelease/ios/documentation/GraphicsImaging/Reference/CGGeometry/index.html#//apple_ref/doc/constant_group/CGFloat_Informational_Macros">Apple had it documented</a> and it could have saved me some time (thanks <a href="https://twitter.com/gustavocsb/status/482602061352423424">@gustavocsb</a>, for the link).</p>
 
-<p><a href="http://blog.flaviocaetano.com/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img src="http://blog.flaviocaetano.com/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" alt="" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/assets/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png"><img src="http://blog.flaviocaetano.com/assets/images/Screen-Shot-2014-06-28-at-12.53.35-AM.png" alt="" /></a></p>
 
 <p>As usual, I solved it the more elegant way I could. “Hey, if <code class="highlighter-rouge">CGFloat</code> is bipolar, let it tell me how to read it!”</p>
 

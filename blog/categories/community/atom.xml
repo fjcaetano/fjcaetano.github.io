@@ -4,11 +4,11 @@
   <title><![CDATA[Category: Community | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/community/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2021-04-05T10:52:24-04:00</updated>
+  <updated>2021-04-05T14:14:25-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
-    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+    <email><![CDATA[blog@flaviocaetano.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
@@ -36,7 +36,7 @@
 
 <p>The main reason to report a bug isn’t obvious. Tools of issue tracking were created to report incidents, i.e. to draw attention to an unexpected behavior.</p>
 
-<p><img src="/images/bugreport/will_smith.png" alt="No keyboard detected, press any key to continue" /></p>
+<p><img src="/assets/images/bugreport/will_smith.png" alt="No keyboard detected, press any key to continue" /></p>
 
 <p>Secondly, the resolution of the bug motivates the report. If there’s a workaround, or any way to avoid the problem in hand, fixing the bug might not have priority.</p>
 
@@ -56,7 +56,7 @@
 
 <p>Several platforms offer report templates. Github itself provides the <a href="https://github.com/blog/1184-contributing-guidelines" target="_blank">CONTRIBUTING guidelines</a> file so that each repository documents how to report and contribute to code development. However, with so many possibilities and without a standard, it’s not always easy to be concise when redacting a report.</p>
 
-<p><img src="/images/bugreport/pc_lab.png" alt="I have no idea what I'm doing" /></p>
+<p><img src="/assets/images/bugreport/pc_lab.png" alt="I have no idea what I'm doing" /></p>
 
 <h4 id="1-be-clear-about-the-inconsistency">1. Be clear about the inconsistency</h4>
 
@@ -80,7 +80,7 @@
 
 <p>It is important not to be afraid of saying something wrong. The iOS community, specially, is super receptive and tolerant. No one will point fingers, or make fun if you say something incorrect. At most, you will be corrected politely.</p>
 
-<p><img src="/images/bugreport/nelson_haha.jpg" alt="Nelson: HAHA" /></p>
+<p><img src="/assets/images/bugreport/nelson_haha.jpg" alt="Nelson: HAHA" /></p>
 
 <p>The common language of the internet is the English Language, but not everyone is fluent and even less have it as native tongue. Don’t be embarrassed nor afraid of speaking English. It is common to find people from all over the world making grammar mistakes and nobody is corrected, ignored, or bullied because they didn’t spoke perfect English. We make mistakes even when writing in our own language, what to say of an idiom that isn’t our own (this post might even have a few). Remember that practice leads to perfection.</p>
 
@@ -90,11 +90,11 @@
 
 <p>Apple has <a href="http://bugreport.apple.com/" target="_blank">its portal</a> where issues and feature requests may be reported. With an interface of doubtful taste (doesn’t seem like Jony Ive).</p>
 
-<p><a href="/images/bugreport/apple_bugreport.png" target="_blank"><img src="/images/bugreport/apple_bugreport.png" alt="Apple Bugreport Portal" /></a></p>
+<p><a href="/assets/images/bugreport/apple_bugreport.png" target="_blank"><img src="/assets/images/bugreport/apple_bugreport.png" alt="Apple Bugreport Portal" /></a></p>
 
 <p>For those of whom that don’t like the portal, there’s also <a href="http://www.quickradar.com/" target="_blank">QuickRadar</a> that provides a much cleaner interface and doesn’t require you to login every time you report an issue, besides also offering a simple template in a single text field.</p>
 
-<p><a href="/images/bugreport/quickradar.png" target="_blank"><img src="/images/bugreport/quickradar.png" alt="QuickRadar" /></a></p>
+<p><a href="/assets/images/bugreport/quickradar.png" target="_blank"><img src="/assets/images/bugreport/quickradar.png" alt="QuickRadar" /></a></p>
 
 <p>Bugs reported to Apple are private for security reasons. Although the bulk of bugs may be behavioral, there are vulnerabilities and security breaches that might be exploited to leverage users and that can’t become public to avoid exposure. Because of this, appeared <a href="https://openradar.appspot.com" target="_blank">OpenRadar</a>, that tries to mirror Apple’s portal, where developers replicate their reports to make them public. One of the advantages of QuickRadar is sending your issues automatically to OpenRadar as well, relieving the need of filling everything twice.</p>
 

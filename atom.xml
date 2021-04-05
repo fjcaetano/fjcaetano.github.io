@@ -4,11 +4,11 @@
   <title><![CDATA[License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2021-04-05T10:52:24-04:00</updated>
+  <updated>2021-04-05T14:14:25-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
-    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+    <email><![CDATA[blog@flaviocaetano.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
@@ -947,57 +947,8 @@ overcomplicated.</p>
 
 <p>So I created an extension on <code class="highlighter-rouge">DispatchQueue</code> (where it should be):</p>
 
-<div><script src="https://gist.github.com/ff3e994c4edb4991ab8280f34994beb4.js"></script>
-<noscript><pre><code>import Dispatch
-
-private var throttleWorkItems = [AnyHashable: DispatchWorkItem]()
-private var lastDebounceCallTimes = [AnyHashable: DispatchTime]()
-private let nilContext: AnyHashable = arc4random()
-
-public extension DispatchQueue {
-    /**
-     - parameters:
-         - deadline: The timespan to delay a closure execution
-         - context: The context in which the throttle should be executed
-         - action: The closure to be executed
-
-     Delays a closure execution and ensures no other executions are made during deadline
-     */
-    public func throttle(deadline: DispatchTime, context: AnyHashable? = nil, action: @escaping () -&gt; Void) {
-        let worker = DispatchWorkItem {
-            defer { throttleWorkItems.removeValue(forKey: context ?? nilContext) }
-            action()
-        }
-
-        asyncAfter(deadline: deadline, execute: worker)
-
-        throttleWorkItems[context ?? nilContext]?.cancel()
-        throttleWorkItems[context ?? nilContext] = worker
-    }
-
-    /**
-     - parameters:
-         - interval: The interval in which new calls will be ignored
-         - context: The context in which the debounce should be executed
-         - action: The closure to be executed
-
-     Executes a closure and ensures no other executions will be made during the interval.
-     */
-    public func debounce(interval: Double, context: AnyHashable? = nil, action: @escaping () -&gt; Void) {
-        if let last = lastDebounceCallTimes[context ?? nilContext], last + interval &gt; .now() {
-            return
-        }
-
-        lastDebounceCallTimes[context ?? nilContext] = .now()
-        async(execute: action)
-
-        // Cleanup &amp; release context
-        throttle(deadline: .now() + interval) {
-            lastDebounceCallTimes.removeValue(forKey: context ?? nilContext)
-        }
-    }
-}
-</code></pre></noscript></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/ff3e994c4edb4991ab8280f34994beb4.js"> </script>
 
 <p><em>TA DAA</em> 🎉</p>
 
@@ -1236,80 +1187,8 @@ be accepted anyway.</p>
 <p>So let’s share it on Github! Since, it’s just a single file, I’ve created a gist
 that can be added as a submodule to your <a href="https://github.com/fastlane/fastlane" target="_blank">Fastlane</a> <code class="highlighter-rouge">actions</code> folder:</p>
 
-<div><script src="https://gist.github.com/04126b3051f6cd6aebe041bb1dfe14e9.js"></script>
-<noscript><pre><code>module Fastlane
-  module Actions
-    class CodecovAction &lt; Action
-      def self.run(params)
-        ci_only = params[:ci_only]
-        cmd = [&#39;curl -s https://codecov.io/bash | bash&#39;]
-
-        cmd &lt;&lt; &quot;-s --&quot; if params.all_keys.inject(false) { |p, k| p or params[k] }
-        cmd &lt;&lt; &quot;-X xcodeplist&quot; if params[:use_xcodeplist]
-        cmd &lt;&lt; &quot;-J &#39;#{params[:project_name]}&#39;&quot; if params[:project_name]
-        cmd &lt;&lt; &quot;-t &#39;#{params[:token]}&#39;&quot; if params[:token]
-        cmd &lt;&lt; &quot;-v&quot; if params[:verbose]
-
-        if Helper.is_ci? || !ci_only
-          sh cmd.join(&quot; &quot;)
-        else
-          puts &quot;Not CI: Skipping coverage files upload&quot;
-        end
-      end
-
-      #####################################################
-      # @!group Documentation
-      #####################################################
-
-      def self.description
-        &quot;Upload your coverage files to Codecov&quot;
-      end
-
-      def self.details
-        &quot;https://codecov.io&quot;
-      end
-
-      def self.available_options
-        [
-          FastlaneCore::ConfigItem.new(key: :use_xcodeplist,
-                                       env_name: &quot;FL_CODECOV_USE_XCODEPLIST&quot;,
-                                       description: &quot;[BETA] Upload to Codecov using xcodeplist&quot;,
-                                       is_string: false,
-                                       default_value: false,),
-          FastlaneCore::ConfigItem.new(key: :project_name,
-                                       env_name: &quot;FL_CODECOV_PROJECT_NAME&quot;,
-                                       description: &quot;Upload to Codecov using a project name&quot;,
-                                       optional: true),
-          FastlaneCore::ConfigItem.new(key: :token,
-                                       env_name: &quot;FL_CODECOV_TOKEN&quot;,
-                                       description: &quot;API token for private repos&quot;,
-                                       optional: true),
-          FastlaneCore::ConfigItem.new(key: :verbose,
-                                       env_name: &quot;FL_CODECOV_VERBOSE&quot;,
-                                       description: &quot;Verbose logs&quot;,
-                                       is_string: false,
-                                       optional: true,
-                                       default_value: false),
-          FastlaneCore::ConfigItem.new(key: :ci_only,
-                                       env_name: &quot;FL_CODECOV_CI_ONLY&quot;,
-                                       description: &quot;Upload coverage only if running on CI&quot;,
-                                       is_string: false,
-                                       optional: true,
-                                       default_value: true),
-        ]
-      end
-
-      def self.author
-        &quot;Flávio Caetano (@fjcaetano)&quot;
-      end
-
-      def self.is_supported?(platform)
-        true
-      end
-    end
-  end
-end
-</code></pre></noscript></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/04126b3051f6cd6aebe041bb1dfe14e9.js"> </script>
 
 <p>After cloning the submodule you can try running <code class="highlighter-rouge">fastlane action codecov</code> for details.</p>
 
@@ -1349,7 +1228,7 @@ end
 
 <p>The main reason to report a bug isn’t obvious. Tools of issue tracking were created to report incidents, i.e. to draw attention to an unexpected behavior.</p>
 
-<p><img src="http://blog.flaviocaetano.com/images/bugreport/will_smith.png" alt="No keyboard detected, press any key to continue" /></p>
+<p><img src="http://blog.flaviocaetano.com/assets/images/bugreport/will_smith.png" alt="No keyboard detected, press any key to continue" /></p>
 
 <p>Secondly, the resolution of the bug motivates the report. If there’s a workaround, or any way to avoid the problem in hand, fixing the bug might not have priority.</p>
 
@@ -1369,7 +1248,7 @@ end
 
 <p>Several platforms offer report templates. Github itself provides the <a href="https://github.com/blog/1184-contributing-guidelines" target="_blank">CONTRIBUTING guidelines</a> file so that each repository documents how to report and contribute to code development. However, with so many possibilities and without a standard, it’s not always easy to be concise when redacting a report.</p>
 
-<p><img src="http://blog.flaviocaetano.com/images/bugreport/pc_lab.png" alt="I have no idea what I'm doing" /></p>
+<p><img src="http://blog.flaviocaetano.com/assets/images/bugreport/pc_lab.png" alt="I have no idea what I'm doing" /></p>
 
 <h4 id="1-be-clear-about-the-inconsistency">1. Be clear about the inconsistency</h4>
 
@@ -1393,7 +1272,7 @@ end
 
 <p>It is important not to be afraid of saying something wrong. The iOS community, specially, is super receptive and tolerant. No one will point fingers, or make fun if you say something incorrect. At most, you will be corrected politely.</p>
 
-<p><img src="http://blog.flaviocaetano.com/images/bugreport/nelson_haha.jpg" alt="Nelson: HAHA" /></p>
+<p><img src="http://blog.flaviocaetano.com/assets/images/bugreport/nelson_haha.jpg" alt="Nelson: HAHA" /></p>
 
 <p>The common language of the internet is the English Language, but not everyone is fluent and even less have it as native tongue. Don’t be embarrassed nor afraid of speaking English. It is common to find people from all over the world making grammar mistakes and nobody is corrected, ignored, or bullied because they didn’t spoke perfect English. We make mistakes even when writing in our own language, what to say of an idiom that isn’t our own (this post might even have a few). Remember that practice leads to perfection.</p>
 
@@ -1403,11 +1282,11 @@ end
 
 <p>Apple has <a href="http://bugreport.apple.com/" target="_blank">its portal</a> where issues and feature requests may be reported. With an interface of doubtful taste (doesn’t seem like Jony Ive).</p>
 
-<p><a href="http://blog.flaviocaetano.com/images/bugreport/apple_bugreport.png" target="_blank"><img src="http://blog.flaviocaetano.com/images/bugreport/apple_bugreport.png" alt="Apple Bugreport Portal" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/assets/images/bugreport/apple_bugreport.png" target="_blank"><img src="http://blog.flaviocaetano.com/assets/images/bugreport/apple_bugreport.png" alt="Apple Bugreport Portal" /></a></p>
 
 <p>For those of whom that don’t like the portal, there’s also <a href="http://www.quickradar.com/" target="_blank">QuickRadar</a> that provides a much cleaner interface and doesn’t require you to login every time you report an issue, besides also offering a simple template in a single text field.</p>
 
-<p><a href="http://blog.flaviocaetano.com/images/bugreport/quickradar.png" target="_blank"><img src="http://blog.flaviocaetano.com/images/bugreport/quickradar.png" alt="QuickRadar" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/assets/images/bugreport/quickradar.png" target="_blank"><img src="http://blog.flaviocaetano.com/assets/images/bugreport/quickradar.png" alt="QuickRadar" /></a></p>
 
 <p>Bugs reported to Apple are private for security reasons. Although the bulk of bugs may be behavioral, there are vulnerabilities and security breaches that might be exploited to leverage users and that can’t become public to avoid exposure. Because of this, appeared <a href="https://openradar.appspot.com" target="_blank">OpenRadar</a>, that tries to mirror Apple’s portal, where developers replicate their reports to make them public. One of the advantages of QuickRadar is sending your issues automatically to OpenRadar as well, relieving the need of filling everything twice.</p>
 
@@ -1452,7 +1331,7 @@ end
 
 <p>It sucks, but it makes sense that you can’t override stuff from extensions. Or can you? It turns out, you can. <em>It’s a bit hacky though</em>. You have been warned.</p>
 
-<p><img src="http://blog.flaviocaetano.com/images/extension-overriding/proceed_with_caution.jpg" alt="Proceed with Caution" /></p>
+<p><img src="http://blog.flaviocaetano.com/assets/images/extension-overriding/proceed_with_caution.jpg" alt="Proceed with Caution" /></p>
 
 <!-- more -->
 
@@ -1512,14 +1391,14 @@ organizing properties and methods within a class.</p>
 <p>If you don’t use the source navigator to browse through your classes’ methods,
 you’re doing it wrong.</p>
 
-<p><a href="http://blog.flaviocaetano.com/images/swift-organization/scope-grouping.png" target="_blank"><img src="http://blog.flaviocaetano.com/images/swift-organization/scope-grouping.png" alt="Scope Grouping" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/assets/images/swift-organization/scope-grouping.png" target="_blank"><img src="http://blog.flaviocaetano.com/assets/images/swift-organization/scope-grouping.png" alt="Scope Grouping" /></a></p>
 
 <p>Absolutely <strong>always</strong> use <code class="highlighter-rouge">// MARK:</code> to segment your code. Use it followed by hyphen to separate your
 extensions and without it to separate your code logic. Use mark to separate your
 properties from your methods. You may also use it to group your methods by their scope. Use
 comments to group your properties by their meaning.</p>
 
-<p><img src="http://blog.flaviocaetano.com/images/swift-organization/mark.png" alt="// MARK:" /></p>
+<p><img src="http://blog.flaviocaetano.com/assets/images/swift-organization/mark.png" alt="// MARK:" /></p>
 
 <h2 id="properties-and-overridden-methods-go-first">Properties And Overridden Methods Go First</h2>
 
@@ -1581,7 +1460,7 @@ methods. That will make clear that they’re not protocol nor private methods.</
 <p>This way you’re automatically grouping methods by their scope. Also, thanks to
 Swift compiler, this way it’s easier to navigate through errors.</p>
 
-<p><a href="http://blog.flaviocaetano.com/images/swift-organization/delegate-error.png" target="_blank"><img src="http://blog.flaviocaetano.com/images/swift-organization/delegate-error.png" alt="Protocol Errors" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/assets/images/swift-organization/delegate-error.png" target="_blank"><img src="http://blog.flaviocaetano.com/assets/images/swift-organization/delegate-error.png" alt="Protocol Errors" /></a></p>
 
 <h2 id="leave-your-private-methods-last">Leave Your Private Methods Last</h2>
 
@@ -1729,7 +1608,7 @@ lipo <span class="nt">-create</span> <span class="nt">-output</span> <span class
 
 <p>Having in mind that I wanted the universal build to be created when I archived the framework target, I edited my scheme and added the script as a “Run Script” phase in “Post-actions”:</p>
 
-<p><a href="http://blog.flaviocaetano.com/images/archive_post_action.jpg"><img src="http://blog.flaviocaetano.com/images/archive_post_action.jpg" alt="Run Script in Post-actions" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/assets/images/archive_post_action.jpg"><img src="http://blog.flaviocaetano.com/assets/images/archive_post_action.jpg" alt="Run Script in Post-actions" /></a></p>
 
 <blockquote>
   <p>Don’t forget to “Provide build settings from” the blurred framework!</p>
@@ -1737,42 +1616,12 @@ lipo <span class="nt">-create</span> <span class="nt">-output</span> <span class
 
 <p>So after fixing <code class="highlighter-rouge">xcodebuild</code>’s parameters to work with workspaces (and running the correct scheme), now all I had to do was combine (<code class="highlighter-rouge">lipo</code>) the product of the Archive with the product of the build I just did and, finally, export it to the correct location. This is the final script:</p>
 
-<div><script src="https://gist.github.com/16bc1f84981262f911d7.js"></script>
-<noscript><pre><code>#!/bin/sh
-
-exec &gt; /tmp/${PROJECT_NAME}_archive.log 2&gt;&amp;1
-
-UNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal
-
-if [ &quot;true&quot; == ${ALREADYINVOKED:-false} ]
-then
-echo &quot;RECURSION: Detected, stopping&quot;
-else
-export ALREADYINVOKED=&quot;true&quot;
-
-# make sure the output directory exists
-mkdir -p &quot;${UNIVERSAL_OUTPUTFOLDER}&quot;
-
-echo &quot;Building for iPhoneSimulator&quot;
-xcodebuild -workspace &quot;${WORKSPACE_PATH}&quot; -scheme &quot;${SCHEME_NAME}&quot; -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=&quot;${BUILD_DIR}&quot; BUILD_ROOT=&quot;${BUILD_ROOT}&quot; clean build &gt; /dev/null
-
-# Step 1. Copy the framework structure (from iphoneos build) to the universal folder
-echo &quot;Copying to output folder&quot;
-cp -R &quot;${ARCHIVE_PRODUCTS_PATH}${INSTALL_PATH}/${FULL_PRODUCT_NAME}&quot; &quot;${UNIVERSAL_OUTPUTFOLDER}/&quot;
-
-# Step 2. Create universal binary file using lipo and place the combined executable in the copied framework directory
-echo &quot;Combining executables&quot;
-lipo -create -output &quot;${UNIVERSAL_OUTPUTFOLDER}/${EXECUTABLE_PATH}&quot; &quot;${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${EXECUTABLE_PATH}&quot; &quot;${ARCHIVE_PRODUCTS_PATH}${INSTALL_PATH}/${EXECUTABLE_PATH}&quot;
-
-# Step 3. Convenience step to copy the framework to the project&#39;s directory
-echo &quot;Copying to project dir&quot;
-yes | cp -Rf &quot;${UNIVERSAL_OUTPUTFOLDER}/${FULL_PRODUCT_NAME}&quot; &quot;${ARCHIVE_PRODUCTS_PATH}${INSTALL_PATH}&quot;
-
-fi</code></pre></noscript></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/16bc1f84981262f911d7.js"> </script>
 
 <p>As you can see, on step 3 I move the universal build to the archive product path. So when I export the archive after Xcode’s Organizer shows up, the final product already has the universal build:</p>
 
-<p><a href="http://blog.flaviocaetano.com/images/universal_framework.png"><img src="http://blog.flaviocaetano.com/images/universal_framework.png" alt="Universal Framework" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/assets/images/universal_framework.png"><img src="http://blog.flaviocaetano.com/assets/images/universal_framework.png" alt="Universal Framework" /></a></p>
 ]]></content>
   </entry>
   
@@ -1812,7 +1661,7 @@ are my own. I’ll try and remember to link them to a bigger picture.</p>
 
 <p>Or maybe, even better, get the changelog and the names of who touched a specific line of code with <code class="highlighter-rouge">git-log</code> “-L” option:</p>
 
-<p><a href="http://blog.flaviocaetano.com/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="http://blog.flaviocaetano.com/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
+<p><a href="http://blog.flaviocaetano.com/assets/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="http://blog.flaviocaetano.com/assets/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
 
 <p>Thanks to: <a href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file" target="_blank">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
 ]]></content>

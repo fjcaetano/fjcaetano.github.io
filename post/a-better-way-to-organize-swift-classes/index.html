@@ -30,13 +30,12 @@
 
 <!-- Twitter Cards -->
 
-  
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="/images/abstract-1.jpg"
-  
-  <meta name="twitter:title" content="A Better Way To Organize Swift Classes">
-  <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
-  <meta name="twitter:creator" content="@flavio_caetano">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/assets/images/abstract-1.jpg" 
+<meta name="twitter:title" content="A Better Way To Organize Swift Classes">
+<meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+<meta name="twitter:creator" content="@flavio_caetano">
 
 
 <!-- Open Graph -->
@@ -46,25 +45,24 @@
 <meta property="og:title" content="A Better Way To Organize Swift Classes">
 <meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-  <meta property="og:image" content="/images/abstract-1.jpg">
+<meta property="og:image" content="/assets/images/abstract-1.jpg">
 
 <meta property="og:site_name" content="License to Kill -9">
 
 <link rel="canonical" href="http://blog.flaviocaetano.com/post/a-better-way-to-organize-swift-classes">
 <link href="/favicon.png" rel="icon">
-<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="/assets/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+<script>Modernizr || document.write('<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"><\/script>')</script>
 
 
 
 <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
 
 </head>
 
@@ -85,7 +83,7 @@
 				</li>
 				
 				<li>
-					<a href="mailto:flavio@vieiracaetano.com"><i class="fa fa-envelope"></i> Email</a>
+					<a href="mailto:blog@flaviocaetano.com"><i class="fa fa-envelope"></i> Email</a>
 				</li>
 				<li>
 					<a href="https://twitter.com/flavio_caetano"><i class="fa fa-twitter"></i> Twitter</a>
@@ -115,7 +113,7 @@
 <div class="entry-header">
   
   <div class="entry-image">
-    <img src="/images/abstract-1.jpg" alt="A Better Way To Organize Swift Classes">
+    <img src="/assets/images/abstract-1.jpg" alt="A Better Way To Organize Swift Classes">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -148,14 +146,14 @@ organizing properties and methods within a class.</p>
 <p>If you don’t use the source navigator to browse through your classes’ methods,
 you’re doing it wrong.</p>
 
-<p><a href="/images/swift-organization/scope-grouping.png" target="_blank"><img src="/images/swift-organization/scope-grouping.png" alt="Scope Grouping" /></a></p>
+<p><a href="/assets/images/swift-organization/scope-grouping.png" target="_blank"><img src="/assets/images/swift-organization/scope-grouping.png" alt="Scope Grouping" /></a></p>
 
 <p>Absolutely <strong>always</strong> use <code class="highlighter-rouge">// MARK:</code> to segment your code. Use it followed by hyphen to separate your
 extensions and without it to separate your code logic. Use mark to separate your
 properties from your methods. You may also use it to group your methods by their scope. Use
 comments to group your properties by their meaning.</p>
 
-<p><img src="/images/swift-organization/mark.png" alt="// MARK:" /></p>
+<p><img src="/assets/images/swift-organization/mark.png" alt="// MARK:" /></p>
 
 <h2 id="properties-and-overridden-methods-go-first">Properties And Overridden Methods Go First</h2>
 
@@ -217,7 +215,7 @@ methods. That will make clear that they’re not protocol nor private methods.</
 <p>This way you’re automatically grouping methods by their scope. Also, thanks to
 Swift compiler, this way it’s easier to navigate through errors.</p>
 
-<p><a href="/images/swift-organization/delegate-error.png" target="_blank"><img src="/images/swift-organization/delegate-error.png" alt="Protocol Errors" /></a></p>
+<p><a href="/assets/images/swift-organization/delegate-error.png" target="_blank"><img src="/assets/images/swift-organization/delegate-error.png" alt="Protocol Errors" /></a></p>
 
 <h2 id="leave-your-private-methods-last">Leave Your Private Methods Last</h2>
 
@@ -302,7 +300,7 @@ cleaner the better.</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->
@@ -310,9 +308,9 @@ cleaner the better.</p>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="/javascripts/octopress.js" type="text/javascript"></script>
-<script src="/javascripts/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/octopress.js" type="text/javascript"></script>
+<script src="/assets/js/scripts.min.js"></script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -344,7 +342,6 @@ cleaner the better.</p>
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
 
 
 

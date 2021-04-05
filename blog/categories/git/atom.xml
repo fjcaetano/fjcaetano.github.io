@@ -4,11 +4,11 @@
   <title><![CDATA[Category: Git | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2021-04-05T10:52:24-04:00</updated>
+  <updated>2021-04-05T14:14:25-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
-    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+    <email><![CDATA[blog@flaviocaetano.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
@@ -28,7 +28,7 @@
 
 <p>Or maybe, even better, get the changelog and the names of who touched a specific line of code with <code class="highlighter-rouge">git-log</code> “-L” option:</p>
 
-<p><a href="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
+<p><a href="/assets/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png"><img src="/assets/images/Screen-Shot-2014-07-23-at-5.31.32-PM.png" alt="git-log -L" /></a></p>
 
 <p>Thanks to: <a href="http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file" target="_blank">http://stackoverflow.com/questions/8435343/retrieve-the-commit-log-for-a-specific-line-in-a-file</a></p>
 ]]></content>

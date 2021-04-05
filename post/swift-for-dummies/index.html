@@ -30,13 +30,12 @@
 
 <!-- Twitter Cards -->
 
-  
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="/images/wwdc14-home-branding_2x.png"
-  
-  <meta name="twitter:title" content="Swift for Dummies">
-  <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
-  <meta name="twitter:creator" content="@flavio_caetano">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/assets/images/wwdc14-home-branding_2x.png" 
+<meta name="twitter:title" content="Swift for Dummies">
+<meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+<meta name="twitter:creator" content="@flavio_caetano">
 
 
 <!-- Open Graph -->
@@ -46,25 +45,24 @@
 <meta property="og:title" content="Swift for Dummies">
 <meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-  <meta property="og:image" content="/images/wwdc14-home-branding_2x.png">
+<meta property="og:image" content="/assets/images/wwdc14-home-branding_2x.png">
 
 <meta property="og:site_name" content="License to Kill -9">
 
 <link rel="canonical" href="http://blog.flaviocaetano.com/post/swift-for-dummies">
 <link href="/favicon.png" rel="icon">
-<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="/assets/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+<script>Modernizr || document.write('<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"><\/script>')</script>
 
 
 
 <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
 
 </head>
 
@@ -85,7 +83,7 @@
 				</li>
 				
 				<li>
-					<a href="mailto:flavio@vieiracaetano.com"><i class="fa fa-envelope"></i> Email</a>
+					<a href="mailto:blog@flaviocaetano.com"><i class="fa fa-envelope"></i> Email</a>
 				</li>
 				<li>
 					<a href="https://twitter.com/flavio_caetano"><i class="fa fa-twitter"></i> Twitter</a>
@@ -115,7 +113,7 @@
 <div class="entry-header">
   
   <div class="entry-image">
-    <img src="/images/wwdc14-home-branding_2x.png" alt="Swift for Dummies">
+    <img src="/assets/images/wwdc14-home-branding_2x.png" alt="Swift for Dummies">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -163,9 +161,10 @@ definition to neither of those just the declares var, for variables, and <cod
 for constants. As you may have figured out, constants can’t be altered. We’ll
 cover when to use it in a few steps.</p>
 
-<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="nv">foo</span> <span class="o">=</span> <span class="s">"this is getting good"</span>
+<pre class="splash"><code><span class="keyword">var</span> foo = <span class="string">"this is getting good"</span>
 
-<span class="k">let</span> <span class="nv">x</span> <span class="o">=</span> <span class="mi">42</span></code></pre></figure>
+<span class="keyword">let</span> x = <span class="number">42</span>
+</code></pre>
 
 <p>Yep, there are no semi-colons at the end of statements.</p>
 
@@ -173,21 +172,22 @@ cover when to use it in a few steps.</p>
  of numbers. Also, cases don’t automatically fall through the next condition, so
   there’s no need to <code class="highlighter-rouge">break</code>.</p>
 
-<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">switch</span> <span class="n">myvar</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="mi">4</span><span class="p">:</span>
-        <span class="c1">// do something</span>
+<pre class="splash"><code><span class="keyword">switch</span> myvar {
+    <span class="keyword">case</span> <span class="number">4</span>:
+        <span class="comment">// do something</span>
 
-    <span class="k">case</span> <span class="nv">someOtherVar</span><span class="p">:</span>
-        <span class="c1">// this is getting wild</span>
+    <span class="keyword">case</span> someOtherVar:
+        <span class="comment">// this is getting wild</span>
 
-    <span class="k">case</span> <span class="s">"string"</span><span class="p">:</span>
-        <span class="c1">// holy cow!</span>
+    <span class="keyword">case</span> <span class="string">"string"</span>:
+        <span class="comment">// holy cow!</span>
 
-    <span class="k">case</span> <span class="mi">1</span><span class="o">..</span><span class="mi">4</span><span class="p">:</span>
-        <span class="c1">// ok, this is awesome</span>
-    <span class="k">default</span><span class="p">:</span>
-        <span class="c1">// something unimplemented</span>
-<span class="p">}</span></code></pre></figure>
+    <span class="keyword">case</span> <span class="number">1</span>..<span class="number">4</span>:
+        <span class="comment">// ok, this is awesome</span>
+    <span class="keyword">default</span>:
+        <span class="comment">// something unimplemented</span>
+}
+</code></pre>
 
 <p>There’s also no need for surrounding parenthesis when working with conditions,
 unless it’s a complex condition, as usual. Switches in Swift (yep, try saying
@@ -199,10 +199,11 @@ XCode will error at compile time if you don’t.</p>
 simple as calling <code class="highlighter-rouge">println()</code> (it’s a function) and you’re done.
 Formatting strings is also awsome:</p>
 
-<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="nv">name</span> <span class="o">=</span> <span class="s">"Flavio"</span>
+<pre class="splash"><code><span class="keyword">var</span> name = <span class="string">"Flavio"</span>
 
-<span class="nf">println</span><span class="p">(</span><span class="s">"Hello </span><span class="se">\(</span><span class="n">name</span><span class="se">)</span><span class="s">!"</span><span class="p">)</span>
-<span class="c1">// Hello Flavio!</span></code></pre></figure>
+<span class="call">println</span>(<span class="string">"Hello</span> \(name)<span class="string">!"</span>)
+<span class="comment">// Hello Flavio!</span>
+</code></pre>
 
 <p>This is enough to get started and get familiar with Swift. Go ahead, poke it
 around, but don’t try to get fancy just yet. I’ll be covering more in the next
@@ -254,7 +255,7 @@ few days.</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->
@@ -262,9 +263,9 @@ few days.</p>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="/javascripts/octopress.js" type="text/javascript"></script>
-<script src="/javascripts/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/octopress.js" type="text/javascript"></script>
+<script src="/assets/js/scripts.min.js"></script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -296,7 +297,6 @@ few days.</p>
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
 
 
 

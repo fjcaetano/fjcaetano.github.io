@@ -30,13 +30,12 @@
 
 <!-- Twitter Cards -->
 
-  
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="/images/abstract-8.jpg"
-  
-  <meta name="twitter:title" content="The Simplest Throttle/Debounce You'll Ever See">
-  <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
-  <meta name="twitter:creator" content="@flavio_caetano">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/assets/images/abstract-8.jpg" 
+<meta name="twitter:title" content="The Simplest Throttle/Debounce You'll Ever See">
+<meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+<meta name="twitter:creator" content="@flavio_caetano">
 
 
 <!-- Open Graph -->
@@ -46,25 +45,24 @@
 <meta property="og:title" content="The Simplest Throttle/Debounce You'll Ever See">
 <meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-  <meta property="og:image" content="/images/abstract-8.jpg">
+<meta property="og:image" content="/assets/images/abstract-8.jpg">
 
 <meta property="og:site_name" content="License to Kill -9">
 
 <link rel="canonical" href="http://blog.flaviocaetano.com/post/the-simplest-throttle-slash-debounce-youll-ever-see">
 <link href="/favicon.png" rel="icon">
-<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="/assets/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+<script>Modernizr || document.write('<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"><\/script>')</script>
 
 
 
 <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
 
 </head>
 
@@ -85,7 +83,7 @@
 				</li>
 				
 				<li>
-					<a href="mailto:flavio@vieiracaetano.com"><i class="fa fa-envelope"></i> Email</a>
+					<a href="mailto:blog@flaviocaetano.com"><i class="fa fa-envelope"></i> Email</a>
 				</li>
 				<li>
 					<a href="https://twitter.com/flavio_caetano"><i class="fa fa-twitter"></i> Twitter</a>
@@ -115,7 +113,7 @@
 <div class="entry-header">
   
   <div class="entry-image">
-    <img src="/images/abstract-8.jpg" alt="The Simplest Throttle/Debounce You'll Ever See">
+    <img src="/assets/images/abstract-8.jpg" alt="The Simplest Throttle/Debounce You'll Ever See">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -153,57 +151,8 @@ overcomplicated.</p>
 
 <p>So I created an extension on <code class="highlighter-rouge">DispatchQueue</code> (where it should be):</p>
 
-<div><script src="https://gist.github.com/ff3e994c4edb4991ab8280f34994beb4.js"></script>
-<noscript><pre><code>import Dispatch
-
-private var throttleWorkItems = [AnyHashable: DispatchWorkItem]()
-private var lastDebounceCallTimes = [AnyHashable: DispatchTime]()
-private let nilContext: AnyHashable = arc4random()
-
-public extension DispatchQueue {
-    /**
-     - parameters:
-         - deadline: The timespan to delay a closure execution
-         - context: The context in which the throttle should be executed
-         - action: The closure to be executed
-
-     Delays a closure execution and ensures no other executions are made during deadline
-     */
-    public func throttle(deadline: DispatchTime, context: AnyHashable? = nil, action: @escaping () -&gt; Void) {
-        let worker = DispatchWorkItem {
-            defer { throttleWorkItems.removeValue(forKey: context ?? nilContext) }
-            action()
-        }
-
-        asyncAfter(deadline: deadline, execute: worker)
-
-        throttleWorkItems[context ?? nilContext]?.cancel()
-        throttleWorkItems[context ?? nilContext] = worker
-    }
-
-    /**
-     - parameters:
-         - interval: The interval in which new calls will be ignored
-         - context: The context in which the debounce should be executed
-         - action: The closure to be executed
-
-     Executes a closure and ensures no other executions will be made during the interval.
-     */
-    public func debounce(interval: Double, context: AnyHashable? = nil, action: @escaping () -&gt; Void) {
-        if let last = lastDebounceCallTimes[context ?? nilContext], last + interval &gt; .now() {
-            return
-        }
-
-        lastDebounceCallTimes[context ?? nilContext] = .now()
-        async(execute: action)
-
-        // Cleanup &amp; release context
-        throttle(deadline: .now() + interval) {
-            lastDebounceCallTimes.removeValue(forKey: context ?? nilContext)
-        }
-    }
-}
-</code></pre></noscript></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/ff3e994c4edb4991ab8280f34994beb4.js"> </script>
 
 <p><em>TA DAA</em> 🎉</p>
 
@@ -256,7 +205,7 @@ public extension DispatchQueue {
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->
@@ -264,9 +213,9 @@ public extension DispatchQueue {
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="/javascripts/octopress.js" type="text/javascript"></script>
-<script src="/javascripts/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/octopress.js" type="text/javascript"></script>
+<script src="/assets/js/scripts.min.js"></script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -298,7 +247,6 @@ public extension DispatchQueue {
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
 
 
 

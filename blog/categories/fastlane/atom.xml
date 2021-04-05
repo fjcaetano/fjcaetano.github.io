@@ -4,11 +4,11 @@
   <title><![CDATA[Category: Fastlane | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/fastlane/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2021-04-05T10:52:24-04:00</updated>
+  <updated>2021-04-05T14:14:25-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
-    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+    <email><![CDATA[blog@flaviocaetano.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
@@ -39,80 +39,8 @@ be accepted anyway.</p>
 <p>So let’s share it on Github! Since, it’s just a single file, I’ve created a gist
 that can be added as a submodule to your <a href="https://github.com/fastlane/fastlane" target="_blank">Fastlane</a> <code class="highlighter-rouge">actions</code> folder:</p>
 
-<div><script src="https://gist.github.com/04126b3051f6cd6aebe041bb1dfe14e9.js"></script>
-<noscript><pre><code>module Fastlane
-  module Actions
-    class CodecovAction &lt; Action
-      def self.run(params)
-        ci_only = params[:ci_only]
-        cmd = [&#39;curl -s https://codecov.io/bash | bash&#39;]
-
-        cmd &lt;&lt; &quot;-s --&quot; if params.all_keys.inject(false) { |p, k| p or params[k] }
-        cmd &lt;&lt; &quot;-X xcodeplist&quot; if params[:use_xcodeplist]
-        cmd &lt;&lt; &quot;-J &#39;#{params[:project_name]}&#39;&quot; if params[:project_name]
-        cmd &lt;&lt; &quot;-t &#39;#{params[:token]}&#39;&quot; if params[:token]
-        cmd &lt;&lt; &quot;-v&quot; if params[:verbose]
-
-        if Helper.is_ci? || !ci_only
-          sh cmd.join(&quot; &quot;)
-        else
-          puts &quot;Not CI: Skipping coverage files upload&quot;
-        end
-      end
-
-      #####################################################
-      # @!group Documentation
-      #####################################################
-
-      def self.description
-        &quot;Upload your coverage files to Codecov&quot;
-      end
-
-      def self.details
-        &quot;https://codecov.io&quot;
-      end
-
-      def self.available_options
-        [
-          FastlaneCore::ConfigItem.new(key: :use_xcodeplist,
-                                       env_name: &quot;FL_CODECOV_USE_XCODEPLIST&quot;,
-                                       description: &quot;[BETA] Upload to Codecov using xcodeplist&quot;,
-                                       is_string: false,
-                                       default_value: false,),
-          FastlaneCore::ConfigItem.new(key: :project_name,
-                                       env_name: &quot;FL_CODECOV_PROJECT_NAME&quot;,
-                                       description: &quot;Upload to Codecov using a project name&quot;,
-                                       optional: true),
-          FastlaneCore::ConfigItem.new(key: :token,
-                                       env_name: &quot;FL_CODECOV_TOKEN&quot;,
-                                       description: &quot;API token for private repos&quot;,
-                                       optional: true),
-          FastlaneCore::ConfigItem.new(key: :verbose,
-                                       env_name: &quot;FL_CODECOV_VERBOSE&quot;,
-                                       description: &quot;Verbose logs&quot;,
-                                       is_string: false,
-                                       optional: true,
-                                       default_value: false),
-          FastlaneCore::ConfigItem.new(key: :ci_only,
-                                       env_name: &quot;FL_CODECOV_CI_ONLY&quot;,
-                                       description: &quot;Upload coverage only if running on CI&quot;,
-                                       is_string: false,
-                                       optional: true,
-                                       default_value: true),
-        ]
-      end
-
-      def self.author
-        &quot;Flávio Caetano (@fjcaetano)&quot;
-      end
-
-      def self.is_supported?(platform)
-        true
-      end
-    end
-  end
-end
-</code></pre></noscript></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/04126b3051f6cd6aebe041bb1dfe14e9.js"> </script>
 
 <p>After cloning the submodule you can try running <code class="highlighter-rouge">fastlane action codecov</code> for details.</p>
 

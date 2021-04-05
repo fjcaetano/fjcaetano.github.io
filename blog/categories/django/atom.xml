@@ -4,11 +4,11 @@
   <title><![CDATA[Category: Django | License to Kill -9]]></title>
   <link href="http://blog.flaviocaetano.com/blog/categories/django/atom.xml" rel="self"/>
   <link href="http://blog.flaviocaetano.com/"/>
-  <updated>2021-04-05T10:52:24-04:00</updated>
+  <updated>2021-04-05T14:14:25-04:00</updated>
   <id>http://blog.flaviocaetano.com/</id>
   <author>
     <name><![CDATA[Flávio Caetano]]></name>
-    <email><![CDATA[flavio@vieiracaetano.com]]></email>
+    <email><![CDATA[blog@flaviocaetano.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
@@ -91,7 +91,7 @@ displays to you in a user friendly way.</p>
 
 <p>This is how it looks when you hover your cursor over an <em>ImageField</em> in your model grid.</p>
 
-<p><a href="/images/thumb_image.png"><img src="/images/thumb_image.png" alt="" /></a></p>
+<p><a href="/assets/images/thumb_image.png"><img src="/assets/images/thumb_image.png" alt="" /></a></p>
 
 <p>The image is in portuguese. Imagem = Image, Abrir Imagem = Open Image.
 <a href="https://github.com/fjcaetano/django-admin-thumbnail">django-admin-thumbnail</a> is

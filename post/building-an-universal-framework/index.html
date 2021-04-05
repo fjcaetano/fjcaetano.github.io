@@ -30,13 +30,12 @@
 
 <!-- Twitter Cards -->
 
-  
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="/images/colloseum.jpg"
-  
-  <meta name="twitter:title" content="Building an Universal Framework">
-  <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
-  <meta name="twitter:creator" content="@flavio_caetano">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/colloseum.jpg" 
+<meta name="twitter:title" content="Building an Universal Framework">
+<meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+<meta name="twitter:creator" content="@flavio_caetano">
 
 
 <!-- Open Graph -->
@@ -46,25 +45,24 @@
 <meta property="og:title" content="Building an Universal Framework">
 <meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-  <meta property="og:image" content="/images/colloseum.jpg">
+<meta property="og:image" content="/images/colloseum.jpg">
 
 <meta property="og:site_name" content="License to Kill -9">
 
 <link rel="canonical" href="http://blog.flaviocaetano.com/post/building-an-universal-framework">
 <link href="/favicon.png" rel="icon">
-<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="/assets/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+<script>Modernizr || document.write('<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"><\/script>')</script>
 
 
 
 <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
 
 </head>
 
@@ -85,7 +83,7 @@
 				</li>
 				
 				<li>
-					<a href="mailto:flavio@vieiracaetano.com"><i class="fa fa-envelope"></i> Email</a>
+					<a href="mailto:blog@flaviocaetano.com"><i class="fa fa-envelope"></i> Email</a>
 				</li>
 				<li>
 					<a href="https://twitter.com/flavio_caetano"><i class="fa fa-twitter"></i> Twitter</a>
@@ -165,7 +163,7 @@ lipo <span class="nt">-create</span> <span class="nt">-output</span> <span class
 
 <p>Having in mind that I wanted the universal build to be created when I archived the framework target, I edited my scheme and added the script as a “Run Script” phase in “Post-actions”:</p>
 
-<p><a href="/images/archive_post_action.jpg"><img src="/images/archive_post_action.jpg" alt="Run Script in Post-actions" /></a></p>
+<p><a href="/assets/images/archive_post_action.jpg"><img src="/assets/images/archive_post_action.jpg" alt="Run Script in Post-actions" /></a></p>
 
 <blockquote>
   <p>Don’t forget to “Provide build settings from” the blurred framework!</p>
@@ -173,42 +171,12 @@ lipo <span class="nt">-create</span> <span class="nt">-output</span> <span class
 
 <p>So after fixing <code class="highlighter-rouge">xcodebuild</code>’s parameters to work with workspaces (and running the correct scheme), now all I had to do was combine (<code class="highlighter-rouge">lipo</code>) the product of the Archive with the product of the build I just did and, finally, export it to the correct location. This is the final script:</p>
 
-<div><script src="https://gist.github.com/16bc1f84981262f911d7.js"></script>
-<noscript><pre><code>#!/bin/sh
-
-exec &gt; /tmp/${PROJECT_NAME}_archive.log 2&gt;&amp;1
-
-UNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal
-
-if [ &quot;true&quot; == ${ALREADYINVOKED:-false} ]
-then
-echo &quot;RECURSION: Detected, stopping&quot;
-else
-export ALREADYINVOKED=&quot;true&quot;
-
-# make sure the output directory exists
-mkdir -p &quot;${UNIVERSAL_OUTPUTFOLDER}&quot;
-
-echo &quot;Building for iPhoneSimulator&quot;
-xcodebuild -workspace &quot;${WORKSPACE_PATH}&quot; -scheme &quot;${SCHEME_NAME}&quot; -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=&quot;${BUILD_DIR}&quot; BUILD_ROOT=&quot;${BUILD_ROOT}&quot; clean build &gt; /dev/null
-
-# Step 1. Copy the framework structure (from iphoneos build) to the universal folder
-echo &quot;Copying to output folder&quot;
-cp -R &quot;${ARCHIVE_PRODUCTS_PATH}${INSTALL_PATH}/${FULL_PRODUCT_NAME}&quot; &quot;${UNIVERSAL_OUTPUTFOLDER}/&quot;
-
-# Step 2. Create universal binary file using lipo and place the combined executable in the copied framework directory
-echo &quot;Combining executables&quot;
-lipo -create -output &quot;${UNIVERSAL_OUTPUTFOLDER}/${EXECUTABLE_PATH}&quot; &quot;${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${EXECUTABLE_PATH}&quot; &quot;${ARCHIVE_PRODUCTS_PATH}${INSTALL_PATH}/${EXECUTABLE_PATH}&quot;
-
-# Step 3. Convenience step to copy the framework to the project&#39;s directory
-echo &quot;Copying to project dir&quot;
-yes | cp -Rf &quot;${UNIVERSAL_OUTPUTFOLDER}/${FULL_PRODUCT_NAME}&quot; &quot;${ARCHIVE_PRODUCTS_PATH}${INSTALL_PATH}&quot;
-
-fi</code></pre></noscript></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/16bc1f84981262f911d7.js"> </script>
 
 <p>As you can see, on step 3 I move the universal build to the archive product path. So when I export the archive after Xcode’s Organizer shows up, the final product already has the universal build:</p>
 
-<p><a href="/images/universal_framework.png"><img src="/images/universal_framework.png" alt="Universal Framework" /></a></p>
+<p><a href="/assets/images/universal_framework.png"><img src="/assets/images/universal_framework.png" alt="Universal Framework" /></a></p>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="/categories/#Bash" title="Pages tagged Bash" class="tag">Bash</a></span>
@@ -256,7 +224,7 @@ fi</code></pre></noscript></div>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->
@@ -264,9 +232,9 @@ fi</code></pre></noscript></div>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="/javascripts/octopress.js" type="text/javascript"></script>
-<script src="/javascripts/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/octopress.js" type="text/javascript"></script>
+<script src="/assets/js/scripts.min.js"></script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -298,7 +266,6 @@ fi</code></pre></noscript></div>
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
 
 
 

@@ -30,13 +30,12 @@
 
 <!-- Twitter Cards -->
 
-  
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="/images/abstract-5.jpg"
-  
-  <meta name="twitter:title" content="Codecov Fastlane action">
-  <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
-  <meta name="twitter:creator" content="@flavio_caetano">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/assets/images/abstract-5.jpg" 
+<meta name="twitter:title" content="Codecov Fastlane action">
+<meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+<meta name="twitter:creator" content="@flavio_caetano">
 
 
 <!-- Open Graph -->
@@ -46,25 +45,24 @@
 <meta property="og:title" content="Codecov Fastlane action">
 <meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-  <meta property="og:image" content="/images/abstract-5.jpg">
+<meta property="og:image" content="/assets/images/abstract-5.jpg">
 
 <meta property="og:site_name" content="License to Kill -9">
 
 <link rel="canonical" href="http://blog.flaviocaetano.com/post/codecov-fastlane-action">
 <link href="/favicon.png" rel="icon">
-<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="/assets/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+<script>Modernizr || document.write('<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"><\/script>')</script>
 
 
 
 <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
 
 </head>
 
@@ -85,7 +83,7 @@
 				</li>
 				
 				<li>
-					<a href="mailto:flavio@vieiracaetano.com"><i class="fa fa-envelope"></i> Email</a>
+					<a href="mailto:blog@flaviocaetano.com"><i class="fa fa-envelope"></i> Email</a>
 				</li>
 				<li>
 					<a href="https://twitter.com/flavio_caetano"><i class="fa fa-twitter"></i> Twitter</a>
@@ -115,7 +113,7 @@
 <div class="entry-header">
   
   <div class="entry-image">
-    <img src="/images/abstract-5.jpg" alt="Codecov Fastlane action">
+    <img src="/assets/images/abstract-5.jpg" alt="Codecov Fastlane action">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -157,80 +155,8 @@ be accepted anyway.</p>
 <p>So let’s share it on Github! Since, it’s just a single file, I’ve created a gist
 that can be added as a submodule to your <a href="https://github.com/fastlane/fastlane" target="_blank">Fastlane</a> <code class="highlighter-rouge">actions</code> folder:</p>
 
-<div><script src="https://gist.github.com/04126b3051f6cd6aebe041bb1dfe14e9.js"></script>
-<noscript><pre><code>module Fastlane
-  module Actions
-    class CodecovAction &lt; Action
-      def self.run(params)
-        ci_only = params[:ci_only]
-        cmd = [&#39;curl -s https://codecov.io/bash | bash&#39;]
-
-        cmd &lt;&lt; &quot;-s --&quot; if params.all_keys.inject(false) { |p, k| p or params[k] }
-        cmd &lt;&lt; &quot;-X xcodeplist&quot; if params[:use_xcodeplist]
-        cmd &lt;&lt; &quot;-J &#39;#{params[:project_name]}&#39;&quot; if params[:project_name]
-        cmd &lt;&lt; &quot;-t &#39;#{params[:token]}&#39;&quot; if params[:token]
-        cmd &lt;&lt; &quot;-v&quot; if params[:verbose]
-
-        if Helper.is_ci? || !ci_only
-          sh cmd.join(&quot; &quot;)
-        else
-          puts &quot;Not CI: Skipping coverage files upload&quot;
-        end
-      end
-
-      #####################################################
-      # @!group Documentation
-      #####################################################
-
-      def self.description
-        &quot;Upload your coverage files to Codecov&quot;
-      end
-
-      def self.details
-        &quot;https://codecov.io&quot;
-      end
-
-      def self.available_options
-        [
-          FastlaneCore::ConfigItem.new(key: :use_xcodeplist,
-                                       env_name: &quot;FL_CODECOV_USE_XCODEPLIST&quot;,
-                                       description: &quot;[BETA] Upload to Codecov using xcodeplist&quot;,
-                                       is_string: false,
-                                       default_value: false,),
-          FastlaneCore::ConfigItem.new(key: :project_name,
-                                       env_name: &quot;FL_CODECOV_PROJECT_NAME&quot;,
-                                       description: &quot;Upload to Codecov using a project name&quot;,
-                                       optional: true),
-          FastlaneCore::ConfigItem.new(key: :token,
-                                       env_name: &quot;FL_CODECOV_TOKEN&quot;,
-                                       description: &quot;API token for private repos&quot;,
-                                       optional: true),
-          FastlaneCore::ConfigItem.new(key: :verbose,
-                                       env_name: &quot;FL_CODECOV_VERBOSE&quot;,
-                                       description: &quot;Verbose logs&quot;,
-                                       is_string: false,
-                                       optional: true,
-                                       default_value: false),
-          FastlaneCore::ConfigItem.new(key: :ci_only,
-                                       env_name: &quot;FL_CODECOV_CI_ONLY&quot;,
-                                       description: &quot;Upload coverage only if running on CI&quot;,
-                                       is_string: false,
-                                       optional: true,
-                                       default_value: true),
-        ]
-      end
-
-      def self.author
-        &quot;Flávio Caetano (@fjcaetano)&quot;
-      end
-
-      def self.is_supported?(platform)
-        true
-      end
-    end
-  end
-end
-</code></pre></noscript></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/04126b3051f6cd6aebe041bb1dfe14e9.js"> </script>
 
 <p>After cloning the submodule you can try running <code class="highlighter-rouge">fastlane action codecov</code> for details.</p>
 
@@ -291,7 +217,7 @@ end
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->
@@ -299,9 +225,9 @@ end
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="/javascripts/octopress.js" type="text/javascript"></script>
-<script src="/javascripts/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/octopress.js" type="text/javascript"></script>
+<script src="/assets/js/scripts.min.js"></script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -333,7 +259,6 @@ end
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
 
 
 

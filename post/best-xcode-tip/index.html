@@ -30,13 +30,12 @@
 
 <!-- Twitter Cards -->
 
-  
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:image" content"">
-  
-  <meta name="twitter:title" content="The Best XCode Tip No One Ever Gave You">
-  <meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
-  <meta name="twitter:creator" content="@flavio_caetano">
+ <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content"">
+
+<meta name="twitter:title" content="The Best XCode Tip No One Ever Gave You">
+<meta name="twitter:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
+<meta name="twitter:creator" content="@flavio_caetano">
 
 
 <!-- Open Graph -->
@@ -46,25 +45,24 @@
 <meta property="og:title" content="The Best XCode Tip No One Ever Gave You">
 <meta property="og:description" content="Mobile developer, kart aficionado, cinephile and musician in spare times. Not necessarily in that order.">
 
-  <meta property="og:image" content="">
+<meta property="og:image" content="">
 
 <meta property="og:site_name" content="License to Kill -9">
 
 <link rel="canonical" href="http://blog.flaviocaetano.com/post/best-xcode-tip">
 <link href="/favicon.png" rel="icon">
-<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="/assets/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/atom.xml" rel="alternate" title="License to Kill -9" type="application/atom+xml">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-<script>Modernizr || document.write('<script src="/javascripts/vendor/modernizr-2.6.2.custom.min.js"><\/script>') </script>
+<script>Modernizr || document.write('<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"><\/script>')</script>
 
 
 
 <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
 
 </head>
 
@@ -85,7 +83,7 @@
 				</li>
 				
 				<li>
-					<a href="mailto:flavio@vieiracaetano.com"><i class="fa fa-envelope"></i> Email</a>
+					<a href="mailto:blog@flaviocaetano.com"><i class="fa fa-envelope"></i> Email</a>
 				</li>
 				<li>
 					<a href="https://twitter.com/flavio_caetano"><i class="fa fa-twitter"></i> Twitter</a>
@@ -140,17 +138,17 @@ breakpoint marker on the top of your Project Navigator. If you didn’t know, th
 Breakpoint Navigator show all your breakpoints in your project, where you can
 easily manage them. (Click on the image to see it bigger)</p>
 
-<p><a href="/images/best-xcode-hint-1.png"><img src="/images/best-xcode-hint-1.png" alt="best-xcode-hint-1" /></a></p>
+<p><a href="/assets/images/best-xcode-hint-1.png"><img src="/assets/images/best-xcode-hint-1.png" alt="best-xcode-hint-1" /></a></p>
 
 <p>Now that you’re in the Breakpoint Navigator, click on the little “+” button on
 the bottom left of the screen. A little dialog window will show up and choose the
 “Add Exception Breakpoint…” option.</p>
 
-<p><a href="/images/best-xcode-hint-3.png"><img src="/images/best-xcode-hint-3.png" alt="best-xcode-hint-3" /></a></p>
+<p><a href="/assets/images/best-xcode-hint-3.png"><img src="/assets/images/best-xcode-hint-3.png" alt="best-xcode-hint-3" /></a></p>
 
 <p>Then, the Xcode will ask you some information about the breakpoint you’re creating:</p>
 
-<p><a href="/images/best-xcode-hint-4.png"><img src="/images/best-xcode-hint-4.png" alt="best-xcode-hint-4" /></a></p>
+<p><a href="/assets/images/best-xcode-hint-4.png"><img src="/assets/images/best-xcode-hint-4.png" alt="best-xcode-hint-4" /></a></p>
 
 <ul>
   <li>Exception: There are three options: “All” to get all types of exceptions; “C++” to get only C++ exceptions; and “Objective-C” to get only ObjC exceptions. I like to leave it as “All”.</li>
@@ -165,7 +163,7 @@ stop whenever something odd happens! Let’s try it out!</p>
 <p>As an example I’ve created an empty array and tried to access the object at index
 0, which doesn’t exists. This is what happened:</p>
 
-<p><a href="/images/best-xcode-hint-5.png"><img src="/images/best-xcode-hint-5.png" alt="best-xcode-hint-5" /></a></p>
+<p><a href="/assets/images/best-xcode-hint-5.png"><img src="/assets/images/best-xcode-hint-5.png" alt="best-xcode-hint-5" /></a></p>
 
 <p>Whoa! The Xcode stopped precisely where the problem was! Quite awesome, huh? But,
 sometimes, it’s not that easy to visualise what the problem really is, so if
@@ -175,7 +173,7 @@ whatever exceptions that may happen.</p>
 
 <p>So you can look at the console to see what the problem was:</p>
 
-<p><a href="/images/best-xcode-hint-6.png"><img src="/images/best-xcode-hint-6.png" alt="best-xcode-hint-6" /></a></p>
+<p><a href="/assets/images/best-xcode-hint-6.png"><img src="/assets/images/best-xcode-hint-6.png" alt="best-xcode-hint-6" /></a></p>
 
 <blockquote>
   <p>”-[__NSArrayI objectAtIndex:]: index 0 beyond bounds for empty array”</p>
@@ -231,7 +229,7 @@ I think you guys should know.</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2021 Flávio Caetano. Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme for Octopress</a>.</span>
+    <span>&copy; 2021 Flávio Caetano. Using the <a href="https://github.com/jez/hpstr-theme/">HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->
@@ -239,9 +237,9 @@ I think you guys should know.</p>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="/javascripts/octopress.js" type="text/javascript"></script>
-<script src="/javascripts/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/octopress.js" type="text/javascript"></script>
+<script src="/assets/js/scripts.min.js"></script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -273,7 +271,6 @@ I think you guys should know.</p>
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
-
 
 
 
