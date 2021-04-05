@@ -4,6 +4,7 @@ require "stringex"
 
 ## -- Misc Configs -- ##
 
+deploy_branch   = "master"    # the branch containing the generated website
 public_dir      = "public"    # compiled site directory
 source_dir      = "."         # source file directory
 posts_dir       = "_posts"    # directory for blog files
@@ -20,10 +21,41 @@ end
 # Working with Jekyll #
 #######################
 
+desc "Prepare the project for building"
+task :prepare do
+  compile_sass(source_dir)
+
+  puts "### Creating worktree on ./#{public_dir} git:(#{deploy_branch})"
+  system "git worktree add #{public_dir} #{deploy_branch}"
+end
+
 desc "Compile compass styles"
 task :compass do
-  puts "### Compiling styles"
-  system "compass compile --css-dir #{source_dir}/assets/css --sass-dir _sass"
+  compile_sass(source_dir)
+end
+
+desc "Deploy website to Github pages"
+task :deploy do
+  Rake::Task["prepare"].invoke
+
+  puts "## Deploying branch to Github Pages "
+  puts "## Pulling any updates from Github Pages "
+  cd "#{public_dir}" do 
+    Bundler.with_unbundled_env { system "git pull" }
+  end
+
+  puts '## Building website with Jekyll'
+  system "jekyll b"
+
+  cd "#{public_dir}" do
+    system "git add -A"
+    message = "Site updated at #{Time.now.utc}"
+    puts "\n## Committing: #{message}"
+    system "git commit -m \"#{message}\""
+    puts "\n## Pushing generated #{public_dir} website"
+    Bundler.with_unbundled_env { system "git push origin #{deploy_branch}" }
+    puts "\n## Github Pages deploy complete"
+  end
 end
 
 # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
@@ -99,6 +131,8 @@ end
 desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
 task :clean do
   rm_rf [Dir.glob(".pygments-cache/**"), Dir.glob(".gist-cache/**"), Dir.glob(".sass-cache/**"), "#{source_dir}/assets/css/screen.css"]
+  system "git worktree remove --force #{public_dir}"
+  system "git worktree add #{public_dir} #{deploy_branch}" 
 end
 
 def get_stdin(message)
@@ -113,6 +147,11 @@ def ask(message, valid_options)
     answer = get_stdin(message)
   end
   answer
+end
+
+def compile_sass(source_dir)
+  puts "### Compiling styles"
+  system "compass compile --css-dir #{source_dir}/assets/css --sass-dir _sass"
 end
 
 desc "list tasks"
