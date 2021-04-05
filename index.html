@@ -1,0 +1,29 @@
+---
+layout: default
+image:
+  feature: /assets/images/feature_image.jpg
+  credit: Flávio Caetano
+  creditlink: http://flaviocaetano.vsco.co/media/559ef75c2c331e8f438b456b
+share: true
+---
+
+{% assign index = true %}
+{% for post in paginator.posts %}
+<article class="hentry">
+  {% include article.html %}
+</article><!-- /.hentry -->
+{% endfor %}
+
+<div class="pagination">
+  {% if paginator.previous_page %}
+    {% if paginator.previous_page == 1 %}
+      <a href="/" class="btn">Previous</a>
+    {% else %}
+      <a href="{{ root_url }}{ paginator.previous_page_path }}" class="btn">Previous</a>
+    {% endif %}
+  {% endif %}
+  <a href="{{ root_url }}/archives">Blog Archives</a>
+  {% if paginator.next_page %}
+    <a href="{{ root_url }}{{ paginator.next_page_path }}" class="btn">Next</a>
+  {% endif %}
+</div><!-- /.pagination -->

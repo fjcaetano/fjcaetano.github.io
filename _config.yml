@@ -17,7 +17,7 @@ timezone: America/New_York
 # RSS / Email (optional) subscription links (change if using something like Feedburner)
 subscribe_rss: /atom.xml
 # RSS feeds can list your email address if you like
-email: flavio@vieiracaetano.com
+email: blog@flaviocaetano.com
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -27,17 +27,12 @@ email: flavio@vieiracaetano.com
 root: /
 permalink: /post/:title/
 destination: public
-plugins_dir: plugins
-plugins: [jekyll-paginate]
+plugins: 
+  - jekyll-paginate
+  - jekyll-gist
 code_dir: downloads/code
-source: source
 category_dir: blog/categories
 markdown: kramdown
-# rdiscount:
-#   extensions:
-#     - autolink
-#     - footnotes
-#     - smart
 
 paginate: 5          # Posts per page on the blog index
 paginate_path: /post/:num/  # Directory base for pagination URLs eg. /posts/2/
