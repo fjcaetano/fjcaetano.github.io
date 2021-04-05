@@ -2,27 +2,11 @@ require "rubygems"
 require "bundler/setup"
 require "stringex"
 
-## -- Rsync Deploy config -- ##
-# Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
-ssh_user       = "user@domain.com"
-ssh_port       = "22"
-document_root  = "~/website.com/"
-rsync_delete   = false
-rsync_args     = ""  # Any extra arguments to pass to rsync
-deploy_default = "push"
-
-# This will be configured for you when you run config_deploy
-deploy_branch  = "master"
-
 ## -- Misc Configs -- ##
 
 public_dir      = "public"    # compiled site directory
-source_dir      = "."    # source file directory
-blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
-deploy_dir      = "_deploy"   # deploy directory (for Github pages deployment)
-stash_dir       = "_stash"    # directory to stash posts for speedy generation
+source_dir      = "."         # source file directory
 posts_dir       = "_posts"    # directory for blog files
-themes_dir      = ".themes"   # directory for blog files
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
@@ -153,114 +137,9 @@ task :new_page, :filename do |t, args|
   end
 end
 
-# usage rake isolate[my-post]
-desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
-task :isolate, :filename do |t, args|
-  stash_dir = "#{source_dir}/#{stash_dir}"
-  FileUtils.mkdir(stash_dir) unless File.exist?(stash_dir)
-  Dir.glob("#{source_dir}/#{posts_dir}/*.*") do |post|
-    FileUtils.mv post, stash_dir unless post.include?(args.filename)
-  end
-end
-
-desc "Move all stashed posts back into the posts directory, ready for site generation."
-task :integrate do
-  FileUtils.mv Dir.glob("#{source_dir}/#{stash_dir}/*.*"), "#{source_dir}/#{posts_dir}/"
-end
-
 desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
 task :clean do
-  rm_rf [Dir.glob(".pygments-cache/**"), Dir.glob(".gist-cache/**"), Dir.glob(".sass-cache/**"), "source/stylesheets/screen.css"]
-end
-
-desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
-task :update_style, :theme do |t, args|
-  theme = args.theme || 'classic'
-  if File.directory?("sass.old")
-    puts "removed existing sass.old directory"
-    rm_r "sass.old", :secure=>true
-  end
-  mv "sass", "sass.old"
-  puts "## Moved styles into sass.old/"
-  cp_r "#{themes_dir}/"+theme+"/sass/", "sass", :remove_destination=>true
-  cp_r "sass.old/custom/.", "sass/custom/", :remove_destination=>true
-  puts "## Updated Sass ##"
-end
-
-desc "Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation"
-task :update_source, :theme do |t, args|
-  theme = args.theme || 'classic'
-  if File.directory?("#{source_dir}.old")
-    puts "## Removed existing #{source_dir}.old directory"
-    rm_r "#{source_dir}.old", :secure=>true
-  end
-  mkdir "#{source_dir}.old"
-  cp_r "#{source_dir}/.", "#{source_dir}.old"
-  puts "## Copied #{source_dir} into #{source_dir}.old/"
-  cp_r "#{themes_dir}/"+theme+"/source/.", source_dir, :remove_destination=>true
-  cp_r "#{source_dir}.old/_includes/custom/.", "#{source_dir}/_includes/custom/", :remove_destination=>true
-  cp "#{source_dir}.old/favicon.png", source_dir
-  mv "#{source_dir}/index.html", "#{blog_index_dir}", :force=>true if blog_index_dir != source_dir
-  cp "#{source_dir}.old/index.html", source_dir if blog_index_dir != source_dir && File.exists?("#{source_dir}.old/index.html")
-  puts "## Updated #{source_dir} ##"
-end
-
-##############
-# Deploying  #
-##############
-
-desc "Default deploy task"
-task :deploy do
-  # Check if preview posts exist, which should not be published
-  if File.exists?(".preview-mode")
-    puts "## Found posts in preview mode, regenerating files ..."
-    File.delete(".preview-mode")
-    Rake::Task[:generate].execute
-  end
-
-  Rake::Task[:copydot].invoke(source_dir, public_dir)
-  Rake::Task["#{deploy_default}"].execute
-end
-
-desc "Generate website and deploy"
-task :gen_deploy => [:integrate, :generate, :deploy] do
-end
-
-desc "copy dot files for deployment"
-task :copydot, :source, :dest do |t, args|
-  FileList["#{args.source}/**/.*"].exclude("**/.", "**/..", "**/.DS_Store", "**/._*").each do |file|
-    cp_r file, file.gsub(/#{args.source}/, "#{args.dest}") unless File.directory?(file)
-  end
-end
-
-desc "deploy public directory to github pages"
-multitask :push do
-  puts "## Deploying branch to Github Pages "
-  puts "## Pulling any updates from Github Pages "
-  cd "#{deploy_dir}" do 
-    Bundler.with_clean_env { system "git pull" }
-  end
-  (Dir["#{deploy_dir}/*"]).each { |f| rm_rf(f) }
-  Rake::Task[:copydot].invoke(public_dir, deploy_dir)
-  puts "\n## Copying #{public_dir} to #{deploy_dir}"
-  cp_r "#{public_dir}/.", deploy_dir
-  cd "#{deploy_dir}" do
-    system "git add -A"
-    message = "Site updated at #{Time.now.utc}"
-    puts "\n## Committing: #{message}"
-    system "git commit -m \"#{message}\""
-    puts "\n## Pushing generated #{deploy_dir} website"
-    Bundler.with_clean_env { system "git push origin #{deploy_branch}" }
-    puts "\n## Github Pages deploy complete"
-  end
-end
-
-def ok_failed(condition)
-  if (condition)
-    puts "OK"
-  else
-    puts "FAILED"
-  end
+  rm_rf [Dir.glob(".pygments-cache/**"), Dir.glob(".gist-cache/**"), Dir.glob(".sass-cache/**"), "#{source_dir}/assets/css/screen.css"]
 end
 
 def get_stdin(message)
@@ -275,17 +154,6 @@ def ask(message, valid_options)
     answer = get_stdin(message)
   end
   answer
-end
-
-def blog_url(user, project, source_dir)
-  cname = "#{source_dir}/CNAME"
-  url = if File.exists?(cname)
-    "http://#{IO.read(cname).strip}"
-  else
-    "http://#{user.downcase}.github.io"
-  end
-  url += "/#{project}" unless project == ''
-  url
 end
 
 desc "list tasks"
