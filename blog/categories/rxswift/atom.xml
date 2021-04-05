@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: RxSwift | License to Kill -9]]></title>
+  <link href="http://blog.flaviocaetano.com/blog/categories/rxswift/atom.xml" rel="self"/>
+  <link href="http://blog.flaviocaetano.com/"/>
+  <updated>2021-04-05T14:40:33-04:00</updated>
+  <id>http://blog.flaviocaetano.com/</id>
+  <author>
+    <name><![CDATA[Flávio Caetano]]></name>
+    <email><![CDATA[blog@flaviocaetano.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ReCaptcha Reaches 1.0]]></title>
+    <link href="http://blog.flaviocaetano.com/post/recaptcha-reaches-1-dot-0/"/>
+    <updated>2017-11-13T12:04:44-05:00</updated>
+    <id>http://blog.flaviocaetano.com/post/recaptcha-reaches-1-dot-0</id>
+    <content type="html"><![CDATA[<p>With the new Swift 4 support, <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> has finally reached a stable release!
+Now you can safely use Google’s <a target="_blank" href="https://developers.google.com/recaptcha/docs/invisible">Invisible ReCaptcha</a> in your app!</p>
+
+<p>Using the JS API, <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> tries to validate the challenge automatically and
+retrieve a token, however, if the API can’t ensure the user is human, a challenge
+may be presented.</p>
+
+<p><img src="https://raw.githubusercontent.com/fjcaetano/ReCaptcha/master/example2.gif" alt="Example Gif 2" width="315px" />
+<img src="https://raw.githubusercontent.com/fjcaetano/ReCaptcha/master/example.gif" alt="Example Gif" width="315px" /></p>
+
+<!-- more -->
+
+<h2 id="setup">Setup</h2>
+
+<p>Register a new site to use <strong>Invisible reCaptcha</strong> at the <a target="_blank" href="https://www.google.com/recaptcha/admin">admin page</a>. Make sure
+to add correct domain owned by you or your company!</p>
+
+<p>This will return you two keys: a <em>Site key</em> and a <em>Secret key</em>. The former is the
+public key which will be used in your frontend to start the validation. This is
+the key must be used in the app. <strong>DO NOT USE THE SECRET KEY</strong>!</p>
+
+<p>The <em>Secret key</em> is for the validation in the server side of the application!</p>
+
+<h4 id="warning-️"><em>Warning</em> ⚠️</h4>
+
+<p>Beware that this library only works for Invisible ReCaptcha keys! Make sure to
+check the Invisible reCAPTCHA option when creating your <a href="https://www.google.com/recaptcha/admin">API Key</a>.</p>
+
+<h4 id="installation">Installation</h4>
+
+<p>You can install <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> using <a target="_blank" href="https://cocoapods.org/">CocoaPods</a>, <a target="_blank" href="https://github.com/Carthage/Carthage">Carthage</a> or as a submodule.
+The library comes with a <a target="_blank" href="https://github.com/ReactiveX/RxSwift">RxSwift</a> extension.</p>
+
+<h5 id="cocoapods">CocoaPods</h5>
+
+<p>Add the following to your Podfile:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pod</span> <span class="s2">"ReCaptcha"</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
+<span class="c1"># or</span>
+<span class="n">pod</span> <span class="s2">"ReCaptcha/RxSwift"</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
+</code></pre></div></div>
+
+<h5 id="carthage">Carthage</h5>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">github</span> <span class="s2">"fjcaetano/ReCaptcha"</span> <span class="o">~&gt;</span> <span class="mf">1.0</span>
+</code></pre></div></div>
+
+<p>If you decide to use the reactive extension, be sure to link both frameworks
+<code class="highlighter-rouge">ReCaptcha</code> and <code class="highlighter-rouge">ReCaptcha_RxSwift</code> to your project. The latter, simply contains
+the reactive extension for the <code class="highlighter-rouge">ReCaptcha</code> class.</p>
+
+<h3 id="ios-setup">iOS Setup</h3>
+
+<p>Open your project’s <code class="highlighter-rouge">Info.plist</code> file and add two entries:</p>
+
+<ul>
+  <li><strong>ReCaptchaKey</strong>: The <em>Site key</em> created in the previous step.</li>
+  <li><strong>ReCaptchaDomain</strong>: A valid domain registered with the key in the previous step.</li>
+</ul>
+
+<p>These values may also be sent as parameters to <code class="highlighter-rouge">ReCaptcha()</code> init. In this case,
+the parameters will override the values in the <code class="highlighter-rouge">Info.plist</code>.</p>
+
+<h2 id="code">Code</h2>
+
+<p>Before starting the validation, you must call the <code class="highlighter-rouge">configureWebView(_:)</code> method.
+This is for when the webview needs to be presented for the user to complete the
+<a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> challenge. If this method is not called, the validation may fail.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="n">configureWebView</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">webview</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">)</span> <span class="k">in</span>
+    <span class="c1">// Configure webview for presentation</span>
+    <span class="c1">// Make sure its frame is not CGRect.zero</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This is the moment to add AutoLayout constraints and store a reference to the webview,
+which will already have a superview that is provided when starting the validation.</p>
+
+<p>The <code class="highlighter-rouge">configureWebView(_:)</code> won’t necessarily be called. Only if the invisible
+validation is not possible.</p>
+
+<h3 id="validation">Validation</h3>
+
+<p>To start the validation, <em>per se</em>, you must call the <code class="highlighter-rouge">validate(on:)</code> method.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">recaptcha</span><span class="o">.</span><span class="nf">validate</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">ReCaptchaResult</span><span class="p">)</span> <span class="k">in</span>
+    <span class="nf">print</span><span class="p">(</span><span class="k">try</span><span class="p">?</span> <span class="n">result</span><span class="o">.</span><span class="nf">dematerialize</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">view</code> given as parameter, must be visible, i.e. be in the active window
+hierarchy, its bounds must be valid and it can’t be marked as <code class="highlighter-rouge">hidden</code>. This view
+will contain the ReCaptcha webview as a subview.</p>
+
+<p>By default, <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> won’t remove the webview from its superview, so it may
+be interesting to have some clean up after the closure is called.</p>
+
+<h3 id="error-handling">Error Handling</h3>
+
+<p><a target="_blank" href="https://github.com/fjcaetano/ReCaptcha">ReCaptcha</a> may throw you some errors if incorrectly configured or when execution
+fails. In any case, you can always try calling <code class="highlighter-rouge">recaptcha.reset()</code> on errors or
+providing <code class="highlighter-rouge">resetOnError: true</code> to the <code class="highlighter-rouge">validate</code> method.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">ReCaptchaError.htmlLoadError</code>: If by some reason, the library’s bundle is
+unreachable, the template HTML won’t be loaded.</li>
+  <li><code class="highlighter-rouge">ReCaptchaError.apiKeyNotFound</code>: No API key has been provided to the library.
+Either set a <code class="highlighter-rouge">ReCaptchaKey</code> entry in the app’s <code class="highlighter-rouge">Info.plist</code> or pass it as argument
+to <code class="highlighter-rouge">ReCaptcha</code>’s init.</li>
+  <li><code class="highlighter-rouge">ReCaptchaError.baseURLNotFound</code>: No domain has been provided to the library.
+Either set a <code class="highlighter-rouge">ReCaptchaDomain</code> entry in the app’s <code class="highlighter-rouge">Info.plist</code> or pass it as
+argument to <code class="highlighter-rouge">ReCaptcha</code>’s init.</li>
+  <li><code class="highlighter-rouge">ReCaptchaError.wrongMessageFormat</code>: This means the JS context provided an
+unexpected message to the API. Shouldn’t happen, so, if it does, be sure to
+<a target="_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
+  <li><code class="highlighter-rouge">ReCaptchaError.unexpected(Error)</code>: 💩 happens ¯\_(ツ)_/¯. The only moment this
+error could be thrown is if JavaScript sends an error. Shouldn’t happen, but if
+it does, don’t be shy and <a target="_blank" href="https://github.com/fjcaetano/ReCaptcha/issues">open an issue</a>.</li>
+</ul>
+
+<h2 id="firewall-bypass">Firewall bypass</h2>
+
+<p>If your firewall is blocking Google’s ReCaptcha, or if you’re behind the <a target="_blank" href="https://en.wikipedia.org/wiki/Great_Firewall">Great
+Firewall of China</a>, you may use an alternate endpoint for the JS API that points
+to <code class="highlighter-rouge">https://www.recaptcha.net/recaptcha/api.js</code>:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="kt">ReCaptcha</span><span class="p">(</span><span class="nv">endpoint</span><span class="p">:</span> <span class="o">.</span><span class="n">alternate</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The default value for the <code class="highlighter-rouge">endpoint</code> parameter points the API to <code class="highlighter-rouge">https://www.google.com/recaptcha/api.js</code></p>
+
+<h2 id="full-documentation"><strong><a target="_blank" style="text-decoration:underline" href="http://fjcaetano.github.io/ReCaptcha">Full Documentation</a></strong></h2>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RxWebSocket]]></title>
+    <link href="http://blog.flaviocaetano.com/post/rxwebsocket/"/>
+    <updated>2016-02-25T13:55:42-05:00</updated>
+    <id>http://blog.flaviocaetano.com/post/rxwebsocket</id>
+    <content type="html"><![CDATA[<p>Recently we had to integrate a chat-like comment feature to our new <a href="https://itunes.apple.com/us/app/winnin-battle-best-videos./id1073178885" target="_blank">Winnin App</a>
+Our backend team decided to build it using websockets, so when it came to the
+app implementation, my first thought was to search for an opensource swift framework
+that did confirm to the <a href="http://tools.ietf.org/html/rfc6455" target="_blank">Websocket Protocol</a>.
+We decided to go with <a href="https://github.com/daltoniam/Starscream" target="_blank">Starscream</a> since
+it seemed simple and reliable enough.</p>
+
+<!-- more -->
+
+<p>In the first drafts of the new app, a decision was made to adopt reactive programming
+in the app, more specifically <a href="https://github.com/ReactiveX/RxSwift" target="_blank">RxSwift</a>. Many sprints later, we’ve limited our
+Rx use to cross-object events and network communications. Not surprisingly, we
+wanted to use websockets reactively.</p>
+
+<h2 id="rxwebsocket"><a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a></h2>
+
+<p>We designed RxWebSocket to be as lightweight as possible, truly, just making an
+abstraction layer over <a href="https://github.com/daltoniam/Starscream" target="_blank">Starscream</a> to make it reactive.</p>
+
+<p>All you need is to listen to the <code class="highlighter-rouge">stream</code> property which is an <code class="highlighter-rouge">Observable&lt;StreamEvent&gt;</code>.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">StreamEvent</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="kt">Connect</span>
+    <span class="k">case</span> <span class="kt">Disconnect</span><span class="p">(</span><span class="kt">NSError</span><span class="p">?)</span>
+    <span class="k">case</span> <span class="kt">Pong</span>
+    <span class="k">case</span> <span class="kt">Text</span><span class="p">(</span><span class="kt">String</span><span class="p">)</span>
+    <span class="k">case</span> <span class="kt">Data</span><span class="p">(</span><span class="kt">NSData</span><span class="p">)</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Using an enum as the element type allows us to have every interaction with the
+websocket server in one property that is also easily filtered by message type. If
+we need to know when the websocket connects, we can simply filter the stream:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">socket</span><span class="o">.</span><span class="n">stream</span>
+  <span class="o">.</span><span class="n">filter</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="nv">$0</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="kt">Connect</span><span class="p">:</span> <span class="k">return</span> <span class="kc">true</span>
+    <span class="k">default</span><span class="p">:</span> <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p>If your websocket messages the client with a JSON object that you need to parse:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">socket</span><span class="o">.</span><span class="n">stream</span>
+  <span class="o">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="n">event</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">AnyObject</span><span class="o">&gt;</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">event</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="kt">Text</span><span class="p">(</span><span class="k">let</span> <span class="nv">text</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">just</span><span class="p">(</span><span class="k">try</span> <span class="kt">NSJSONSerialization</span><span class="o">.</span><span class="kt">JSONObjectWithData</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="nf">dataUsingEncoding</span><span class="p">(</span><span class="kt">NSUTF8StringEncoding</span><span class="p">)</span><span class="o">!</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="o">.</span><span class="kt">AllowFragments</span><span class="p">))</span>
+    <span class="k">default</span><span class="p">:</span> <span class="k">return</span> <span class="kt">Observable</span><span class="o">.</span><span class="nf">empty</span><span class="p">()</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p>We know it’s still crude and quite simple, which is our intention, but we’ll improve
+<a href="https://github.com/fjcaetano/RxWebSocket" target="_blank">RxWebSocket</a> with time. Every suggestion, comment, critic, PR,
+etcetera is welcome.</p>
+
+<p>You can check an actual implementation in the example project or by running</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pod try RxWebSocket
+</code></pre></div></div>
+
+<p>Enjoy!</p>
+
+]]></content>
+  </entry>
+  
+</feed>

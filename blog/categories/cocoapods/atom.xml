@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: CocoaPods | License to Kill -9]]></title>
+  <link href="http://blog.flaviocaetano.com/blog/categories/cocoapods/atom.xml" rel="self"/>
+  <link href="http://blog.flaviocaetano.com/"/>
+  <updated>2021-04-05T14:40:33-04:00</updated>
+  <id>http://blog.flaviocaetano.com/</id>
+  <author>
+    <name><![CDATA[Flávio Caetano]]></name>
+    <email><![CDATA[blog@flaviocaetano.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cocoapods and Resource_bundles]]></title>
+    <link href="http://blog.flaviocaetano.com/post/cocoapods-and-resource_bundles/"/>
+    <updated>2014-04-15T16:12:13-04:00</updated>
+    <id>http://blog.flaviocaetano.com/post/cocoapods-and-resource_bundles</id>
+    <content type="html"><![CDATA[<p>Anyone that have recently developed any pods for Cocoapods know that resources
+should be gathered using the <a href="http://guides.cocoapods.org/syntax/podspec.html#resource_bundles"><code class="highlighter-rouge">resource_bundles</code></a>
+option. What is quite hard to figure out is how, exactly, to access those
+resources once they’re set up in the <code class="highlighter-rouge">bundle</code>. It seems obvious now that I got
+it working, but I struggle a lot since there wasn’t anything in Stackoverflow or
+anywhere else that provided the answer I came up with.</p>
+
+<p>After setting up the <code class="highlighter-rouge">resource_bundles</code>, Cocoapods copies the resources found in
+a “resources” folder within the Pods project, but none of them are added in the
+target’s “Copy bundle resources”. For that reason, I couldn’t access any of the
+Pod’s images or <em>xibs</em> in my project. Every time XCode threw me this error:</p>
+
+<blockquote>
+  <p>‘Terminating app due to uncaught exception ‘NSInternalInconsistencyException’,
+reason: ‘Could not load NIB in bundle:&lt;{PATH_TO_APP}&gt; (loaded)’ with name
+‘{VIEW_CONTROLLER_NAME}’</p>
+</blockquote>
+
+<p>The obvious solution that wasn’t listed anywhere is using the Cocoapods
+generated bundle (which the folder actually doesn’t exist) as a <code class="highlighter-rouge">NSBundle</code>:</p>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">NSString</span> <span class="o">*</span><span class="n">bundlePath</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="nf">mainBundle</span><span class="p">]</span> <span class="nf">pathForResource</span><span class="p">:</span><span class="s">@"MyBundle"</span> <span class="nf">ofType</span><span class="p">:</span><span class="s">@"bundle"</span><span class="p">];</span>
+
+<span class="n">NSBundle</span> <span class="o">*</span><span class="n">bundle</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSBundle</span> <span class="nf">bundleWithPath</span><span class="p">:</span><span class="n">bundlePath</span><span class="p">];</span>
+
+<span class="n">MyViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyViewController</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithNibName</span><span class="p">:</span><span class="s">@"MyViewController"</span> <span class="nf">bundle</span><span class="p">:</span><span class="n">bundle</span><span class="p">];</span>
+
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nf">pushViewController</span><span class="p">:</span><span class="n">viewController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span></code></pre></figure>
+
+<p>Yes, it’s that simple, that obvious, though it’s not listed anywhere. I believe
+to be prudent and convenient to write about it in order to help anyone who
+encounter themselves in the same situation as I did.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cocoapod Badges]]></title>
+    <link href="http://blog.flaviocaetano.com/post/cocoapod-badges/"/>
+    <updated>2013-06-03T15:15:45-04:00</updated>
+    <id>http://blog.flaviocaetano.com/post/cocoapod-badges</id>
+    <content type="html"><![CDATA[<p>In any kind of environment, visual marks ease and enhance the comprehension of
+information. Countless researches studied the best way to display data, which
+colors induce what emotions, the association of geometric shapes with pre-formed
+concepts. The fact is that a sign or plaque draws much more attention than plain
+text. After all, an image is worth a thousand words, therefore, an image sends a
+much more significant message than some written words.</p>
+
+<p>That’s one of the reasons many development tools have featured <em>badges</em> (or 
+<em>shields)</em> to inform the status of an application/framework/library/<em>etcetera</em>.
+It’s the case of <a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI</a>, 
+<a href="https://codeclimate.com/changelog/510d4fde56b102523a0004bf">Code Climate</a>, 
+<a href="http://blog.tech-angels.com/post/43141047457/gemnasium-v3-aka-gemnasium">Gemnasium</a>,
+among others, all following <a href="https://github.com/olivierlacan/shields">olivierlacan/shields`</a>
+trend, available Github.</p>
+
+<p>I’m an iOS developer and previously have worked with Python/Django (though I
+still fool around) and I’ve always found very interesting this creative way of
+sharing the state of a service dynamically, but sadly, there were no solution to
+Python nor iOS featuring <em>badges</em> (except for Travis CI for tests). But,
+recently, appeared - out of nowhere - <a href="https://pypip.in/">pypip’s</a> <em>shields</em> for
+Python packages that allows the visualisation of the latest available version of
+a package on <a href="http://pypi.python.org">pypi</a> or how many downloads some <em>release
+*had</em>.* When I came aware if it I resented for taking so long for solution so
+simple and effective to come up (or at least for <strong>I</strong> to discover it)… but it
+got over the top when I found out… or better, <strong>did not found out</strong> a similar
+solution for <a href="http://cocoapods.org">Cocoapods</a>.</p>
+
+<p>I’m one of those who doesn’t miss a chance to solve a problem and endeavour an
+opportunity. That’s how the <a href="http://fjcaetano.github.io/cocoapod-badges/">Cocoapod Badges</a> 
+project started. Since Cocoapods doesn’t provide an API, any info on the number
+of <em>users/downloads</em>, nor any kind of useful data, it proved to be a challenge,
+and all I could use had to be what was at hand: the latest version of a <em>pod</em>.
+But even though, mistaken are those who thought it easy. As mentioned, there’s
+no API!</p>
+
+<h1 id="cocoapod-badges">Cocoapod Badges <img src="https://cocoapod-badges.herokuapp.com/v/NSStringMask/badge.png" alt="NSStringMask 1.1.2" /></h1>
+
+<p>Digging through Cocoapod’s and <a href="http://cocoadocs.org">Cocoadocs’</a> websites, I
+tried, first, to use the <a href="http://cocoadocs.org/documents.jsonp">documents.jsonp</a> 
+file that I found in the <em>source</em> of the <em>pod</em>’s documentation website, however,
+I soon gave up for realising that its update frequency is too high (above one
+hour). At last, I had to content with the unfortunate <code class="highlighter-rouge">/search?q=</code> requested
+when searching for a <em>pod</em> in Cocoapod’s main page. At first, it looked like an
+excellent solution since it returned a <code class="highlighter-rouge">json</code> object with some info, until I
+realised that inside the object was a string with some <code class="highlighter-rouge">html</code> code and only
+inside that code was the <em>pod</em>’s latest version. “<em>God dammit!</em>” Now I have to
+run a request on a “pseudo-<em>webservice</em>” and parse it with <code class="highlighter-rouge">XPATH</code> to get the
+latest version!</p>
+
+<p>Super easy! But, as my mother would on a brazilian saying: “<em>few shit is
+silliness</em>”. The damned “API” doesn’t return the requested <em>pod</em>, but anything
+with the searched string. To get something more useful, I figured that 
+<code class="highlighter-rouge">/search?q=name:POD_NAME</code> searches only in the <em>pod</em>’s name and not in its
+description, what significantly reduces the results, specially when dealing with
+popular <em>pods</em> such as <a href="http://afnetworking.github.io/AFNetworking/index.html">AFNetworking</a>.</p>
+
+<p>After all that suffering, I finally got the information I wanted, but then, how
+do I show it in an image? Olivier Lacan’s repo, that enabled all the existing 
+<em>badges,</em> provides, beyond the <em>.png</em> to existing services, <code class="highlighter-rouge">.SVG</code> vectorial
+files that render <code class="highlighter-rouge">xml</code> data to images. So, accidentally, I double-clicked the 
+<code class="highlighter-rouge">.SVG</code> file and the holy Google Chrome opened it as an image! Finally good news!
+As the information about the version is in plain text inside the <code class="highlighter-rouge">xml</code>, all I
+had to do was to set the <code class="highlighter-rouge">mimetype</code> so Django could provide the file as an image.</p>
+
+<p>1 <a href="http://heroku.com">Heroku</a> <em>dyno</em> later and the service is available fulltime
+(depending on Cocoapods website) through the images’ url:</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">http://cocoapod-badges.herokuapp.com/v/$PODNAME/badge.png</code></p>
+</blockquote>
+
+<p>All you have to do is replace the <code class="highlighter-rouge">$PODNAME</code> with the name of the pod you want.
+Simple and easy, isn’t it? Use it at will! And suport the Github repo!</p>
+]]></content>
+  </entry>
+  
+</feed>
