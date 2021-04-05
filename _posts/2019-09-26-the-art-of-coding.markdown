@@ -4,7 +4,7 @@ title: "The Art of Coding"
 date: 2019-09-26 09:47:19 -0300
 comments: true
 categories: 
-- self-improvement
+- Self Improvement
 share: true
 published: true
 image:

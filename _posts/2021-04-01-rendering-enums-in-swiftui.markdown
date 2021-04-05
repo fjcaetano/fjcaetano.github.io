@@ -4,10 +4,10 @@ title: "Rendering enums in SwiftUI"
 date: 2021-04-01 15:33:00 -0400
 comments: true
 categories: 
-  - swiftui
-  - swift
-  - ios
-  - macos
+  - SwiftUI
+  - Swift
+  - iOS
+  - macOS
 share: true
 published: true
 image:

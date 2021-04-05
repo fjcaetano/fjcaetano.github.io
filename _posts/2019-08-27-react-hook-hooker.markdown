@@ -4,10 +4,10 @@ title: "Hooking Your Hooks"
 date: 2019-08-28 18:36:39 -0300
 comments: true
 categories: 
-- react-native
-- hoc
-- hooks
-- compose
+- React-Native
+- HoC
+- React Hooks
+- Compose
 share: true
 published: true
 image:

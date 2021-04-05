@@ -4,7 +4,7 @@ title: "The Simplest Throttle/Debounce You'll Ever See"
 date: 2018-01-11 11:12:28 -0200
 comments: true
 categories:
-- swift
+- Swift
 share: true
 published: true
 image:

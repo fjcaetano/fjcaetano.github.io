@@ -3,9 +3,10 @@ layout: post
 title: Cocoapods and resource_bundles
 date: 2014-04-15 17:12:13.000000000 -03:00
 categories:
-- Objective-C
+  - Objective-C
+  - CocoaPods
 tags:
-- cocoapods pod
+  - cocoapods pod
 status: publish
 type: post
 published: true

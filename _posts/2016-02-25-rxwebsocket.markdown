@@ -5,6 +5,7 @@ date: 2016-02-25 15:55:42 -0300
 comments: true
 categories:
 - Swift
+- RxSwift
 tags:
 - cocoapods
 - opensource

@@ -4,7 +4,7 @@ title: "Protip: UIViewControllerAnimatedTransitioning + snapshots"
 date: 2017-12-05 18:06:12 -0200
 comments: true
 categories:
-- swift
+- Swift
 share: true
 published: true
 image:

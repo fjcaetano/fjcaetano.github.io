@@ -4,7 +4,8 @@ title: "ReCaptcha Reaches 1.0"
 date: 2017-11-13 15:04:44 -0200
 comments: true
 categories:
-- swift
+- Swift
+- RxSwift
 share: true
 published: true
 image:

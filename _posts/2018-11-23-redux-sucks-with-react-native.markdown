@@ -4,7 +4,7 @@ title: "Redux sucks with React-Native"
 date: 2018-11-23 18:21:27 -0200
 comments: true
 categories:
-- react-native
+- React-Native
 share: true
 published: true
 image:

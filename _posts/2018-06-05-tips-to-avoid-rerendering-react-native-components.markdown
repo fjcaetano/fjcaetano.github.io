@@ -4,7 +4,7 @@ title: "Tips To Avoid Rerendering React-Native Components"
 date: 2018-06-05 17:30:00 -0300
 comments: true
 categories:
-- react-native
+- React-Native
 share: true
 published: true
 image:

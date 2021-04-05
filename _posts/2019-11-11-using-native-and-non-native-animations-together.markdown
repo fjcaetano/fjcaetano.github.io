@@ -4,8 +4,8 @@ title: "Using native and non-native animations together"
 date: 2019-11-11 17:36:36 -0300
 comments: true
 categories: 
-  - react-native
-  - animations
+  - React-Native
+  - Animations
 share: true
 published: true
 image:

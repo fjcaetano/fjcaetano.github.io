@@ -3,7 +3,9 @@ layout: post
 title: Cocoapod Badges
 date: 2013-06-03 16:15:45.000000000 -03:00
 categories:
-- Objective-C
+  - Objective-C
+  - Swift
+  - CocoaPods
 tags:
 - badge
 - cocoapod

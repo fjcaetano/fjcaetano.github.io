@@ -4,8 +4,8 @@ title: "An easier way to record iOS gifs"
 date: 2019-07-30 10:56:44 -0300
 comments: true
 categories: 
-- bash
-- ios
+- Bash
+- iOS
 share: true
 published: true
 image:
