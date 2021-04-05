@@ -18,4 +18,3 @@ end
 
 gem 'sinatra', '~> 2.1'
 gem 'octopress', '~> 3.0'
-gem 'pygments.rb', '~> 2.2'
