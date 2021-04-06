@@ -1,0 +1,24 @@
+name: Deploy
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: macos-latest
+    name: 'Deploy to Github Pages'
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: ruby/setup-ruby@v1
+      with: 
+        bundler-cache: true
+
+    - name: Install Splash
+      uses: fjcaetano/mint-action@v1.0.2
+      with:
+        package: fjcaetano/Splash@master
+
+    - name: Prepare website for building
+      run: bundle exec rake prepare
+      
+    - name: Build and Deploy Jekyll website
+      run: bundle exec rake deploy
