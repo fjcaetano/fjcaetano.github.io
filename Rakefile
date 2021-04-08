@@ -4,7 +4,7 @@ require "stringex"
 
 ## -- Misc Configs -- ##
 
-deploy_branch   = "master"    # the branch containing the generated website
+deploy_branch   = "origin/master"    # the branch containing the generated website
 public_dir      = "public"    # compiled site directory
 source_dir      = "."         # source file directory
 posts_dir       = "_posts"    # directory for blog files
